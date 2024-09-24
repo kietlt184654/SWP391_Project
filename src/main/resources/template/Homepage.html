@@ -1,10 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <title>Homepage</title>
+    <link rel="stylesheet" href="Homepage.css">
 </head>
-<body>
-    <h1>Hello TuKiet</h1>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Product Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Service</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-secondary me-2">Login</button>
+            <button class="btn btn-outline-secondary me-2">Sign up</button>
+            <a href="#" class="btn btn-outline-dark">
+                <img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart--v1.png" alt="Cart">
+            </a>
+        </div>
+    </div>
+</nav>
+<div class="body-content">
+    <div class="slideshow-container">
+
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 4</div>
+            <img src="img/blue.jpg" style="width:100%">
+            <div class="text">Chú thích cho ảnh 1</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 4</div>
+            <img src="img/hokoi.jpg" style="width:100%">
+            <div class="text">Chú thích cho ảnh 2</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 4</div>
+            <img src="img/cat.jpg" style="width:100%">
+            <div class="text">Chú thích cho ảnh 3</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">4 / 4</div>
+            <img src="img/hokoi.jpg" style="width:100%">
+            <div class="text">Chú thích cho ảnh 4</div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+
+<script src="Homepage.js"></script>
+
+<section class=" awe-section-2">
+    <div class="section_about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="section content_video">
+                        <div class=" section banner_video">
+                            <img class="lazyload img-responsive loaded"
+                                src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/about_video.jpg?1726532383157"
+                                data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/about_video.jpg?1726532383157"
+                                alt="KoiShop111" data-was-processed="true">
+                            <span data-video="https://www.youtube.com/embed/JBHC0MsWnU4" class="button_video video_play"
+                                data-toggle="modal" data-target="#myModalYoutube"><i class="fa fa-play"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h2 class="title_module">Xin chào! Chúng tôi là ...</h2>
+                    <div class="about_desc">Đầu tiên ... xin gửi lời chào, kính chúc sức khỏe, thành công và lời
+                        cảm ơn đến Quý khách hàng đã ủng hộ những sản phẩm của chúng tôi. Với hơn 10 năm kinh nghiệm
+                        về sản xuất, kinh doanh, thiết kế và thi công sản phẩm nội thất phục vụ cho không gian:
+                        phòng khách gia đình, nhà hàng, café, khách sạn, bar… ... thấu hiểu được nhu cầu và thị
+                        hiếu của người tiêu dùng, tập thể chúng tôi luôn chú trọng đầu tư, thiết kế những sản phẩm
+                        chất lượng nhằm mang đến một không gian sống thật thoải mái, ấm cúng và tiện nghi cho người
+                        sử dụng.</div>
+                    <a href="/gioi-thieu" class="about_more" title="Xem chi tiết"><span>Xem chi tiết</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="myModalYoutube" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="wrap_youtube_modal">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card h-100">
+        <img src="img/refund.jpg" class="card-img-top" alt="refund">
+        <div class="card-body">
+          <h3 class="card-title-1">Chính sách đổi trả</h3>
+          <p class="card-text">Sẵn sàng đổi trả trong vòng 24h nếu quý khách không ưng ý mà không mất thêm bất cứ
+            khoản chi phí nào</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="img/goodservice.jpg" class="card-img-top" alt="Service">
+        <div class="card-body">
+          <h3 class="card-title-2">Đội ngũ chuyên nghiệp</h3>
+          <p class="card-text">Với đội ngũ nhân viên có kinh nghiệm, nhiệt tình sẽ mang đến cho bạn dịch vụ hoàn hảo
+            nhất.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="img/ship1.jpg" class="card-img-top" alt="shipping">
+        <div class="card-body">
+          <h3 class="card-title-3">Chính sách vận chuyển</h3>
+          <p class="card-text">Miễn phí vận chuyển cho các đơn hàng trên toàn quốc, đảm bảo chất lượng khi đến tay khách hàng</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">Last updated 3 mins ago</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<section class="section_danhmucnoibat">
+    <div class="title_module_main">
+        <h2 class="h2">
+            <span title="Danh mục nổi bật">Danh mục nổi bật</span>
+        </h2>
+    </div>
+    <div class="content_category">
+        <div class="cate_left">
+            <div class="element image_cate" onclick="window.location.href='san-pham-noi-bat'" title="Sản phẩm nổi bật">
+                <img class="lazyload img-responsive loaded"
+                    src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_1.jpg?1726532383157"
+                    data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_1.jpg?1726532383157"
+                    alt="Sản phẩm nổi bật" data-was-processed="true">
+                <div class="title_cate">
+                    <h3>
+                        <a href="san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+                    </h3>
+                </div>
+            </div>
+            <div class="content_cate_left">
+                <div class="element image_cate_long" onclick="window.location.href='san-pham-moi'" title="Sản phẩm mới">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_4.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_4.jpg?1726532383157"
+                        alt="Sản phẩm mới" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-moi" title="Sản phẩm mới">Sản phẩm mới</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="content_cate_right">
+                <div class="element image_cate" onclick="window.location.href='san-pham-noi-bat'"
+                    title="Sản phẩm nổi bật">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_5.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_5.jpg?1726532383157"
+                        alt="Sản phẩm nổi bật" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="element image_cate" onclick="window.location.href='san-pham-noi-bat'"
+                    title="Sản phẩm nổi bật">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_7.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_7.jpg?1726532383157"
+                        alt="Sản phẩm nổi bật" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cate_right">
+            <div class="cate_right_1" onclick="window.location.href='san-pham-moi'" title="Sản phẩm mới">
+                <div class="element image_cate">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_2.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_2.jpg?1726532383157"
+                        alt="Sản phẩm mới" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-moi" title="Sản phẩm mới">Sản phẩm mới</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="element image_cate" onclick="window.location.href='san-pham-moi'" title="Sản phẩm mới ">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_6.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_6.jpg?1726532383157"
+                        alt="Sản phẩm mới " data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-moi" title="Sản phẩm mới ">Sản phẩm mới </a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="element image_cate" onclick="window.location.href='san-pham-moi'" title="Sản phẩm mới">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_8.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_8.jpg?1726532383157"
+                        alt="Sản phẩm mới" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-moi" title="Sản phẩm mới">Sản phẩm mới</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="cate_right_2">
+                <div class="element image_cate_long" onclick="window.location.href='san-pham-noi-bat'"
+                    title="Sản phẩm nổi bật">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_3.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_3.jpg?1726532383157"
+                        alt="Sản phẩm nổi bật" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="element image_cate" onclick="window.location.href='san-pham-noi-bat'"
+                    title="Sản phẩm nổi bật">
+                    <img class="lazyload img-responsive loaded"
+                        src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_9.jpg?1726532383157"
+                        data-src="//bizweb.dktcdn.net/100/526/511/themes/963257/assets/category_9.jpg?1726532383157"
+                        alt="Sản phẩm nổi bật" data-was-processed="true">
+                    <div class="title_cate">
+                        <h3>
+                            <a href="san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Our services</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Affiliate program</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Order status</a></li>
+                    <li><a href="#">Payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Online shop</h4>
+                <ul>
+                    <li><a href="#">Watch</a></li>
+                    <li><a href="#">Bag</a></li>
+                    <li><a href="#">Shoes</a></li>
+                    <li><a href="#">Dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
 </body>
+
 </html>
