@@ -12,5 +12,5 @@ public interface AccountRepository extends JpaRepository<AccountEnity, Integer> 
    AccountEnity findByAccountName(String accountName);
    AccountEnity findByAccountEmail(String accountEmail);
    Optional<AccountEnity> findByAccountId (int accountId);
-
+   Optional<AccountEnity> findByAccountName (int accountId);
 }
