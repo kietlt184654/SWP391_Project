@@ -10,7 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
-<nav class="navbar navbar-expand-lg bg-light">
+<!-- <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Logo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -37,14 +37,39 @@
             </ul>
         </div>
         <div class="d-flex">
-            <button class="btn btn-outline-secondary me-2">Login</button>
+            <button class="btn btn-outline-secondary me-2"><a href="http://127.0.0.1:5500/src/main/resources/template/login.html">Login</a></button>
             <button class="btn btn-outline-secondary me-2">Sign up</button>
             <a href="#" class="btn btn-outline-dark">
                 <img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart--v1.png" alt="Cart">
             </a>
         </div>
     </div>
-</nav>
+</nav> -->
+<nav class="nav">
+    <div class="nav-logo">
+      <p>LOGO</p>
+    </div>
+    <div class="nav-menu" id="navMenu">
+      <ul>
+        <li><a href="http://127.0.0.1:5500/src/main/resources/template/Homepage.html" class="link">Home</a></li>
+        <li><a href="#" class="link">About</a></li>
+        <li><a href="#" class="link">Blog</a></li>
+        <li><a href="#" class="link">Services</a></li>
+        <li><a href="#" class="link">Product</a></li>
+      </ul>
+    </div>
+    <div class="nav-button">
+      <button class="btn white-btn" id="loginBtn" onclick="login()">
+        <a href="http://127.0.0.1:5501/src/main/resources/template/login.html">Login</a>
+      </button>
+      <button class="btn" id="registerBtn" onclick="register()">
+        Sign Up
+      </button>
+    </div>
+    <div class="nav-menu-btn">
+      <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+    </div>
+  </nav>
 
 <body>
 
@@ -53,7 +78,7 @@
         <div class="slideshow-container">
             <div class="mySlides fade">
                 <div class="numbertext">1 / 4</div>
-                <img src="/src/main/resources/img/blue.jpg" alt="Slide 1" style="width:100%">
+                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 1" style="width:100%">
                 <div class="text">Chú thích cho ảnh 1</div>
             </div>
             <div class="mySlides fade">
@@ -63,7 +88,7 @@
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">3 / 4</div>
-                <img src="/src/main/resources/img/cat.jpg" alt="Slide 3" style="width:100%">
+                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 3" style="width:100%">
                 <div class="text">Chú thích cho ảnh 3</div>
             </div>
             <div class="mySlides fade">
@@ -198,7 +223,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="path_to_default_avatar.jpg" alt="User" class="rounded-circle" width="50"
+                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
                                 height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -220,7 +245,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="path_to_default_avatar.jpg" alt="User" class="rounded-circle" width="50"
+                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
                                 height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -242,7 +267,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="path_to_default_avatar.jpg" alt="User" class="rounded-circle" width="50"
+                            <img src="/src/main/resources/img/user.jpg  " alt="User" class="rounded-circle" width="50"
                                 height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
