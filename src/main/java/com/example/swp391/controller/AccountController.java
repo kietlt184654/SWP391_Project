@@ -28,13 +28,28 @@ public class AccountController {
     public String login(@RequestParam("accountName") String accountName,
                         @RequestParam("password") String password, HttpSession session, Model model) {
         AccountEnity loginUser = accountService.userLogin(accountName, password);
+
         if (loginUser != null) {
+
             session.setAttribute("loginUser", loginUser);
             model.addAttribute("userLogin", loginUser);
-            return "homepage";
+            String role=loginUser.getAccountTypeID();
+
+            switch (role.toLowerCase()) { // Chuyển role về chữ thường để dễ so sánh
+                case "1":
+                    return "Homepage";
+                case "2":
+                    return "StaffPage";
+                case "3":
+                    return "AdminPage";
+                default:
+                    // Nếu quyền không hợp lệ, chuyển hướng đến trang mặc định
+                    model.addAttribute("errorAccount", "Quyền của bạn không hợp lệ");
+                    return "login";
+            }
         } else {
             model.addAttribute("errorAccount", "Invalid username or password");
-            return "loginForm";
+            return "login";
         }
     }
 
