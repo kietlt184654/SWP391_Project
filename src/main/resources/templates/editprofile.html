@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="editprofile.css" />
+    <title>Edit profile customer</title>
+  </head>
+  <body>
+    <div class="nav">
+      <!-- Hamburger button -->
+      <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
+      </div>
+
+      <!-- Logo -->
+      <div class="nav-logo">
+        <p>LOGO</p>
+      </div>
+
+      <!-- Nav Menu -->
+      <div class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="#" class="link">Home</a></li>
+          <li><a href="#" class="link">About</a></li>
+          <li><a href="#" class="link">Blog</a></li>
+          <li><a href="#" class="link">Services</a></li>
+          <li><a href="#" class="link">Product</a></li>
+
+          <!-- Shopping cart -->
+          <li>
+            <a href="#" class="icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="notification-badge">0</span>
+              <!-- Update shopping cart  -->
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="icon" id="accountIcon">
+              <i class="fas fa-user-circle"></i>Username
+              <i class="fas fa-caret-down"></i>
+            </a>
+
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-history"></i> History Order</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <h2>Edit Profile</h2>
+      <form class="profile-form">
+        <!-- Avatar Upload -->
+        <div class="avatar-upload">
+          <div class="avatar">
+            <img src="avatar.png" />
+            <div>
+              <label for="upload">Upload Picture</label>
+              <input type="file" id="upload" style="display: none" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Enter your address"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="cancel-btn">Cancel</button>
+          <button type="submit" class="save-btn">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-container">
+        <div class="footer-info">
+          <h4>Information</h4>
+          <p>Open: 8 AM - 10 PM</p>
+
+          <p>
+            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+            Minh
+          </p>
+        </div>
+        <div class="footer-services">
+          <h4>Services</h4>
+          <ul>
+            <li>Construction Koi pond</li>
+            <li>Cleaning and maintenance</li>
+            <li>Design upon requirements</li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+          <p>
+            <i class="fa-brands fa-facebook"></i>
+            <a href="https://facebook.com" target="_blank">Visit Us</a>
+          </p>
+        </div>
+
+        <div class="footer-map">
+          <h4>Map</h4>
+          <img src="map.png" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+      });
+
+      // Toggle dropdown menu when clicking the account icon
+      const accountIcon = document.getElementById("accountIcon");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+
+      accountIcon.addEventListener("click", (event) => {
+        event.preventDefault();
+        dropdownMenu.style.display =
+          dropdownMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (event) {
+        if (
+          !accountIcon.contains(event.target) &&
+          !dropdownMenu.contains(event.target)
+        ) {
+          dropdownMenu.style.display = "none";
+        }
+
+        let cartCount = 0;
+
+        function updateCartCount(count) {
+          cartCount += count;
+          document.querySelector(".notification-badge").textContent = cartCount;
+        }
+
+        updateCartCount(1);
+      });
+    </script>
+  </body>
+</html>
