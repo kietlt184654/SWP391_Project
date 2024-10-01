@@ -1,61 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/src/main/resources/static/Homepage.css">
+
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
+<nav class="nav">
+    <div class="nav-logo">
+      <p>LOGO</p>
+    </div>
+    <div class="nav-menu" id="navMenu">
+      <ul>
+        <li><a href="http://127.0.0.1:5500/src/main/resources/templates/Homepage.html" class="link">Home</a></li>
+        <li><a href="#" class="link">About</a></li>
+        <li><a href="#" class="link">Blog</a></li>
+        <li><a href="#" class="link">Services</a></li>
+        <li><a href="#" class="link">Product</a></li>
+      </ul>
+    </div>
+    <div class="nav-button">
+        <form th:action="@{/}" method="post">
+      <button class="btn white-btn" id="loginBtn" onclick="login()">
+      login
+      </button>
+        </form>
+      <button class="btn" id="registerBtn" onclick="register()">
+        Sign Up
+      </button>
+    </div>
+    <div class="nav-menu-btn">
+      <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+    </div>
+  </nav>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home Page</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Product Page</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Service
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Thiết Kế Và Thi Công Kiến Trúc</a></li>
-                            <li><a class="dropdown-item" href="#">Thiết Kế Và Thi Công Cảnh Quan</a></li>
-                            <li><a class="dropdown-item" href="#">Thiết Kế Và Thi Công Nhà Vườn</a></li>
-                            <li><a class="dropdown-item" href="#">Thiết Kế Và Thi Công Sân Vườn</a></li>
-                            <li><a class="dropdown-item" href="#">Thiết Kế Và Thi Công Hồ Cá Koi</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Project</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                </ul>
-            </div>
-            <div class="d-flex">
-                <button class="btn btn-outline-secondary me-2">Login</button>
-                <button class="btn btn-outline-secondary me-2">Sign up</button>
-                <a href="#" class="btn btn-outline-dark">
-                    <img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart--v1.png" alt="Cart">
-                </a>
-            </div>
-        </div>
-    </nav>
+
 
     <div class="body-content">
         <div class="slideshow-container">
             <div class="mySlides fade">
                 <div class="numbertext">1 / 4</div>
-                <img src="/src/main/resources/img/blue.jpg" alt="Slide 1" style="width:100%">
+                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 1" style="width:100%">
                 <div class="text">Chú thích cho ảnh 1</div>
             </div>
             <div class="mySlides fade">
@@ -65,7 +56,7 @@
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">3 / 4</div>
-                <img src="/src/main/resources/img/cat.jpg" alt="Slide 3" style="width:100%">
+                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 3" style="width:100%">
                 <div class="text">Chú thích cho ảnh 3</div>
             </div>
             <div class="mySlides fade">
@@ -92,11 +83,11 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <h2 class="title_module">Our company</h2>
                         <div class="about_desc">
-                            Our company is specialized in designing and constructing high-end koi ponds, 
-                            gardens, and landscaping projects. With over 10 years of experience, we are 
-                            committed to creating beautiful and functional outdoor spaces. Our team of 
-                            experts uses the latest techniques and high-quality materials to ensure that 
-                            each project meets our clients' expectations. We pride ourselves on our attention 
+                            Our company is specialized in designing and constructing high-end koi ponds,
+                            gardens, and landscaping projects. With over 10 years of experience, we are
+                            committed to creating beautiful and functional outdoor spaces. Our team of
+                            experts uses the latest techniques and high-quality materials to ensure that
+                            each project meets our clients' expectations. We pride ourselves on our attention
                             to detail and our ability to bring our clients' visions to life.
                         </div>
                         <a href="/about-us" class="about_more" title="Learn more"><span>Learn more</span></a>
@@ -155,9 +146,8 @@
             <div class="card h-100">
                 <img src="/src/main/resources/img/refund.jpg" class="card-img-top" alt="refund">
                 <div class="card-body">
-                    <h3 class="card-title-1">Chính sách đổi trả</h3>
-                    <p class="card-text">Sẵn sàng đổi trả trong vòng 24h nếu quý khách không ưng ý mà không mất thêm bất cứ
-                        khoản chi phí nào</p>
+                    <h3 class="card-title-1">Return Policy</h3>
+                    <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -168,9 +158,8 @@
             <div class="card h-100">
                 <img src="/src/main/resources/img/goodservice.jpg" class="card-img-top" alt="Service">
                 <div class="card-body">
-                    <h3 class="card-title-2">Đội ngũ chuyên nghiệp</h3>
-                    <p class="card-text">Với đội ngũ nhân viên có kinh nghiệm, nhiệt tình sẽ mang đến cho bạn dịch vụ hoàn hảo
-                        nhất.</p>
+                    <h3 class="card-title-2">Professional Team</h3>
+                    <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -181,8 +170,8 @@
             <div class="card h-100">
                 <img src="/src/main/resources/img/ship1.jpg" class="card-img-top" alt="shipping">
                 <div class="card-body">
-                    <h3 class="card-title-3">Chính sách vận chuyển</h3>
-                    <p class="card-text">Miễn phí vận chuyển cho các đơn hàng trên toàn quốc, đảm bảo chất lượng khi đến tay khách hàng</p>
+                    <h3 class="card-title-3">Shipping Policy</h3>
+                    <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -190,7 +179,7 @@
             </div>
         </div>
     </div>
-  
+
     <section class="section_danhmucnoibat">
         <!-- Content for this section remains the same -->
     </section>
@@ -202,7 +191,8 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="path_to_default_avatar.jpg" alt="User" class="rounded-circle" width="50" height="50">
+                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                                height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
                             <div class="bg-light p-2 rounded">
@@ -223,7 +213,8 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="path_to_default_avatar.jpg" alt="User" class="rounded-circle" width="50" height="50">
+                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                                height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
                             <div class="bg-light p-2 rounded">
@@ -244,7 +235,8 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="path_to_default_avatar.jpg" alt="User" class="rounded-circle" width="50" height="50">
+                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                                height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
                             <div class="bg-light p-2 rounded">
@@ -314,7 +306,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script src="/src/main/resources/javascript/Homepage.js"></script>
-   
+
 </body>
 
 </html>
