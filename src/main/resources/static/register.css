@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+  background: white;
+}
+.nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 90px;
+  line-height: 100px;
+  background: #3c7363;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+.nav-logo p {
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+}
+.nav-menu ul {
+  display: flex;
+}
+.nav-menu ul li {
+  list-style-type: none;
+}
+.nav-menu ul li .link {
+  text-decoration: none;
+  font-weight: 500;
+  color: #fff;
+  padding-bottom: 15px;
+  margin: 0 25px;
+}
+.link:hover,
+.active {
+  border-bottom: 2px solid #fff;
+}
+.nav-button .btn {
+  width: 130px;
+  height: 40px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+#registerBtn {
+  margin-left: 15px;
+}
+.btn.white-btn {
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+}
+.btn.btn.white-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.nav-menu-btn {
+  display: none;
+}
+.form-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 700px;
+  overflow: hidden;
+  z-index: 2;
+}
+/* Register Section */
+.register-container {
+  position: absolute;
+  right: 0;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.5s ease-in-out;
+  margin-top: 30px;
+}
+
+.top span {
+  color: black;
+  font-size: small;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+}
+.top span a {
+  font-weight: 500;
+  color: black;
+  margin-left: 5px;
+}
+
+header {
+  color: black;
+  font-size: 40px;
+  text-align: center;
+  padding: 10px 0 30px 0;
+}
+
+.input-field {
+  font-size: 18px;
+  background: rgba(138, 133, 133, 0.2);
+  color: black;
+  height: 50px;
+  width: 100%;
+  padding: 0 10px 0 45px;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.input-field:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid #3c7363;
+}
+
+.input-field:focus {
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid #3c7363;
+}
+
+::-webkit-input-placeholder {
+  color: black;
+}
+.input-box i {
+  position: relative;
+  top: -35px;
+  left: 17px;
+  color: black;
+}
+.submit {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  height: 60px;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  background: #3c7363;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.submit:hover {
+  background: #529f89;
+  box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+.two-col {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  font-size: small;
+  margin-top: 10px;
+}
+.two-col .one {
+  display: flex;
+  gap: 5px;
+}
+.two label a {
+  text-decoration: none;
+  color: black;
+  font-size: 13px;
+}
+.two label a:hover {
+  text-decoration: underline;
+}
