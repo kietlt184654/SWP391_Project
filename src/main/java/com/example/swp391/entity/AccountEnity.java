@@ -19,7 +19,7 @@ public class AccountEnity {
     private int accountId;
 
     private String password;
-    private String accountType;
+    private String accountTypeID;
     private String accountName;
     private String email;
     private String phoneNumber;

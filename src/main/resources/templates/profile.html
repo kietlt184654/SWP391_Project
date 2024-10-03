@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="profile.css" />
+    <title>Profile page</title>
+  </head>
+
+  <body>
+    <div class="nav">
+      <!-- Hamburger button -->
+      <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
+      </div>
+
+      <!-- Logo -->
+      <div class="nav-logo">
+        <p>LOGO</p>
+      </div>
+
+      <!-- Nav Menu -->
+      <div class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="#" class="link">Home</a></li>
+          <li><a href="#" class="link">About</a></li>
+          <li><a href="#" class="link">Blog</a></li>
+          <li><a href="#" class="link">Services</a></li>
+          <li><a href="#" class="link">Product</a></li>
+          <li>
+            <a href="#" class="icon">
+              <i class="fas fa-user-circle"></i>
+            </a>
+          </li>
+          <a href="#" class="icon">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-history"></i> History Order</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="profile-container">
+      <h2>Profile</h2>
+      <div class="profile-content">
+        <!-- Left Section: Avatar and Social Media Links -->
+        <div class="profile-left">
+          <div class="avatar">
+            <img src="avatar.png" alt="Avatar" />
+            <div>
+              <label for="upload">Upload Picture</label>
+              <input type="file" id="upload" style="display: none" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Section: User Information Form -->
+        <div class="profile-right">
+          <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" value="qnhu490" readonly />
+
+            <label for="phone-number">Phone number:</label>
+            <input
+              type="phone-number"
+              id="phone-number"
+              value="0972423242"
+              readonly
+            />
+
+            <label for="email">E-mail:</label>
+            <input
+              type="email"
+              id="email"
+              value="nnquynhnhu49@gmail.com"
+              readonly
+            />
+            <label for="address">Address:</label>
+            <input type="address" id="address" readonly />
+            <label for="password">Password:</label>
+            <input type="password" id="password" value="123" readonly />
+
+            <label for="repeat-password">Repeat Password:</label>
+            <input type="password" id="repeat-password" value="123" readonly />
+
+            <button type="submit">Edit Information</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+      });
+    </script>
+  </body>
+</html>
