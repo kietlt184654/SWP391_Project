@@ -27,7 +27,7 @@ public class AccountService {
     }
 
     public boolean checkExistingEmail(String accountEmail) {
-        return accountRepository.findByAccountEmail(accountEmail) != null;
+        return accountRepository.findByEmail(accountEmail) != null;
     }
 
     public AccountEnity findByAccountId(int AccountId) {

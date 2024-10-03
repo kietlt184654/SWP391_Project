@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,12 +12,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="/css/login.css" />
     <title>Login</title>
   </head>
   <body>
     <div class="wrapper">
-      <nav class="nav">
+      <nav class="nav" th:fragment="nav">
         <div class="nav-logo">
           <p>LOGO</p>
         </div>
@@ -32,7 +32,7 @@
         </div>
         <div class="nav-button">
           <button class="btn white-btn">Sign In</button>
-          <a href="register.html"><button class="btn">Sign Up</button></a>
+          <a th:href="@{/register}"><button class="btn">Sign Up</button></a>
         </div>
         <div class="nav-menu-btn">
           <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -44,7 +44,7 @@
         <div class="login-container" id="login">
           <div class="top">
             <span
-              >Don't have an account? <a href="register.html">Sign Up</a></span
+              >Don't have an account? <a th:href="@{/register}">Sign Up</a></span
             >
             <header>Login</header>
           </div>
