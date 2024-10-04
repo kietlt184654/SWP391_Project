@@ -7,15 +7,16 @@
     <title>Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/src/main/resources/static/Homepage.css">
+
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
-<nav class="nav">
+<nav class="nav" th:fragment="nav">
     <div class="nav-logo">
       <p>LOGO</p>
     </div>
     <div class="nav-menu" id="navMenu">
-      <ul >
+      <ul>
         <li><a href="http://127.0.0.1:5500/src/main/resources/templates/Homepage.html" class="link">Home</a></li>
         <li><a href="#" class="link">About</a></li>
         <li><a href="#" class="link">Blog</a></li>
@@ -30,12 +31,15 @@
       </ul>
     </div>
     <div class="nav-button">
+        <form th:action="@{/}" method="post">
       <button class="btn white-btn" id="loginBtn" onclick="login()">
         <a href="http://127.0.0.1:5501/src/main/resources/templates/login.html">Login</a>
       </button>
+        </form>
       <button class="btn" id="registerBtn" onclick="register()">
         Sign Up
       </button>
+        </form>
     </div>
     <div class="nav-menu-btn">
       <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -49,22 +53,22 @@
         <div class="slideshow-container">
             <div class="mySlides fade">
                 <div class="numbertext">1 / 4</div>
-                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 1" style="width:100%">
+                <img src="/img/hokoi.jpg" alt="Slide 1" style="width:100%">
                 <div class="text">Chú thích cho ảnh 1</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">2 / 4</div>
-                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 2" style="width:100%">
+                <img src="/img/hokoi.jpg" alt="Slide 2" style="width:100%">
                 <div class="text">Chú thích cho ảnh 2</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">3 / 4</div>
-                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 3" style="width:100%">
+                <img src="/img/hokoi.jpg" alt="Slide 3" style="width:100%">
                 <div class="text">Chú thích cho ảnh 3</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">4 / 4</div>
-                <img src="/src/main/resources/img/hokoi.jpg" alt="Slide 4" style="width:100%">
+                <img src="/img/hokoi.jpg" alt="Slide 4" style="width:100%">
                 <div class="text">Chú thích cho ảnh 4</div>
             </div>
         </div>
@@ -106,7 +110,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6 mb-4">
                     <div class="project-card">
-                        <img src="/src/main/resources/img/ho_koi.jpg" alt="Project 1">
+                        <img src="/img/ho_koi.jpg" alt="Project 1">
                         <div class="project-overlay">
                             <h3 class="project-title">Koi Pond Design</h3>
                         </div>
@@ -115,7 +119,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 mb-4">
                     <div class="project-card">
-                        <img src="/src/main/resources/img/ho_koi.jpg" alt="Project 2">
+                        <img src="/img/ho_koi.jpg" alt="Project 2">
                         <div class="project-overlay">
                             <h3 class="project-title">Japanese Garden</h3>
                         </div>
@@ -124,7 +128,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 mb-4">
                     <div class="project-card">
-                        <img src="/src/main/resources/img/ho_koi.jpg" alt="Project 3">
+                        <img src="/img/ho_koi.jpg" alt="Project 3">
                         <div class="project-overlay">
                             <h3 class="project-title">Waterfall Feature</h3>
                         </div>
@@ -133,7 +137,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 mb-4">
                     <div class="project-card">
-                        <img src="/src/main/resources/img/ho_koi.jpg" alt="Project 4">
+                        <img src="/img/ho_koi.jpg" alt="Project 4">
                         <div class="project-overlay">
                             <h3 class="project-title">Zen Garden</h3>
                         </div>
@@ -148,7 +152,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
             <div class="card h-100">
-                <img src="/src/main/resources/img/refund.jpg" class="card-img-top" alt="refund">
+                <img src="/img/refund.jpg" class="card-img-top" alt="refund">
                 <div class="card-body">
                     <h3 class="card-title-1">Return Policy</h3>
                     <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
@@ -160,7 +164,7 @@
         </div>
         <div class="col">
             <div class="card h-100">
-                <img src="/src/main/resources/img/goodservice.jpg" class="card-img-top" alt="Service">
+                <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
                 <div class="card-body">
                     <h3 class="card-title-2">Professional Team</h3>
                     <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
@@ -172,7 +176,7 @@
         </div>
         <div class="col">
             <div class="card h-100">
-                <img src="/src/main/resources/img/ship1.jpg" class="card-img-top" alt="shipping">
+                <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
                 <div class="card-body">
                     <h3 class="card-title-3">Shipping Policy</h3>
                     <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
@@ -195,7 +199,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
                                 height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -217,7 +221,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
                                 height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -239,7 +243,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="/src/main/resources/img/user.jpg  " alt="User" class="rounded-circle" width="50"
+                            <img src="/src/main/resources/img/user.jpg" alt="User" class="rounded-circle" width="50"
                                 height="50">
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -306,10 +310,10 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    <script src="/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="/src/main/resources/javascript/Homepage.js"></script>
+    <script src="/javascript/Homepage.js"></script>
 
 </body>
 
