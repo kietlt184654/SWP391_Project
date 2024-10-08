@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
     </div>
     <div class="nav-menu" id="navMenu">
       <ul>
-        <li><a href="/templates/Homepage.html" class="link">Home</a></li>
+        <li><a th:href="@{/}" class="link">Home</a></li>
         <li><a href="#" class="link">About</a></li>
         <li><a href="#" class="link">Blog</a></li>
         <li>
@@ -32,11 +32,12 @@
       </ul>
     </div>
     <div class="nav-button">
-        <form th:action="@{/}" method="post">
+        <form th:action="@{/login}" method="GET">
       <button class="btn white-btn" id="loginBtn" onclick="login()">
-        <a href="/templates/login.html" style="text-decoration: none; color:black;">Login</a>
+      Login
       </button>
         </form>
+        <form th:action="@{/register}" method="GET">
       <button class="btn" id="registerBtn" onclick="register()">
         Sign Up
       </button>
@@ -85,7 +86,7 @@
             <span class="dot"></span>
         </div>
     </div>
-    <br>
+
     <section class="awe-section-2">
         <div class="section_about">
             <div class="container">
@@ -109,7 +110,6 @@
             </div>
         </div>
     </section>
-    <br>
     <section class="projects-section">
         <div class="container">
             <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our Projects</h2>
@@ -138,7 +138,7 @@
                         <div class="project-overlay">
                             <h3 class="project-title">Waterfall Feature</h3>
                         </div>
-                        <a href="/src/main/resources/static/project/waterfall-feature" class="stretched-link"></a>
+                        <a href="/project/waterfall-feature" class="stretched-link"></a>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-4">
@@ -193,6 +193,10 @@
             </div>
         </div>
     </div>
+
+    <section class="section_danhmucnoibat">
+        <!-- Content for this section remains the same -->
+    </section>
 
     <section class="rating-feedback">
         <div class="container">

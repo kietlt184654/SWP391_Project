@@ -14,7 +14,7 @@ public class DesignEnity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int designId;
+    private String designId;
 
     private String designName;
 
