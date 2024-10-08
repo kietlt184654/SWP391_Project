@@ -8,12 +8,11 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="/css/login.css" />
     <title>Login</title>
   </head>
   <body>
@@ -24,7 +23,7 @@
         </div>
         <div class="nav-menu" id="navMenu">
           <ul>
-            <li><a href="http://127.0.0.1:5501/src/main/resources/template/Homepage.html" class="link">Home</a></li>
+            <li><a href="#" class="link">Home</a></li>
             <li><a href="#" class="link">About</a></li>
             <li><a href="#" class="link">Blog</a></li>
             <li><a href="#" class="link">Services</a></li>
@@ -33,41 +32,43 @@
         </div>
         <div class="nav-button">
           <button class="btn white-btn">Sign In</button>
-          <a href="register.html"><button class="btn">Sign Up</button></a>
+          <a th:href="@{/register}"><button class="btn">Sign Up</button></a>
         </div>
         <div class="nav-menu-btn">
           <i class="bx bx-menu" onclick="myMenuFunction()"></i>
         </div>
       </nav>
 
-      <!----------------------------- Form box ----------------------------------->
+      <!------------------- login form -------------------------->
+      <form method="post" th:action="@{/account/login}">
       <div class="form-box">
-        <!------------------- login form -------------------------->
-
         <div class="login-container" id="login">
           <div class="top">
             <span
-              >Don't have an account? <a href="register.html">Sign Up</a></span
+              >Don't have an account? <a th:href="@{/register}">Sign Up</a></span
             >
             <header>Login</header>
           </div>
+          <div th:if="${errorAccount != null}" class="error-message" style="color:red;">
+            <p th:text="${errorAccount}"></p>
+          </div>
           <div class="input-box">
             <input
+              name="accountName"
               type="text"
               class="input-field"
-              placeholder="Username or Email"
+              placeholder="Username"
             />
             <i class="bx bx-user"></i>
           </div>
           <div class="input-box">
-            <input type="password" class="input-field" placeholder="Password" />
+
+            <input name="password" type="password" class="input-field" placeholder="Password" />
             <i class="bx bx-lock-alt"></i>
           </div>
-
           <div class="input-box">
             <input type="submit" class="submit" value="Sign In" />
           </div>
-
           <div class="btn-social">
             <div class="btn-google">
               <i class="fab fa-google"></i> Sign in with Google
@@ -76,7 +77,6 @@
               <i class="fab fa-facebook-f"></i> Sign in with Facebook
             </div>
           </div>
-
           <div class="two-col">
             <div class="one">
               <input type="checkbox" id="login-check" />
@@ -87,79 +87,18 @@
             </div>
           </div>
         </div>
-
-        <!------------------- registration form -------------------------->
-        <div class="register-container" id="register">
-          <div class="top">
-            <span
-              >Have an account? <a href="#" onclick="login()">Login</a></span
-            >
-            <header>Sign Up</header>
-          </div>
-
-          <div class="input-box">
-            <input type="text" class="input-field" placeholder="Firstname" />
-            <i class="bx bx-user"></i>
-          </div>
-
-          <div class="input-box">
-            <input type="text" class="input-field" placeholder="Email" />
-            <i class="bx bx-envelope"></i>
-          </div>
-          <div class="input-box">
-            <input type="password" class="input-field" placeholder="Password" />
-            <i class="bx bx-lock-alt"></i>
-          </div>
-          <div class="input-box">
-            <input type="submit" class="submit" value="Register" />
-          </div>
-          <div class="two-col">
-            <div class="one">
-              <input type="checkbox" id="register-check" />
-              <label for="register-check"> Remember Me</label>
-            </div>
-            <div class="two">
-              <label><a href="#">Terms & conditions</a></label>
-            </div>
-          </div>
-        </div>
       </div>
+      </form>
     </div>
 
     <script>
       function myMenuFunction() {
         var i = document.getElementById("navMenu");
-
         if (i.className === "nav-menu") {
           i.className += " responsive";
         } else {
           i.className = "nav-menu";
         }
-      }
-    </script>
-
-    <script>
-      var a = document.getElementById("loginBtn");
-      var b = document.getElementById("registerBtn");
-      var x = document.getElementById("login");
-      var y = document.getElementById("register");
-
-      function login() {
-        x.style.left = "4px";
-        y.style.right = "-520px";
-        a.className += " white-btn";
-        b.className = "btn";
-        x.style.opacity = 1;
-        y.style.opacity = 0;
-      }
-
-      function register() {
-        x.style.left = "-510px";
-        y.style.right = "5px";
-        a.className = "btn";
-        b.className += " white-btn";
-        x.style.opacity = 0;
-        y.style.opacity = 1;
       }
     </script>
   </body>
