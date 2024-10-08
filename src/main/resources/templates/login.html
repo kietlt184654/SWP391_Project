@@ -40,6 +40,7 @@
       </nav>
 
       <!------------------- login form -------------------------->
+      <form method="post" th:action="@{/account/login}">
       <div class="form-box">
         <div class="login-container" id="login">
           <div class="top">
@@ -48,18 +49,25 @@
             >
             <header>Login</header>
           </div>
+          <div th:if="${errorAccount != null}" class="error-message" style="color:red;">
+            <p th:text="${errorAccount}"></p>
+          </div>
           <div class="input-box">
             <input
+              name="accountName"
               type="text"
               class="input-field"
-              placeholder="Username or Email"
+              placeholder="Username"
             />
             <i class="bx bx-user"></i>
           </div>
+
           <div class="input-box">
-            <input type="password" class="input-field" placeholder="Password" />
+
+            <input name="password" type="password" class="input-field" placeholder="Password" />
             <i class="bx bx-lock-alt"></i>
           </div>
+
           <div class="input-box">
             <input type="submit" class="submit" value="Sign In" />
           </div>
@@ -82,6 +90,7 @@
           </div>
         </div>
       </div>
+      </form>
     </div>
 
     <script>

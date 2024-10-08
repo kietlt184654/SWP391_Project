@@ -16,18 +16,32 @@ public class AccountEnity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "AccountID")
     private int accountId;
-
+    @Column(name = "Password")
     private String password;
-    private String accountTypeID;
+
+    // Đảm bảo rằng accountTypeID là Integer
+    @Column(name = "AccountTypeID")
+    private Integer accountTypeID;
+
+    @Column(name = "AccountName")
     private String accountName;
+
+    @Column(name = "Email")
     private String email;
+
+    @Column(name = "PhoneNumber")
     private String phoneNumber;
+
+    @Column(name = "Address")
     private String address;
 
-    @Lob
-    private byte[] images;
 
-    private String status;
+    @Lob
+    @Column(name = "Images")
+    private byte[] images;
+//    @Column(name = "AccountName")
+//    private String status;
 }
 

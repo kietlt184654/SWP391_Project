@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Swp391Application {
 
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(Swp391Application.class, args);
     }
