@@ -1,30 +1,19 @@
 package com.example.swp391.service;
 
-import com.example.swp391.entity.AccountEnity;
+import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-//    public AccountEnity userLogin(String accountName, String password) {
-//        AccountEnity account = accountRepository.findByAccountNameAndPassword(accountName, password);
-//        if (account != null && account.getPassword().equals(password)) {
-//            return account;
-//        }
-//        return null;
-//    }
-public AccountEnity userLogin(String accountName, String password) {
-    AccountEnity account = accountRepository.findByAccountName(accountName);
-    if (account != null && account.getPassword().equals(password)) {
-        return account;
-    }
-    return null;
+
+public AccountEntity login(String accountName, String password) {
+   return accountRepository.findByAccountNameAndPassword(accountName, password);
+
 }
 
 
