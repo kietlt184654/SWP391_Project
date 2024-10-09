@@ -15,62 +15,22 @@ public AccountEntity login(String accountName, String password) {
    return accountRepository.findByAccountNameAndPassword(accountName, password);
 
 }
+    public boolean checkIfAccountNameExists(String username) {
+        return accountRepository.findByAccountName(username) != null;
+    }
+
+    public boolean checkIfEmailExists(String email) {
+        return accountRepository.findByEmail(email) != null;
+    }
+    public void registerUser(AccountEntity userDTO) {
+        userDTO.setAccountId(accountRepository.findTopByOrderByAccountIdDesc().getAccountId()+1);
+        userDTO.setAccountTypeID(2);
+        userDTO.setStatus(true);
+        accountRepository.save(userDTO);
+    }
 
 
-//    public AccountEnity findAccountByTypeID(Integer accountTypeID) {
-//        return accountRepository.findByAccountTypeID(accountTypeID);
-//    }
 
 
-//    public AccountEnity registerAccount(AccountEnity account) {
-//        return accountRepository.save(account);
-//    }
-//
-//    public boolean checkExistingAccount(String accountName) {
-//        return accountRepository.findByAccountName(accountName) != null;
-//    }
-//
-//    public boolean checkExistingEmail(String accountEmail) {
-//        return accountRepository.findByEmail(accountEmail) != null;
-//    }
-//
-//    public AccountEnity findByAccountId(int AccountId) {
-//        return accountRepository.findByAccountId(AccountId)
-//                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
-//    }
-//
-//
-//    public void updateProfile(AccountEnity updateAccount, String currentPassword, String newPassword, String confirmPassword,String accountName) throws Exception {
-//        AccountEnity existingAccount = findByAccountId(updateAccount.getAccountId());
-//        if (existingAccount.getPassword().equals(currentPassword)) {
-//            throw new Exception("Current password doesn't match");
-//        }
-//        if (!newPassword.isEmpty() && newPassword != null) {
-//            if (!newPassword.equals(confirmPassword)) {
-//
-//                throw new Exception("New password don't match with confirm password");
-//            }
-//            existingAccount.setPassword(newPassword);
-//        }
-//if (existingAccount.getPassword().equals(newPassword)&&existingAccount.getAccountName().equals(accountName)) {
-//    throw  new Exception("Please Change Password or account name");
-//}
-//        existingAccount.setAccountName(updateAccount.getAccountName());
-//        existingAccount.setEmail(updateAccount.getEmail());
-//        existingAccount.setPhoneNumber(updateAccount.getPhoneNumber());
-//        existingAccount.setAddress(updateAccount.getAddress());
-//        accountRepository.save(existingAccount);
-//
-//    }
-//public void deleteAccount(int AccountId) throws Exception {
-//        if(accountRepository.existsById(AccountId)) {
-//            accountRepository.deleteById(AccountId);
-//        }else {
-//            throw new Exception("Account Not Found");
-//        }
-//}
-//public List<AccountEnity> showAllAccounts() {
-//       return accountRepository.findAll();
-//}
 
 }

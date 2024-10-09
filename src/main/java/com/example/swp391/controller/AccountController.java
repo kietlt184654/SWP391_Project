@@ -3,6 +3,7 @@ package com.example.swp391.controller;
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.service.AccountService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,25 @@ public class AccountController {
 
 
 
+    }
+    @PostMapping("/register")
+public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
+        if (accountService.checkIfEmailExists(userDTO.getEmail())) {
+            model.addAttribute("emailError", "Email đã được sử dụng");
+            return "register";
+        }
+        // Kiểm tra username đã tồn tại
+        if (accountService.checkIfAccountNameExists(userDTO.getAccountName())) {
+            model.addAttribute("usernameError", "Tên người dùng đã tồn tại");
+            return "register";
+        }
+        AccountEntity account = new AccountEntity();
+        account.setAccountName(userDTO.getAccountName());
+        account.setPassword(userDTO.getPassword());
+        account.setEmail(userDTO.getEmail());
+
+        accountService.registerUser(account);
+        return "login";
     }
 
 
