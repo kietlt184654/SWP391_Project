@@ -6,8 +6,8 @@
 }
 
 body {
-  background: url("images/1.jpg") no-repeat center center fixed;
-  background-size: cover;
+  margin-top: 20px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,7 +144,7 @@ body {
 
 .dropdown-menu li a:hover {
   background-color: white;
-  color: #036d2f;
+  color: #3c7363;
 }
 
 /* Sidebar */
@@ -214,111 +214,6 @@ body {
   color: #333;
 }
 
-/* Profile Container */
-.container {
-  margin-right: 10px;
-  margin-top: 100px;
-  background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 800px;
-  width: 100%;
-  transition: margin-left 0.3s ease;
-  max-height: 800px;
-}
-
-.avatar-upload {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.avatar img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  object-fit: cover;
-  border: 2px solid #ccc;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.avatar label {
-  cursor: pointer;
-  color: #3c7363;
-  margin-left: 10px;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #294e3e;
-}
-
-.profile-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.form-group {
-  width: 100%;
-}
-
-label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 5px;
-  color: #294e3e;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.cancel-btn,
-.save-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.cancel-btn {
-  background-color: #fb8f23;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.save-btn {
-  background-color: #3c7363;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #d97b1d;
-}
-
-.save-btn:hover {
-  background-color: rgb(65, 131, 68);
-}
-
 /* Button in Navbar */
 .nav-button .btn {
   font-size: 24px;
@@ -334,71 +229,118 @@ input {
   color: #f4f4f4;
 }
 
-/* Footer */
-.footer h4 {
+/* Container */
+
+.breadcrumb {
+  background-color: transparent;
+  margin-top: 50px;
+  font-size: 15px;
+}
+
+.service-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  width: 300px;
+  text-align: center;
   margin-bottom: 20px;
 }
-.footer p {
-  margin-bottom: 10px;
+
+.service-header {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
-.footer ul li {
-  margin-bottom: 10px;
+
+.service-header h1 {
+  font-size: 24px;
+  font-weight: bold;
 }
+
+.service-list {
+  list-style: none;
+  padding: 20px 0;
+}
+
+.service-list li {
+  padding: 10px 0;
+}
+
+.service-link {
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  padding: 10px 0;
+}
+
+.service-link:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.highlighted {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+/* -----------------------------FOOTER-----------------------------*/
 .footer {
   background-color: #3c7363;
-  color: white;
-  padding: 10px;
+  padding: 20px;
+  border-top: 1px solid #ccc;
   width: 100%;
-  position: relative;
-  bottom: 0;
-  margin-top: 20px;
+  box-sizing: border-box;
 }
 
 .footer-container {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  align-items: flex-start;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .footer-info,
 .footer-services,
-.footer-contact,
-.footer-map {
+.footer-contact {
   flex: 1;
-  margin: 10px;
-}
-
-.footer-map img {
-  width: 100%;
-
-  border: 0;
-}
-.footer-contact p {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.footer-contact i {
-  margin-right: 8px;
-  font-size: 1.2em;
-}
-.footer-contact a {
+  padding: 10px;
+  min-width: 200px;
   color: white;
 }
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .nav-menu ul {
-    display: none;
-  }
 
-  .container {
-    margin: 80px 10px;
-  }
+.footer-services h4,
+.footer-contact h4 {
+  margin-bottom: 10px;
+}
 
-  #sidebar {
-    width: 200px;
-  }
+.footer-services ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-services li {
+  margin: 5px 0;
+}
+
+.service-item {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.service-item:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.footer-contact {
+  text-align: left;
+}
+.footer-container h4 {
+  text-align: left;
+}
+.footer-container h4 {
+  text-decoration: underline;
 }

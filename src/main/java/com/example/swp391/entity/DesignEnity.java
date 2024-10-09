@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "design") // Bảng trong cơ sở dữ liệu, đảm bảo tên đúng với bảng
+@Table(name = "Design")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

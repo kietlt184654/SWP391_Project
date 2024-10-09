@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="designService.js" defer></script>
+    <link rel="stylesheet" href="designService.css>
+    <title>Design service</title>
+  </head>
+  <body>
+    <!-------------------- HEADER-------------------->
+    <div class="nav">
+      <!-- Hamburger button -->
+      <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
+      </div>
+
+      <!-- Logo -->
+      <div class="nav-logo">
+        <p>LOGO</p>
+      </div>
+
+      <!-- Nav Menu -->
+      <div class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="#" class="link">Home</a></li>
+          <li><a href="#" class="link">About</a></li>
+          <li><a href="#" class="link">Blog</a></li>
+          <li><a href="#" class="link">Services</a></li>
+          <li><a href="#" class="link">Product</a></li>
+
+          <!-- Cart -->
+          <li>
+            <a href="#" class="icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="notification-badge">0</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="icon" id="accountIcon">
+              <i class="fas fa-user-circle"></i>Username
+              <i class="fas fa-caret-down"></i>
+            </a>
+
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--  content -->
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="product.html">Services</a></li>
+        <li class="active">Design service</li>
+      </ol>
+      <div class="col-md-4 service-container">
+        <div class="service-header">
+          <h1>Services</h1>
+        </div>
+        <ul class="service-list">
+          <li>
+            <a href="Design service.html" class="service-link"
+              >Design upon requirement</a
+            >
+          </li>
+          <li>
+            <a href=".html" class="service-link">Clear and maintenance pond</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6 design-content">
+        <div class="design">
+          <h3>Design upon requirement</h3>
+          <p>
+            A Koi pond is not just a striking visual feature for your living
+            space, but also brings peace and harmony through its integration
+            with natural elements, enhancing the overall feng shui of your home.
+            With a perfect blend of architectural artistry and a keen eye for
+            natural beauty, we offer unique Koi pond designs that suit every
+            style, from traditional to modern.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------------------------------------------------------------------------------------------------- -->
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-history"></i> History Order</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
+    <div class="footer">
+      <div class="footer-container">
+        <div class="footer-info">
+          <h4>Information</h4>
+          <p>Open: 8 AM - 10 PM</p>
+          <p>
+            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+            Minh
+          </p>
+        </div>
+        <div class="footer-services">
+          <h4>Services</h4>
+          <ul>
+            <li>
+              <a href="link-to-construction" class="service-item"
+                >Construction Koi pond</a
+              >
+            </li>
+            <li>
+              <a href="link-to-cleaning" class="service-item"
+                >Cleaning and maintenance</a
+              >
+            </li>
+            <li>
+              <a href="link-to-design" class="service-item"
+                >Design upon requirements</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+          <p>
+            <i class="fa-brands fa-facebook"></i>
+            <a href="https://facebook.com" target="_blank">Visit Us</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
