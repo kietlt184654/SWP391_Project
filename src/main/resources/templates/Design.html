@@ -84,14 +84,17 @@
                         <form>
                             <div class="mb-3">
                                 <label for="designType" class="form-label">Design Type</label>
-                                <select class="form-select" id="designType" required>
+                                <select class="form-select" id="designType" required onchange="showImage()">
                                     <option value="">Choose...</option>
-                                    <option>Architectural Design</option>
-                                    <option>Landscape Design</option>
-                                    <option>Garden House Design</option>
-                                    <option>Garden Design</option>
-                                    <option>Koi Pond Design</option>
+                                    <option value="Architectural Design">Architectural Design</option>
+                                    <option value="Landscape Design">Landscape Design</option>
+                                    <option value="Garden House Design">Garden House Design</option>
+                                    <option value="Garden Design">Garden Design</option>
+                                    <option value="Koi Pond Design">Koi Pond Design</option>
                                 </select>
+                            </div>
+                            <div class="mb-3" id="imageDiv" style="display: none;">
+                                <img id="designImage" src="" alt="Design Image" style="max-width: 100%; height: auto;">
                             </div>
                             <div class="mb-3">
                                 <label for="designDescription" class="form-label">Design Description</label>
@@ -107,6 +110,19 @@
                 </div>
             </div>
         </div>
+        <script>
+            function showImage() {
+                var designType = document.getElementById('designType').value;
+                var imageDiv = document.getElementById('imageDiv');
+                var designImage = document.getElementById('designImage');
+                if (designType != "") {
+                    imageDiv.style.display = "block";
+                    designImage.src = "/src/main/resources/img" + designType + "hokoi.jpg";
+                } else {
+                    imageDiv.style.display = "none";
+                }
+            }
+        </script>
 
         <footer class="footer">
             <div class="container">
