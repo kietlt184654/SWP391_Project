@@ -28,6 +28,10 @@ public AccountEntity login(String accountName, String password) {
         userDTO.setStatus(true);
         accountRepository.save(userDTO);
     }
+    public AccountEntity findByEmail(String email) {
+    return accountRepository.findByEmail(email);
+    }
+
 
 
 

@@ -17,4 +17,8 @@ public class ScreenController {
     public String showRegisterPage() {
         return "register";
     }
+    @GetMapping("/profile")
+    public String showProfilePage(Model model) {
+        return "profile";
+    }
 }
