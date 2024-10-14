@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.container {
+    padding: 20px;
+}
+
+.product-card {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    background-color: white;
+    transition: box-shadow 0.3s;
+}
+.product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.card-img-top{
+    width: 90%;
+    height: 70%;
+    margin: 0 auto;
+    border-radius: 40px;
+    background-color: #f0f0f0;
+    margin-top: 20.5px;
+}

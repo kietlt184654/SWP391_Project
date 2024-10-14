@@ -14,312 +14,313 @@
 </head>
 <nav class="nav" th:fragment="nav">
     <div class="nav-logo">
-      <p>LOGO</p>
+        <p>LOGO</p>
     </div>
     <div class="nav-menu" id="navMenu">
-      <ul>
-        <li><a th:href="@{/}" class="link">Home</a></li>
-        <li><a href="#" class="link">About</a></li>
-        <li><a href="#" class="link">Blog</a></li>
-        <li>
-            <a href="#" class="link">Services</a>
-            <ul>
-                <li><a href="/templates/Design.html">Desing Koi Pond</a></li>
-                <li><a href="#">Koi Pond Service</a></li>
-            </ul>
-        </li>
-        <li><a href="#" class="link">Product</a></li>
-      </ul>
+        <ul>
+            <li><a th:href="@{/}" class="link">Home</a></li>
+            <li><a href="#" class="link">About</a></li>
+            <li><a href="#" class="link">Blog</a></li>
+            <li>
+                <a href="#" class="link">Services</a>
+                <ul>
+                    <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
+                    <li><a th:href="@{/services}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
+                </ul>
+
+            </li>
+            <li><a href="#" class="link">Product</a></li>
+        </ul>
     </div>
     <div class="nav-button">
         <form th:action="@{/login}" method="GET">
-      <button class="btn white-btn" id="loginBtn" onclick="login()">
-      Login
-      </button>
+            <button class="btn white-btn" id="loginBtn" onclick="login()">
+                Login
+            </button>
         </form>
         <form th:action="@{/register}" method="GET">
-      <button class="btn" id="registerBtn" onclick="register()">
-        Sign Up
-      </button>
+            <button class="btn" id="registerBtn" onclick="register()">
+                Sign Up
+            </button>
         </form>
     </div>
     <div class="nav-menu-btn">
-      <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        <i class="bx bx-menu" onclick="myMenuFunction()"></i>
     </div>
-  </nav>
+</nav>
 
 <body>
-    <div class="search-container">
-        <input type="text" placeholder="Search...">
-        <a href="">
-            <li class="fas fa-search "></li>
-        </a>
-    </div>
+<div class="search-container">
+    <input type="text" placeholder="Search...">
+    <a href="">
+        <li class="fas fa-search "></li>
+    </a>
+</div>
 
-    <div class="body-content">
-        <div class="slideshow-container">
-            <div class="mySlides fade">
-                <div class="numbertext">1 / 4</div>
-                <img src="/img/hokoi.jpg" alt="Slide 1" style="width:100%">
-                <div class="text">Chú thích cho ảnh 1</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">2 / 4</div>
-                <img src="/img/hokoi.jpg" alt="Slide 2" style="width:100%">
-                <div class="text">Chú thích cho ảnh 2</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">3 / 4</div>
-                <img src="/img/hokoi.jpg" alt="Slide 3" style="width:100%">
-                <div class="text">Chú thích cho ảnh 3</div>
-            </div>
-            <div class="mySlides fade">
-                <div class="numbertext">4 / 4</div>
-                <img src="/img/hokoi.jpg" alt="Slide 4" style="width:100%">
-                <div class="text">Chú thích cho ảnh 4</div>
-            </div>
+<div class="body-content">
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 1" style="width:100%">
+            <div class="text">Chú thích cho ảnh 1</div>
         </div>
-        <div style="text-align:center">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 2" style="width:100%">
+            <div class="text">Chú thích cho ảnh 2</div>
+        </div>
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 3" style="width:100%">
+            <div class="text">Chú thích cho ảnh 3</div>
+        </div>
+        <div class="mySlides fade">
+            <div class="numbertext">4 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 4" style="width:100%">
+            <div class="text">Chú thích cho ảnh 4</div>
         </div>
     </div>
+    <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
 
-    <section class="awe-section-2">
-        <div class="section_about">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <img class="img-fluid" src="path/to/company-image.jpg" alt="Our company">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <h2 class="title_module">Our company</h2>
-                        <div class="about_desc">
-                            Our company is specialized in designing and constructing high-end koi ponds,
-                            gardens, and landscaping projects. With over 10 years of experience, we are
-                            committed to creating beautiful and functional outdoor spaces. Our team of
-                            experts uses the latest techniques and high-quality materials to ensure that
-                            each project meets our clients' expectations. We pride ourselves on our attention
-                            to detail and our ability to bring our clients' visions to life.
-                        </div>
-                        <a href="/about-us" class="about_more" title="Learn more"><span>Learn more</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="projects-section">
+<section class="awe-section-2">
+    <div class="section_about">
         <div class="container">
-            <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our Projects</h2>
             <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/ho_koi.jpg" alt="Project 1">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Koi Pond Design</h3>
-                        </div>
-                        <a href="/project/koi-pond-design" class="stretched-link"></a>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <img class="img-fluid" src="path/to/company-image.jpg" alt="Our company">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h2 class="title_module">Our company</h2>
+                    <div class="about_desc">
+                        Our company is specialized in designing and constructing high-end koi ponds,
+                        gardens, and landscaping projects. With over 10 years of experience, we are
+                        committed to creating beautiful and functional outdoor spaces. Our team of
+                        experts uses the latest techniques and high-quality materials to ensure that
+                        each project meets our clients' expectations. We pride ourselves on our attention
+                        to detail and our ability to bring our clients' visions to life.
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/ho_koi.jpg" alt="Project 2">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Japanese Garden</h3>
-                        </div>
-                        <a href="/project/japanese-garden" class="stretched-link"></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/ho_koi.jpg" alt="Project 3">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Waterfall Feature</h3>
-                        </div>
-                        <a href="/project/waterfall-feature" class="stretched-link"></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/ho_koi.jpg" alt="Project 4">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Zen Garden</h3>
-                        </div>
-                        <a href="/project/zen-garden" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card h-100">
-                <img src="/img/refund.jpg" class="card-img-top" alt="refund">
-                <div class="card-body">
-                    <h3 class="card-title-1">Return Policy</h3>
-                    <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
-                <div class="card-body">
-                    <h3 class="card-title-2">Professional Team</h3>
-                    <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
-                <div class="card-body">
-                    <h3 class="card-title-3">Shipping Policy</h3>
-                    <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    <a href="/about-us" class="about_more" title="Learn more"><span>Learn more</span></a>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<section class="projects-section">
+    <div class="container">
+        <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our Projects</h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 1">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Koi Pond Design</h3>
+                    </div>
+                    <a href="/project/koi-pond-design" class="stretched-link"></a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 2">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Japanese Garden</h3>
+                    </div>
+                    <a href="/project/japanese-garden" class="stretched-link"></a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 3">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Waterfall Feature</h3>
+                    </div>
+                    <a href="/project/waterfall-feature" class="stretched-link"></a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 4">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Zen Garden</h3>
+                    </div>
+                    <a href="/project/zen-garden" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="section_danhmucnoibat">
-        <!-- Content for this section remains the same -->
-    </section>
 
-    <section class="rating-feedback">
-        <div class="container">
-            <h2 class="text-center mb-4">Rating and feedback</h2>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
-                                height="50">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <img src="/img/refund.jpg" class="card-img-top" alt="refund">
+            <div class="card-body">
+                <h3 class="card-title-1">Return Policy</h3>
+                <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
+            <div class="card-body">
+                <h3 class="card-title-2">Professional Team</h3>
+                <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
+            <div class="card-body">
+                <h3 class="card-title-3">Shipping Policy</h3>
+                <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section_danhmucnoibat">
+    <!-- Content for this section remains the same -->
+</section>
+
+<section class="rating-feedback">
+    <div class="container">
+        <h2 class="text-center mb-4">Rating and feedback</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                             height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-0">User feedback text goes here.</p>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="bg-light p-2 rounded">
-                                <p class="mb-0">User feedback text goes here.</p>
-                            </div>
-                            <div class="mt-1">
-                                <small class="text-muted">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                </small>
-                            </div>
+                        <div class="mt-1">
+                            <small class="text-muted">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                            </small>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
-                                height="50">
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                             height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-0">Another user feedback example.</p>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="bg-light p-2 rounded">
-                                <p class="mb-0">Another user feedback example.</p>
-                            </div>
-                            <div class="mt-1">
-                                <small class="text-muted">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </small>
-                            </div>
+                        <div class="mt-1">
+                            <small class="text-muted">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </small>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
-                                height="50">
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                             height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-0">Third user feedback goes here.</p>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="bg-light p-2 rounded">
-                                <p class="mb-0">Third user feedback goes here.</p>
-                            </div>
-                            <div class="mt-1">
-                                <small class="text-muted">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                </small>
-                            </div>
+                        <div class="mt-1">
+                            <small class="text-muted">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Our services</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                        <li><a href="#">Affiliate program</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Get help</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">Returns</a></li>
-                        <li><a href="#">Order status</a></li>
-                        <li><a href="#">Payment options</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Online shop</h4>
-                    <ul>
-                        <li><a href="#">Watch</a></li>
-                        <li><a href="#">Bag</a></li>
-                        <li><a href="#">Shoes</a></li>
-                        <li><a href="#">Dress</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Follow us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Our services</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Affiliate program</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Order status</a></li>
+                    <li><a href="#">Payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Online shop</h4>
+                <ul>
+                    <li><a href="#">Watch</a></li>
+                    <li><a href="#">Bag</a></li>
+                    <li><a href="#">Shoes</a></li>
+                    <li><a href="#">Dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="/js/bootstrap.bundle.min.js"
+<script src="/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="/javascript/Homepage.js"></script>
+<script src="/javascript/Homepage.js"></script>
 
 </body>
 

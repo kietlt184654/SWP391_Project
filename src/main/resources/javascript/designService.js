@@ -54,15 +54,10 @@ increaseBtn.addEventListener("click", () => {
   }
 });
 
-// Lấy tất cả các liên kết dịch vụ
 const links = document.querySelectorAll(".service-link");
-
-// Lấy URL của trang hiện tại
 const currentUrl = window.location.href;
-
-// Duyệt qua các liên kết và kiểm tra URL
 links.forEach((link) => {
   if (currentUrl.includes(link.getAttribute("href"))) {
-    link.classList.add("highlighted"); // Thêm lớp highlighted nếu URL khớp
+    link.classList.add("highlighted");
   }
 });
