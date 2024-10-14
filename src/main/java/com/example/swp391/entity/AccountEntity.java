@@ -31,7 +31,7 @@ public class AccountEntity {
 
     @Column(name = "PhoneNumber", nullable = false)  // Tên cột chính xác
     private String phoneNumber;
-
+    private String resetToken;
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
 

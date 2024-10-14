@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DesignEnity {
+public class DesignEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,10 +45,10 @@ public class DesignEnity {
 
     // Enum để giới hạn các giá trị cho Size và Status
     public enum Size {
-        SMALL, MEDIUM, LARGE
+        Small, Medium, Large
     }
 
     public enum Status {
-        AVAILABLE, UNAVAILABLE, PENDING
+        Available, Unavailable, Pending
     }
 }

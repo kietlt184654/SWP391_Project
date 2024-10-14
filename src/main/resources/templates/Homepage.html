@@ -24,9 +24,10 @@
         <li>
             <a href="#" class="link">Services</a>
             <ul>
-                <li><a href="/templates/Design.html">Desing Koi Pond</a></li>
-                <li><a href="#">Koi Pond Service</a></li>
+                <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
+                <li><a th:href="@{/services}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
             </ul>
+
         </li>
         <li><a href="#" class="link">Product</a></li>
       </ul>
@@ -36,7 +37,7 @@
       <button class="btn white-btn" id="loginBtn" onclick="login()">
       Login
       </button>
-        </form>
+                                                                            </form>
         <form th:action="@{/register}" method="GET">
       <button class="btn" id="registerBtn" onclick="register()">
         Sign Up

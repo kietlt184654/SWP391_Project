@@ -30,30 +30,31 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
-        if (accountService.checkIfEmailExists(userDTO.getEmail())&&userDTO.getEmail().matches("")) {
+    public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
+        // Kiểm tra email đã tồn tại
+        if (accountService.checkIfEmailExists(userDTO.getEmail())) {
             model.addAttribute("emailError", "Email đã được sử dụng");
             return "register";
         }
-        // Kiểm tra username đã tồn tại
+
+        // Kiểm tra tên người dùng đã tồn tại
         if (accountService.checkIfAccountNameExists(userDTO.getAccountName())) {
             model.addAttribute("usernameError", "Tên người dùng đã tồn tại");
             return "register";
         }
+
+        // Tạo tài khoản mới và lưu trực tiếp mật khẩu (không mã hóa)
         AccountEntity account = new AccountEntity();
         account.setAccountName(userDTO.getAccountName());
-        account.setPassword(userDTO.getPassword());
+        account.setPassword(userDTO.getPassword()); // Lưu trực tiếp mật khẩu không mã hóa
         account.setEmail(userDTO.getEmail());
+
+        // Lưu tài khoản vào cơ sở dữ liệu
         accountService.registerUser(account);
-        return "login";
+
+        return "login"; // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
     }
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        // Xóa thông tin người dùng khỏi session
-        session.invalidate();
-        // Chuyển hướng tới trang Homepage
-        return "redirect:/homepage";
-    }
+
     @GetMapping
     public String showProfile(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         // Lấy thông tin người dùng từ session

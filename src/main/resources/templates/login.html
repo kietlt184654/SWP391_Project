@@ -23,7 +23,7 @@
         </div>
         <div class="nav-menu" id="navMenu">
           <ul>
-            <li><a href="#" class="link">Home</a></li>
+            <li><a th:href="@{/}" class="link">Home</a></li>
             <li><a href="#" class="link">About</a></li>
             <li><a href="#" class="link">Blog</a></li>
             <li><a href="#" class="link">Services</a></li>
@@ -88,9 +88,14 @@
               <input type="checkbox" id="login-check" />
               <label for="login-check"> Remember Me</label>
             </div>
-            <div class="two">
-              <label><a href="#">Forgot password?</a></label>
-            </div>
+            <form th:action="@{/forgetPassword}" method="GET">
+              <div class="two">
+                <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">
+                  Forgot password?
+                </button>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>

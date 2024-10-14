@@ -1,11 +1,9 @@
 package com.example.swp391.repository;
 
-import com.example.swp391.entity.DesignEnity;
+import com.example.swp391.entity.DesignEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface DesignRepository extends JpaRepository<DesignEnity, String> {
-    @Override
-    List<DesignEnity> findAll();
+public interface DesignRepository extends JpaRepository<DesignEntity, String> {
+//    @Override
+//    List<DesignEnity> findAll();
 }
