@@ -273,73 +273,84 @@ body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
-
-input {
+.cart {
+  width: 60%;
+}
+.payment-info {
+  width: 35%;
+  height: 250px;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+table {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-collapse: collapse;
 }
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.product-image img {
+  width: 60px;
+}
+/* total */
 
-button {
-  padding: 10px 15px;
-  border: none;
-  background-color: #999;
+.checkout-btn {
+  background-color: #3c7363;
   color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
   cursor: pointer;
   border-radius: 5px;
 }
-
-/* Profile Section */
-.profile-container {
-  background-color: white;
-  padding: 20px;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.checkout-btn:hover {
+  background-color: #0056b3;
 }
 
-.info-header {
-  background-color: #3c7363;
-  color: white;
-  padding: 10px 20px;
-  margin-right: 100px;
-  margin-top: 30px;
-  width: 500px;
-  box-sizing: border-box;
-  transition-timing-function: ease-in-out;
-  transition: width 2s;
-}
-.info-header:hover {
-  width: 300px;
-}
-#div1 {
-  transition-timing-function: ease-in-out;
+.quantity-container {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: fit-content;
+  margin-top: 10px;
 }
 
-.profile-info {
-  display: flex;
-  align-items: flex-start;
-  padding: 20px;
+.quantity-btn {
+  width: 30px;
+  height: 30px;
+  background-color: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-.avatar {
-  background-color: #ccc;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin-right: 20px;
+.quantity-btn:hover {
+  background-color: #ddd;
 }
 
-/* order tracking */
+#quantity-1,
+#quantity-2,
+#quantity-3 {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  background-color: #fff;
+}
 
 /* -----------------------------FOOTER-----------------------------*/
 .footer {
