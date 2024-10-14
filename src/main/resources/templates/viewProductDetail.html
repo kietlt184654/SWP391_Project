@@ -19,8 +19,14 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <script src="viewProductDetail.js" defer></script>
-    <link rel="stylesheet" href="viewProductDetail.css" />
+    <script
+      src="/src/main/resources/javascript/viewProductDetail.js"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/css/viewProductDetail.css"
+    />
     <title>View product detail</title>
   </head>
 
@@ -40,11 +46,11 @@
       <!-- Nav Menu -->
       <div class="nav-menu" id="navMenu">
         <ul>
-          <li><a href="#" class="link">Home</a></li>
-          <li><a href="#" class="link">About</a></li>
-          <li><a href="#" class="link">Blog</a></li>
-          <li><a href="#" class="link">Services</a></li>
-          <li><a href="#" class="link">Product</a></li>
+          <li><a href="Homepage.html" class="link">Home</a></li>
+          <li><a href="about.html" class="link">About</a></li>
+          <li><a href="blog.html" class="link">Blog</a></li>
+          <li><a href="services.html" class="link">Services</a></li>
+          <li><a href="Availableproject.html" class="link">Product</a></li>
 
           <!-- Cart -->
           <li>
@@ -63,10 +69,14 @@
             <!-- Dropdown menu -->
             <ul class="dropdown-menu">
               <li>
-                <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+                <a href="profile.html"
+                  ><i class="fas fa-user-circle"></i> Profile</a
+                >
               </li>
               <li>
-                <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                <a href="login.html"
+                  ><i class="fas fa-sign-out-alt"></i> Log Out</a
+                >
               </li>
             </ul>
           </li>
@@ -80,7 +90,7 @@
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="homepage.html">Home</a></li>
-        <li><a href="product.html">Products</a></li>
+        <li><a href="Availableproject.html">Products</a></li>
         <li class="active">Product Detail</li>
       </ol>
 
@@ -90,17 +100,17 @@
             <div class="panel-body">
               <div class="col-md-6">
                 <div class="pro-img-details">
-                  <img src="img/pond koi.jpg" alt="" />
+                  <img src="/src/main/resources/img/pond koi.jpg" alt="" />
                 </div>
                 <div class="pro-img-list">
                   <a href="#">
-                    <img src="img/n1.jpg" alt="" />
+                    <img src="/src/main/resources/img/n1.jpg" alt="" />
                   </a>
                   <a href="#">
-                    <img src="img/n3.jpg" alt="" />
+                    <img src="/src/main/resources/img/n3.jpg" alt="" />
                   </a>
                   <a href="#">
-                    <img src="img/n4.jpg" alt="" />
+                    <img src="/src/main/resources/img/n4.jpg" alt="" />
                   </a>
                 </div>
 
@@ -137,8 +147,8 @@
                 </div>
                 <!-- price -->
                 <div class="price">
-                  <span class="amount-old">35.000.000đ</span>
-                  <span class="pro-price"> 30.000.000đ</span>
+                  <span class="amount-old">110.000.000đ</span>
+                  <span class="pro-price"> 100.000.000đ</span>
                 </div>
                 <!-- quantity -->
                 <div class="quantity-container">
@@ -350,7 +360,7 @@
         <div class="row thumbnail-content">
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="img/pond koi.jpg" alt="Ashlar Lounge Chair" />
+              <img src="/src/main/resources/img/pond koi.jpg" />
               <div class="caption">
                 <p>Koi pond 1</p>
               </div>
@@ -359,7 +369,7 @@
 
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="img/n6.jpeg" alt="Somnus Bonded" />
+              <img src="/src/main/resources/img/n6.jpg" />
               <div class="caption">
                 <p>Koi pond 2</p>
               </div>
@@ -368,7 +378,7 @@
 
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="img/n3.jpg" alt="Americus Lounge Chair" />
+              <img src="/src/main/resources/img/n3.jpg" />
               <div class="caption">
                 <p>Koi pond 3</p>
               </div>
