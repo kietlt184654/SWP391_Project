@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "Material")
-@Data
+@Data // Đảm bảo rằng @Data của Lombok sẽ tự động tạo getter cho bạn
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaterialEnity {
@@ -20,4 +20,7 @@ public class MaterialEnity {
     private int stockQuantity;
     private String unit;
     private String status;
+
+    // Lombok sẽ tự động tạo phương thức getMaterialId() khi bạn dùng @Data
 }
+

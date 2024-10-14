@@ -16,7 +16,9 @@ public class ProjectEnity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectId;
-
+    private String name;
+    private String description; // Mô tả dự án
+    private double totalCost;
     @ManyToOne
     @JoinColumn(name = "formRequestId")
     private FormRequestEnity formRequest;
