@@ -16,10 +16,10 @@ public class CustomerEnity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerId;
+    private long customerID;
 
     @ManyToOne
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "AccountID")
     private AccountEnity account;
 
     private String additionalInfor;
