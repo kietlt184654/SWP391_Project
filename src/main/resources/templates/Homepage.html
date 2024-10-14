@@ -27,7 +27,6 @@
                 <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
                 <li><a th:href="@{/services}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
             </ul>
-
         </li>
         <li><a href="#" class="link">Product</a></li>
       </ul>
@@ -43,6 +42,33 @@
         Sign Up
       </button>
         </form>
+        <!-- Check if the user is logged in -->
+        <div th:if="${isLoggedIn}">
+            <form th:action="@{/account}" method="GET">
+                <button class="btn white-btn" id="accountBtn">
+                    Account
+                </button>
+            </form>
+            <form th:action="@{/logout}" method="POST">
+                <button class="btn" id="logoutBtn">
+                    Logout
+                </button>
+            </form>
+        </div>
+
+        <!-- Show login and register buttons if not logged in -->
+        <div th:if="${!isLoggedIn}">
+            <form th:action="@{/login}" method="GET">
+                <button class="btn white-btn" id="loginBtn">
+                    Login
+                </button>
+            </form>
+            <form th:action="@{/register}" method="GET">
+                <button class="btn" id="registerBtn">
+                    Sign Up
+                </button>
+            </form>
+        </div>
     </div>
     <div class="nav-menu-btn">
       <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -296,7 +322,7 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Online shop</h4>
+                    <h4>Online shops</h4>
                     <ul>
                         <li><a href="#">Watch</a></li>
                         <li><a href="#">Bag</a></li>
