@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class DesignService {
     @Autowired
@@ -13,5 +15,19 @@ public class DesignService {
 
     public List<DesignEntity> getAllProducts() {
         return designRepository.findAll(); // Lấy tất cả các sản phẩm từ database
+    }
+//    public Optional<DesignEntity> getProductById(Long id) {
+//        return designRepository.findById(String.valueOf(id));
+//    }
+//
+//    public DesignEntity saveProduct(DesignEntity product) {
+//        return designRepository.save(product);
+//    }
+    public Optional<DesignEntity> getProductById(Long id) {
+        return designRepository.findById(String.valueOf(id));
+    }
+
+    public DesignEntity saveProduct(DesignEntity product) {
+        return designRepository.save(product);
     }
 }

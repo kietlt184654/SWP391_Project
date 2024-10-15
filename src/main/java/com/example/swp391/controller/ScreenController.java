@@ -29,5 +29,9 @@ public class ScreenController {
     public String showDesignPage(Model model) {
             return "Design";
     }
+    @GetMapping("/designDetail")
+    public String showDesignDetailPage(Model model) {
+        return "viewProductDetail";
+    }
 
 }

@@ -56,7 +56,10 @@
         <div class="card-body">
           <h5 class="card-title" th:text="${product.getDesignName()}">Product Name</h5>
           <p class="card-text" th:text="${product.getPrice()} + ' $'">Price</p>
-          <button class="btn btn-primary" style="background-color: #3c7363;">Detail</button>
+
+          <a th:href="@{/design/{id}(id=${product.designId})}" class="btn btn-primary" style="background-color: #3c7363;">Detail</a>
+
+
         </div>
       </div>
     </div>

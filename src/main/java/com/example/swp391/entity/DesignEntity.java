@@ -15,11 +15,11 @@ public class DesignEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DesignTemplateID")
-    private Long designId; // IDENTITY trong SQL nên dùng kiểu Long
+    private long designId; // IDENTITY trong SQL nên dùng kiểu Long
 
     @Column(name = "DesignName", nullable = false, length = 100)
     private String designName; // Tên thiết kế
-
+    private Float WaterCapacity;
     @Column(name = "Type", nullable = false, length = 50)
     private String designType; // Loại thiết kế
 
@@ -35,7 +35,7 @@ public class DesignEntity {
 
     @Column(name = "Price", nullable = false)
     private double price; // Giá không âm
-
+private String ShapeOfPond;
     @Column(name = "EstimatedCompletionTime", nullable = false)
     private int estimatedCompletionTime; // Số ngày hoàn thành lớn hơn 0
 
