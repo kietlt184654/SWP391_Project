@@ -23,8 +23,8 @@ public class AccountEntity {
     @Column(name = "Password", nullable = false)  // Tên cột chính xác
     private String password;
 
-    @Column(name = "AccountTypeID")  // Tên cột chính xác
-    private Integer accountTypeID;
+    @Column(name = "AccountType")  // Tên cột chính xác
+    private String accountTypeID;
 
     @Column(name = "Email", nullable = false)  // Tên cột chính xác
     private String email;

@@ -26,7 +26,7 @@ public AccountEntity login(String accountName, String password) {
     }
     public void registerUser(AccountEntity userDTO) {
         userDTO.setAccountId(accountRepository.findTopByOrderByAccountIdDesc().getAccountId()+1);
-        userDTO.setAccountTypeID(2);
+        userDTO.setAccountTypeID("Customer");
         userDTO.setStatus(true);
         accountRepository.save(userDTO);
     }
