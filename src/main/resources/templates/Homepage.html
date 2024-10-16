@@ -33,17 +33,34 @@
         </ul>
     </div>
     <div class="nav-button">
-        <form th:action="@{/login}" method="GET">
-            <button class="btn white-btn" id="loginBtn" onclick="login()">
-                Login
-            </button>
-        </form>
-        <form th:action="@{/register}" method="GET">
-            <button class="btn" id="registerBtn" onclick="register()">
-                Sign Up
-            </button>
-        </form>
+        <!-- If the user is not logged in, show Login and Sign Up buttons -->
+        <div th:if="${session.loggedInUser == null}">
+            <form th:action="@{/login}" method="GET" style="display: inline;">
+                <button class="btn white-btn" id="loginBtn">
+                    Login
+                </button>
+            </form>
+            <form th:action="@{/register}" method="GET" style="display: inline;">
+                <button class="btn" id="registerBtn">
+                    Sign Up
+                </button>
+            </form>
+        </div>
+        <!-- If the user is logged in, show avatar and account name -->
+        <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
+
+            alt="User Avatar"
+                 class="rounded-circle"
+                 width="40"
+                 height="40">
+            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+            <form th:action="@{/logout}" method="POST" class="ms-3">
+                <button class="btn btn-outline-secondary btn-sm">Logout</button>
+            </form>
+        </div>
     </div>
+
     <div class="nav-menu-btn">
         <i class="bx bx-menu" onclick="myMenuFunction()"></i>
     </div>
