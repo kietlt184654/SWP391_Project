@@ -46,23 +46,40 @@
             <span>Have an account? <a href="login.html">Login</a></span>
             <header>Sign Up</header>
           </div>
+          <form th:action="@{/account/register}" th:object="${userDTO}" method="post" enctype="multipart/form-data">
 
-          <div class="input-box">
-            <input type="text" class="input-field" placeholder="Username" />
-            <i class="bx bx-user"></i>
-          </div>
+            <!-- Input Username -->
+            <div class="input-box">
+              <input type="text" class="input-field" placeholder="Username" name="accountName" required />
+              <i class="bx bx-user"></i>
+            </div>
+            <div th:if="${usernameError}" class="error-message" style="color: red;">[[${usernameError}]]</div>
 
-          <div class="input-box">
-            <input type="text" class="input-field" placeholder="Email" />
-            <i class="bx bx-envelope"></i>
-          </div>
-          <div class="input-box">
-            <input type="password" class="input-field" placeholder="Password" />
-            <i class="bx bx-lock-alt"></i>
-          </div>
-          <div class="input-box">
-            <input type="submit" class="submit" value="Register" />
-          </div>
+            <!-- Input Email -->
+            <div class="input-box">
+              <input type="email" class="input-field" placeholder="Email" name="email" required />
+              <i class="bx bx-envelope"></i>
+            </div>
+            <div th:if="${emailError}" class="error-message" style="color: red;">[[${emailError}]]</div>
+
+            <!-- Input Password -->
+            <div class="input-box">
+              <input type="password" class="input-field" placeholder="Password" name="password" required />
+              <i class="bx bx-lock-alt"></i>
+            </div>
+
+            <!-- Upload Image -->
+            <div class="input-box">
+              <label for="file">Upload Image:</label>
+              <input type="file" id="file" name="file" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="input-box">
+              <input type="submit" class="submit" value="Register" />
+            </div>
+          </form>
+
           <div class="two-col">
             <div class="one">
               <input type="checkbox" id="register-check" />

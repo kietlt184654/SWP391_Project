@@ -1,13 +1,14 @@
 package com.example.swp391.controller;
 
-import com.example.swp391.entity.AccountEnity;
-import com.example.swp391.repository.AccountRepository;
+import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.service.AccountService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/account")
@@ -16,79 +17,61 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/login")
-    public String login(@RequestParam("accountName") String accountName,
-                        @RequestParam("password") String password,
-                        HttpSession session, Model model) {
-
-        AccountEnity loginUser = accountService.userLogin(accountName, password);
-
-        if (loginUser != null) {
-            session.setAttribute("loginUser", loginUser);
-            model.addAttribute("userLogin", loginUser);
-
-            int role = loginUser.getAccountTypeID();
-            switch (role) {
-                case 1:
-                case 2:
-                case 3:
-                    return "Homepage";  // Điều chỉnh tên view nếu cần
-                default:
-                    model.addAttribute("errorAccount", "Quyền của bạn không hợp lệ");
-                    return "login";
-            }
-        } else {
-            model.addAttribute("errorAccount", "Invalid username or password");
+    public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model,HttpSession session) {
+        AccountEntity account = accountService.login(accountname, password);
+        if (account != null) {
+            model.addAttribute("message", "Login Successful");
+            session.setAttribute("loggedInUser", account);
+            return "Homepage";
+        }else {
+            model.addAttribute("message", "Invalid username or password");
             return "login";
         }
     }
 
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
+        // Kiểm tra email đã tồn tại
+        if (accountService.checkIfEmailExists(userDTO.getEmail())) {
+            model.addAttribute("emailError", "Email đã được sử dụng");
+            return "register";
+        }
 
-//    @PostMapping("/register")
-//    public String register(AccountEnity accountEnity, Model model) {
-//        if (accountService.checkExistingAccount(accountEnity.getAccountName())) {
-//            model.addAttribute("errorAccount", "Account already exists");
-//            return "register";
-//        }
-//        if (!accountEnity.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-//            model.addAttribute("errorAccount", "Invalid email address");
-//            return "register";
-//        }
-//        if (accountService.checkExistingEmail(accountEnity.getEmail())) {
-//            model.addAttribute("errorAccount", "Email already exists");
-//            return "register";
-//        } else
-//            accountService.registerAccount(accountEnity);
-//        return "redirect:/loginForm";
-//    }
-//
-//    @GetMapping("/profile")
-//    public String viewProfile(HttpSession session, Model model) {
-//        AccountEnity loginUser = (AccountEnity) session.getAttribute("loginUser");
-//        int accountId = loginUser.getAccountId();
-//        AccountEnity account = accountService.findByAccountId(accountId);
-//        model.addAttribute("account", account);
-//        return "viewProfile";
-//    }
-//
-//
-//    @PostMapping("/updateProfile")
-//    public String updateProfile(@ModelAttribute("account") AccountEnity accountEnity, @RequestParam("currentPassword") String currentPassword,
-//                                @RequestParam(value = "newPassword", required = false) String newPassword,
-//                                @RequestParam(value = "confirmPassword", required = false) String confirmPassword,
-//                                @RequestParam(value = "accountName", required = false) String accountName,
-//                                Model model, HttpSession session) throws Exception {
-//        AccountEnity loginUser = (AccountEnity) session.getAttribute("loginUser");
-//        int accountId = loginUser.getAccountId();
-//        AccountEnity account = accountService.findByAccountId(accountId);//check right account
-//        try {
-//            accountService.updateProfile(account, currentPassword, newPassword, confirmPassword, accountName);
-//        } catch (Exception e) {
-//            model.addAttribute("errorAccount", e.getMessage());
-//        }
-//        AccountEnity updatedAccount = accountService.findByAccountId(accountId);
-//        model.addAttribute("account", updatedAccount);
-//        return "redirect:/profile";
-//    }
+        // Kiểm tra tên người dùng đã tồn tại
+        if (accountService.checkIfAccountNameExists(userDTO.getAccountName())) {
+            model.addAttribute("usernameError", "Tên người dùng đã tồn tại");
+            return "register";
+        }
+
+        // Tạo tài khoản mới và lưu trực tiếp mật khẩu (không mã hóa)
+        AccountEntity account = new AccountEntity();
+        account.setAccountName(userDTO.getAccountName());
+        account.setPassword(userDTO.getPassword()); // Lưu trực tiếp mật khẩu không mã hóa
+        account.setEmail(userDTO.getEmail());
+
+        // Lưu tài khoản vào cơ sở dữ liệu
+        accountService.registerUser(account);
+
+        return "login"; // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
+    }
+
+    @GetMapping
+    public String showProfile(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        // Lấy thông tin người dùng từ session
+        AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            // Nếu người dùng chưa đăng nhập, chuyển hướng về trang login
+            redirectAttributes.addFlashAttribute("message", "Please login first.");
+            return "redirect:/login";
+        }
+
+        // Lấy thông tin cập nhật từ database để đảm bảo dữ liệu mới nhất
+        AccountEntity account = accountService.findByEmail(loggedInUser.getEmail());
+        model.addAttribute("accountEntity", account);
+        return "profile";
+    }
+
+
 
 
 

@@ -17,4 +17,21 @@ public class ScreenController {
     public String showRegisterPage() {
         return "register";
     }
+    @GetMapping("/profile")
+    public String showProfilePage(Model model) {
+        return "profile";
+    }
+    @GetMapping("/forgetPassword")
+    public String showForgetPasswordPage(Model model) {
+        return "forgotPassword";
+    }
+    @GetMapping("/design")
+    public String showDesignPage(Model model) {
+            return "Design";
+    }
+    @GetMapping("/designDetail")
+    public String showDesignDetailPage(Model model) {
+        return "viewProductDetail";
+    }
+
 }

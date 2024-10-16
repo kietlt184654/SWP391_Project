@@ -16,18 +16,18 @@
     <title>Login</title>
   </head>
   <body>
-    <div class="wrapper">
+    <div class="wrapper" th:fragment="wrapper">
       <nav class="nav" th:fragment="nav">
         <div class="nav-logo">
           <p>LOGO</p>
         </div>
         <div class="nav-menu" id="navMenu">
           <ul>
-            <li><a href="Homepage.html" class="link">Home</a></li>
-            <li><a href="about.html" class="link">About</a></li>
-            <li><a href="blog.html" class="link">Blog</a></li>
-            <li><a href="services.html" class="link">Services</a></li>
-            <li><a href="Availableproject.html" class="link">Product</a></li>
+            <li><a th:href="@{/}" class="link">Home</a></li>
+            <li><a href="#" class="link">About</a></li>
+            <li><a href="#" class="link">Blog</a></li>
+            <li><a href="#" class="link">Services</a></li>
+            <li><a href="#" class="link">Product</a></li>
           </ul>
         </div>
         <div class="nav-button">
@@ -40,34 +40,31 @@
       </nav>
 
       <!------------------- login form -------------------------->
-      <form method="post" th:action="@{/account/login}">
-        <div class="form-box">
-          <div class="login-container" id="login">
-            <div class="top">
-              <span
-                >Don't have an account?
-                <a href="register.html">Sign Up</a></span
-              >
-              <header>Login</header>
-            </div>
-            <div
-              th:if="${errorAccount != null}"
-              class="error-message"
-              style="color: red"
+
+      <div class="form-box">
+        <div class="login-container" id="login">
+          <div class="top">
+            <span
+              >Don't have an account?
+              <a th:href="@{/register}">Sign Up</a></span
             >
-              <p th:text="${errorAccount}"></p>
-            </div>
+            <header>Login</header>
+          </div>
+
+          <form th:method="post" th:action="@{/account/login}">
             <div class="input-box">
               <input
+                id="accountName"
                 name="accountName"
                 type="text"
                 class="input-field"
-                placeholder="Username"
+                placeholder="accountName"
               />
               <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
               <input
+                id="password"
                 name="password"
                 type="password"
                 class="input-field"
@@ -75,29 +72,49 @@
               />
               <i class="bx bx-lock-alt"></i>
             </div>
+            <div
+              th:if="${message != null}"
+              class="error-message"
+              style="color: red"
+            >
+              <p th:text="${message}"></p>
+            </div>
             <div class="input-box">
               <input type="submit" class="submit" value="Sign In" />
             </div>
-            <div class="btn-social">
-              <div class="btn-google">
-                <i class="fab fa-google"></i> Sign in with Google
-              </div>
-              <div class="btn-facebook">
-                <i class="fab fa-facebook-f"></i> Sign in with Facebook
-              </div>
+          </form>
+          <div class="btn-social">
+            <div class="btn-google">
+              <i class="fab fa-google"></i> Sign in with Google
             </div>
-            <div class="two-col">
-              <div class="one">
-                <input type="checkbox" id="login-check" />
-                <label for="login-check"> Remember Me</label>
-              </div>
-              <div class="two">
-                <label><a href="#">Forgot password?</a></label>
-              </div>
+            <div class="btn-facebook">
+              <i class="fab fa-facebook-f"></i> Sign in with Facebook
             </div>
           </div>
+          <div class="two-col">
+            <div class="one">
+              <input type="checkbox" id="login-check" />
+              <label for="login-check"> Remember Me</label>
+            </div>
+            <form th:action="@{/forgetPassword}" method="GET">
+              <div class="two">
+                <button
+                  type="submit"
+                  style="
+                    background: none;
+                    border: none;
+                    color: blue;
+                    text-decoration: underline;
+                    cursor: pointer;
+                  "
+                >
+                  Forgot password?
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
 
     <script>

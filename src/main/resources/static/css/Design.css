@@ -189,12 +189,12 @@ h1 {
 }
 .nav li:hover ul{
   display: block;
-  
+
 }
-	/* Change the background color of dropdown links on hover */
-	.navbar ul ul li a:hover {
-		background-color: #c7b7b7;
-	}
+/* Change the background color of dropdown links on hover */
+.navbar ul ul li a:hover {
+  background-color: #c7b7b7;
+}
 
 .nav-logo p {
   color: white;
