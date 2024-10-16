@@ -19,7 +19,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <script src="profile.js" defer></script>
+    <script
+      src="/src/main/resources/static/javascript/profile.js"
+      defer
+    ></script>
     <link rel="stylesheet" href="/src/main/resources/static/css/profile.css" />
     <title>Profile</title>
   </head>
@@ -82,7 +85,7 @@
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-content">
-        <img src="/src/main/resources/img/koi_des.webp" />
+        <img src="/src/main/resources/static/img/koi_des.webp" />
         <h1>Profile</h1>
         <ol class="breadcrumb">
           <li><a href="homepage.html">Home</a></li>
@@ -144,6 +147,42 @@
     </div>
 
     <!-- order tracking -->
+    <div class="tracking-header">Order tracking</div>
+    <div class="container">
+      <div class="steps">
+        <div class="step">
+          <span class="circle active">1</span>
+          <p class="step-info">Order complete</p>
+        </div>
+        <div class="step">
+          <span class="circle">2</span>
+          <p class="step-info">Prepare for construction</p>
+        </div>
+        <div class="step">
+          <span class="circle">3</span>
+          <p class="step-info">Construction</p>
+        </div>
+        <div class="step">
+          <span class="circle">4</span>
+          <p class="step-info">Construction completed</p>
+        </div>
+        <div class="step">
+          <span class="circle">5</span>
+          <p class="step-info">Check quality</p>
+        </div>
+        <div class="step">
+          <span class="circle">6</span>
+          <p class="step-info">Handover</p>
+        </div>
+        <div class="progress-bar">
+          <div class="indicator"></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="prev" disabled>Prev</button>
+        <button id="next">Next</button>
+      </div>
+    </div>
 
     <!-- ---------------------------------------------------------------------------------------------------------- -->
     <!-- Sidebar -->
