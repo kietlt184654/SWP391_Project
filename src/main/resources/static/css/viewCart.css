@@ -304,7 +304,10 @@ td {
 .product-image img {
   width: 60px;
 }
-/* total */
+
+.total-row {
+  font-weight: bold;
+}
 
 .checkout-btn {
   background-color: #3c7363;
