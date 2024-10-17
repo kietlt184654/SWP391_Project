@@ -28,7 +28,13 @@ public class AccountController {
             return "login";
         }
     }
-
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        // Xóa toàn bộ session
+        session.invalidate();
+        // Chuyển hướng đến trang đăng nhập hoặc trang chủ
+        return "Homepage"; // Thay đổi đường dẫn theo yêu cầu của bạn
+    }
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
         // Kiểm tra email đã tồn tại

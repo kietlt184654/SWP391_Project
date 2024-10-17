@@ -28,7 +28,7 @@ public class DesignEntity {
 
     @Column(name = "Img", length = 255)
     private String img; // Đường dẫn tới ảnh
-
+private Integer Quantity;
     @Column(name = "Size", nullable = false, length = 50)
     @Enumerated(EnumType.STRING) // Đảm bảo chỉ nhận 'Small', 'Medium', 'Large'
     private Size size; // Kích cỡ của thiết kế, sử dụng enum

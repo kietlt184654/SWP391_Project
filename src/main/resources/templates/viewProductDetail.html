@@ -40,7 +40,7 @@
   <!-- Nav Menu -->
   <div class="nav-menu" id="navMenu">
     <ul>
-      <li><a href="/" class="link">Home</a></li>
+      <li><a th:href="@{/}" class="link">Home</a></li>
       <li><a href="/about" class="link">About</a></li>
       <li><a href="/blog" class="link">Blog</a></li>
       <li><a href="/services" class="link">Services</a></li>
@@ -171,13 +171,13 @@
             <div class="button-cart">
               <div class="button-group">
                 <form th:action="@{/cart/add}" method="post">
-                  <input type="hidden" name="productId" th:value="${design.designId}" />
+                  <input type="hidden" name="designId" th:value="${design.designId}" />
                   <input type="hidden" name="quantity" th:value="${1}" min="1" max="1000" step="1" />
                   <button class="btn btn-cart" type="submit">
-                    <i class="fa fa-shopping-cart"></i> Add to cart
+                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
                   </button>
                 </form>
-                <button class="btn btn-buy">Buy now</button>
+                <button class="btn btn-buy">Mua ngay</button>
               </div>
             </div>
           </div>
@@ -227,7 +227,7 @@
       </li>
       <li>
         <strong>Estimated Completion Time:</strong>
-        <span th:text="${design.estimatedCompletionTime} + ' days'">
+        <span th:text="${design.getEstimatedCompletionTime()} + ' days'">
             Estimated completion time description.
           </span>
       </li>

@@ -55,8 +55,8 @@
                  width="40"
                  height="40">
             <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
-            <form th:action="@{/logout}" method="POST" class="ms-3">
-                <button class="btn btn-outline-secondary btn-sm">Logout</button>
+            <form th:action="@{/account/logout}" method="post" class="ms-3">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
             </form>
         </div>
     </div>
