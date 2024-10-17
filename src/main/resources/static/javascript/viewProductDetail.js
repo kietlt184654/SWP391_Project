@@ -84,9 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       stars.forEach((s, index) => {
         if (index < rating) {
-          s.classList.add("selected"); // Tô màu vàng
+          s.classList.add("selected");
         } else {
-          s.classList.remove("selected"); // Giữ màu xám
+          s.classList.remove("selected");
         }
       });
     });
@@ -95,37 +95,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // move pro-img-list
 document.addEventListener("DOMContentLoaded", function () {
-  const imgList = document.querySelectorAll(".pro-img-list img"); // Lấy danh sách các ảnh nhỏ
-  const mainImg = document.querySelector(".pro-img-details img"); // Lấy ảnh chính hiển thị
-  let currentIndex = 0; // Đặt chỉ số hiện tại của ảnh đang được hiển thị
+  const imgList = document.querySelectorAll(".pro-img-list img");
+  const mainImg = document.querySelector(".pro-img-details img");
+  let currentIndex = 0;
 
-  // Hàm cập nhật ảnh chính
   function updateMainImage(index) {
     if (imgList[index]) {
       mainImg.src = imgList[index].src;
     }
   }
 
-  // Sự kiện khi nhấn nút "Previous"
+  //control button on main img
   document.getElementById("prev-btn").addEventListener("click", function () {
     if (currentIndex > 0) {
       currentIndex--;
     } else {
-      currentIndex = imgList.length - 1; // Quay lại ảnh cuối cùng nếu đã ở đầu
+      currentIndex = imgList.length - 1;
     }
-    updateMainImage(currentIndex); // Cập nhật ảnh chính
+    updateMainImage(currentIndex);
   });
-
-  // Sự kiện khi nhấn nút "Next"
   document.getElementById("next-btn").addEventListener("click", function () {
     if (currentIndex < imgList.length - 1) {
       currentIndex++;
     } else {
-      currentIndex = 0; // Quay lại ảnh đầu tiên nếu đã đến cuối
+      currentIndex = 0;
     }
-    updateMainImage(currentIndex); // Cập nhật ảnh chính
+    updateMainImage(currentIndex);
   });
 
-  // Đặt ảnh đầu tiên khi trang được tải
   updateMainImage(currentIndex);
 });
