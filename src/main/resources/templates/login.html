@@ -12,7 +12,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/src/main/resources/static/css/login.css" />
     <title>Login</title>
   </head>
   <body>
@@ -32,7 +32,7 @@
         </div>
         <div class="nav-button">
           <button class="btn white-btn">Sign In</button>
-          <a th:href="@{/register}"><button class="btn">Sign Up</button></a>
+          <a href="register.html"><button class="btn">Sign Up</button></a>
         </div>
         <div class="nav-menu-btn">
           <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -45,36 +45,44 @@
         <div class="login-container" id="login">
           <div class="top">
             <span
-              >Don't have an account? <a th:href="@{/register}">Sign Up</a></span
+              >Don't have an account?
+              <a th:href="@{/register}">Sign Up</a></span
             >
             <header>Login</header>
           </div>
 
           <form th:method="post" th:action="@{/account/login}">
-          <div class="input-box">
-
-            <input
-                    id="accountName"
-              name="accountName"
-              type="text"
-              class="input-field"
-              placeholder="accountName"
-            />
-            <i class="bx bx-user"></i>
-          </div>
-          <div class="input-box">
-
-            <input id="password" name="password" type="password" class="input-field" placeholder="Password" />
-            <i class="bx bx-lock-alt"></i>
-          </div>
-            <div th:if="${message != null}" class="error-message" style="color:red;">
+            <div class="input-box">
+              <input
+                id="accountName"
+                name="accountName"
+                type="text"
+                class="input-field"
+                placeholder="accountName"
+              />
+              <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                class="input-field"
+                placeholder="Password"
+              />
+              <i class="bx bx-lock-alt"></i>
+            </div>
+            <div
+              th:if="${message != null}"
+              class="error-message"
+              style="color: red"
+            >
               <p th:text="${message}"></p>
             </div>
-          <div class="input-box">
-            <input type="submit" class="submit" value="Sign In" />
-          </div>
-
-      </form>
+            <div class="input-box">
+              <input type="submit" class="submit" value="Sign In" />
+            </div>
+          </form>
           <div class="btn-social">
             <div class="btn-google">
               <i class="fab fa-google"></i> Sign in with Google
@@ -90,16 +98,23 @@
             </div>
             <form th:action="@{/forgetPassword}" method="GET">
               <div class="two">
-                <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">
+                <button
+                  type="submit"
+                  style="
+                    background: none;
+                    border: none;
+                    color: blue;
+                    text-decoration: underline;
+                    cursor: pointer;
+                  "
+                >
                   Forgot password?
                 </button>
               </div>
             </form>
-
           </div>
         </div>
       </div>
-
     </div>
 
     <script>
