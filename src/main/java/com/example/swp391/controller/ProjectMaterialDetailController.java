@@ -1,6 +1,6 @@
 package com.example.swp391.controller;
 
-import com.example.swp391.entity.ProjectMaterialDetailEnity;
+import com.example.swp391.entity.ProjectMaterialDetailEntity;
 import com.example.swp391.repository.ProjectMaterialDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ public class ProjectMaterialDetailController {
 
     // Lấy danh sách vật liệu sử dụng trong một dự án
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<ProjectMaterialDetailEnity>> getMaterialsByProjectId(@PathVariable Long projectId) {
-        List<ProjectMaterialDetailEnity> materials = projectMaterialDetailRepository.findByProject_ProjectId(projectId);
+    public ResponseEntity<List<ProjectMaterialDetailEntity>> getMaterialsByProjectId(@PathVariable Long projectId) {
+        List<ProjectMaterialDetailEntity> materials = projectMaterialDetailRepository.findByProject_ProjectId(projectId);
         return ResponseEntity.ok(materials);
     }
 }

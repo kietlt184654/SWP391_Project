@@ -1,6 +1,6 @@
 package com.example.swp391.service;
 
-import com.example.swp391.entity.ProjectEnity;
+import com.example.swp391.entity.ProjectEntity;
 import com.example.swp391.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,22 +14,22 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
     // Lấy tất cả dự án
-    public List<ProjectEnity> getAllProjects() {
+    public List<ProjectEntity> getAllProjects() {
         return projectRepository.findAll();
     }
 
     // Tìm dự án theo ID
-    public ProjectEnity findProjectById(Long projectId) {
+    public ProjectEntity findProjectById(Long projectId) {
         return projectRepository.findById(projectId).orElse(null);
     }
 
     // Lưu dự án (tạo mới hoặc cập nhật)
-    public ProjectEnity saveProject(ProjectEnity project) {
+    public ProjectEntity saveProject(ProjectEntity project) {
         return projectRepository.save(project);
     }
 
     // Cập nhật trạng thái dự án (ví dụ: đã thanh toán)
-    public void updateProject(ProjectEnity project) {
+    public void updateProject(ProjectEntity project) {
         projectRepository.save(project);
     }
 
