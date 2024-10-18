@@ -1,6 +1,5 @@
 package com.example.swp391.controller;
 
-
 import com.example.swp391.entity.DesignEntity;
 import com.example.swp391.service.DesignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/design")
+@RequestMapping("/designs")
 public class DesignController {
 
     @Autowired
@@ -24,7 +23,7 @@ public class DesignController {
     @GetMapping("/showAllDesign")
     public String showProducts(Model model) {
         // Lấy danh sách sản phẩm từ service
-        List<DesignEntity> products = designService.getAllProducts();
+        List<DesignEntity> products = designService.getAllDesigns();
         model.addAttribute("design", products);
         return "Availableproject"; // Trả về trang "Availableproject.html"
     }
@@ -47,5 +46,5 @@ public class DesignController {
             return "404"; // Trang lỗi 404 nếu không tìm thấy
         }
     }
-
 }
+

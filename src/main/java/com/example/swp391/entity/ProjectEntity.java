@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectEnity {
+public class ProjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,11 @@ public class ProjectEnity {
     private double totalCost;
     @ManyToOne
     @JoinColumn(name = "formRequestId")
-    private FormRequestEnity formRequest;
+    private FormRequestEntity formRequest;
 
     @ManyToOne
     @JoinColumn(name = "designId")
-    private DesignEnity design;
+    private DesignEntity design;
 
     @Temporal(TemporalType.DATE)
     private Date startDate;

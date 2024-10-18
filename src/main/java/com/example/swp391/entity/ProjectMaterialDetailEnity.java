@@ -21,7 +21,7 @@ public class ProjectMaterialDetailEnity { // Sửa lại tên lớp cho đúng
     // Liên kết với bảng Project
     @ManyToOne
     @JoinColumn(name = "projectId", nullable = false) // Tên cột trong bảng Project_Material_Detail
-    private ProjectEnity project; // Sửa lại tên thành ProjectEntity cho đúng
+    private ProjectEntity project; // Sửa lại tên thành ProjectEntity cho đúng
 
     // Liên kết với bảng Material
     @ManyToOne

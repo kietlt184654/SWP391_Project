@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerEnity {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class CustomerEnity {
 
     @ManyToOne
     @JoinColumn(name = "AccountID")
-    private AccountEnity account;
+    private AccountEntity account;
 
     private String additionalInfor;
 }

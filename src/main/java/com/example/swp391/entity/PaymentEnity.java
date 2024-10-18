@@ -25,9 +25,9 @@ public class PaymentEnity {
 
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)
-    private CustomerEnity customer; // Liên kết với bảng Customer (khách hàng thực hiện thanh toán)
+    private CustomerEntity customer; // Liên kết với bảng Customer (khách hàng thực hiện thanh toán)
 
     @ManyToOne
     @JoinColumn(name = "projectId", nullable = false)
-    private ProjectEnity project; // Liên kết với bảng Project (dự án tương ứng với thanh toán)
+    private ProjectEntity project; // Liên kết với bảng Project (dự án tương ứng với thanh toán)
 }

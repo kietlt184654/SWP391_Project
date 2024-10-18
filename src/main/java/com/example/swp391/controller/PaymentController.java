@@ -1,7 +1,7 @@
 package com.example.swp391.controller;
 
 import com.example.swp391.entity.PaymentEnity;
-import com.example.swp391.entity.ProjectEnity;
+import com.example.swp391.entity.ProjectEntity;
 import com.example.swp391.service.PaymentService;
 import com.example.swp391.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class PaymentController {
     // Xử lý yêu cầu tạo thanh toán và chuyển hướng đến VNPay
     @GetMapping("/payment/create")
     public String createPayment(@RequestParam("projectId") Long projectId, Model model) {
-        ProjectEnity project = projectService.findProjectById(projectId);
+        ProjectEntity project = projectService.findProjectById(projectId);
         if (project == null) {
             model.addAttribute("message", "Dự án không tồn tại!");
             return "error";
@@ -104,7 +104,7 @@ public class PaymentController {
                 String transactionId = vnp_Params.get("vnp_TransactionNo");
 
                 // Tìm dự án và cập nhật trạng thái thanh toán
-                ProjectEnity project = projectService.findProjectById(projectId);
+                ProjectEntity project = projectService.findProjectById(projectId);
                 if (project == null) {
                     model.addAttribute("message", "Dự án không tồn tại");
                     return "error";
