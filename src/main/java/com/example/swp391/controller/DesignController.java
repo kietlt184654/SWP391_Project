@@ -37,7 +37,7 @@ public class DesignController {
     // Hiển thị chi tiết một thiết kế cụ thể dựa trên ID
     @GetMapping("/{id}")
     public String getDesignDetail(@PathVariable("id") Long id, Model model) {
-        Optional<DesignEntity> designOpt = designService.getProductById(id);
+        Optional<DesignEntity> designOpt = designService.getDesignById(id);
         if (designOpt.isPresent()) {
             // Nếu tìm thấy thiết kế, thêm thông tin vào model và trả về trang chi tiết
             DesignEntity design = designOpt.get();
