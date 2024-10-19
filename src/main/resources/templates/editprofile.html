@@ -60,41 +60,36 @@
 <!-- Profile Edit Form -->
 <div class="container">
   <h2>Edit Profile</h2>
-  <form class="profile-form">
+  <form class="profile-form" action="/account/update-profile" method="POST" enctype="multipart/form-data">
     <!-- Avatar Upload -->
     <div class="avatar-upload">
       <div class="avatar">
-        <img th:src="@{${accountEntity.images} ?: '/img/defaultAva.jpg'}" alt="Avatar" />
+        <img th:src="@{${accountEntity.images} ?: '/img/defaultAva.jpg'}" alt="Avatar" id="avatarPreview" />
         <div>
           <label for="upload" class="btn btn-upload">Upload Picture</label>
-          <input type="file" id="upload" style="display: none" />
+          <input type="file" id="upload" name="profileImage" style="display: none" onchange="previewImage(event)" />
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required />
-    </div>
-
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required />
+      <label for="accountName">Account Name</label>
+      <input type="text" id="accountName" name="accountName" th:value="${accountEntity.accountName}" placeholder="Enter your account name" required />
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" required />
-    </div>
-
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input type="text" id="address" name="address" placeholder="Enter your address" required />
+      <input type="email" id="email" name="email" th:value="${accountEntity.email}" placeholder="Enter your email" required />
     </div>
 
     <div class="form-group">
       <label for="phoneNumber">Phone Number</label>
-      <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required />
+      <input type="tel" id="phoneNumber" name="phoneNumber" th:value="${accountEntity.phoneNumber}" placeholder="Enter your phone number" required />
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" th:value="${accountEntity.address}" placeholder="Enter your address" required />
     </div>
 
     <div class="form-group">
@@ -163,13 +158,14 @@
     }
   });
 
-  // Update cart count
-  let cartCount = 0;
-  function updateCartCount(count) {
-    cartCount += count;
-    document.querySelector(".notification-badge").textContent = cartCount;
+  // Preview uploaded image
+  function previewImage(event) {
+    const output = document.getElementById('avatarPreview');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src); // Free memory
+    }
   }
-  updateCartCount(1); // Example update for demonstration
 </script>
 </body>
 </html>

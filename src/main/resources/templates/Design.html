@@ -24,7 +24,7 @@
                 <li>
                     <a href="#" class="link">Services</a>
                     <ul>
-                        <li><a href="#">Desing Koi Pond</a></li>
+                        <li><a href="#">Design Koi Pond</a></li>
                         <li><a href="#">Koi Pond Services</a></li>
                     </ul>
                 </li>
@@ -63,66 +63,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Custom Design</h5>
                         <p class="card-text">Create your own unique design by filling out our form.</p>
-                        <a href="/customdesign" class="btn btn-secondary" data-bs-toggle="modal"
-                           data-bs-target="#customDesignModal">Start Custom Design</a>
+                        <a th:href="@{/designService}" class="btn btn-secondary">Start Custom Design</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Custom Design Modal -->
-    <div class="modal fade" id="customDesignModal" tabindex="-1" aria-labelledby="customDesignModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="customDesignModalLabel">Custom Design Form</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="designType" class="form-label">Design Type</label>
-                            <select class="form-select" id="designType" required onchange="showImage()">
-                                <option value="">Choose...</option>
-                                <option value="Architectural Design">Architectural Design</option>
-                                <option value="Landscape Design">Landscape Design</option>
-                                <option value="Garden House Design">Garden House Design</option>
-                                <option value="Garden Design">Garden Design</option>
-                                <option value="Koi Pond Design">Koi Pond Design</option>
-                            </select>
-                        </div>
-                        <div class="mb-3" id="imageDiv" style="display: none;">
-                            <img id="designImage" src="" alt="Design Image" style="max-width: 100%; height: auto;">
-                        </div>
-                        <div class="mb-3">
-                            <label for="designDescription" class="form-label">Design Description</label>
-                            <textarea class="form-control" id="designDescription" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="budget" class="form-label">Budget (in VND)</label>
-                            <input type="number" class="form-control" id="budget" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Design Request</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        function showImage() {
-            var designType = document.getElementById('designType').value;
-            var imageDiv = document.getElementById('imageDiv');
-            var designImage = document.getElementById('designImage');
-            if (designType != "") {
-                imageDiv.style.display = "block";
-                designImage.src = "/src/main/resources/img" + designType + "hokoi.jpg";
-            } else {
-                imageDiv.style.display = "none";
-            }
-        }
-    </script>
 
     <footer class="footer">
         <div class="container">

@@ -35,9 +35,8 @@ public class AccountEntity {
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
 
-    @Column(name = "Images")  // Tên cột chính xác
+    @Column(name = "Images")
     private String images;
-
     @Column(name = "Status", nullable = false)  // Thêm trường Status
     private Boolean status;  // Sử dụng Boolean cho kiểu BIT
 }
