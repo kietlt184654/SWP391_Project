@@ -48,6 +48,12 @@
 
 <body>
 <h1 style="text-align: center; margin-top: 120px; background-color: #3c7363; color: white; border-radius: 95px; ">Available Project</h1>
+<div class="search-container">
+    <input type="text" placeholder="Search...">
+    <a href="">
+        <li class="fas fa-search "></li>
+    </a>
+</div>
 <div class="container">
   <div th:if="${design}" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     <div th:each="product : ${design}" class="col">
@@ -68,49 +74,47 @@
   </div>
   <br>
 </div>
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Our services</a></li>
-          <li><a href="#">Privacy policy</a></li>
-          <li><a href="#">Affiliate program</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Get help</h4>
-        <ul>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Shipping</a></li>
-          <li><a href="#">Returns</a></li>
-          <li><a href="#">Order status</a></li>
-          <li><a href="#">Payment options</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Online shop</h4>
-        <ul>
-          <li><a href="#">Watch</a></li>
-          <li><a href="#">Bag</a></li>
-          <li><a href="#">Shoes</a></li>
-          <li><a href="#">Dress</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Follow us</h4>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-      </div>
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+        Minh
+      </p>
+    </div>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li>
+          <a href="link-to-construction" class="service-item"
+            >Construction Koi pond</a
+          >
+        </li>
+        <li>
+          <a href="link-to-cleaning" class="service-item"
+            >Cleaning and maintenance</a
+          >
+        </li>
+        <li>
+          <a href="link-to-design" class="service-item"
+            >Design upon requirements</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
     </div>
   </div>
-</footer>
+</div>
 
 </body>
 
