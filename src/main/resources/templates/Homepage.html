@@ -47,21 +47,23 @@
             </form>
         </div>
         <!-- If the user is logged in, show avatar and account name -->
+        <!-- Hiển thị avatar và tên người dùng -->
         <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
-
-            alt="User Avatar"
-                 class="rounded-circle"
-                 width="40"
-                 height="40">
-            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+            <a th:href="@{/account/profile}" class="d-flex align-items-center">
+                <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
+                     alt="User Avatar"
+                     class="rounded-circle"
+                     width="40"
+                     height="40">
+                <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+            </a>
             <form th:action="@{/account/logout}" method="post" class="ms-3">
                 <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
             </form>
         </div>
-    </div>
 
-    <div class="nav-menu-btn">
+
+        <div class="nav-menu-btn">
         <i class="bx bx-menu" onclick="myMenuFunction()"></i>
     </div>
 </nav>

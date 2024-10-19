@@ -61,20 +61,56 @@ public class AccountController {
         return "login"; // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
     }
 
-    @GetMapping
+    @GetMapping("/profile")
     public String showProfile(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         // Lấy thông tin người dùng từ session
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
-            // Nếu người dùng chưa đăng nhập, chuyển hướng về trang login
+            // Nếu người dùng chưa đăng nhập, chuyển hướng về trang đăng nhập
             redirectAttributes.addFlashAttribute("message", "Please login first.");
             return "redirect:/login";
         }
 
-        // Lấy thông tin cập nhật từ database để đảm bảo dữ liệu mới nhất
+        // Lấy thông tin người dùng mới nhất từ cơ sở dữ liệu
+        AccountEntity account = accountService.findByEmail(loggedInUser.getEmail());
+        model.addAttribute("accountEntity", account);  // Đẩy thông tin người dùng vào model
+
+        return "profile";  // Trả về view "profile.html"
+    }
+    @GetMapping("/edit-profile")
+    public String editProfileForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+        AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            redirectAttributes.addFlashAttribute("message", "Please login first.");
+            return "redirect:/login";
+        }
+
         AccountEntity account = accountService.findByEmail(loggedInUser.getEmail());
         model.addAttribute("accountEntity", account);
-        return "profile";
+
+        return "editprofile"; // Trả về view "edit-profile.html"
+    }
+
+    @PostMapping("/edit-profile")
+    public String editProfile(@RequestParam String name, @RequestParam String phone, @RequestParam String address, HttpSession session, RedirectAttributes redirectAttributes) {
+        AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            redirectAttributes.addFlashAttribute("message", "Please login first.");
+            return "redirect:/login";
+        }
+
+        AccountEntity account = accountService.findByEmail(loggedInUser.getEmail());
+        account.setAccountName(name);
+        account.setPhoneNumber(phone);
+        account.setAddress(address);
+
+        // Cập nhật thông tin người dùng
+        accountService.updateAccount(account);
+
+        session.setAttribute("loggedInUser", account); // Cập nhật session
+        redirectAttributes.addFlashAttribute("message", "Profile updated successfully!");
+
+        return "redirect:/profile";
     }
 
 

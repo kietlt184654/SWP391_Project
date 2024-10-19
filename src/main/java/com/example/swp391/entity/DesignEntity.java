@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "DesignTemplate") // Tên bảng trong SQL
 @Data
@@ -51,4 +54,6 @@ private String ShapeOfPond;
     public enum Status {
         Available, Unavailable, Pending
     }
+//    @OneToMany(mappedBy = "design", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<DesignImgEntity> images = new ArrayList<>();
 }

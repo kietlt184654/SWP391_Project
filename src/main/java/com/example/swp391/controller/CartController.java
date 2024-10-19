@@ -30,7 +30,7 @@ public class CartController {
             session.setAttribute("cart", cart);
         }
 
-        // Thêm sản phẩm vào giỏ hàng
+        // Thêm sản phẩm vào giỏ hàng (chỉ với số lượng 1)
         cart.addDesign(design);
 
         // Điều hướng tới trang giỏ hàng
