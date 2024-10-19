@@ -2,11 +2,15 @@ package com.example.swp391.repository;
 
 import com.example.swp391.entity.ProjectMaterialDetailEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ProjectMaterialDetailRepository extends JpaRepository<ProjectMaterialDetailEntity, Long> {
 
-    // Tìm danh sách vật liệu sử dụng theo ID của dự án
+    // Tìm chi tiết vật liệu theo projectId
     List<ProjectMaterialDetailEntity> findByProject_ProjectId(Long projectId);
+
+
 }

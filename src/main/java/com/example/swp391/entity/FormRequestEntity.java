@@ -21,6 +21,6 @@ public class FormRequestEntity {
     private ServiceEntity service;
 
     @ManyToOne
-    @JoinColumn(name = "typeDesignId")
+    @JoinColumn(name = "TypeDesignID")
     private TypeDesignEntity typeDesign;
 }

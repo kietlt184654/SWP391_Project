@@ -3,11 +3,10 @@ package com.example.swp391.service;
 import com.example.swp391.DTO.DesignRequestDTO;
 import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.entity.DesignEntity;
-import com.example.swp391.entity.ProjectMaterialDetailEntity;
 import com.example.swp391.entity.TypeDesignEntity;
-
-import com.example.swp391.repository.*;
-import jakarta.transaction.Transactional;
+import com.example.swp391.repository.CustomerRepository;
+import com.example.swp391.repository.DesignRepository;
+import com.example.swp391.repository.TypeDesignRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,27 +24,6 @@ public class DesignService {
 
     @Autowired
     private TypeDesignRepository typeDesignRepository;
-    @Autowired
-    private ProjectMaterialDetailRepository projectMaterialDetailRepository;
-    @Autowired
-    private MaterialRepository materialRepository;
-
-    @Transactional
-    public void processPayment(Long projectId) {
-        // Lấy danh sách vật liệu đã sử dụng trong dự án
-        List<ProjectMaterialDetailEntity> materialDetails = projectMaterialDetailRepository.findByProject_ProjectId(projectId);
-
-        // Lặp qua mỗi vật liệu đã sử dụng và giảm tồn kho
-        for (ProjectMaterialDetailEntity detail : materialDetails) {
-            Long materialId = (long) detail.getMaterial().getMaterialId();
-            // Sửa lại cách lấy materialId
-            int usedQuantity = detail.getQuantity(); // Lấy số lượng vật liệu đã sử dụng
-
-            // Cập nhật số lượng tồn kho của vật liệu
-            materialRepository.reduceMaterialStock(materialId, usedQuantity);
-        }
-    }
-
 
     /**
      * Lấy tất cả các thiết kế hiện có trong cơ sở dữ liệu.
@@ -78,6 +56,16 @@ public class DesignService {
     }
 
     /**
+     * Tìm thiết kế theo ID.
+     *
+     * @param id ID của thiết kế.
+     * @return DesignEntity tìm thấy hoặc ngoại lệ nếu không tồn tại.
+     */
+    public Optional<DesignEntity> getDesignById(Long id) {
+        return designRepository.findById(id);
+    }
+
+    /**
      * Tạo yêu cầu thiết kế mới cho khách hàng.
      *
      * @param designRequestDTO Đối tượng chứa thông tin của yêu cầu thiết kế.
@@ -85,30 +73,21 @@ public class DesignService {
      */
     public DesignEntity createDesignRequest(DesignRequestDTO designRequestDTO) {
         // Tìm khách hàng dựa trên ID từ DTO
-        Optional<CustomerEntity> customerOpt = customerRepository.findByCustomerId(designRequestDTO.getCustomerId());
-        if (!customerOpt.isPresent()) {
-            throw new IllegalArgumentException("Customer not found with ID: " + designRequestDTO.getCustomerId());
-        }
-
-        CustomerEntity customer = customerOpt.get();
+        CustomerEntity customer = customerRepository.findByCustomerId(designRequestDTO.getCustomerId())
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with ID: " + designRequestDTO.getCustomerId()));
 
         // Tìm TypeDesign dựa trên ID từ DTO
-        Optional<TypeDesignEntity> typeDesignOpt = typeDesignRepository.findById(designRequestDTO.getTypeDesignId());
-        if (!typeDesignOpt.isPresent()) {
-            throw new IllegalArgumentException("TypeDesign not found with ID: " + designRequestDTO.getTypeDesignId());
-        }
-
-        TypeDesignEntity typeDesign = typeDesignOpt.get();
+        TypeDesignEntity typeDesign = typeDesignRepository.findById(designRequestDTO.getTypeDesignId())
+                .orElseThrow(() -> new IllegalArgumentException("TypeDesign not found with ID: " + designRequestDTO.getTypeDesignId()));
 
         // Tạo một đối tượng Design mới và gán các thuộc tính từ DTO
         DesignEntity design = new DesignEntity();
         design.setDesignName(designRequestDTO.getDesignName());
         design.setDescription(designRequestDTO.getDescription());
-//        design.setTypeDesign(typeDesign); // Gắn kiểu thiết kế vào design
-//        design.setCustomer(customer); // Gắn thông tin khách hàng vào thiết kế (nếu cần)
+//        design.setTypeDesign(typeDesign);  // Gắn kiểu thiết kế vào design
+//        design.setCustomer(customer);  // Gắn thông tin khách hàng vào thiết kế
 
         // Lưu thiết kế vào cơ sở dữ liệu
         return designRepository.save(design);
     }
-
 }

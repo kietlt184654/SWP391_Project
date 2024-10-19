@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -13,28 +14,30 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    // Lấy tất cả dự án
+    // Tìm kiếm dự án theo ID
+    public Optional<ProjectEntity> findProjectById(Long projectId) {
+        return projectRepository.findById(projectId);
+    }
+
+    // Lấy tất cả các dự án
     public List<ProjectEntity> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    // Tìm dự án theo ID
-    public ProjectEntity findProjectById(Long projectId) {
-        return projectRepository.findById(projectId).orElse(null);
-    }
-
-    // Lưu dự án (tạo mới hoặc cập nhật)
+    // Lưu dự án (thêm mới hoặc cập nhật)
     public ProjectEntity saveProject(ProjectEntity project) {
         return projectRepository.save(project);
     }
 
-    // Cập nhật trạng thái dự án (ví dụ: đã thanh toán)
+    // Cập nhật dự án
     public void updateProject(ProjectEntity project) {
-        projectRepository.save(project);
+        projectRepository.save(project);  // Cập nhật dự án
     }
 
-    // Xóa dự án (nếu cần)
-    public void deleteProject(Long projectId) {
-        projectRepository.deleteById(projectId);
+    // Xóa dự án theo ID
+    public void deleteProjectById(Long projectId) {
+        if (projectRepository.existsById(projectId)) {
+            projectRepository.deleteById(projectId);
+        }
     }
 }

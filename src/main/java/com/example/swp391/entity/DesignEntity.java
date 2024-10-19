@@ -23,7 +23,7 @@ public class DesignEntity {
 
     private Float WaterCapacity;
 
-    @Column(name = "TypeDe", nullable = false, length = 50)
+    @Column(name = "TypeDesignID", nullable = false, length = 50)
     private String designType; // Loại thiết kế
 
     @Column(name = "Description", length = 255)

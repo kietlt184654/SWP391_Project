@@ -44,11 +44,11 @@
             <a href="#" class="icon">
               <i class="fas fa-shopping-cart"></i>
               <span class="notification-badge">0</span>
-              
+
             </a>
           </li>
 
-         
+
           <li>
             <a href="#" class="icon" id="accountIcon">
               <i class="fas fa-user-circle"></i>Username
@@ -85,7 +85,7 @@
   </section>
 
   <!-- View cart -->
-  
+
 <div class="container">
   <div class="cart">
       <h2>View Cart</h2>
@@ -148,7 +148,7 @@
           <tr>
             <td>3</td>
               <td class="product-image"><img src="/src/main/resources/static/img/a2.jpg" alt="Product Image"> Pond 3</td>
-             
+
               <td>
                 <div class="quantity-container">
                   <button class="quantity-btn increase-btn" data-id="3">-</button>
@@ -178,27 +178,47 @@
             <td colspan="3">Discount:</td>
             <td>20%</td>
         </tr>
-        
+
         <tr class="total-row">
             <td colspan="3">Total:</td>
             <td>212.000.000VND</td>
         </tr>
 
       </table>
-    
-      
+
+
   </div>
 
   <!-- Payment Info Section -->
-  <div class="payment-info">
-      <h2>Payment</h2>
-      <form>
-          <label for="payment-method">Payment Method:</label><br>
-          <input type="radio" id="cod" name="payment-method" value="cod" checked> COD<br>
-          <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer"> Bank transfer<br><br>
-        <button type="submit" name="" action="" class="checkout-btn">Check Out</button>
-      </form>
-  </div>
+<!--  <div class="payment-info">-->
+<!--      <h2>Payment</h2>-->
+<!--      <form>-->
+<!--          <label for="payment-method">Payment Method:</label><br>-->
+<!--          <input type="radio" id="cod" name="payment-method" value="cod" checked> COD<br>-->
+<!--          <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer"> Bank transfer<br><br>-->
+<!--        <button type="submit" name="" action="" class="checkout-btn">Check Out</button>-->
+<!--      </form>-->
+<!--  </div>-->
+    <div class="payment-info">
+        <h2>Payment</h2>
+        <form method="POST" action="/payment/create">
+            <input type="hidden" name="projectId" value="1" />
+
+            <!-- Nhãn cho radio button COD -->
+            <label for="cod">Payment Method:</label><br>
+            <input type="radio" id="cod" name="payment-method" value="cod" checked> COD<br>
+
+            <!-- Nhãn cho radio button Bank Transfer -->
+            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer"> Bank transfer<br><br>
+
+            <button type="submit" class="checkout-btn">Check Out</button>
+        </form>
+
+
+
+    </div>
+
+</div>
 </div>
   </div>
 

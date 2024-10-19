@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Data // Đảm bảo rằng @Data của Lombok sẽ tự động tạo getter cho bạn
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaterialEnity {
+public class MaterialEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

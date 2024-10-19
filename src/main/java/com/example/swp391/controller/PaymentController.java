@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -39,35 +40,124 @@ public class PaymentController {
     @Value("${vnpay.return_url}")
     private String vnp_ReturnUrl;
 
-    // Hiển thị trang thanh toán
-    @GetMapping("/payment")
-    public String showPaymentPage(Model model) {
-        // Lấy danh sách các dự án cần thanh toán và truyền vào view
-        model.addAttribute("projects", projectService.getAllProjects());
-        return "payment"; // Trả về view "payment.html" trong thư mục templates
-    }
+    // Xử lý yêu cầu tạo thanh toán và chuyển hướng đến VNPay (Sử dụng POST để bảo mật hơn)
+//    @PostMapping("/payment/create")
+//    public String createPayment(
+//            @RequestParam("projectId") Long projectId,
+//            @RequestParam("payment-method") String paymentMethod,  // Thêm phương thức thanh toán
+//            Model model) {
+//        ProjectEntity project = projectService.findProjectById(projectId);
+//        if (project == null) {
+//            model.addAttribute("message", "Dự án không tồn tại!");
+//            return "error";
+//        }
+//
+//        // Kiểm tra xem dự án đã được thanh toán chưa
+//        if ("Paid".equals(project.getStatus())) {
+//            model.addAttribute("message", "Dự án này đã được thanh toán trước đó.");
+//            return "error";
+//        }
+//
+//        // Xử lý thanh toán tùy thuộc vào phương thức thanh toán
+//        if ("bank-transfer".equals(paymentMethod)) {
+//            // Tổng số tiền thanh toán từ giỏ hàng
+//            double totalAmount = project.getTotalCost();
+//
+//            // Tạo vnp_Params để gửi tới VNPay
+//            Map<String, String> vnp_Params = createVnpParams(project, totalAmount);
+//
+//            // Tạo query URL và mã hóa SecureHash
+//            String queryUrl = vnp_Params.entrySet().stream()
+//                    .map(e -> e.getKey() + "=" + e.getValue())
+//                    .collect(Collectors.joining("&"));
+//            String secureHash = hmacSHA512(vnp_HashSecret, queryUrl);
+//
+//            // Chuyển hướng người dùng tới VNPay
+//            return "redirect:" + vnp_Url + "?" + queryUrl + "&vnp_SecureHash=" + secureHash;
+//
+//        } else if ("cod".equals(paymentMethod)) {
+//            // Xử lý thanh toán COD
+//            project.setStatus("COD Requested");
+//            projectService.updateProject(project);
+//
+//            // Tạo bản ghi thanh toán COD (có thể tùy chỉnh)
+//            PaymentEntity payment = new PaymentEntity();
+//            payment.setTransactionId("COD-" + projectId);  // Sử dụng mã giao dịch tạm cho COD
+//            payment.setAmount(project.getTotalCost());
+//            payment.setPaymentDate(new java.util.Date());
+//            payment.setPaymentStatus("Pending COD");
+//            payment.setProject(project);
+//
+//            paymentService.savePayment(payment);
+//
+//            model.addAttribute("message", "Yêu cầu thanh toán COD đã được ghi nhận.");
+//            return "codSuccess";  // Trả về trang xác nhận yêu cầu COD thành công
+//        } else {
+//            model.addAttribute("message", "Phương thức thanh toán không hợp lệ.");
+//            return "error";
+//        }
+//    }
+    @PostMapping("/payment/create")
+    public String createPayment(
+            @RequestParam("projectId") Long projectId,
+            @RequestParam("payment-method") String paymentMethod,  // Thêm phương thức thanh toán
+            Model model) {
 
-    // Xử lý yêu cầu tạo thanh toán và chuyển hướng đến VNPay
-    @GetMapping("/payment/create")
-    public String createPayment(@RequestParam("projectId") Long projectId, Model model) {
-        ProjectEntity project = projectService.findProjectById(projectId);
-        if (project == null) {
+        // Tìm dự án theo ID
+        Optional<ProjectEntity> projectOpt = projectService.findProjectById(projectId);
+        if (!projectOpt.isPresent()) {
             model.addAttribute("message", "Dự án không tồn tại!");
             return "error";
         }
 
-        // Tạo vnp_Params bằng phương thức đã tách riêng
-        Map<String, String> vnp_Params = createVnpParams(project, projectId);
+        ProjectEntity project = projectOpt.get();  // Lấy đối tượng ProjectEntity từ Optional
 
-        // Tạo query URL và mã hóa SecureHash
-        String queryUrl = vnp_Params.entrySet().stream()
-                .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.joining("&"));
-        String secureHash = hmacSHA512(vnp_HashSecret, queryUrl);
+        // Kiểm tra xem dự án đã được thanh toán chưa
+        if ("Paid".equals(project.getStatus())) {
+            model.addAttribute("message", "Dự án này đã được thanh toán trước đó.");
+            return "error";
+        }
 
-        // Chuyển hướng người dùng tới VNPay
-        return "redirect:" + vnp_Url + "?" + queryUrl + "&vnp_SecureHash=" + secureHash;
+        // Xử lý thanh toán tùy thuộc vào phương thức thanh toán
+        if ("bank-transfer".equals(paymentMethod)) {
+            // Tổng số tiền thanh toán từ giỏ hàng
+            double totalAmount = project.getTotalCost();
+
+            // Tạo vnp_Params để gửi tới VNPay
+            Map<String, String> vnp_Params = createVnpParams(project, totalAmount);
+
+            // Tạo query URL và mã hóa SecureHash
+            String queryUrl = vnp_Params.entrySet().stream()
+                    .map(e -> e.getKey() + "=" + e.getValue())
+                    .collect(Collectors.joining("&"));
+            String secureHash = hmacSHA512(vnp_HashSecret, queryUrl);
+
+            // Chuyển hướng người dùng tới VNPay
+            return "redirect:" + vnp_Url + "?" + queryUrl + "&vnp_SecureHash=" + secureHash;
+
+        } else if ("cod".equals(paymentMethod)) {
+            // Xử lý thanh toán COD
+            project.setStatus("COD Requested");
+            projectService.updateProject(project);
+
+            // Tạo bản ghi thanh toán COD (có thể tùy chỉnh)
+            PaymentEntity payment = new PaymentEntity();
+            payment.setTransactionId("COD-" + projectId);  // Sử dụng mã giao dịch tạm cho COD
+            payment.setAmount(project.getTotalCost());
+            payment.setPaymentDate(new java.util.Date());
+            payment.setPaymentStatus("Pending COD");
+            payment.setProject(project);
+
+            paymentService.savePayment(payment);
+
+            model.addAttribute("message", "Yêu cầu thanh toán COD đã được ghi nhận.");
+            return "codSuccess";  // Trả về trang xác nhận yêu cầu COD thành công
+        } else {
+            model.addAttribute("message", "Phương thức thanh toán không hợp lệ.");
+            return "error";
+        }
     }
+
 
     // Xử lý kết quả thanh toán sau khi người dùng thanh toán xong
     @GetMapping("/payment/vnpay-return")
@@ -91,10 +181,18 @@ public class PaymentController {
                 double amount = Double.parseDouble(vnp_Params.get("vnp_Amount")) / 100;
                 String transactionId = vnp_Params.get("vnp_TransactionNo");
 
-                // Tìm dự án và cập nhật trạng thái thanh toán
-                ProjectEntity project = projectService.findProjectById(projectId);
-                if (project == null) {
+                // Tìm kiếm dự án
+                Optional<ProjectEntity> projectOpt = projectService.findProjectById(projectId);
+                if (!projectOpt.isPresent()) {
                     model.addAttribute("message", "Dự án không tồn tại");
+                    return "error";
+                }
+
+                ProjectEntity project = projectOpt.get();  // Lấy đối tượng ProjectEntity từ Optional
+
+                // Kiểm tra tính hợp lệ của số tiền thanh toán
+                if (project.getTotalCost() != amount) {
+                    model.addAttribute("message", "Số tiền không khớp với dự án!");
                     return "error";
                 }
 
@@ -106,13 +204,13 @@ public class PaymentController {
                 payment.setPaymentStatus("Success");
                 payment.setProject(project);
 
-                // Lưu thông tin thanh toán và cập nhật trạng thái dự án
+                // Lưu thanh toán và cập nhật trạng thái dự án
                 paymentService.savePayment(payment);
                 project.setStatus("Paid");
                 projectService.updateProject(project);
 
                 model.addAttribute("message", "Thanh toán thành công!");
-                return "success";
+                return "success";  // Trả về trang kết quả thanh toán thành công
             } else {
                 model.addAttribute("message", "Thanh toán thất bại!");
                 return "error";
@@ -123,24 +221,24 @@ public class PaymentController {
         }
     }
 
+
     // Phương thức được tách riêng để tạo vnp_Params
-    private Map<String, String> createVnpParams(ProjectEntity project, Long projectId) {
-        String vnp_TxnRef = String.valueOf(projectId); // Mã giao dịch
+    private Map<String, String> createVnpParams(ProjectEntity project, double totalAmount) {
+        String vnp_TxnRef = String.valueOf(project.getProjectId()); // Mã giao dịch
         String vnp_OrderInfo = "Thanh toán dự án " + project.getName();
-        String vnp_Amount = String.valueOf(project.getTotalCost() * 100); // Đơn vị là VND (x100 vì VNPay yêu cầu)
+        String vnp_Amount = String.valueOf(totalAmount * 100); // Chuyển đổi sang VND (nhân 100)
         String vnp_IpAddr = getClientIpAddress(); // Lấy IP của máy khách
 
-        // Tạo các tham số gửi lên VNPay
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", "2.1.0");
         vnp_Params.put("vnp_Command", "pay");
-        vnp_Params.put("vnp_TmnCode", vnp_TmnCode); // Lấy từ properties
+        vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", vnp_Amount);
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
         vnp_Params.put("vnp_OrderType", "billpayment");
-        vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl); // Lấy từ properties
+        vnp_Params.put("vnp_ReturnUrl", vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         return vnp_Params;
@@ -161,7 +259,7 @@ public class PaymentController {
         }
     }
 
-    // Hàm để lấy địa chỉ IP của client (dùng thay cho HttpServletRequest)
+    // Hàm để lấy địa chỉ IP của client
     private String getClientIpAddress() {
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
@@ -169,40 +267,5 @@ public class PaymentController {
         } catch (Exception e) {
             return "127.0.0.1"; // Trả về localhost nếu không thể lấy IP
         }
-    }
-    // Lấy chi tiết thanh toán theo ID
-    @GetMapping("/payment/{id}")
-    public String getPaymentById(@PathVariable("id") Long paymentId, Model model) {
-        PaymentEntity payment = paymentService.findPaymentById(paymentId);
-        if (payment == null) {
-            model.addAttribute("message", "Không tìm thấy thanh toán với ID: " + paymentId);
-            return "error";
-        }
-        model.addAttribute("payment", payment);
-        return "paymentDetails"; // Trả về trang hiển thị chi tiết thanh toán
-    }
-
-    // Lấy thanh toán theo transactionId
-    @GetMapping("/payment/transaction")
-    public String getPaymentByTransactionId(@RequestParam("transactionId") String transactionId, Model model) {
-        PaymentEntity payment = paymentService.findPaymentByTransactionId(transactionId);
-        if (payment == null) {
-            model.addAttribute("message", "Không tìm thấy thanh toán với mã giao dịch: " + transactionId);
-            return "error";
-        }
-        model.addAttribute("payment", payment);
-        return "paymentDetails";
-    }
-
-    // Xóa thanh toán theo ID
-    @DeleteMapping("/payment/{id}")
-    @ResponseBody
-    public String deletePaymentById(@PathVariable("id") Long paymentId) {
-        PaymentEntity payment = paymentService.findPaymentById(paymentId);
-        if (payment == null) {
-            return "Không tìm thấy thanh toán với ID: " + paymentId;
-        }
-        paymentService.deletePayment(paymentId);
-        return "Đã xóa thanh toán thành công";
     }
 }
