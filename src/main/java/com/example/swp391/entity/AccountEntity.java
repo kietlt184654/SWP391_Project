@@ -20,11 +20,11 @@ public class AccountEntity {
     @Column(name = "AccountName", nullable = false, length = 100)  // Thêm trường AccountName
     private String accountName;
 
-    @Column(name = "Password", nullable = false, length = 255)  // Mã hóa mật khẩu nên để đủ dài
+    @Column(name = "Password", nullable = false)  // Mã hóa mật khẩu nên để đủ dài
     private String password;
 
     @Column(name = "AccountType", length = 50)  // Ánh xạ cột chính xác
-    private String accountTypeID;
+    private int accountTypeID;
 
     @Column(name = "Email", nullable = false, unique = true, length = 100)  // Email cần duy nhất
     private String email;
@@ -35,10 +35,10 @@ public class AccountEntity {
     @Column(name = "ResetToken", length = 100)  // Thêm trường reset token
     private String resetToken;
 
-    @Column(name = "Address", length = 255)  // Thêm cột địa chỉ
+    @Column(name = "Address")  // Thêm cột địa chỉ
     private String address;
 
-    @Column(name = "Images", length = 255)  // Lưu link hoặc tên hình ảnh
+    @Column(name = "Images")  // Lưu link hoặc tên hình ảnh
     private String images;
 
     @Column(name = "Status", nullable = false)  // Thêm trạng thái tài khoản
