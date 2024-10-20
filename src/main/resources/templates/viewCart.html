@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <script src="/static/viewCartPage.js" defer></script>
+    <script src="/javascript/viewCartPage.js" defer></script>
     <link rel="stylesheet" href="/css/viewCart.css" />
     <title>View Cart</title>
 </head>
@@ -30,7 +30,7 @@
             <li><a th:href="@{/}" class="link">Home</a></li>
             <li><a href="about.html" class="link">About</a></li>
             <li><a href="blog.html" class="link">Blog</a></li>
-            <li><a href="services.html" class="link">Services</a></li>
+            <li><a th:href="@{/design}" class="link">Services</a></li>
             <li><a href="products.html" class="link">Products</a></li>
 
             <!-- Cart -->
@@ -108,61 +108,48 @@
     </div>
 </div>
 
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#"><i class="fas fa-history"></i> History Order</a></li>
+        <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+    </ul>
+</div>
 
-    <!-- ---------------------------------------------------------------------------------------------------------- -->
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="user-info">
-          <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-          <p class="username">Username</p>
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>Information</h4>
+            <p>Open: 8 AM - 10 PM</p>
+            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
         </div>
-        <ul class="sidebar-menu">
-          <li>
-            <a href="/"><i class="fas fa-home"></i> Home</a>
-          </li>
-          <li>
-            <a href="historyOrder"><i class="fas fa-history"></i> History Order</a>
-          </li>
-          <li>
-            <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
-          </li>
-          <li>
-            <a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a>
-          </li>
-          <li>
-            <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-          </li>
-        </ul>
-      </div>
-    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <h4>Information</h4>
-                <p>Open: 8 AM - 10 PM</p>
-                <p>
-                    PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh
-                </p>
-            </div>
-            <div class="footer-services">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="link-to-construction" class="service-item">Construction Koi pond</a></li>
-                    <li><a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a></li>
-                    <li><a href="link-to-design" class="service-item">Design upon requirements</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact</h4>
-                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-                <p>
-                    <i class="fa-brands fa-facebook"></i>
-                    <a href="https://facebook.com" target="_blank">Visit Us</a>
-                </p>
-            </div>
+        <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="link-to-construction">Construction Koi Pond</a></li>
+                <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
+                <li><a href="link-to-design">Design upon Requirements</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+            <p>
+                <i class="fa-brands fa-facebook"></i>
+                <a href="https://facebook.com" target="_blank">Visit Us</a>
+            </p>
         </div>
     </div>
+</div>
 
 </body>
 </html>

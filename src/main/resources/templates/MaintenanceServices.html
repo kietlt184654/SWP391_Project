@@ -1,27 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koi Pond Maintenance</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+    <title>User Profile</title>
 </head>
-<body>
-    <h1>Koi Pond Maintenance Services</h1>
-    
-    <form action="/book" method="post" id="bookingForm">
-        <label for="customerName">Your Name:</label>
-        <input type="text" id="customerName" name="customerName" required>
-        
-        <label for="serviceDate">Preferred Date:</label>
-        <input type="date" id="serviceDate" name="serviceDate" required>
-        
-        <button type="submit">Book Maintenance</button>
-    </form>
 
-    <div id="trackingSection" style="display:none;">
-        <h2>Service Tracking</h2>
-        <p id="trackingMessage">${trackingMessage}</p> 
+<body>
+<!-- Navigation -->
+<div class="nav" th:fragment="nav">
+    <div class="nav-logo">
+        <p>LOGO</p>
     </div>
+    <div class="nav-menu">
+        <ul>
+            <li><a href="/" class="link">Home</a></li>
+            <li><a href="/about" class="link">About</a></li>
+            <li><a href="/services" class="link">Services</a></li>
+            <li><a href="/products" class="link">Products</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <img src="/img/koi_des.webp" />
+        <h1>Profile</h1>
+        <ol class="breadcrumb">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li class="active">Design service</li>
+        </ol>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="profile-container container">
+    <div class="row">
+        <!-- Profile Information Sidebar -->
+        <div class="col-md-4">
+            <div class="profile-sidebar text-center">
+                <img th:src="@{${accountEntity.images} ?: '/img/defaultAva.jpg'}" alt="User Avatar" class="rounded-circle img-thumbnail" />
+                <h3 class="username" th:text="${accountEntity.accountName}"></h3>
+                <p class="user-role" th:text="'Role: ' + ${accountEntity.accountTypeID}"></p>
+                <button class="btn btn-primary mt-2">Change Avatar</button>
+            </div>
+        </div>
+
+        <!-- Profile Details Form -->
+        <div class="col-md-8">
+            <h2 class="info-header">Edit Profile Information</h2>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" th:value="${accountEntity.accountName}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" class="form-control" th:value="${accountEntity.phoneNumber}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" th:value="${accountEntity.email}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" class="form-control" th:value="${accountEntity.address}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" th:value="${accountEntity.password}" readonly />
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Save Changes</button>
+            </form>
+
+            <!-- Adding navigation buttons -->
+            <div class="mt-4">
+                <a href="/" class="btn btn-primary">Back to Home</a>
+                <a href="/account/edit-profile" class="btn btn-warning">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <p>Contact us: koipond@gmail.com | Phone: 0972423242</p>
+    </div>
+</div>
 </body>
 </html>

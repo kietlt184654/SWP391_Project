@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="/css/Homepage.css">
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -25,10 +24,8 @@
             <li>
                 <a href="#" class="link">Services</a>
                 <ul>
-                    <li><a th:href="@{/design}">Design Koi Pond</a></li>
-                    <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
-                    <li><a th:href="@{/services}">Koi Pond Service</a></li>
-                    <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
+                    <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
+                    <li><a th:href="@{/services}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
                 </ul>
 
             </li>
@@ -52,392 +49,297 @@
         <!-- If the user is logged in, show avatar and account name -->
         <!-- Hiển thị avatar và tên người dùng -->
         <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
-                class="rounded-circle" width="40" height="40">
-            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
-            <form th:action="@{/logout}" method="POST" class="ms-3">
-                <button class="btn btn-outline-secondary btn-sm">Logout</button>
+            <a th:href="@{/account/profile}" class="d-flex align-items-center">
+                <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
+                     alt="User Avatar"
+                     class="rounded-circle"
+                     width="40"
+                     height="40">
+                <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+            </a>
+            <form th:action="@{/account/logout}" method="post" class="ms-3">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
             </form>
         </div>
-    </div>
+
 
         <div class="nav-menu-btn">
-        <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-    </div>
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
 </nav>
 
 <body>
-    <!-- <div class="search-container">
+<div class="search-container">
     <input type="text" placeholder="Search...">
     <a href="">
         <li class="fas fa-search "></li>
     </a>
-</div> -->
+</div>
 
-    <div class="carousel">
-
-        <div class="list">
-
-            <div class="item" style="background-image: url(/img/Japanese\ Koi\ Design.jpg);">
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">JAPANESE STYLE</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item" style="background-image: url(/img/koi_des.webp);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">WATERFALL STYLE</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="item"
-                style="background-image: url(/img/Zen-Garden-in-Sacramento.jpg);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">ZEN GARDEN</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="item" style="background-image: url(/img/Modernstyle.webp);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">MODERN STYLE</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="item" style="background-image: url(/img/Zengarden.jpg);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">ZEN GARDEN</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="item" style="background-image: url(/img/Japanese_Style.jpg);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">JAPANESE STYLE</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="item" style="background-image: url(/img/Koi_Waterfall_Style.jpg);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">WATERFALL STYLE</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="item" style="background-image: url(/img/Modern_Luxury.webp);">
-
-                <div class="content">
-                    <div class="title">KOI POND</div>
-                    <div class="name">MODERN STYLE</div>
-                    <div class="des">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis culpa similique
-                        consequuntur, reprehenderit dicta repudiandae.</div>
-                    <div class="btn">
-                        <button>See More</button>
-                        <button>Subscribe</button>
-                    </div>
-                </div>
-
-            </div>
-
-
+<div class="body-content">
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 1" style="width:100%">
+            <div class="text">Chú thích cho ảnh 1</div>
         </div>
-
-        <!--next prev button-->
-        <div class="arrows">
-            <button class="prev"><  </button>
-            <button class="next">></button>
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 2" style="width:100%">
+            <div class="text">Chú thích cho ảnh 2</div>
         </div>
-
-
-        <!-- time running -->
-        <div class="timeRunning"></div>
-
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 3" style="width:100%">
+            <div class="text">Chú thích cho ảnh 3</div>
+        </div>
+        <div class="mySlides fade">
+            <div class="numbertext">4 / 4</div>
+            <img src="/img/hokoi.jpg" alt="Slide 4" style="width:100%">
+            <div class="text">Chú thích cho ảnh 4</div>
+        </div>
     </div>
+    <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
 
-    <section class="awe-section-2">
-        <div class="section_about">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <img class="img-fluid" src="path/to/company-image.jpg" alt="Our company">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <h2 class="title_module">Our company</h2>
-                        <div class="about_desc">
-                            Our company is specialized in designing and constructing high-end koi ponds,
-                            gardens, and landscaping projects. With over 10 years of experience, we are
-                            committed to creating beautiful and functional outdoor spaces. Our team of
-                            experts uses the latest techniques and high-quality materials to ensure that
-                            each project meets our clients' expectations. We pride ourselves on our attention
-                            to detail and our ability to bring our clients' visions to life.
-                        </div>
-                        <a href="/about-us" class="about_more" title="Learn more"><span>Learn more</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="projects-section">
+<section class="awe-section-2">
+    <div class="section_about">
         <div class="container">
-            <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our
-                Projects</h2>
             <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/Japanese\ Koi\ Design.jpg" alt="Project 1">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Japanese Style</h3>
-                        </div>
-                        <a href="/project/koi-pond-design" class="stretched-link"></a>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <img class="img-fluid" src="path/to/company-image.jpg" alt="Our company">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h2 class="title_module">Our company</h2>
+                    <div class="about_desc">
+                        Our company is specialized in designing and constructing high-end koi ponds,
+                        gardens, and landscaping projects. With over 10 years of experience, we are
+                        committed to creating beautiful and functional outdoor spaces. Our team of
+                        experts uses the latest techniques and high-quality materials to ensure that
+                        each project meets our clients' expectations. We pride ourselves on our attention
+                        to detail and our ability to bring our clients' visions to life.
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/Zen-Garden-in-Sacramento.jpg" alt="Project 2">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Zen Garden</h3>
-                        </div>
-                        <a href="/project/japanese-garden" class="stretched-link"></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/koi_des.webp" alt="Project 3">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Waterfall Feature</h3>
-                        </div>
-                        <a href="/project/waterfall-feature" class="stretched-link"></a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="project-card">
-                        <img src="/img/Modernstyle.webp" alt="Project 4">
-                        <div class="project-overlay">
-                            <h3 class="project-title">Modern Style</h3>
-                        </div>
-                        <a href="/project/zen-garden" class="stretched-link"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card h-100">
-                <img src="/img/refund.jpg" class="card-img-top" alt="refund">
-                <div class="card-body">
-                    <h3 class="card-title-1">Return Policy</h3>
-                    <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without
-                        any additional costs</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
-                <div class="card-body">
-                    <h3 class="card-title-2">Professional Team</h3>
-                    <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most
-                        perfect service.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
-                <div class="card-body">
-                    <h3 class="card-title-3">Shipping Policy</h3>
-                    <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to
-                        customers</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    <a href="/about-us" class="about_more" title="Learn more"><span>Learn more</span></a>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<section class="projects-section">
+    <div class="container">
+        <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our Projects</h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 1">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Koi Pond Design</h3>
+                    </div>
+                    <a href="/project/koi-pond-design" class="stretched-link"></a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 2">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Japanese Garden</h3>
+                    </div>
+                    <a href="/project/japanese-garden" class="stretched-link"></a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 3">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Waterfall Feature</h3>
+                    </div>
+                    <a href="/project/waterfall-feature" class="stretched-link"></a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="project-card">
+                    <img src="/img/ho_koi.jpg" alt="Project 4">
+                    <div class="project-overlay">
+                        <h3 class="project-title">Zen Garden</h3>
+                    </div>
+                    <a href="/project/zen-garden" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="section_danhmucnoibat">
-        <!-- Content for this section remains the same -->
-    </section>
 
-    <section class="rating-feedback">
-        <div class="container">
-            <h2 class="text-center mb-4">Rating and feedback</h2>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50" height="50">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <img src="/img/refund.jpg" class="card-img-top" alt="refund">
+            <div class="card-body">
+                <h3 class="card-title-1">Return Policy</h3>
+                <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
+            <div class="card-body">
+                <h3 class="card-title-2">Professional Team</h3>
+                <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
+            <div class="card-body">
+                <h3 class="card-title-3">Shipping Policy</h3>
+                <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section_danhmucnoibat">
+    <!-- Content for this section remains the same -->
+</section>
+
+<section class="rating-feedback">
+    <div class="container">
+        <h2 class="text-center mb-4">Rating and feedback</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                             height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-0">User feedback text goes here.</p>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="bg-light p-2 rounded">
-                                <p class="mb-0">User feedback text goes here.</p>
-                            </div>
-                            <div class="mt-1">
-                                <small class="text-muted">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                </small>
-                            </div>
+                        <div class="mt-1">
+                            <small class="text-muted">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                            </small>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50" height="50">
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                             height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-0">Another user feedback example.</p>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="bg-light p-2 rounded">
-                                <p class="mb-0">Another user feedback example.</p>
-                            </div>
-                            <div class="mt-1">
-                                <small class="text-muted">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </small>
-                            </div>
+                        <div class="mt-1">
+                            <small class="text-muted">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </small>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50" height="50">
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
+                             height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-0">Third user feedback goes here.</p>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                            <div class="bg-light p-2 rounded">
-                                <p class="mb-0">Third user feedback goes here.</p>
-                            </div>
-                            <div class="mt-1">
-                                <small class="text-muted">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                </small>
-                            </div>
+                        <div class="mt-1">
+                            <small class="text-muted">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <h4>Information</h4>
-                <p>Open: 8 AM - 10 PM</p>
-                <p>
-                    PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-                    Minh
-                </p>
-            </div>
-            <div class="footer-services">
-                <h4>Services</h4>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>Company</h4>
                 <ul>
-                    <li>
-                        <a href="link-to-construction" class="service-item">Construction Koi pond</a>
-                    </li>
-                    <li>
-                        <a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a>
-                    </li>
-                    <li>
-                        <a href="link-to-design" class="service-item">Design upon requirements</a>
-                    </li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Our services</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Affiliate program</a></li>
                 </ul>
             </div>
-            <div class="footer-contact">
-                <h4>Contact</h4>
-                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-                <p>
-                    <i class="fa-brands fa-facebook"></i>
-                    <a href="https://facebook.com" target="_blank">Visit Us</a>
-                </p>
+            <div class="footer-col">
+                <h4>Get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Order status</a></li>
+                    <li><a href="#">Payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Online shop</h4>
+                <ul>
+                    <li><a href="#">Watch</a></li>
+                    <li><a href="#">Bag</a></li>
+                    <li><a href="#">Shoes</a></li>
+                    <li><a href="#">Dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
         </div>
     </div>
+</footer>
 
-    <script src="/js/bootstrap.bundle.min.js"
+<script src="/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="/javascript/Homepage.js"></script>
+<script src="/javascript/Homepage.js"></script>
 
 </body>
 
