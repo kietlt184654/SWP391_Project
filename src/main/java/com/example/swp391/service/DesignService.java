@@ -54,6 +54,9 @@ public class DesignService {
         Long availableTypeDesignId = 1L; // Giả định rằng 1 là ID của "mẫu có sẵn" (stereotype design)
         return designRepository.findByDesignNameContainingIgnoreCaseAndTypeDesign_TypeDesignId(designName, availableTypeDesignId);
     }
+    public Optional<DesignEntity> getDesignById(Long id) {
+        return designRepository.findById(id);  // Sử dụng phương thức findById() của JpaRepository
+    }
 
     /**
      * Tìm thiết kế theo ID.
