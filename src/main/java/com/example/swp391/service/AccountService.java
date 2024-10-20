@@ -33,15 +33,15 @@ public AccountEntity login(String accountName, String password) {
     public AccountEntity findByEmail(String email) {
     return accountRepository.findByEmail(email);
     }
-    public void updateResetToken(String token, String email) {
-        AccountEntity user = accountRepository.findByEmail(email);
-        if (user != null) {
-            user.setResetToken(token);
-            accountRepository.save(user);
-        }
-
-
-    }
+//    public void updateResetToken(String token, String email) {
+//        AccountEntity user = accountRepository.findByEmail(email);
+//        if (user != null) {
+//            user.setResetToken(token);
+//            accountRepository.save(user);
+//        }
+//
+//
+//    }
     public void updatePassword(AccountEntity user, String newPassword) {
         // Không mã hóa, chỉ cập nhật mật khẩu trực tiếp
         user.setPassword(newPassword);
@@ -59,5 +59,9 @@ public AccountEntity login(String accountName, String password) {
         return accountRepository.findByResetToken(token); // Tìm theo token
     }
 
+
+    public void updateAccount(AccountEntity account) {
+        accountRepository.save(account);
+    }
 
 }

@@ -15,6 +15,16 @@ body {
   flex-direction: column;
   background: #f3f6f9;
 }
+.info-header {
+  font-size: 28px;
+  color: #3c7363;
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
+  letter-spacing: 1px; /* Thêm khoảng cách giữa các chữ */
+}
 
 /* Navbar */
 .nav {

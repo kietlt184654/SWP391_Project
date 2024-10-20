@@ -23,6 +23,9 @@ public class DesignService {
 //    public DesignEntity saveProduct(DesignEntity product) {
 //        return designRepository.save(product);
 //    }
+public DesignEntity findDesignById(Long id) {
+    return designRepository.findById(String.valueOf(id)).orElse(null);
+}
     public Optional<DesignEntity> getProductById(Long id) {
         return designRepository.findById(String.valueOf(id));
     }
