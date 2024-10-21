@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Manager Dashboard</title>
+  <link rel="stylesheet" href="/css/manager.css">
+</head>
+<body>
+<div class="container">
+  <nav class="sidebar">
+    <div class="logo">
+      <h2>Manager</h2>
+    </div>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a th:href="@{/account/customers}">Quản lí Customer</a></li>
+      <li><a href="project.html">Quản lí Project</a></li>
+      <li><a href="staff.html">Quản lí Staff</a></li>
+      <li><a href="settings.html">Settings</a></li>
+    </ul>
+  </nav>
+  <div class="main-content">
+    <header>
+      <h1>Welcome to the Manager Dashboard</h1>
+      <div class="user-profile">
+        <img src="profile-pic.jpg" alt="User Profile" class="profile-pic">
+        <span class="user-name">Ngân</span>
+      </div>
+    </header>
+    <section class="overview">
+      <div class="card">
+        <h3>Users</h3>
+        <p>1,245</p>
+      </div>
+      <div class="card">
+        <h3>Active Projects</h3>
+        <p>34</p>
+      </div>
+      <div class="card">
+        <h3>Completed Tasks</h3>
+        <p>720</p>
+      </div>
+      <div class="card">
+        <h3>Pending Requests</h3>
+        <p>16</p>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

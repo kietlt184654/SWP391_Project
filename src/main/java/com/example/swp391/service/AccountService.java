@@ -5,6 +5,7 @@ import com.example.swp391.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,6 +63,9 @@ public AccountEntity login(String accountName, String password) {
 
     public void updateAccount(AccountEntity account) {
         accountRepository.save(account);
+    }
+    public List<AccountEntity> getAllCustomers() {
+        return accountRepository.findAll();
     }
 
 }

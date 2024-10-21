@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.List;
+
 @Controller
 @RequestMapping("/account")
 public class AccountController {
@@ -30,7 +32,12 @@ public class AccountController {
         if (account != null) {
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
-            return "Homepage";
+            if (account.getAccountTypeID().equals("Customer")){
+
+            return "Homepage";}else {
+                return "manager";
+            }
+
         }else {
             model.addAttribute("message", "Invalid username or password");
             return "login";
@@ -157,7 +164,18 @@ public class AccountController {
 
         return "profile";  // Quay lại trang profile sau khi lưu thành công
     }
+    // Hàm hiển thị danh sách khách hàng
+    @GetMapping("/customers")
+    public String showAllCustomers(Model model) {
+        // Lấy danh sách tất cả khách hàng
+        List<AccountEntity> customers = accountService.getAllCustomers();
 
+        // Đưa danh sách vào model để hiển thị trên giao diện
+        model.addAttribute("customers", customers);
+
+        // Trả về tên template Thymeleaf
+        return "manageCustomer";
+    }
 
 
 }
