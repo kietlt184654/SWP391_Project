@@ -31,12 +31,15 @@ public class AccountEntity {
 
     @Column(name = "PhoneNumber", nullable = false)  // Tên cột chính xác
     private String phoneNumber;
+
+    @Column(name = "ResetToken", length = 100)  // Thêm trường reset token
     private String resetToken;
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
 
-    @Column(name = "Images")
+    @Column(name = "Images")  // Tên cột chính xác
     private String images;
+
     @Column(name = "Status", nullable = false)  // Thêm trường Status
     private Boolean status;  // Sử dụng Boolean cho kiểu BIT
 }
