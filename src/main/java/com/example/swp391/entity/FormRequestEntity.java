@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "Form_Request")
+@Table(name = "FormRequest")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +21,6 @@ public class FormRequestEntity {
     private ServiceEntity service;
 
     @ManyToOne
-    @JoinColumn(name = "TypeDesignID")
+    @JoinColumn(name = "typeDesignId")
     private TypeDesignEntity typeDesign;
 }

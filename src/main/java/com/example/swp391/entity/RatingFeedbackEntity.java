@@ -10,7 +10,7 @@
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class RatingFeedbackEnity {
+//public class RatingFeedbackEntity {
 //
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
