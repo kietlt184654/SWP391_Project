@@ -12,13 +12,13 @@ const dropdownMenu = document.querySelector(".dropdown-menu");
 accountIcon.addEventListener("click", (event) => {
   event.preventDefault();
   dropdownMenu.style.display =
-    dropdownMenu.style.display === "block" ? "none" : "block";
+      dropdownMenu.style.display === "block" ? "none" : "block";
 });
 
 document.addEventListener("click", function (event) {
   if (
-    !accountIcon.contains(event.target) &&
-    !dropdownMenu.contains(event.target)
+      !accountIcon.contains(event.target) &&
+      !dropdownMenu.contains(event.target)
   ) {
     dropdownMenu.style.display = "none";
   }
@@ -84,9 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       stars.forEach((s, index) => {
         if (index < rating) {
-          s.classList.add("selected");
+          s.classList.add("selected"); // Tô màu vàng
         } else {
-          s.classList.remove("selected");
+          s.classList.remove("selected"); // Giữ màu xám
         }
       });
     });
@@ -95,33 +95,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // move pro-img-list
 document.addEventListener("DOMContentLoaded", function () {
-  const imgList = document.querySelectorAll(".pro-img-list img");
-  const mainImg = document.querySelector(".pro-img-details img");
-  let currentIndex = 0;
+  const imgList = document.querySelectorAll(".pro-img-list img"); // Lấy danh sách các ảnh nhỏ
+  const mainImg = document.querySelector(".pro-img-details img"); // Lấy ảnh chính hiển thị
+  let currentIndex = 0; // Đặt chỉ số hiện tại của ảnh đang được hiển thị
 
+  // Hàm cập nhật ảnh chính
   function updateMainImage(index) {
     if (imgList[index]) {
       mainImg.src = imgList[index].src;
     }
   }
 
-  //control button on main img
+  // Sự kiện khi nhấn nút "Previous"
   document.getElementById("prev-btn").addEventListener("click", function () {
     if (currentIndex > 0) {
       currentIndex--;
     } else {
-      currentIndex = imgList.length - 1;
+      currentIndex = imgList.length - 1; // Quay lại ảnh cuối cùng nếu đã ở đầu
     }
-    updateMainImage(currentIndex);
+    updateMainImage(currentIndex); // Cập nhật ảnh chính
   });
+
+  // Sự kiện khi nhấn nút "Next"
   document.getElementById("next-btn").addEventListener("click", function () {
     if (currentIndex < imgList.length - 1) {
       currentIndex++;
     } else {
-      currentIndex = 0;
+      currentIndex = 0; // Quay lại ảnh đầu tiên nếu đã đến cuối
     }
-    updateMainImage(currentIndex);
+    updateMainImage(currentIndex); // Cập nhật ảnh chính
   });
 
+  // Đặt ảnh đầu tiên khi trang được tải
   updateMainImage(currentIndex);
 });

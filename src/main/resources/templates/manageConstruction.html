@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script
+      src="/src/main/resources/static/javascript/manageConstruction.js"
+      defer
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/css/manageConstruction.css"
+    />
+    <title>Manage construction progress</title>
+  </head>
+  <body>
+    <div class="nav">
+      <!-- Hamburger button -->
+      <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
+      </div>
+
+      <!-- Logo -->
+      <div class="nav-logo">
+        <p>LOGO</p>
+      </div>
+
+      <!-- Nav Menu -->
+      <div class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="manageConstruction.html" class="link">Overview</a></li>
+          <li><a href="taskBoard.html" class="link">Task Board</a></li>
+          <li><a href="taskList.html" class="link">Task List</a></li>
+          <li>
+            <a href="construction.html" class="link"
+              >Construction Plan & Layers</a
+            >
+          </li>
+
+          <li>
+            <a href="#" class="icon" id="accountIcon">
+              <i class="fas fa-user-circle"></i>Username
+              <i class="fas fa-caret-down"></i>
+            </a>
+
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="project-container">
+      <div class="project">
+        <button class="toggle-btn">Project 1</button>
+        <div class="project-content">
+          <div class="col-md-6 project-image">
+            <img src="/src/main/resources/static/img/a1.jpg" alt="Koi Pond 1" />
+          </div>
+          <div class="col-md-6 text-content">
+            <h4>Koi Pond 1</h4>
+            <p>
+              1. Basic Information<br />
+              <strong>Customer Name:</strong> Nguyen Van A<br />
+              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
+              City<br />
+              <strong>Phone Number:</strong> 0909 123 456<br />
+              <strong>Email:</strong> nguyenvana@example.com<br /><br />
+              2. Construction Timeline<br />
+              <strong>Start Date:</strong> November 1, 2024<br />
+              <strong>Completion Date:</strong> November 20, 2024<br /><br />
+            </p>
+            <button class="btn btn-primary">View</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <button class="toggle-btn">Project 2</button>
+        <div class="project-content">
+          <div class="col-md-6 project-image">
+            <img src="/src/main/resources/static/img/a2.jpg" alt="Koi Pond 1" />
+          </div>
+          <div class="col-md-6 text-content">
+            <h4>Koi Pond 2</h4>
+            <p>
+              1. Basic Information<br />
+              <strong>Customer Name:</strong> Nguyen Thi B<br />
+              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
+              City<br />
+              <strong>Phone Number:</strong> 0909 123 456<br />
+              <strong>Email:</strong> nguyenvana@example.com<br /><br />
+              2. Construction Timeline<br />
+              <strong>Start Date:</strong> November 1, 2024<br />
+              <strong>Completion Date:</strong> November 20, 2024<br /><br />
+            </p>
+            <button class="btn btn-primary">View</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <button class="toggle-btn">Project 3</button>
+        <div class="project-content">
+          <div class="col-md-6 project-image">
+            <img
+              src="/src/main/resources/static/img/koi3.jpg"
+              alt="Koi Pond 1"
+            />
+          </div>
+          <div class="col-md-6 text-content">
+            <h4>Koi Pond 3</h4>
+            <p>
+              1. Basic Information<br />
+              <strong>Customer Name:</strong> Le Hoang C<br />
+              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
+              City<br />
+              <strong>Phone Number:</strong> 0909 123 456<br />
+              <strong>Email:</strong> nguyenvana@example.com<br /><br />
+              2. Construction Timeline<br />
+              <strong>Start Date:</strong> November 1, 2024<br />
+              <strong>Completion Date:</strong> November 20, 2024<br /><br />
+            </p>
+            <button class="btn btn-primary">View</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <button class="toggle-btn">Project 4</button>
+        <div class="project-content">
+          <div class="col-md-6 project-image">
+            <img
+              src="/src/main/resources/static/img/koi2.jpg"
+              alt="Koi Pond 1"
+            />
+          </div>
+          <div class="col-md-6 text-content">
+            <h4>Koi Pond 4</h4>
+            <p>
+              1. Basic Information<br />
+              <strong>Customer Name:</strong> Le Van D<br />
+              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
+              City<br />
+              <strong>Phone Number:</strong> 0909 123 456<br />
+              <strong>Email:</strong> nguyenvana@example.com<br /><br />
+              2. Construction Timeline<br />
+              <strong>Start Date:</strong> November 1, 2024<br />
+              <strong>Completion Date:</strong> November 20, 2024<br /><br />
+            </p>
+            <button class="btn btn-primary">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-history"></i> History Order</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
+    <div class="footer">
+      <div class="footer-container">
+        <div class="footer-info">
+          <h4>Information</h4>
+          <p>Open: 8 AM - 10 PM</p>
+          <p>
+            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+            Minh
+          </p>
+        </div>
+        <div class="footer-services">
+          <h4>Services</h4>
+          <ul>
+            <li>
+              <a href="link-to-construction" class="service-item"
+                >Construction Koi pond</a
+              >
+            </li>
+            <li>
+              <a href="link-to-cleaning" class="service-item"
+                >Cleaning and maintenance</a
+              >
+            </li>
+            <li>
+              <a href="link-to-design" class="service-item"
+                >Design upon requirements</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+          <p>
+            <i class="fa-brands fa-facebook"></i>
+            <a href="https://facebook.com" target="_blank">Visit Us</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

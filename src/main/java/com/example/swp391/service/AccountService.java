@@ -107,7 +107,14 @@ public class AccountService {
         }
 
 
+//    public AccountEntity findByToken(String token) {
+//        return accountRepository.findByResetToken(token); // Tìm theo token
+//    }
 
+
+//    public void updateAccount(AccountEntity account) {
+//        accountRepository.save(account);
+//    }
 
         // Mã hóa mật khẩu mới
         account.setPassword(passwordEncoder.encode(newPassword));

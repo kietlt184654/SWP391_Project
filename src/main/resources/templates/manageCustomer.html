@@ -16,15 +16,152 @@
 
     <link
       rel="stylesheet"
-      href="/src/main/resources/static/css/editprofile.css"
+      href="/src/main/resources/static/css/manageCustomer.css"
     />
 
-    <link
-      rel="stylesheet"
-      href="/src/main/resources/javascript/editProfile.js"
-    />
-    <title>Edit profile customer</title>
+    <script
+      src="/src/main/resources/static/javascript/manageCustomer.js"
+      defer
+    ></script>
+    <title>Manage customer</title>
   </head>
 
-  <body></body>
+  <body>
+    <div class="nav">
+      <!-- Hamburger button -->
+      <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
+      </div>
+
+      <!-- Logo -->
+      <div class="nav-logo">
+        <p>LOGO</p>
+      </div>
+
+      <!-- Nav Menu -->
+      <div class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="Homepage.html" class="link">Home</a></li>
+          <li><a href="about.html" class="link">About</a></li>
+          <li><a href="blog.html" class="link">Blog</a></li>
+          <li><a href="services.html" class="link">Services</a></li>
+          <li><a href="Availableproject.html" class="link">Product</a></li>
+
+          <li>
+            <a href="#" class="icon" id="accountIcon">
+              <i class="fas fa-user-circle"></i>StaffName
+              <i class="fas fa-caret-down"></i>
+            </a>
+
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu">
+              <li>
+                <a href="profile.html"
+                  ><i class="fas fa-user-circle"></i> Profile</a
+                >
+              </li>
+              <li>
+                <a href="login.html"
+                  ><i class="fas fa-sign-out-alt"></i> Log Out</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <h1>Customer Information</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Customer ID</th>
+          <th>Image</th>
+          <th>Customer Name</th>
+          <th>Role ID</th>
+          <th>Phone Number</th>
+          <th>Address</th>
+          <th>Point</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><img src="customer1.jpg" alt="Customer 1" width="50" /></td>
+          <td>Quynhu</td>
+          <td>Customer</td>
+          <td>0972423242</td>
+          <td>15B Nguyễn Tư Nghiêm, p Bình Trưng Tây, Q2</td>
+          <td>150</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><img src="customer2.jpg" alt="Customer 2" width="50" /></td>
+          <td>Tramy</td>
+          <td>Customer</td>
+          <td>0903092242</td>
+          <td>Sala village</td>
+          <td>120</td>
+        </tr>
+        <!-- Thêm các dòng khác ở đây -->
+      </tbody>
+    </table>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="Homepage.html"><i class="fas fa-home"></i> Home</a>
+        </li>
+
+        <li>
+          <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
+        <li>
+          <a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+        <li>
+          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-container">
+        <div class="footer-info">
+          <h4>Information</h4>
+          <p>Open: 8 AM - 10 PM</p>
+
+          <p>
+            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+            Minh
+          </p>
+        </div>
+        <div class="footer-services">
+          <h4>Services</h4>
+          <ul>
+            <li>Construction Koi pond</li>
+            <li>Cleaning and maintenance</li>
+            <li>Design upon requirements</li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+          <p>
+            <i class="fa-brands fa-facebook"></i>
+            <a href="https://facebook.com" target="_blank">Visit Us</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

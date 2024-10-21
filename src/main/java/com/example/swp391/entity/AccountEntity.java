@@ -17,30 +17,29 @@ public class AccountEntity {
     @Column(name = "AccountID")  // Tên cột chính xác
     private int accountId;
 
-    @Column(name = "AccountName", nullable = false, length = 100)  // Thêm trường AccountName
+    @Column(name = "AccountName", nullable = false)  // Thêm trường AccountName
     private String accountName;
 
-    @Column(name = "Password", nullable = false)  // Mã hóa mật khẩu nên để đủ dài
+    @Column(name = "Password", nullable = false)  // Tên cột chính xác
     private String password;
 
-    @Column(name = "AccountType", length = 50)  // Ánh xạ cột chính xác
-    private int accountTypeID;
+    @Column(name = "AccountType")  // Tên cột chính xác
+    private String accountTypeID;
 
-    @Column(name = "Email", nullable = false, unique = true, length = 100)  // Email cần duy nhất
+    @Column(name = "Email", nullable = false)  // Tên cột chính xác
     private String email;
 
-    @Column(name = "PhoneNumber", nullable = false, length = 15)  // Tối đa 15 ký tự cho số điện thoại quốc tế
+    @Column(name = "PhoneNumber", nullable = false)  // Tên cột chính xác
     private String phoneNumber;
 
     @Column(name = "ResetToken", length = 100)  // Thêm trường reset token
     private String resetToken;
-
-    @Column(name = "Address")  // Thêm cột địa chỉ
+    @Column(name = "Address")  // Tên cột chính xác
     private String address;
 
-    @Column(name = "Images")  // Lưu link hoặc tên hình ảnh
+    @Column(name = "Images")  // Tên cột chính xác
     private String images;
 
-    @Column(name = "Status", nullable = false)  // Thêm trạng thái tài khoản
-    private Boolean status;  // Sử dụng Boolean cho kiểu BIT/TINYINT
+    @Column(name = "Status", nullable = false)  // Thêm trường Status
+    private Boolean status;  // Sử dụng Boolean cho kiểu BIT
 }

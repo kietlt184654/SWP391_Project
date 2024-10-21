@@ -13,13 +13,13 @@ const dropdownMenu = document.querySelector(".dropdown-menu");
 accountIcon.addEventListener("click", (event) => {
   event.preventDefault();
   dropdownMenu.style.display =
-    dropdownMenu.style.display === "block" ? "none" : "block";
+      dropdownMenu.style.display === "block" ? "none" : "block";
 });
 
 document.addEventListener("click", function (event) {
   if (
-    !accountIcon.contains(event.target) &&
-    !dropdownMenu.contains(event.target)
+      !accountIcon.contains(event.target) &&
+      !dropdownMenu.contains(event.target)
   ) {
     dropdownMenu.style.display = "none";
   }
