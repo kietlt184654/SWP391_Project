@@ -1,468 +1,324 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  />
 
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+  <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+  />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script
-      src="/src/main/resources/static/javascript/viewProductDetail.js"
-      defer
-    ></script>
-    <link
-      rel="stylesheet"
-      href="/src/main/resources/static/css/viewProductDetail.css"
-    />
-    <title>View product detail</title>
-  </head>
-  <body>
-    <!-- HEADER -->
-    <div class="nav">
-      <!-- Hamburger button -->
-      <div class="nav-button">
-        <button id="menu-toggle" class="btn">&#9776;</button>
-      </div>
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="/javascript/viewProductDetail.js" defer></script>
+  <link rel="stylesheet" href="/css/viewProductDetail.css" />
+  <title th:text="${design.designName}">View Product Detail</title>
+</head>
 
-      <!-- Logo -->
-      <div class="nav-logo">
-        <p>LOGO</p>
-      </div>
+<body>
+<!-- HEADER -->
+<div class="nav">
+  <!-- Hamburger button -->
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
 
-      <!-- Nav Menu -->
-      <div class="nav-menu" id="navMenu">
-        <ul>
-          <li><a href="#" class="link">Home</a></li>
-          <li><a href="#" class="link">About</a></li>
-          <li><a href="#" class="link">Blog</a></li>
-          <li><a href="#" class="link">Services</a></li>
-          <li><a href="#" class="link">Product</a></li>
+  <!-- Logo -->
+  <div class="nav-logo">
+    <p>LOGO</p>
+  </div>
 
-          <!-- Shopping cart -->
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a href="/about" class="link">About</a></li>
+      <li><a href="/blog" class="link">Blog</a></li>
+      <li><a href="/services" class="link">Services</a></li>
+      <li><a href="/products" class="link">Product</a></li>
+
+      <!-- Cart -->
+      <li>
+        <a href="/cart" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge" th:text="${cartItemCount}">0</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i> <span th:text="${username}">Username</span>
+          <i class="fas fa-caret-down"></i>
+        </a>
+
+        <!-- Dropdown menu -->
+        <ul class="dropdown-menu">
           <li>
-            <a href="#" class="icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="notification-badge">0</span>
-              <!-- Update shopping cart  -->
-            </a>
+            <a href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
           </li>
-
           <li>
-            <a href="#" class="icon" id="accountIcon">
-              <i class="fas fa-user-circle"></i>Username
-              <i class="fas fa-caret-down"></i>
-            </a>
-
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-              </li>
-              <li>
-                <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-              </li>
-            </ul>
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a>
           </li>
         </ul>
-      </div>
-    </div>
-    <!-- ----------------------------------------------------------------------------------------------------------- -->
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- ----------------------------------------------------------------------------------------------------------- -->
 
-    <!-- Show product detail -->
+<!-- Show product detail -->
 
-    <div class="container">
-      <ol class="breadcrumb">
-        <li><a href="homepage.html">Home</a></li>
-        <li><a href="product.html">Products</a></li>
-        <li class="active">Product Detail</li>
-      </ol>
+<div class="container" th:object="${design}" >
+  <div class="container" th:object="${images}" >
+    <ol class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li><a href="/products">Products</a></li>
+      <li class="active" th:text="${design.designName}">Product Detail</li>
+    </ol>
 
-      <div class="container bootdey">
-        <div class="col-md-12">
-          <section class="panel">
-            <div class="panel-body">
-              <div class="col-md-6">
-                <div class="pro-img-details">
-                  <img
-                    src="/src/main/resources/static/img/pond koi.jpg"
-                    alt=""
-                  />
-                </div>
-                <div class="pro-img-list">
-                  <a href="#">
-                    <img src="/src/main/resources/static/img/n1.jpeg" alt="" />
-                  </a>
-                  <a href="#">
-                    <img src="/src/main/resources/static/img/n3.jpg" alt="" />
-                  </a>
-                  <a href="#">
-                    <img src="/src/main/resources/static/img/n4.jpg" alt="" />
-                  </a>
-                </div>
-
-                <div class="img-navigation">
-                  <span id="prev-btn"
-                    ><i class="fa-solid fa-chevron-left"></i
-                  ></span>
-                  <span id="next-btn"
-                    ><i class="fa-solid fa-chevron-right"></i
-                  ></span>
-                </div>
+    <div class="container bootdey">
+      <div class="col-md-12">
+        <section class="panel">
+          <div class="panel-body">
+            <div class="col-md-6">
+              <div class="pro-img-details">
+                <!-- Sử dụng Thymeleaf để hiển thị hình ảnh chính -->
+                <img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-responsive" />
               </div>
-              <div class="col-md-6 body-right">
-                <h3>Elegant Koi Fish Pond</h3>
-                <p>
-                  Transform your home with an elegant Koi fish pond. Surrounded
-                  by natural stones, the pond offers a serene and stylish
-                  atmosphere. Crystal-clear water, maintained by an advanced
-                  filtration system, creates the perfect environment for vibrant
-                  Koi fish. These fish symbolize prosperity and peace, making
-                  your pond not only a beautiful focal point but also a relaxing
-                  retreat.
-                </p>
-                <div class="product_meta">
-                  <span class="posted_in">
-                    <strong>Size:</strong>
+              <div class="pro-img-list">
+                <!-- Nếu có nhiều hình ảnh, bạn có thể sử dụng Thymeleaf để lặp qua chúng -->
+                <a href="#">
+                  <img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-thumbnail" />
+                </a>
+                <a href="#">
+                  <img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-thumbnail" />
+                </a>
+                <a href="#">
+                  <img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-thumbnail" />
+                </a>
+              </div>
 
-                    <a rel="tag" href="#"> 120 x 45 x 60cm</a></span
-                  >
-                  <span class="tagged_as"
-                    ><strong>Water capacity:</strong>
-                    <a rel="tag" href="#">60 litre</a></span
-                  >
-                </div>
-                <!-- price -->
-                <div class="price">
-                  <span class="amount-old">95.000.000đ</span>
-                  <span class="pro-price"> 85.000.000đ</span>
-                </div>
-                <!-- quantity -->
-                <div class="quantity-container">
-                  <button class="quantity-btn" id="decrease">-</button>
-                  <input
-                    type="text"
-                    id="quantity"
-                    value="1"
-                    min="1"
-                    max="1000"
-                    step="1"
-                  />
-                  <button class="quantity-btn" id="increase">+</button>
-                </div>
+              <div class="img-navigation">
+                <span id="prev-btn">
+                  <i class="fas fa-chevron-left"></i>
+                </span>
+                <span id="next-btn">
+                  <i class="fas fa-chevron-right"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6 body-right">
+              <!-- Sử dụng Thymeleaf để hiển thị tên sản phẩm -->
+              <h3 th:text="${design.designName}">Product Name</h3>
+              <!-- Sử dụng Thymeleaf để hiển thị mô tả -->
+              <p th:text="${design.description}">
+                Product description goes here.
+              </p>
+              <div class="product_meta">
+                <span class="posted_in">
+                  <strong>Size:</strong>
+                  <a rel="tag" href="#" th:text="${design.size}">Size</a>
+                </span>
+                <span class="tagged_as">
+                  <strong>Water Capacity:</strong>
+                  <a rel="tag" href="#" th:text="${design.waterCapacity}">Water Capacity</a>
+                </span>
+                <span class="tagged_as">
+                  <strong>Design Type:</strong>
+                  <a rel="tag" href="#" th:text="${design.designType}">Design Type</a>
+                </span>
+                <span class="tagged_as">
+                  <strong>Status:</strong>
+                  <a rel="tag" href="#" th:text="${design.status}">Status</a>
+                </span>
+                <span class="tagged_as">
+                  <strong>Estimated Completion Time:</strong>
+                  <a rel="tag" href="#" th:text="${design.estimatedCompletionTime} + ' days'">Estimated Completion Time</a>
+                </span>
+                <span class="tagged_as">
+                  <strong>Shape of Pond:</strong>
+                  <a rel="tag" href="#" th:text="${design.shapeOfPond}">Shape of Pond</a>
+                </span>
+              </div>
+              <!-- price -->
+              <div class="price">
+                <!-- Nếu có giá cũ, giữ lại; nếu không, bạn có thể xóa phần này -->
+                <!-- <span class="amount-old" th:text="${design.oldPrice}">Old Price</span> -->
+                <span class="pro-price" th:text="${design.price} + ' $'">Price</span>
+              </div>
+              <!-- quantity -->
+              <div class="quantity-container">
+                <button class="quantity-btn" id="decrease">-</button>
+                <input
+                        type="number"
+                        id="quantity"
+                        th:value="${1}" <!-- Giá trị mặc định -->
+                min="1"
+                max="1000"
+                step="1"
+                />
+                <button class="quantity-btn" id="increase">+</button>
+              </div>
 
-                <div class="button-cart">
-                  <div class="button-group">
-                    <button class="btn btn-cart">
-                      <i class="fa fa-shopping-cart"></i> Add to cart
+              <div class="button-cart">
+                <div class="button-group">
+                  <form th:action="@{/cart/add}" method="post">
+                    <input type="hidden" name="designId" th:value="${design.designId}" />
+                    <input type="hidden" name="quantity" th:value="${1}"/>
+                    <button class="btn btn-cart" type="submit">
+                      <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
                     </button>
-                    <button class="btn btn-buy">Buy now</button>
-                  </div>
+                  </form>
+                  <button class="btn btn-buy">Mua ngay</button>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
-      </div>
-
-      <!-- Description of product -->
-      <div class="tab-bar">
-        <div class="tab" onclick="showContent('description')">Description</div>
-        <div class="tab" onclick="showContent('review')">Review</div>
-      </div>
-
-      <div class="tab-content" id="description-content">
-        <h3>Description</h3>
-        <ul>
-          <li>
-            <strong>Design and Materials:</strong>
-            Pond Structure: The clear water surface reflects the surrounding
-            greenery, giving a spacious and tranquil feel. Large and small
-            stones are naturally arranged around the pond's edges, both as
-            decorative highlights and to protect the structure of the pond
-            banks.
-          </li>
-          <li>
-            <strong>Shape of Pond:</strong>
-            The shape of the pond will depend on your personal property and the
-            overall appearance of the garden. If necessary, contact a
-            professional unit so they can help you design a koi pond according
-            to your wishes and preferences.
-          </li>
-          <li>
-            <strong>Surrounding Plants:</strong>
-            The pond is encircled by a variety of plants, from small shrubs to
-            larger trees, providing shade and creating a natural ecosystem.
-            Trees like evergreens, red-leaf plants, and green lawns are
-            harmoniously positioned.
-          </li>
-          <li>
-            <strong>Small Waterfall:</strong>
-            A small waterfall gently flows from the stones above into the pond,
-            creating soft, soothing sounds while also supplying oxygen for the
-            koi fish, keeping them healthy.
-          </li>
-          <li>
-            <strong>Aquatic Plants:</strong>
-            Inside the pond, floating patches of lilies and aquatic plants
-            enhance the natural look and serve as an ideal habitat for the koi.
-            These plants also help balance the pond's water ecosystem.
-          </li>
-          <li>
-            <strong>Feng Shui and Aesthetic Benefits:</strong>
-            The koi pond is not only a place to keep fish but also brings good
-            feng shui to the garden space. The water in the pond symbolizes
-            wealth, and its continuous flow helps maintain a positive energy
-            flow.
-          </li>
-          <li>
-            <strong>Aesthetic Appeal:</strong>
-            With the combination of stones, greenery, and water, this koi pond
-            is a beautiful focal point for the garden, offering natural,
-            harmonious, and tranquil beauty.
-          </li>
-          <li>
-            <strong>Koi Fish Care:</strong>
-            Koi fish require a clean and oxygen-rich water environment. The
-            filtration system and waterfall will help keep the water clear,
-            ensuring an ideal environment for the fish.
-          </li>
-          <li>
-            <strong>Pond Cleaning:</strong>
-            Periodic cleaning is necessary to remove algae, leaves, and sediment
-            from the pond bottom. Partial water changes will help maintain
-            optimal water quality for the koi to thrive.
-          </li>
-        </ul>
-      </div>
-
-      <div class="tab-content" id="review-content" style="display: none">
-        <h3>Reviews</h3>
-
-        <ul id="reviews-list">
-          <li class="user-review">
-            <div class="user-info">
-              <div class="user-details">
-                <span class="user-name">John Doe</span>
-                <span class="review-time">Now</span>
-              </div>
-            </div>
-            <div class="review-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <p class="review-content">
-              Đây là đánh giá của tôi về sản phẩm. Tôi rất hài lòng...
-            </p>
-          </li>
-          <li class="user-review">
-            <div class="user-info">
-              <div class="user-details">
-                <span class="user-name">Quynhnhu</span>
-                <span class="review-time">20 mins</span>
-              </div>
-            </div>
-            <div class="review-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fa-regular fa-star"></i>
-              <i class="fa-regular fa-star"></i>
-            </div>
-            <p class="review-content">
-              Chưa hài lòng, còn thiếu sót quá nhiều.
-            </p>
-          </li>
-          <li class="user-review">
-            <div class="user-info">
-              <div class="user-details">
-                <span class="user-name">kietlu</span>
-                <span class="review-time">1 hour </span>
-              </div>
-            </div>
-            <div class="review-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fa-solid fa-star-half-stroke"></i>
-              <i class="fa-regular fa-star"></i>
-              <i class="fa-regular fa-star"></i>
-            </div>
-            <p class="review-content">Chưa hài lòng, shop nên cân nhắc.</p>
-          </li>
-          <li class="user-review">
-            <div class="user-info">
-              <div class="user-details">
-                <span class="user-name">Jane Smith</span>
-                <span class="review-time">30 mins</span>
-              </div>
-            </div>
-            <div class="review-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <p class="review-content">Sản phẩm tốt, giá cả hợp lý.</p>
-          </li>
-        </ul>
-        <form id="review-form">
-          <label for="review-text">Write your review:</label>
-          <textarea
-            id="review-text"
-            name="review-text"
-            rows="5"
-            required
-          ></textarea>
-
-          <div class="rating">
-            <span class="star" data-value="1"
-              ><i class="fa-sharp-duotone fa-solid fa-star"></i
-            ></span>
-            <span class="star" data-value="2"
-              ><i class="fa-sharp-duotone fa-solid fa-star"></i
-            ></span>
-            <span class="star" data-value="3"
-              ><i class="fa-sharp-duotone fa-solid fa-star"></i
-            ></span>
-            <span class="star" data-value="4"
-              ><i class="fa-sharp-duotone fa-solid fa-star"></i
-            ></span>
-            <span class="star" data-value="5"
-              ><i class="fa-sharp-duotone fa-solid fa-star"></i
-            ></span>
           </div>
-
-          <button class="btn btn-submit" type="submit">Submit Review</button>
-        </form>
-      </div>
-
-      <!-- Other Products -->
-      <div class="related-products-section">
-        <h3 class="related-products-heading">Related Products</h3>
-
-        <div class="row thumbnail-content">
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img
-                src="/src/main/resources/static/img/pond koi.jpg"
-                alt="Ashlar Lounge Chair"
-              />
-              <div class="caption">
-                <p>Koi pond 1</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img
-                src="/src/main/resources/static/img/n6.jpg"
-                alt="Somnus Bonded"
-              />
-              <div class="caption">
-                <p>Koi pond 2</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img
-                src="/src/main/resources/static/img/n3.jpg"
-                alt="Americus Lounge Chair"
-              />
-              <div class="caption">
-                <p>Koi pond 3</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
     </div>
 
-    <!-- ---------------------------------------------------------------------------------------------------------- -->
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="user-info">
-        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username">Username</p>
-      </div>
-      <ul class="sidebar-menu">
+    <!-- Description of product -->
+    <div class="tab-bar">
+      <div class="tab" onclick="showContent('description')">Description</div>
+      <!-- Loại bỏ tab "Review" -->
+    </div>
+
+    <div class="tab-content" id="description-content">
+      <h3>Description</h3>
+      <ul>
         <li>
-          <a href="#"><i class="fas fa-home"></i> Home</a>
+          <strong>Description:</strong>
+          <span th:text="${design.description}">
+            Design description goes here.
+          </span>
         </li>
         <li>
-          <a href="#"><i class="fas fa-history"></i> History Order</a>
+          <strong>Size:</strong>
+          <span th:text="${design.size}">
+            Size description.
+          </span>
         </li>
         <li>
-          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+          <strong>Water Capacity:</strong>
+          <span th:text="${design.waterCapacity}">
+            Water capacity description.
+          </span>
         </li>
         <li>
-          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+          <strong>Design Type:</strong>
+          <span th:text="${design.designType}">
+            Design type description.
+          </span>
         </li>
         <li>
-          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+          <strong>Status:</strong>
+          <span th:text="${design.status}">
+            Status description.
+          </span>
+        </li>
+        <li>
+          <strong>Estimated Completion Time:</strong>
+          <span th:text="${design.getEstimatedCompletionTime()} + ' days'">
+            Estimated completion time description.
+          </span>
+        </li>
+        <li>
+          <strong>Shape of Pond:</strong>
+          <span th:text="${design.shapeOfPond}">
+            Shape of pond description.
+          </span>
         </li>
       </ul>
     </div>
 
-    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
-    <div class="footer">
-      <div class="footer-container">
-        <div class="footer-info">
-          <h4>Information</h4>
-          <p>Open: 8 AM - 10 PM</p>
-          <p>
-            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-            Minh
-          </p>
-        </div>
-        <div class="footer-services">
-          <h4>Services</h4>
-          <ul>
-            <li>
-              <a href="link-to-construction" class="service-item"
-                >Construction Koi pond</a
-              >
-            </li>
-            <li>
-              <a href="link-to-cleaning" class="service-item"
-                >Cleaning and maintenance</a
-              >
-            </li>
-            <li>
-              <a href="link-to-design" class="service-item"
-                >Design upon requirements</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Contact</h4>
-          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-          <p>
-            <i class="fa-brands fa-facebook"></i>
-            <a href="https://facebook.com" target="_blank">Visit Us</a>
-          </p>
+    <!-- Other Products -->
+    <div class="related-products-section">
+      <h3 class="related-products-heading">Related Products</h3>
+
+      <div class="row thumbnail-content">
+        <div class="col-sm-4" th:each="related : ${relatedProducts}">
+          <div class="thumbnail">
+            <img th:src="@{${related.img}}" alt="[[${related.designName}]]" class="img-responsive" />
+            <div class="caption">
+              <p th:text="${related.designName}">Related Product Name</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------------------- -->
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="user-info">
+    <img src="/images/avatar.png" alt="User Avatar" class="user-avatar" />
+    <p class="username" th:text="${username}">Username</p>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a href="/history-order"><i class="fas fa-history"></i> History Order</a>
+    </li>
+    <li>
+      <a href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
+    </li>
+    <li>
+      <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+    </li>
+    <li>
+      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    </li>
+  </ul>
+</div>
+
+<!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh
+      </p>
+    </div>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li>
+          <a href="/services/construction" class="service-item">Construction Koi pond</a>
+        </li>
+        <li>
+          <a href="/services/cleaning" class="service-item">Cleaning and maintenance</a>
+        </li>
+        <li>
+          <a href="/services/design" class="service-item">Design upon requirements</a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
+    </div>
+  </div>
+</div>
+</body>
 </html>

@@ -15,16 +15,6 @@ body {
   flex-direction: column;
   background: #f3f6f9;
 }
-.info-header {
-  font-size: 28px;
-  color: #3c7363;
-  text-align: center;
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
-  letter-spacing: 1px; /* Thêm khoảng cách giữa các chữ */
-}
 
 /* Navbar */
 .nav {
@@ -283,74 +273,165 @@ body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  padding: 10px 15px;
-  border: none;
-  background-color: #999;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-/* Profile Section */
-.profile-container {
-  background-color: white;
-  padding: 20px;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.info-header {
+.introduction-header {
   background-color: #3c7363;
   color: white;
   padding: 10px 20px;
-  margin-right: 100px;
-  margin-top: 30px;
+  margin-right: 20px;
   width: 500px;
   box-sizing: border-box;
   transition-timing-function: ease-in-out;
   transition: width 2s;
 }
-.info-header:hover {
+.introduction-header:hover {
   width: 300px;
 }
 #div1 {
   transition-timing-function: ease-in-out;
 }
 
-.profile-info {
+.intro-wrapper {
   display: flex;
-  align-items: flex-start;
-  padding: 20px;
+  align-items: center;
+  background-color: #3c7363;
+  padding: 10px 10px;
+  margin-top: 10px;
 }
 
-.avatar {
-  background-color: #ccc;
-  border-radius: 50%;
+.intro-image img {
+  width: 550px;
+  height: 350px;
+}
+.intro-text {
+  padding-left: 30px;
+  color: white;
+  font-size: 15px;
+}
+
+/* overview */
+.overview-header {
+  color: #3c7363;
+  text-align: center;
+  margin-top: 80px;
+  font-weight: bold;
+  box-shadow: 0 3px #3c7363;
   width: 100px;
-  height: 100px;
-  margin-right: 20px;
+  justify-content: space-between;
+  text-decoration: none;
+}
+.overview-image {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.overview-image img {
+  width: 350px;
 }
 
-/* order tracking */
+/* second content */
 
+.second-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #3c7363;
+  padding: 10px 10px;
+  margin-top: 80px;
+}
+
+.second-image img {
+  width: 550px;
+  height: 350px;
+}
+.second-header {
+  margin-bottom: 50px;
+}
+.second-text {
+  padding-left: 30px;
+  color: white;
+  font-size: 15px;
+  line-height: 60px;
+  margin-bottom: 30px;
+}
+/* Process of service */
+.timeline {
+  position: relative;
+  margin-top: 50px;
+  margin-right: 90px;
+  padding-left: 40px;
+  border-left: 4px solid #d0d0d0;
+}
+
+.timeline-header {
+  margin-right: 60px;
+
+  font-size: 20px;
+  color: #333;
+}
+
+.timeline-step {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.circle {
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  background-color: #3c7363;
+  border-radius: 50%;
+}
+
+.step-number {
+  position: absolute;
+  left: -120px;
+  top: -2px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #3c7363;
+}
+
+.step-box {
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-step::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: -4px;
+  width: 8px;
+  height: calc(100% - 20px);
+  background-color: #3c7363;
+  z-index: -1;
+}
+
+.step-box p {
+  margin-top: 10px;
+  color: #666;
+  margin-right: 50px;
+}
+
+.service-header {
+  background-color: #3c7363;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 20px;
+  width: 500px;
+  box-sizing: border-box;
+  transition-timing-function: ease-in-out;
+  transition: width 2s;
+}
+.service-header:hover {
+  width: 300px;
+}
+#div1 {
+  transition-timing-function: ease-in-out;
+}
 /* -----------------------------FOOTER-----------------------------*/
 .footer {
   background-color: #3c7363;

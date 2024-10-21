@@ -31,6 +31,8 @@ public class AccountEntity {
 
     @Column(name = "PhoneNumber", nullable = false)  // Tên cột chính xác
     private String phoneNumber;
+
+    @Column(name = "ResetToken", length = 100)  // Thêm trường reset token
     private String resetToken;
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
