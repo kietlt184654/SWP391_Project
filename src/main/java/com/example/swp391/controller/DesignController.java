@@ -2,8 +2,6 @@ package com.example.swp391.controller;
 
 
 import com.example.swp391.entity.DesignEntity;
-//import com.example.swp391.entity.DesignImgEntity;
-//import com.example.swp391.repository.ImageRepository;
 import com.example.swp391.service.DesignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,45 +9,53 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/design")
+@RequestMapping("/designs")
 public class DesignController {
 
+    private final DesignService designService;
+
+    // Constructor Injection
     @Autowired
-    private DesignService designService;
-//    private ImageRepository imgRepo;
-//show thiet ke
+    public DesignController(DesignService designService) {
+        this.designService = designService;
+    }
+
+    // Hiển thị tất cả các thiết kế
     @GetMapping("/showAllDesign")
     public String showProducts(Model model) {
-        // Lấy danh sách sản phẩm từ service
-        List<DesignEntity> products = designService.getAllProducts();
-        model.addAttribute("design", products);
-        return "Availableproject"; // Trả về trang "Availableproject.html"
+        // Lấy danh sách thiết kế từ service
+        List<DesignEntity> designs = designService.getAllDesigns();
+        model.addAttribute("designs", designs);
+        return "Availableproject"; // Tên của template HTML để hiển thị danh sách các thiết kế
     }
-//    // Phương thức tìm kiếm mẫu có sẵn theo tên (chỉ hiển thị mẫu có sẵn)
-//    @GetMapping("/search")
-//    public String findDesignByName(@RequestParam("name") String name, Model model) {
-//        List<DesignEnity> designs = designService.findDesignByName(name); // Gọi phương thức từ service
-//        model.addAttribute("designs", designs); // Thêm kết quả vào model
-//        return "designList"; // Trả về view hiển thị danh sách các thiết kế
-//    }
-    // Hiển thị chi tiết sản phẩm
+
+    // Hiển thị chi tiết một thiết kế cụ thể dựa trên ID
     @GetMapping("/{id}")
     public String getDesignDetail(@PathVariable("id") Long id, Model model) {
-        Optional<DesignEntity> designOpt = designService.getProductById(id);
+        Optional<DesignEntity> designOpt = designService.getDesignById(id);
         if (designOpt.isPresent()) {
+            // Nếu tìm thấy thiết kế, thêm thông tin vào model và trả về trang chi tiết
             DesignEntity design = designOpt.get();
-//            List<DesignImgEntity> images = imgRepo.findByDesignId(id);
             model.addAttribute("design", design);
-//            model.addAttribute("images", images);
-            return "viewProductDetail"; // Tên của template Thymeleaf
+            return "viewProductDetail"; // Tên của template HTML hiển thị chi tiết thiết kế
         } else {
-            return "404"; // Trang lỗi 404 nếu không tìm thấy
+            // Nếu không tìm thấy, trả về trang lỗi 404
+            return "404";
         }
     }
+
+    // tìm kiếm theo tên
+     @GetMapping("/search")
+     public String findDesignByName(@RequestParam("name") String name, Model model) {
+         List<DesignEntity> designs = designService.findDesignByName(name);
+         model.addAttribute("designs", designs);
+         return "designList"; // Tên của template hiển thị kết quả tìm kiếm
+     }
 
 }
