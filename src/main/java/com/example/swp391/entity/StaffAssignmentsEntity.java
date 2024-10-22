@@ -10,7 +10,7 @@
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class StaffAssignmentsEnity {
+//public class StaffAssignmentsEntity {
 //
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

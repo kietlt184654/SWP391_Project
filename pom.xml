@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.KoiPond</groupId>
+    <groupId>com.example.swp391</groupId>
     <artifactId>KoiPondProject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>KoiPondProject</name>

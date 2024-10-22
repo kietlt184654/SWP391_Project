@@ -37,7 +37,7 @@ public class AccountService {
 
     // Đăng ký người dùng mới từ DTO
     @Transactional
-    public void registerNewAccount(AccountRegistrationDTO accountDTO) throws Exception {
+    public void registerUser(AccountRegistrationDTO accountDTO) throws Exception {
         // Kiểm tra email đã tồn tại chưa
         if (checkIfEmailExists(accountDTO.getEmail())) {
             throw new Exception("Email đã được sử dụng.");
@@ -76,12 +76,16 @@ public class AccountService {
     public AccountEntity findByAccountName(String accountName) {
         return accountRepository.findByAccountName(accountName);
     }
+    public AccountEntity findByEmail(String email) {
+        return accountRepository.findByEmail(email);  // Gọi đến repository
+    }
 
 
 
     // Gửi email khôi phục mật khẩu
     @Transactional
     public void sendResetPasswordLink(String email) throws Exception {
+        // Tìm kiếm người dùng theo email
         AccountEntity account = accountRepository.findByEmail(email);
         if (account == null) {
             throw new Exception("Email không tồn tại trong hệ thống.");
@@ -89,22 +93,26 @@ public class AccountService {
 
         // Tạo token khôi phục mật khẩu
         String token = UUID.randomUUID().toString();
-        account.setResetToken(token);
-        accountRepository.save(account);  // Lưu token vào cơ sở dữ liệu
+        account.setToken(token);  // Lưu token vào đối tượng tài khoản
+        accountRepository.save(account);  // Lưu tài khoản với token mới
 
-        // Gửi email chứa link đặt lại mật khẩu
+        // Tạo URL khôi phục mật khẩu
         String resetUrl = "http://localhost:8080/account/reset-password?token=" + token;
-        emailService.sendEmail(account.getEmail(), "Đặt lại mật khẩu",
-                "Click vào link để đặt lại mật khẩu: " + resetUrl);
+
+        // Gửi email chứa liên kết khôi phục mật khẩu
+        emailService.sendEmail(account.getEmail(), "Khôi phục mật khẩu",
+                "Nhấp vào liên kết sau để đặt lại mật khẩu của bạn: " + resetUrl);
     }
 
     // Cập nhật mật khẩu mới dựa trên token khôi phục
     @Transactional
     public void updatePassword(String token, String newPassword) throws Exception {
-        AccountEntity account = accountRepository.findByResetToken(token);
+        AccountEntity account = accountRepository.findBytoken(token);
         if (account == null) {
             throw new Exception("Token không hợp lệ hoặc đã hết hạn.");
         }
+
+
 
 
 //    public AccountEntity findByToken(String token) {
@@ -118,7 +126,8 @@ public class AccountService {
 
         // Mã hóa mật khẩu mới
         account.setPassword(passwordEncoder.encode(newPassword));
-        account.setResetToken(null);  // Xóa token sau khi đặt lại mật khẩu
+        account.setToken(null);  // Xóa token sau khi đặt lại mật khẩu
         accountRepository.save(account);
     }
+
 }

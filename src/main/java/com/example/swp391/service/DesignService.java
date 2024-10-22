@@ -52,11 +52,9 @@ public class DesignService {
      */
     public List<DesignEntity> searchAvailableDesignsByName(String designName) {
         Long availableTypeDesignId = 1L; // Giả định rằng 1 là ID của "mẫu có sẵn" (stereotype design)
-        return designRepository.findByDesignNameContainingIgnoreCaseAndTypeDesign_TypeDesignId(designName, availableTypeDesignId);
+        return designRepository.findByDesignNameContainingIgnoreCaseAndTypeDesignId_typeDesignId(designName, availableTypeDesignId);
     }
-    public Optional<DesignEntity> getDesignById(Long id) {
-        return designRepository.findById(id);  // Sử dụng phương thức findById() của JpaRepository
-    }
+
 
     /**
      * Tìm thiết kế theo ID.
@@ -76,8 +74,8 @@ public class DesignService {
      */
     public DesignEntity createDesignRequest(DesignRequestDTO designRequestDTO) {
         // Tìm khách hàng dựa trên ID từ DTO
-        CustomerEntity customer = customerRepository.findByCustomerId(designRequestDTO.getCustomerId())
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found with ID: " + designRequestDTO.getCustomerId()));
+        CustomerEntity customer = customerRepository.findByCustomerID(designRequestDTO.getCustomerID())
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found with ID: " + designRequestDTO.getCustomerID()));
 
         // Tìm TypeDesign dựa trên ID từ DTO
         TypeDesignEntity typeDesign = typeDesignRepository.findById(designRequestDTO.getTypeDesignId())

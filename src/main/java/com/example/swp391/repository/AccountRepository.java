@@ -14,5 +14,5 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
    AccountEntity findByEmail(String email);
 
    // Tìm kiếm tài khoản theo token khôi phục mật khẩu
-   AccountEntity findByResetToken(String resetToken);
+   AccountEntity findBytoken(String token);
 }

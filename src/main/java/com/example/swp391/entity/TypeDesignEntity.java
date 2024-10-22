@@ -14,15 +14,15 @@ public class TypeDesignEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int typeDesignId; // Khóa chính cho bảng TypeDesign
+    private long typeDesignId; // Khóa chính cho bảng TypeDesign
 
     // Tên của loại thiết kế (ví dụ: Mẫu có sẵn, Thiết kế riêng)
-    @Column(name = "type_design_name", nullable = false)
+    @Column(name = "TypeDesignName", nullable = false)
     private String typeDesignName;
 
     // Liên kết ManyToOne với bảng ServiceEntity (mỗi loại thiết kế có thể thuộc về một dịch vụ)
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false) // Đảm bảo tên cột khóa ngoại khớp với cơ sở dữ liệu
+    @JoinColumn(name = "serviceId", nullable = false) // Đảm bảo tên cột khóa ngoại khớp với cơ sở dữ liệu
     private ServiceEntity service;
 }
 //package com.example.swp391.entity;
