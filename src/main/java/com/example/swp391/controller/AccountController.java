@@ -1,7 +1,9 @@
 package com.example.swp391.controller;
 
 import com.example.swp391.entity.AccountEntity;
+import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.service.AccountService;
+import com.example.swp391.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 
 import jakarta.validation.Valid;
@@ -25,7 +27,7 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-
+private CustomerService customerService;
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model,HttpSession session) {
         AccountEntity account = accountService.login(accountname, password);
@@ -34,15 +36,15 @@ public class AccountController {
             session.setAttribute("loggedInUser", account);
             if (account.getAccountTypeID().equals("Customer")){
 
-            return "Homepage";}else {
-                return "manager";
-            }
+                return "Homepage";
 
-        }else {
+        }else if (account.getAccountTypeID().equals("Manager")){
             model.addAttribute("message", "Invalid username or password");
-            return "login";
+            return "manager";
+        }else if (account.getAccountTypeID().equals("Consulting Staff")){
+            return "FormConsulting";
         }
-    }
+    }return "login"; }
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         // Xóa toàn bộ session
@@ -175,6 +177,12 @@ public class AccountController {
 
         // Trả về tên template Thymeleaf
         return "manageCustomer";
+    }
+    @GetMapping("/dashboardAccount")
+    public String showDashboard(Model model) {
+        long userCount = accountService.countUsers(); // Lấy số lượng tài khoản từ DB
+        model.addAttribute("userCount", userCount); // Gửi dữ liệu sang template Thymeleaf
+        return "manager"; // Tên của template HTML (manager.html)
     }
 
 

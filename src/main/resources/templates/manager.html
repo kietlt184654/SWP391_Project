@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,7 @@
     <section class="overview">
       <div class="card">
         <h3>Users</h3>
-        <p>1,245</p>
+        <p th:text="${userCount}"></p> <!-- Hiển thị số lượng user thực từ DB -->
       </div>
       <div class="card">
         <h3>Active Projects</h3>

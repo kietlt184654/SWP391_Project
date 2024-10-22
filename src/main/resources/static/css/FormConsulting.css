@@ -1,0 +1,81 @@
+/* Đặt kiểu tổng quát cho trang */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Kiểu cho container chính */
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Kiểu cho tiêu đề chính */
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Định dạng các label */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Định dạng các input và textarea */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+/* Định dạng cho nút Submit */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng khi rê chuột qua nút */
+button:hover {
+    background-color: #218838;
+}
+
+/* Hiển thị thông tin sau khi gửi form */
+#result {
+    margin-top: 30px;
+    text-align: center;
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Cải thiện giao diện trên các thiết bị nhỏ */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    input, textarea, button {
+        font-size: 14px;
+    }
+}
