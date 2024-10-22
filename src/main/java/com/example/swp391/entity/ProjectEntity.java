@@ -27,6 +27,10 @@ public class ProjectEntity {
     @JoinColumn(name = "designId")
     private DesignEntity design;
 
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private CustomerEntity customerId;
+
     @Temporal(TemporalType.DATE)
     private Date startDate;
 

@@ -23,8 +23,9 @@ public class DesignEntity {
 
     private Float WaterCapacity;
 
-    @Column(name = "TypeDesignID", nullable = false, length = 50)
-    private String designType; // Loại thiết kế
+    @ManyToOne // Thêm annotation này để xác định mối quan hệ Many-to-One
+    @JoinColumn(name = "TypeDesignID", nullable = false) // Liên kết đến cột khóa chính trong bảng TypeDesign
+    private TypeDesignEntity typeDesignId; // Liên kết đến TypeDesignEntity
 
     @Column(name = "Description", length = 255)
     private String description; // Mô tả thiết kế

@@ -14,7 +14,7 @@
 //    private Long cartId;
 //
 //    @OneToMany
-//    @JoinColumn(name = "DesignTemplateID")
+//    @JoinColumn(name = "DesignID")
 //    private List<DesignEntity> designItems = new ArrayList<>(); // Lưu các sản phẩm trong giỏ hàng
 //
 //    // Method to add a design only if it is not already in the cart

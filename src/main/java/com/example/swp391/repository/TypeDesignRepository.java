@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TypeDesignRepository {
- Optional<TypeDesignEntity> findById(long id);
+ Optional<TypeDesignEntity> findById(int typeDesignId);
 }

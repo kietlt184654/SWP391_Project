@@ -15,7 +15,7 @@ import jakarta.validation.constraints.Size;
 public class DesignRequestDTO {
 
     @NotNull(message = "Customer ID cannot be null")
-    private int customerId;
+    private int customerID;
 
     @NotBlank(message = "Design name cannot be empty")
     @Size(max = 100, message = "Design name must be less than 100 characters")
@@ -29,6 +29,6 @@ public class DesignRequestDTO {
     private Double price;
 
     @NotNull(message = "Type Design ID cannot be null")
-    private Long typeDesignId;
+    private int typeDesignId;
 }
 

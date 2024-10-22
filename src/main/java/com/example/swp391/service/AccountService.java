@@ -93,7 +93,7 @@ public class AccountService {
 
         // Tạo token khôi phục mật khẩu
         String token = UUID.randomUUID().toString();
-        account.setResetToken(token);  // Lưu token vào đối tượng tài khoản
+        account.setToken(token);  // Lưu token vào đối tượng tài khoản
         accountRepository.save(account);  // Lưu tài khoản với token mới
 
         // Tạo URL khôi phục mật khẩu
@@ -107,7 +107,7 @@ public class AccountService {
     // Cập nhật mật khẩu mới dựa trên token khôi phục
     @Transactional
     public void updatePassword(String token, String newPassword) throws Exception {
-        AccountEntity account = accountRepository.findByResetToken(token);
+        AccountEntity account = accountRepository.findBytoken(token);
         if (account == null) {
             throw new Exception("Token không hợp lệ hoặc đã hết hạn.");
         }
@@ -126,7 +126,7 @@ public class AccountService {
 
         // Mã hóa mật khẩu mới
         account.setPassword(passwordEncoder.encode(newPassword));
-        account.setResetToken(null);  // Xóa token sau khi đặt lại mật khẩu
+        account.setToken(null);  // Xóa token sau khi đặt lại mật khẩu
         accountRepository.save(account);
     }
 

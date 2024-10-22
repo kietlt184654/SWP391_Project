@@ -24,5 +24,6 @@ public interface DesignRepository extends JpaRepository<DesignEntity, Long> {
      * @param typeDesignId ID của kiểu thiết kế cần tìm.
      * @return Danh sách các thiết kế phù hợp.
      */
-    List<DesignEntity> findByDesignNameContainingIgnoreCaseAndTypeDesign_TypeDesignId(String designName, Long typeDesignId);
+    List<DesignEntity> findByDesignNameContainingIgnoreCaseAndTypeDesignId_typeDesignId(String designName, long typeDesignId);
+
 }
