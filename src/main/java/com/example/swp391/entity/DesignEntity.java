@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+import java.util.Map;
+
 @Entity
 @Table(name = "Design") // Tên bảng trong SQL
 @Data
@@ -61,4 +64,17 @@ public class DesignEntity {
     public enum Status {
         Available, Unavailable, Pending
     }
+    @ManyToMany
+    @JoinTable(
+            name = "Designmaterial",
+            joinColumns = @JoinColumn(name = "designId"),
+            inverseJoinColumns = @JoinColumn(name = "materialId")
+    )
+    private List<MaterialEntity> materials;
+
+    @ElementCollection
+    @CollectionTable(name = "designMaterialQuantity", joinColumns = @JoinColumn(name = "designId"))
+    @MapKeyJoinColumn(name = "materialId")
+    @Column(name = "quantityNeeded")
+    private Map<MaterialEntity, Integer> materialQuantities; // Số lượng nguyên vật liệu cần cho sản phẩm
 }

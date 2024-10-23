@@ -97,7 +97,7 @@ public class AccountService {
         accountRepository.save(account);  // Lưu tài khoản với token mới
 
         // Tạo URL khôi phục mật khẩu
-        String resetUrl = "http://localhost:8080/account/reset-password?token=" + token;
+        String resetUrl = "http://localhost:8082/account/reset-password?token=" + token;
 
         // Gửi email chứa liên kết khôi phục mật khẩu
         emailService.sendEmail(account.getEmail(), "Khôi phục mật khẩu",
@@ -107,7 +107,7 @@ public class AccountService {
     // Cập nhật mật khẩu mới dựa trên token khôi phục
     @Transactional
     public void updatePassword(String token, String newPassword) throws Exception {
-        AccountEntity account = accountRepository.findBytoken(token);
+        AccountEntity account = accountRepository.findByToken(token);
         if (account == null) {
             throw new Exception("Token không hợp lệ hoặc đã hết hạn.");
         }

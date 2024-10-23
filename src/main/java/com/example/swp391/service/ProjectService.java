@@ -1,11 +1,15 @@
 package com.example.swp391.service;
 
-import com.example.swp391.entity.ProjectEntity;
+import com.example.swp391.entity.*;
+import com.example.swp391.repository.ProjectMaterialDetailRepository;
 import com.example.swp391.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -13,6 +17,9 @@ public class ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectMaterialDetailRepository projectMaterialDetailRepository;
 
     // Tìm kiếm dự án theo ID
     public Optional<ProjectEntity> findProjectById(Long projectId) {
@@ -40,4 +47,23 @@ public class ProjectService {
             projectRepository.deleteById(projectId);
         }
     }
-}
+    // Tạo chi tiết nguyên vật liệu cho dự án
+    private void createProjectMaterialDetails(ProjectEntity project, DesignEntity design) {
+        for (Map.Entry<MaterialEntity, Integer> entry : design.getMaterialQuantities().entrySet()) {
+            MaterialEntity material = entry.getKey();
+            int quantityUsed = entry.getValue();
+
+            ProjectMaterialDetailEntity detail = new ProjectMaterialDetailEntity();
+            detail.setProject(project);
+            detail.setMaterial(material);
+            detail.setQuantityUsed(quantityUsed);
+
+            projectMaterialDetailRepository.save(detail);
+        }
+    }
+
+
+
+    }
+
+
