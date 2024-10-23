@@ -22,8 +22,9 @@
       rel="stylesheet"
       href="/src/main/resources/static/css/manageConstruction.css"
     />
-    <title>Manage construction progress</title>
+    <title>View project detail</title>
   </head>
+
   <body>
     <div class="nav">
       <!-- Hamburger button -->
@@ -71,7 +72,6 @@
     <!-- Body -->
     <div class="project-container">
       <div class="project">
-        <button class="toggle-btn">Project 1</button>
         <div class="project-content">
           <div class="col-md-6 project-image">
             <img src="/src/main/resources/static/img/a1.jpg" alt="Koi Pond 1" />
@@ -89,95 +89,61 @@
               <strong>Start Date:</strong> November 1, 2024<br />
               <strong>Completion Date:</strong> November 20, 2024<br /><br />
             </p>
-            <a href="viewDetailProject.html">
-              <button class="btn btn-primary">View</button>
-            </a>
           </div>
         </div>
       </div>
+    </div>
+    <div class="tab-bar">
+      <div class="tab" onclick="showContent('task')">Task</div>
+      <div class="tab" onclick="showContent('progress')">Progress</div>
+      <div class="tab" onclick="showContent('finish')">Finish</div>
 
-      <div class="project">
-        <button class="toggle-btn">Project 2</button>
-        <div class="project-content">
-          <div class="col-md-6 project-image">
-            <img src="/src/main/resources/static/img/a2.jpg" alt="Koi Pond 1" />
-          </div>
-          <div class="col-md-6 text-content">
-            <h4>Koi Pond 2</h4>
-            <p>
-              1. Basic Information<br />
-              <strong>Customer Name:</strong> Nguyen Thi B<br />
-              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
-              City<br />
-              <strong>Phone Number:</strong> 0909 123 456<br />
-              <strong>Email:</strong> nguyenvana@example.com<br /><br />
-              2. Construction Timeline<br />
-              <strong>Start Date:</strong> November 1, 2024<br />
-              <strong>Completion Date:</strong> November 20, 2024<br /><br />
-            </p>
-            <a href="viewDetailProject.html">
-              <button class="btn btn-primary">View</button>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="project">
-        <button class="toggle-btn">Project 3</button>
-        <div class="project-content">
-          <div class="col-md-6 project-image">
+      <div class="tab-content" id="task-content">
+        <h3>Task</h3>
+        <div class="row members">
+          <div class="col-xs-2 member">
             <img
-              src="/src/main/resources/static/img/koi3.jpg"
-              alt="Koi Pond 1"
+              src="/src/main/resources/static/img/ava1.jpeg"
+              alt="Tom"
+              class="member-img"
             />
+            <span>Quỳnh Như (You)</span>
           </div>
-          <div class="col-md-6 text-content">
-            <h4>Koi Pond 3</h4>
-            <p>
-              1. Basic Information<br />
-              <strong>Customer Name:</strong> Le Hoang C<br />
-              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
-              City<br />
-              <strong>Phone Number:</strong> 0909 123 456<br />
-              <strong>Email:</strong> nguyenvana@example.com<br /><br />
-              2. Construction Timeline<br />
-              <strong>Start Date:</strong> November 1, 2024<br />
-              <strong>Completion Date:</strong> November 20, 2024<br /><br />
-            </p>
-            <a href="viewDetailProject.html">
-              <button class="btn btn-primary">View</button>
-            </a>
+          <div class="col-xs-2 member">
+            <img
+              src="/src/main/resources/static/img/ava1.jpeg"
+              alt="Tom"
+              class="member-img"
+            />
+            <span>Tử Kiệt</span>
           </div>
+          <div class="col-xs-2 member">
+            <img
+              src="/src/main/resources/static/img/ava1.jpeg"
+              alt="Tom"
+              class="member-img"
+            />
+            <span>Gia Kiện</span>
+          </div>
+          <div class="col-xs-2 member">
+            <img
+              src="/src/main/resources/static/img/ava1.jpeg"
+              alt="Tom"
+              class="member-img"
+            />
+            <span>Thái An</span>
+          </div>
+
+          <div class="col-xs-2 text-center add-member">+ Add new member</div>
         </div>
       </div>
 
-      <div class="project">
-        <button class="toggle-btn">Project 4</button>
-        <div class="project-content">
-          <div class="col-md-6 project-image">
-            <img
-              src="/src/main/resources/static/img/koi2.jpg"
-              alt="Koi Pond 1"
-            />
-          </div>
-          <div class="col-md-6 text-content">
-            <h4>Koi Pond 4</h4>
-            <p>
-              1. Basic Information<br />
-              <strong>Customer Name:</strong> Le Van D<br />
-              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
-              City<br />
-              <strong>Phone Number:</strong> 0909 123 456<br />
-              <strong>Email:</strong> nguyenvana@example.com<br /><br />
-              2. Construction Timeline<br />
-              <strong>Start Date:</strong> November 1, 2024<br />
-              <strong>Completion Date:</strong> November 20, 2024<br /><br />
-            </p>
-            <a href="viewDetailProject.html">
-              <button class="btn btn-primary">View</button>
-            </a>
-          </div>
-        </div>
+      <div class="tab-content" id="progress-content">
+        <h3>Progress</h3>
+      </div>
+
+      <div class="tab-content" id="finish-content">
+        <h3>Finish</h3>
       </div>
     </div>
 

@@ -216,6 +216,11 @@ body {
   overflow: hidden;
   width: 100%;
 }
+.project h4 {
+  margin-bottom: 20px;
+  margin-left: 80px;
+  color: #3c7363;
+}
 
 .toggle-btn {
   width: 100%;
@@ -253,12 +258,13 @@ body {
 .text-content button {
   align-self: flex-start;
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 5px 30px;
   font-size: 14px;
   cursor: pointer;
   background-color: #3c7363;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
+  color: white;
 }
 
 /* -----------------------------FOOTER-----------------------------*/
