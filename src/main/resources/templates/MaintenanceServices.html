@@ -1,101 +1,213 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/profile.css" />
-    <title>User Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koi Pond Maintenance</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script
+      src="/src/main/resources/static/javascript/designService.js"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/css/designService.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/css/Maintenance.css"
+    />
 </head>
 
 <body>
-<!-- Navigation -->
-<div class="nav" th:fragment="nav">
-    <div class="nav-logo">
-        <p>LOGO</p>
-    </div>
-    <div class="nav-menu">
-        <ul>
-            <li><a href="/" class="link">Home</a></li>
-            <li><a href="/about" class="link">About</a></li>
-            <li><a href="/services" class="link">Services</a></li>
-            <li><a href="/products" class="link">Products</a></li>
+     <!-------------------- HEADER-------------------->
+     <div class="nav">
+        <!-- Hamburger button -->
+        <div class="nav-button">
+          <button id="menu-toggle" class="btn">&#9776;</button>
+        </div>
+  
+        <!-- Logo -->
+        <div class="nav-logo">
+          <p>LOGO</p>
+        </div>
+  
+        <!-- Nav Menu -->
+        <div class="nav-menu" id="navMenu">
+          <ul>
+            <li><a th:href="@{/}" class="link">Home</a></li>
+            <li><a href="about.html" class="link">About</a></li>
+            <li><a href="blog.html" class="link">Blog</a></li>
+            <li><a href="service.html" class="link">Services</a></li>
+            <li><a href="Availableproject.html" class="link">Product</a></li>
+  
+            <!-- Cart -->
+            <li>
+              <a href="#" class="icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="notification-badge">0</span>
+              </a>
+            </li>
+  
+            <li>
+              <a href="#" class="icon" id="accountIcon">
+                <i class="fas fa-user-circle"></i>Username
+                <i class="fas fa-caret-down"></i>
+              </a>
+  
+              <!-- Dropdown menu -->
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="profile.html"
+                    ><i class="fas fa-user-circle"></i> Profile</a
+                  >
+                </li>
+                <li>
+                  <a href="login.html"
+                    ><i class="fas fa-sign-out-alt"></i> Log Out</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="user-info">
+          <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+          <p class="username">Username</p>
+        </div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-history"></i> History Order</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-cog"></i> Settings</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+          </li>
         </ul>
-    </div>
-</div>
+      </div>
+  
+    <!-- <h1>Koi Pond Maintenance Services</h1>
+    
+    <form action="/book" method="post" id="bookingForm">
+        <label for="customerName">Your Name:</label>
+        <input type="text" id="customerName" name="customerName" required>
+        
+        <label for="serviceDate">Preferred Date:</label>
+        <input type="date" id="serviceDate" name="serviceDate" required>
+        
+        <button type="submit">Book Maintenance</button>
+    </form>
 
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-content">
-        <img src="/img/koi_des.webp" />
-        <h1>Profile</h1>
-        <ol class="breadcrumb">
-            <li><a href="homepage.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li class="active">Design service</li>
-        </ol>
-    </div>
-</section>
-
-<!-- Main Content -->
-<div class="profile-container container">
-    <div class="row">
-        <!-- Profile Information Sidebar -->
-        <div class="col-md-4">
-            <div class="profile-sidebar text-center">
-                <img th:src="@{${accountEntity.images} ?: '/img/defaultAva.jpg'}" alt="User Avatar" class="rounded-circle img-thumbnail" />
-                <h3 class="username" th:text="${accountEntity.accountName}"></h3>
-                <p class="user-role" th:text="'Role: ' + ${accountEntity.accountTypeID}"></p>
-                <button class="btn btn-primary mt-2">Change Avatar</button>
-            </div>
+    <div id="trackingSection" style="display:none;">
+        <h2>Service Tracking</h2>
+        <p id="trackingMessage">${trackingMessage}</p>  -->
+        
+        <!-- New tracking table -->
+        <!-- <table id="trackingTable" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Customer Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Service Date</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;" id="trackingCustomerName">${customerName}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;" id="trackingServiceDate">${serviceDate}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;" id="trackingStatus">Pending</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+    <div class="container">
+      <h1>Book Your Maintenance Service</h1>
+      <div class="date-display">
+          <span id="currentDateDisplay"></span>
+      </div>
+      <div class="navigation">
+          <button id="prevMonth">Previous Month</button>
+          <button id="nextMonth">Next Month</button>
+          <button id="prevWeek">Previous Week</button>
+          <button id="nextWeek">Next Week</button>
+          <button id="prevYear">Previous Year</button>
+          <button id="nextYear">Next Year</button>
+      </div>
+      <div id="calendar"></div>
+      <form id="bookingForm" style="display:none;">
+          <label for="customerName">Your Name:</label>
+          <input type="text" id="customerName" name="customerName" required>
+          <input type="hidden" id="selectedDate" name="serviceDate">
+          <button type="submit">Book Maintenance</button>
+      </form>
+      <div id="message" style="margin-top: 20px; color: green;"></div>
+  </div>
+    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
+    <div class="footer">
+        <div class="footer-container">
+          <div class="footer-info">
+            <h4>Information</h4>
+            <p>Open: 8 AM - 10 PM</p>
+            <p>
+              PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+              Minh
+            </p>
+          </div>
+          <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+              <li>
+                <a href="link-to-construction" class="service-item"
+                  >Construction Koi pond</a
+                >
+              </li>
+              <li>
+                <a href="link-to-cleaning" class="service-item"
+                  >Cleaning and maintenance</a
+                >
+              </li>
+              <li>
+                <a href="link-to-design" class="service-item"
+                  >Design upon requirements</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact</h4>
+            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+            <p>
+              <i class="fa-brands fa-facebook"></i>
+              <a href="https://facebook.com" target="_blank">Visit Us</a>
+            </p>
+          </div>
         </div>
-
-        <!-- Profile Details Form -->
-        <div class="col-md-8">
-            <h2 class="info-header">Edit Profile Information</h2>
-            <form action="#" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" class="form-control" th:value="${accountEntity.accountName}" readonly />
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="text" id="phone" name="phone" class="form-control" th:value="${accountEntity.phoneNumber}" readonly />
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" th:value="${accountEntity.email}" readonly />
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address" class="form-control" th:value="${accountEntity.address}" />
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" th:value="${accountEntity.password}" readonly />
-                </div>
-
-                <button type="submit" class="btn btn-success mt-3">Save Changes</button>
-            </form>
-
-            <!-- Adding navigation buttons -->
-            <div class="mt-4">
-                <a href="/" class="btn btn-primary">Back to Home</a>
-                <a href="/account/edit-profile" class="btn btn-warning">Edit Profile</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
-        <p>Contact us: koipond@gmail.com | Phone: 0972423242</p>
-    </div>
-</div>
+      </div>
+      <script src="/src/main/resources/static/javascript/Maintenance.js"></script>
 </body>
 </html>
