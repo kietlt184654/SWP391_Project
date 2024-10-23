@@ -28,6 +28,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 private CustomerService customerService;
+
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model,HttpSession session) {
         AccountEntity account = accountService.login(accountname, password);
@@ -45,6 +46,7 @@ private CustomerService customerService;
             return "FormConsulting";
         }
     }return "login"; }
+
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         // Xóa toàn bộ session
@@ -52,6 +54,7 @@ private CustomerService customerService;
         // Chuyển hướng đến trang đăng nhập hoặc trang chủ
         return "Homepage"; // Thay đổi đường dẫn theo yêu cầu của bạn
     }
+
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
         // Kiểm tra email đã tồn tại
@@ -94,6 +97,7 @@ private CustomerService customerService;
 
         return "profile";  // Trả về view "profile.html"
     }
+
     @GetMapping("/edit-profile")
     public String editProfileForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
@@ -166,6 +170,7 @@ private CustomerService customerService;
 
         return "profile";  // Quay lại trang profile sau khi lưu thành công
     }
+
     // Hàm hiển thị danh sách khách hàng
     @GetMapping("/customers")
     public String showAllCustomers(Model model) {
@@ -178,6 +183,7 @@ private CustomerService customerService;
         // Trả về tên template Thymeleaf
         return "manageCustomer";
     }
+
     @GetMapping("/dashboardAccount")
     public String showDashboard(Model model) {
         long userCount = accountService.countUsers(); // Lấy số lượng tài khoản từ DB
@@ -185,5 +191,43 @@ private CustomerService customerService;
         return "manager"; // Tên của template HTML (manager.html)
     }
 
+
+    // Hiển thị trang forgot-password.html
+    @GetMapping("/forgot-password-form")
+    public String showForgotPasswordForm() {
+        return "forgotPassword";  // Trả về view forgot-password.html
+    }
+
+    // Gửi email lấy token khi quên mật khẩu
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        try {
+            accountService.sendResetPasswordLink(email);  // Gọi service để gửi email với token
+            redirectAttributes.addFlashAttribute("message", "Password reset link sent to your email.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Email not found.");
+        }
+        return "redirect:/account/forgot-password-form";  // Điều hướng đến trang quên mật khẩu
+    }
+
+    @GetMapping("/reset-password-form")
+    public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
+        model.addAttribute("token", token);  // Đưa token vào model để sử dụng trong form
+        return "resetPassword";  // Trả về trang resetPassword.html
+    }
+
+    // Đặt lại mật khẩu bằng token
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam("token") String token,
+                                @RequestParam("newPassword") String newPassword,
+                                RedirectAttributes redirectAttributes) {
+        try {
+            accountService.updatePassword(token, newPassword);  // Cập nhật mật khẩu mới
+            redirectAttributes.addFlashAttribute("message", "Password updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Invalid or expired token.");
+        }
+        return "redirect:/login";  // Điều hướng đến trang đăng nhập sau khi đặt lại mật khẩu thành công
+    }
 
 }
