@@ -16,7 +16,7 @@ public class ProjectMaterialDetailEntity { // Sửa lại tên lớp cho đúng
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long projectMaterialDetailId; // ID của bảng này
 
-    private int quantity; // Số lượng vật liệu sử dụng trong dự án
+    private int QuantityUsed; // Số lượng vật liệu sử dụng trong dự án
 
     // Liên kết với bảng Project
     @ManyToOne

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Material")
 @Data // Đảm bảo rằng @Data của Lombok sẽ tự động tạo getter cho bạn
@@ -14,13 +16,14 @@ public class MaterialEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int materialId;
+    private long materialId;
 
     private String materialName;
     private int stockQuantity;
     private String unit;
     private String status;
-
+    @ManyToMany(mappedBy = "materials")
+    private List<DesignEntity> designs;
     // Lombok sẽ tự động tạo phương thức getMaterialId() khi bạn dùng @Data
 }
 
