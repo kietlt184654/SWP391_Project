@@ -15,12 +15,12 @@ public class StaffEntity {
 
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer staffID;  // Khóa chính
 
-    private Integer accountID;  // Liên kết tới bảng Account
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "accountID")  // Liên kết tới bảng Account
+    private AccountEntity account;  // Thực thể liên kết tới Customer/Account
 
-    @OneToMany(mappedBy = "staff")
-    private List<StaffProjectEntity> staffProjects;
+    private String role;  // Vai trò của nhân viên
 }

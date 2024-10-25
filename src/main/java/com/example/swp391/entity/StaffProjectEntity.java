@@ -29,11 +29,4 @@ public class StaffProjectEntity {
 
     private Date assignmentDate;
     private String progressImage;
-    // Constructor không tham số sẽ tự động có từ @NoArgsConstructor
-    // Constructor nhận đầy đủ các tham số (id, assignmentDate, progressImage)
-    public StaffProjectEntity(StaffProjectId id, Date assignmentDate, String progressImage) {
-        this.id = id;
-        this.assignmentDate = assignmentDate;
-        this.progressImage = progressImage;
-    }
 }

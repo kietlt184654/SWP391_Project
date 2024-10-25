@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="/css/viewDetailProject.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="nav">
+  <div class="nav-logo"><p>LOGO</p></div>
+  <div class="nav-menu">
+    <ul>
+      <li><a href="/manageConstruction.html">Overview</a></li>
+      <li><a href="/taskBoard.html">Task Board</a></li>
+      <li><a href="/taskList.html">Task List</a></li>
+      <li><a href="/construction.html">Construction Plan & Layers</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Project Details -->
+<div class="project-container">
+  <div class="project">
+    <div class="project-content">
+      <div class="col-md-6 project-image">
+        <img th:src="@{${project.img}}" alt="Project Image" />
+      </div>
+      <div class="col-md-6 text-content">
+        <h4 th:text="${project.name}">Project Name</h4>
+        <p>
+          <strong>Description:</strong> <span th:text="${project.description}">Project Description</span><br>
+          <strong>Status:</strong> <span th:text="${project.status}">Project Status</span><br>
+          <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br>
+          <strong>End Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br>
+          <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
+          <strong>Priority:</strong> <span th:text="${project.priority}">Priority</span><br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs for Additional Information (Tasks, Progress, Finish) -->
+<div class="tab-bar">
+  <div class="tab" onclick="showContent('task')">Task</div>
+  <div class="tab" onclick="showContent('progress')">Progress</div>
+  <div class="tab" onclick="showContent('finish')">Finish</div>
+</div>
+
+<!-- JavaScript for Tabs and Interactivity -->
+<script src="/javascript/viewDetailProject.js"></script>
+</body>
+</html>
