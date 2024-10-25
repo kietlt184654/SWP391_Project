@@ -15,16 +15,6 @@ body {
   flex-direction: column;
   background: #f3f6f9;
 }
-.info-header {
-  font-size: 28px;
-  color: #3c7363;
-  text-align: center;
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
-  letter-spacing: 1px; /* Thêm khoảng cách giữa các chữ */
-}
 
 /* Navbar */
 .nav {
@@ -350,7 +340,165 @@ button {
 }
 
 /* order tracking */
+.tracking-header {
+  background-color: #3c7363;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 20px;
+  width: 500px;
+  box-sizing: border-box;
+  transition-timing-function: ease-in-out;
+  transition: width 2s;
+}
+.tracking-header:hover {
+  width: 300px;
+}
+#div1 {
+  transition-timing-function: ease-in-out;
+}
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.steps {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.active {
+  background-color: green;
+  color: white;
+}
+
+.step-info {
+  font-size: 14px;
+  text-align: center;
+  max-width: 80px;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 20px; /* Adjust this to align the progress bar */
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: lightgray;
+  z-index: -1;
+}
+
+.indicator {
+  height: 5px;
+  background-color: green;
+  width: 0;
+  transition: width 0.3s;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  margin: 0 10px;
+  padding: 10px 20px;
+}
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  max-width: 400px;
+  width: 100%;
+}
+.container .steps {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.steps .circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  color: #999;
+  font-size: 22px;
+  font-weight: 500;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #e0e0e0;
+  transition: all 200ms ease;
+  transition-delay: 0s;
+}
+.steps .circle.active {
+  transition-delay: 100ms;
+  border-color: #3C7363;
+  color: black;
+}
+.steps .progress-bar {
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: #e0e0e0;
+  z-index: -1;
+}
+.progress-bar .indicator {
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background: #3C7363;
+  transition: all 300ms ease;
+}
+.container .buttons {
+  display: flex;
+  gap: 20px;
+}
+.buttons button {
+  padding: 8px 25px;
+  background: #3C7363;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  transition: all 200ms linear;
+}
+.buttons button:active {
+  transform: scale(0.97);
+}
+.buttons button:disabled {
+  background: #649a8b;
+  cursor: not-allowed;
+} */
 /* -----------------------------FOOTER-----------------------------*/
 .footer {
   background-color: #3c7363;
