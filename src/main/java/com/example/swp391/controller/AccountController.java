@@ -27,25 +27,28 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+    @Autowired
 private CustomerService customerService;
 
     @PostMapping("/login")
-    public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model,HttpSession session) {
+    public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
         AccountEntity account = accountService.login(accountname, password);
         if (account != null) {
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
-            if (account.getAccountTypeID().equals("Customer")){
-
+            if (account.getAccountTypeID().equals("Customer")) {
                 return "Homepage";
-
-        }else if (account.getAccountTypeID().equals("Manager")){
-            model.addAttribute("message", "Invalid username or password");
-            return "manager";
-        }else if (account.getAccountTypeID().equals("Consulting Staff")){
-            return "FormConsulting";
+            } else if (account.getAccountTypeID().equals("Manager")) {
+                return "manager";
+            } else if (account.getAccountTypeID().equals("Consulting Staff")) {
+                return "FormConsulting";
+            }
+        } else {
+            // Xử lý khi tài khoản không tồn tại hoặc mật khẩu sai
+            model.addAttribute("messageLogin", "Invalid username or password");
         }
-    }return "login"; }
+        return "login";
+    }
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {
@@ -74,10 +77,8 @@ private CustomerService customerService;
         account.setAccountName(userDTO.getAccountName());
         account.setPassword(userDTO.getPassword()); // Lưu trực tiếp mật khẩu không mã hóa
         account.setEmail(userDTO.getEmail());
-
         // Lưu tài khoản vào cơ sở dữ liệu
         accountService.registerUser(account);
-
         return "login"; // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
     }
 
@@ -183,7 +184,12 @@ private CustomerService customerService;
         // Trả về tên template Thymeleaf
         return "manageCustomer";
     }
-
+//    @GetMapping("/customers")
+//    public String showAllCustomers(Model model) {
+//        List<Object[]> customers = customerService.getAllCustomersWithAccountInfo();
+//        model.addAttribute("customers", customers);
+//        return "manageCustomer";
+//    }
     @GetMapping("/dashboardAccount")
     public String showDashboard(Model model) {
         long userCount = accountService.countUsers(); // Lấy số lượng tài khoản từ DB

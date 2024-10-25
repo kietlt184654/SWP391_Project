@@ -1,7 +1,9 @@
 package com.example.swp391.service;
 
 import com.example.swp391.entity.AccountEntity;
+import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.repository.AccountRepository;
+import com.example.swp391.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class AccountService {
     private AccountRepository accountRepository;
 private EmailService emailService;
 
+    private CustomerRepository customerRepository;
+
     public AccountEntity login(String accountName, String password) {
         return accountRepository.findByAccountNameAndPassword(accountName, password);
 
@@ -27,24 +31,37 @@ private EmailService emailService;
     public boolean checkIfAccountNameExists(String username) {
         return accountRepository.findByAccountName(username)!=null;
     }
-    public void registerUser(AccountEntity userDTO) {
-        userDTO.setAccountId(accountRepository.findTopByOrderByAccountIdDesc().getAccountId()+1);
+    public synchronized void registerUser(AccountEntity userDTO) {
+        // Tìm tài khoản có AccountID lớn nhất hiện có
+        AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
+
+        if (lastAccount != null) {
+            // Tăng giá trị AccountID thủ công
+            userDTO.setAccountId(lastAccount.getAccountId() + 1);
+        } else {
+            // Nếu bảng trống, bắt đầu từ AccountID = 1
+            userDTO.setAccountId(1);
+        }
+
+        // Thiết lập các giá trị khác
         userDTO.setAccountTypeID("Customer");
         userDTO.setStatus(true);
+
+        // Lưu tài khoản vào cơ sở dữ liệu
         accountRepository.save(userDTO);
+        // Sau khi lưu xong tài khoản, tạo một Customer mới
+        CustomerEntity customer = new CustomerEntity();
+        customer.setCustomerID(customerRepository.findTopByOrderByCustomerIDDesc().getCustomerID() + 1); // Gán AccountID mới tạo cho Customer
+        customer.setAdditionalInfo("Thông tin khách hàng mặc định"); // Thông tin thêm cho khách hàng, có thể thay đổi
+        customer.setAccount(userDTO); // Sửa đổi: gán trực tiếp đối tượng AccountEntity
+        customerRepository.save(customer); // Lưu thông tin Customer vào cơ sở dữ liệu
     }
+
+
     public AccountEntity findByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
-    //    public void updateResetToken(String token, String email) {
-//        AccountEntity user = accountRepository.findByEmail(email);
-//        if (user != null) {
-//            user.setResetToken(token);
-//            accountRepository.save(user);
-//        }
-//
-//
-//    }
+
     public void updatePassword(AccountEntity user, String newPassword) {
         // Không mã hóa, chỉ cập nhật mật khẩu trực tiếp
         user.setPassword(newPassword);
@@ -53,9 +70,7 @@ private EmailService emailService;
         accountRepository.save(user);
     }
 
-    public void save(AccountEntity user) {
-        accountRepository.save(user);
-    }
+
 
 
     public AccountEntity findByToken(String token) {

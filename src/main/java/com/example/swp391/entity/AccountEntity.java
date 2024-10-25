@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 public class AccountEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "AccountID")  // Tên cột chính xác
     private int accountId;
 

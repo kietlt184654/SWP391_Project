@@ -12,7 +12,7 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
    AccountEntity findByAccountNameAndPassword(String accountName, String password);
    AccountEntity findByAccountName(String accountName);
 
-   AccountEntity findTopByOrderByAccountIdDesc();;
+   AccountEntity findTopByOrderByAccountIdDesc();
    AccountEntity findByEmail(String email);
    //AccountEntity findByEmail(String email);
    // Tìm kiếm tài khoản theo token khôi phục mật khẩu

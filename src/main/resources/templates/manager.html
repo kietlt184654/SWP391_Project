@@ -14,18 +14,18 @@
       <h2>Manager</h2>
     </div>
     <ul class="menu">
-      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a th:href="@{/dashboard}">Dashboard</a></li>
       <li><a th:href="@{/account/customers}">Quản lí Customer</a></li>
-      <li><a href="project.html">Quản lí Project</a></li>
-      <li><a href="staff.html">Quản lí Staff</a></li>
-      <li><a href="settings.html">Settings</a></li>
+      <li><a th:href="@{/projects/showProjects}">Quản lí Project</a></li> <!-- Cập nhật đường dẫn quản lý project -->
+      <li><a th:href="@{/staff}">Quản lí Staff</a></li> <!-- Đường dẫn cho quản lý nhân viên -->
+      <li><a th:href="@{/settings}">Settings</a></li>
     </ul>
   </nav>
   <div class="main-content">
     <header>
       <h1>Welcome to the Manager Dashboard</h1>
       <div class="user-profile">
-        <img src="profile-pic.jpg" alt="User Profile" class="profile-pic">
+        <img src="/img/profile-pic.jpg" alt="User Profile" class="profile-pic">
         <span class="user-name">Ngân</span>
       </div>
     </header>

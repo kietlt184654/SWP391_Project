@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project List</title>
+    <link rel="stylesheet" href="/css/show_projects.css">  <!-- Liên kết đến file CSS -->
+</head>
+<body>
+<header>
+    <h1>Project Management System</h1>
+</header>
+<section>
+    <h2>All Projects</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Project ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Total Cost</th>
+            <th>Priority</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Sử dụng th:each để duyệt qua danh sách projects -->
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.projectID}">1</td>
+            <td th:text="${project.name}">Project Name</td>
+            <td th:text="${project.description}">Description</td>
+            <td th:text="${project.startDate != null ? #temporals.format(project.startDate, 'yyyy-MM-dd') : 'N/A'}">Start Date</td>
+            <td th:text="${project.endDate != null ? #temporals.format(project.endDate, 'yyyy-MM-dd') : 'N/A'}">End Date</td>
+
+            <td th:text="${project.status}">Status</td>
+            <td th:text="${project.totalCost}">Total Cost</td>
+            <td th:text="${project.priority}">Priority</td>
+            <td><img th:src="@{${project.img}}" alt="Project Image" class="project-img"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</section>
+<script src="/javascript/show_projects.js"></script> <!-- Liên kết đến file JS -->
+</body>
+</html>

@@ -67,8 +67,8 @@
           <input id="password" name="password" type="password" class="input-field" placeholder="Password" />
           <i class="bx bx-lock-alt"></i>
         </div>
-        <div th:if="${message != null}" class="error-message" style="color:red;">
-          <p th:text="${message}"></p>
+        <div th:if="${messageLogin != null}" class="error-message" style="color:red;">
+          <p th:text="${messageLogin}"></p>
         </div>
         <div class="input-box">
           <input type="submit" class="submit" value="Sign In" />
