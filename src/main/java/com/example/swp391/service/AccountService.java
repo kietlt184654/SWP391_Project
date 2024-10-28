@@ -2,8 +2,10 @@ package com.example.swp391.service;
 
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
+import com.example.swp391.entity.StaffEntity;
 import com.example.swp391.repository.AccountRepository;
 import com.example.swp391.repository.CustomerRepository;
+import com.example.swp391.repository.StaffRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.UUID;
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private StaffRepository staffRepository;
 private EmailService emailService;
 
     private CustomerRepository customerRepository;
@@ -70,7 +74,9 @@ private EmailService emailService;
         accountRepository.save(user);
     }
 
-
+    public List<AccountEntity> findStaffByRole(String role) {
+        return accountRepository.findByAccountTypeID(role);
+    }
 
 
     public AccountEntity findByToken(String token) {

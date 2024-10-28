@@ -1,0 +1,151 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Navigation */
+.nav {
+    background-color: #343a40;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo p {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #17a2b8;
+}
+
+/* Page Title */
+h2 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2rem;
+    color: #343a40;
+}
+
+/* Staff List Container */
+.staff-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.staff-table {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.staff-table th, .staff-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.staff-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.staff-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.staff-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Assign Button */
+.assign-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.assign-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.footer-info, .footer-contact {
+    max-width: 300px;
+}
+
+.footer-info h4, .footer-contact h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.footer-contact p, .footer-info p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .staff-table {
+        width: 100%;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-info, .footer-contact {
+        margin-bottom: 20px;
+    }
+}

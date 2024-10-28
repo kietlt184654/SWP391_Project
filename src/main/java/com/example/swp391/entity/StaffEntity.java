@@ -5,22 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Staff")
 public class StaffEntity {
-
-
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer staffID;  // Khóa chính
+    @Column(name = "StaffID")
+    private Integer staffID;  // Primary Key without auto-increment (ID manually set)
 
     @ManyToOne
-    @JoinColumn(name = "accountID")  // Liên kết tới bảng Account
-    private AccountEntity account;  // Thực thể liên kết tới Customer/Account
+    @JoinColumn(name = "AccountID")
+    private AccountEntity account;
 
-    private String role;  // Vai trò của nhân viên
+    @Column(name = "Role")
+    private String role;  // Role of the staff (matching database column name)
 }

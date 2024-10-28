@@ -13,19 +13,24 @@ public class StaffService {
     @Autowired
     private StaffRepository staffRepository;
 
-    // Phương thức lấy nhân viên theo ID
+   public List<StaffEntity> getStaffByRole(String role) {
+        return staffRepository.findByRole(role);
+    }
+
     public List<StaffEntity> getAllStaff() {
         return staffRepository.findAll();
     }
 
-
-
-    // Phương thức lấy tất cả các nhân viên có role là "construction staff"
-    public List<StaffEntity> getConstructionStaff() {
-        return staffRepository.findByRole("Construction Staff");
+    public StaffEntity getStaffById(Integer staffId) {
+        Optional<StaffEntity> staffEntity = staffRepository.findById(staffId);
+        return staffEntity.orElse(null);
     }
 
-    public Optional<StaffEntity> getStaffById(int staffId) {
-        return staffRepository.findById(staffId);
+    public StaffEntity save(StaffEntity staffEntity) {
+        return staffRepository.save(staffEntity);
+    }
+
+    public void deleteStaff(Integer staffId) {
+        staffRepository.deleteById(staffId);
     }
 }
