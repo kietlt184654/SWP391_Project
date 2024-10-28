@@ -109,46 +109,22 @@
           </li>
         </ul>
       </div>
-  
-    <!-- <h1>Koi Pond Maintenance Services</h1>
-    
-    <form action="/book" method="post" id="bookingForm">
-        <label for="customerName">Your Name:</label>
-        <input type="text" id="customerName" name="customerName" required>
-        
-        <label for="serviceDate">Preferred Date:</label>
-        <input type="date" id="serviceDate" name="serviceDate" required>
-        
-        <button type="submit">Book Maintenance</button>
-    </form>
-
-    <div id="trackingSection" style="display:none;">
-        <h2>Service Tracking</h2>
-        <p id="trackingMessage">${trackingMessage}</p>  -->
-        
-        <!-- New tracking table -->
-        <!-- <table id="trackingTable" style="width:100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Customer Name</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Service Date</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;" id="trackingCustomerName">${customerName}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;" id="trackingServiceDate">${serviceDate}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;" id="trackingStatus">Pending</td>
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
     <div class="container">
       <h1>Book Your Maintenance Service</h1>
       <div class="date-display">
           <span id="currentDateDisplay"></span>
       </div>
+      
+      <!-- Pond Size Selection -->
+      <label for="pondSize">Choose Pond Size:</label>
+      <select id="pondSize" name="pondSize" required>
+          <option value="" disabled selected>Select size</option>
+          <option value="small">Small (1000 USD)</option>
+          <option value="medium">Medium (2000 USD)</option>
+          <option value="large">Large (3000 USD)</option>
+      </select>
+      <div id="costDisplay" style="margin-top: 10px; color: blue;"></div>
+      
       <div class="navigation">
           <button id="prevMonth">Previous Month</button>
           <button id="nextMonth">Next Month</button>
@@ -157,11 +133,13 @@
           <button id="prevYear">Previous Year</button>
           <button id="nextYear">Next Year</button>
       </div>
-      <div id="calendar"></div>
-      <form id="bookingForm" style="display:none;">
+      <div id="calendar"></div> 
+      <form id="bookingForm" method="POST" action="/bookings">
           <label for="customerName">Your Name:</label>
           <input type="text" id="customerName" name="customerName" required>
           <input type="hidden" id="selectedDate" name="serviceDate">
+          <input type="hidden" id="pondSize" name="pondSize">
+          <div id="costDisplay" style="margin-top: 10px; color: blue;"></div>
           <button type="submit">Book Maintenance</button>
       </form>
       <div id="message" style="margin-top: 20px; color: green;"></div>

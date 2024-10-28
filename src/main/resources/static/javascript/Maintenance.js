@@ -99,4 +99,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     generateCalendar();
+
+    // Add this to your existing JavaScript file (designService.js or Maintenance.js)
+    document.getElementById('pondSize').addEventListener('change', function() {
+        const size = this.value;
+        let cost = 0;
+
+        switch(size) {
+            case 'small':
+                cost = 1000;
+                break;
+            case 'medium':
+                cost = 2000;
+                break;
+            case 'large':
+                cost = 3000;
+                break;
+        }
+
+        document.getElementById('costDisplay').innerText = `Estimated Cost: ${cost} USD`;
+        document.getElementById('pondSize').value = size; // Set pond size in the form
+    });
+
+    // Assuming you have a way to set the selected date
+    // Example: document.getElementById('selectedDate').value = '2023-10-01';
 });
