@@ -51,7 +51,74 @@
   <div class="tab" onclick="showContent('finish')">Finish</div>
 </div>
 
-<!-- JavaScript for Tabs and Interactivity -->
-<script src="/javascript/viewDetailProject.js"></script>
+<div class="tab-content" id="task-content">
+  <!-- Task Form in Horizontal Layout -->
+  <form class="horizontal-form" th:action="@{'/tasks/project/' + ${project.projectID} + '/assign'}" method="post">
+    <div class="form-group">
+      <label for="task">Task Description:</label>
+      <textarea id="task" name="taskDescription" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="staff">Select Staff:</label>
+      <!-- Button to open the modal -->
+      <button type="button" id="openStaffModal" class="select-btn">Select Staff</button>
+      <!-- Hidden input to store the selected staff ID -->
+      <input type="hidden" id="staffId" name="staffId" />
+      <!-- Display the selected staff member -->
+      <span id="selectedStaff" class="staff-info"></span>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" class="submit-btn">Assign Task</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal for selecting staff -->
+<div id="staffModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h4>Select a Staff Member</h4>
+    <div id="staffList">
+      <!-- Example list, to be populated dynamically -->
+      <div class="staff-item" onclick="selectStaff(1, 'John Doe', 'Engineer', 'john@example.com', '123-456-7890')">
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Role:</strong> Engineer</p>
+      </div>
+      <!-- Add more staff items dynamically -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal logic
+  const modal = document.getElementById("staffModal");
+  const openModalBtn = document.getElementById("openStaffModal");
+  const closeModalBtn = document.getElementsByClassName("close")[0];
+  const selectedStaffDisplay = document.getElementById("selectedStaff");
+
+  openModalBtn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  closeModalBtn.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function selectStaff(id, name, role, email, phone) {
+    document.getElementById("staffId").value = id;
+    selectedStaffDisplay.innerText = `${name} - ${role}`;
+    modal.style.display = "none";
+  }
+</script>
+
 </body>
 </html>

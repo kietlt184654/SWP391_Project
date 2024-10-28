@@ -29,4 +29,5 @@ public class StaffProjectEntity {
 
     private Date assignmentDate;
     private String progressImage;
+    private String Task;
 }

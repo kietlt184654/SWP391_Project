@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StaffService {
@@ -16,12 +17,15 @@ public class StaffService {
     public List<StaffEntity> getAllStaff() {
         return staffRepository.findAll();
     }
-    public StaffEntity getStaffById(Integer staffID) {
-        return staffRepository.findById(staffID).orElseThrow(() -> new IllegalArgumentException("Invalid staff ID"));
+
+
+
+    // Phương thức lấy tất cả các nhân viên có role là "construction staff"
+    public List<StaffEntity> getConstructionStaff() {
+        return staffRepository.findByRole("Construction Staff");
     }
 
-    // Lấy tất cả nhân viên có vai trò là 'Staff'
-    public List<StaffEntity> getAllStaffWithRole() {
-        return staffRepository.findByRole("Construction Staff");
+    public Optional<StaffEntity> getStaffById(int staffId) {
+        return staffRepository.findById(staffId);
     }
 }
