@@ -5,10 +5,8 @@ import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.service.AccountService;
 import com.example.swp391.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -36,7 +34,18 @@ private CustomerService customerService;
         if (account != null) {
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
+
+            // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
             if (account.getAccountTypeID().equals("Customer")) {
+                // Kiểm tra nếu customer chưa tồn tại
+                if (!customerService.existsByAccount(account)) {
+                    CustomerEntity customer = new CustomerEntity();
+                    customer.setAccount(account);
+                    customer.setAdditionalInfo("");  // Bạn có thể thêm thông tin bổ sung tùy ý
+
+                    // Lưu Customer mới vào cơ sở dữ liệu
+                    customerService.save(customer);
+                }
                 return "Homepage";
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
@@ -44,11 +53,11 @@ private CustomerService customerService;
                 return "FormConsulting";
             }
         } else {
-            // Xử lý khi tài khoản không tồn tại hoặc mật khẩu sai
             model.addAttribute("messageLogin", "Invalid username or password");
         }
         return "login";
     }
+
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {

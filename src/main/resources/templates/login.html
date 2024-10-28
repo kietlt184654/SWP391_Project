@@ -12,8 +12,7 @@
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
   />
-  <link rel="stylesheet" th:href="@{/css/login.css}" />
-
+  <link rel="stylesheet" href="/css/login.css" />
   <title>Login</title>
 </head>
 <body>
@@ -89,12 +88,13 @@
           <input type="checkbox" id="login-check" />
           <label for="login-check"> Remember Me</label>
         </div>
-        <!-- Liên kết tới trang quên mật khẩu -->
-        <div class="two">
-          <a th:href="@{/account/forgot-password-form}" style="color: blue; text-decoration: underline; cursor: pointer;">
-            Forgot password?
-          </a>
-        </div>
+        <form th:action="@{/forgetPassword}" method="GET">
+          <div class="two">
+            <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">
+              Forgot password?
+            </button>
+          </div>
+        </form>
 
       </div>
     </div>

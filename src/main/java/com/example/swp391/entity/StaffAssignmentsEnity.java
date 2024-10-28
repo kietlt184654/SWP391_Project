@@ -1,4 +1,4 @@
-//package com.example.swp391.entity;
+package com.example.swp391.entity;//package com.example.swp391.entity;
 //
 //import jakarta.persistence.*;
 //import lombok.Data;
@@ -6,25 +6,26 @@
 //import lombok.AllArgsConstructor;
 //
 //@Entity
-//@Table(name = "Point")
+//@Table(name = "Staff_Assignments")
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class PointEnity {
+//public class StaffAssignmentsEnity {
 //
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int pointId;
+//    private int staffAssignmentId;
 //
 //    @ManyToOne
-//    @JoinColumn(name = "customerId")
-//    private CustomerEnity customer;
-//
-//    private int orderId;
+//    @JoinColumn(name = "staffId")
+//    private StaffEnity staff;
 //
 //    @ManyToOne
 //    @JoinColumn(name = "projectId")
 //    private ProjectEnity project;
 //
-//    private int points;
+//    private String task;
+//
+//    @Lob
+//    private byte[] img;
 //}

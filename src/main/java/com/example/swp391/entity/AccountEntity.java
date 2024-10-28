@@ -1,9 +1,9 @@
 package com.example.swp391.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "Account")
@@ -13,9 +13,9 @@ import lombok.AllArgsConstructor;
 public class AccountEntity {
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AccountID")  // Tên cột chính xác
-    private int accountId;
+    private long accountId;
 
     @Column(name = "AccountName", nullable = false)  // Thêm trường AccountName
     private String accountName;
@@ -40,5 +40,7 @@ public class AccountEntity {
     private String images;
     @Column(name = "Status", nullable = false)  // Thêm trường Status
     private Boolean status;  // Sử dụng Boolean cho kiểu BIT
-
+    // Thiết lập quan hệ một-một với CustomerEntity
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CustomerEntity customer;
 }

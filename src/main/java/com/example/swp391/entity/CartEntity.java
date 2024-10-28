@@ -1,31 +1,40 @@
 package com.example.swp391.entity;
 
-import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-@Entity
-@Table(name = "Cart")
+@Data
+@NoArgsConstructor
 public class CartEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartId;
+    private Long cartId; // Có thể giữ cartId cho nhận diện, nhưng sẽ không được lưu vào DB
+    private Map<DesignEntity, Integer> designItems = new HashMap<>(); // Lưu các thiết kế và số lượng
 
-    @OneToMany
-    @JoinColumn(name = "DesignID")
-    private List<DesignEntity> designItems = new ArrayList<>(); // Lưu các sản phẩm trong giỏ hàng
-
-    // Method to add a design only if it is not already in the cart
+    // Thêm thiết kế vào giỏ hàng
     public void addDesign(DesignEntity design) {
-        // Check if the design is already in the cart
-        if (!designItems.contains(design)) {
-            this.designItems.add(design); // Add the design with a quantity of 1
-        }
+        designItems.put(design, designItems.getOrDefault(design, 0) + 1); // Tăng số lượng hoặc thêm mới
     }
 
+    // Xóa thiết kế khỏi giỏ hàng
+    public void removeDesign(DesignEntity design) {
+        designItems.remove(design);
+    }
 
+    // Lấy danh sách thiết kế
+    public Map<DesignEntity, Integer> getDesignItems() {
+        return new HashMap<>(designItems); // Trả về bản sao để bảo vệ dữ liệu
+    }
 
+    // Xóa tất cả thiết kế trong giỏ hàng
+    public void clear() {
+        designItems.clear();
+    }
 
+    // Tính tổng số lượng các thiết kế trong giỏ hàng
+    public int getTotalQuantity() {
+        return designItems.values().stream().mapToInt(Integer::intValue).sum();
+    }
 }
