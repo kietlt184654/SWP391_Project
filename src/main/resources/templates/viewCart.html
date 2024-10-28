@@ -1,282 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en"><head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script src="/src/main/resources/javascript/viewCart.js" defer></script>
-    <link rel="stylesheet" href="/src/main/resources/static/css/viewCart.css" />
-    <title>View cart</title>
-  </head>
-  <body>
-   <!-------------------- HEADER-------------------->
-    <div class="nav">
-      <!-- Hamburger button -->
-      <div class="nav-button">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <script src="/javascript/viewCartPage.js" defer></script>
+    <link rel="stylesheet" href="/css/viewCart.css" />
+    <title>View Cart</title>
+</head>
+<body>
+<!-------------------- HEADER-------------------->
+<div class="nav">
+    <!-- Hamburger button -->
+    <div class="nav-button">
         <button id="menu-toggle" class="btn">&#9776;</button>
-      </div>
+    </div>
 
-      <!-- Logo -->
-      <div class="nav-logo">
+    <!-- Logo -->
+    <div class="nav-logo">
         <p>LOGO</p>
-      </div>
+    </div>
 
-      <!-- Nav Menu -->
-      <div class="nav-menu" id="navMenu">
+    <!-- Nav Menu -->
+    <div class="nav-menu" id="navMenu">
         <ul>
-          <li><a href="Homepage.html" class="link">Home</a></li>
-          <li><a href="about.html" class="link">About</a></li>
-          <li><a href="blog.html" class="link">Blog</a></li>
-          <li><a href="services.html" class="link">Services</a></li>
-          <li><a href="Availableproject.html" class="link">Product</a></li>
+            <li><a th:href="@{/}" class="link">Home</a></li>
+            <li><a href="about.html" class="link">About</a></li>
+            <li><a href="blog.html" class="link">Blog</a></li>
+            <li><a href="services.html" class="link">Services</a></li>
+            <li><a th:href="@{/design}" class="link">Services</a></li>
+            <li><a href="products.html" class="link">Products</a></li>
+            <!-- Cart -->
+            <li>
+                <a href="#" class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="notification-badge">0</span>
+                </a>
+            </li>
 
-          <!-- Cart -->
-          <li>
-            <a href="#" class="icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="notification-badge">0</span>
+            <!-- User -->
+            <li>
+                <a href="#" class="icon" id="accountIcon">
+                    <i class="fas fa-user-circle"></i> Username
+                    <i class="fas fa-caret-down"></i>
+                </a>
 
-            </a>
-          </li>
-
-
-          <li>
-            <a href="#" class="icon" id="accountIcon">
-              <i class="fas fa-user-circle"></i>Username
-              <i class="fas fa-caret-down"></i>
-            </a>
-
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li>
-                <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
-              </li>
-              <li>
-                <a href="Homepage.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-              </li>
-            </ul>
-          </li>
+                <!-- Dropdown menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                </ul>
+            </li>
         </ul>
-      </div>
     </div>
+</div>
 
-    <!--  content -->
- <!-- Hero Section -->
- <section class="hero-section">
+<!-- Hero Section -->
+<section class="hero-section">
     <div class="hero-content">
-    <img src="/src/main/resources/static/img/koi_des.webp">
-      <h1>View cart</h1>
-      <ol class="breadcrumb">
-        <li><a href="homepage.html">Home</a></li>
-        <li><a href="Availableproject.html">Products</a></li>
-        <li><a href="viewProductDetail.html">Products detail</a></li>
-        <li class="active">View cart</li>
-      </ol>
+        <img src="/img/koi_des.webp" alt="Koi Pond Design" />
+        <h1>View Cart</h1>
+        <ol class="breadcrumb">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li class="active">View Cart</li>
+        </ol>
     </div>
-  </section>
+</section>
 
-  <!-- View cart -->
-
+<!-- View Cart Section -->
 <div class="container">
-  <div class="cart">
-      <h2>View Cart</h2>
-      <table>
-          <tr>
-              <th>ID</th>
-              <th>Name product</th>
-              <th>Quantity</th>
-              <th>Total</th>
-              <th>Action</th>
-          </tr>
+    <div class="cart">
+        <h2>Your Cart</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cart.designItems}">
+                <td th:text="${item.getDesignId()}">Product ID</td>
+                <td><img th:src="@{${item.getImg()}}" alt="Product Image" width="100"/></td>
+                <td th:text="${item.getDesignName()}">Product Name</td>
+                <td th:text="${item.getPrice()}">Product Price</td>
+                <td th:text="${item.getQuantity()}">Quantity</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-          <tr>
-            <td>1</td>
-              <td class="product-image"><img src="/src/main/resources/static/img/a2.jpg" alt="Product Image"> Pond 1</td>
-              <td>
-                <div class="quantity-container">
-                  <button class="quantity-btn increase-btn" data-id="1">-</button>
-                  <input
-                    type="text"
-                    id="quantity-1"
-                    value="1"
-                    min="1"
-                    max="1000"
-                    step="1"
-                  />
-                  <button class="quantity-btn increase-btn" data-id="1">+</button>
-                </div>
-              </td>
-              <td>100.000.000VND</td>
-              <td>
-                <div class="icon-bin" onclick="deleteRow(this)">
-                <i class="fa-solid fa-trash"></i></div>
-              </td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-              <td class="product-image"><img src="/src/main/resources/static/img/a2.jpg" alt="Product Image"> Pond 2</td>
-              <td>
-                <div class="quantity-container">
-                  <button class="quantity-btn increase-btn" data-id="2">-</button>
-                  <input
-                    type="text"
-                    id="quantity-2"
-                    value="1"
-                    min="1"
-                    max="1000"
-                    step="1"
-                  />
-                  <button class="quantity-btn increase-btn" data-id="2">+</button>
-                </div>
-              </td>
-              <td>80.000.000VND</td>
-              <td>
-                <div class="icon-bin" onclick="deleteRow(this)">
-                <i class="fa-solid fa-trash"></i></div>
-              </td>
-          </tr>
-          <tr>
-            <td>3</td>
-              <td class="product-image"><img src="/src/main/resources/static/img/a2.jpg" alt="Product Image"> Pond 3</td>
-
-              <td>
-                <div class="quantity-container">
-                  <button class="quantity-btn increase-btn" data-id="3">-</button>
-                  <input
-                    type="text"
-                    id="quantity-3"
-                    value="1"
-                    min="1"
-                    max="1000"
-                    step="1"
-                  />
-                  <button class="quantity-btn increase-btn" data-id="3">+</button>
-                </div>
-              </td>
-              <td>85.000.000VND</td>
-              <td>
-                <div class="icon-bin"  onclick="deleteRow(this)">
-                <i class="fa-solid fa-trash"></i></div>
-              </td>
-          </tr>
-        <!-- total  -->
-        <tr class="total-row">
-          <td colspan="3">Sub total:</td>
-          <td>265.000.000VND</td>
-      </tr>
-        <tr class="total-row">
-            <td colspan="3">Discount:</td>
-            <td>20%</td>
-        </tr>
-
-        <tr class="total-row">
-            <td colspan="3">Total:</td>
-            <td>212.000.000VND</td>
-        </tr>
-
-      </table>
-
-
-  </div>
-
-  <!-- Payment Info Section -->
-<!--  <div class="payment-info">-->
-<!--      <h2>Payment</h2>-->
-<!--      <form>-->
-<!--          <label for="payment-method">Payment Method:</label><br>-->
-<!--          <input type="radio" id="cod" name="payment-method" value="cod" checked> COD<br>-->
-<!--          <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer"> Bank transfer<br><br>-->
-<!--        <button type="submit" name="" action="" class="checkout-btn">Check Out</button>-->
-<!--      </form>-->
-<!--  </div>-->
+    <!-- Payment Info Section -->
     <div class="payment-info">
         <h2>Payment</h2>
-        <form method="POST" action="/payment/create">
-            <input type="hidden" name="projectId" value="1" />
-
-            <!-- Nhãn cho radio button COD -->
-            <label for="cod">Payment Method:</label><br>
-            <input type="radio" id="cod" name="payment-method" value="cod" checked> COD<br>
-
-            <!-- Nhãn cho radio button Bank Transfer -->
-            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer"> Bank transfer<br><br>
-
+        <form>
+            <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
+            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
             <button type="submit" class="checkout-btn">Check Out</button>
         </form>
-
-
-
     </div>
-
 </div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#"><i class="fas fa-history"></i> History Order</a></li>
+        <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+    </ul>
 </div>
-  </div>
-
-
-    <!-- ---------------------------------------------------------------------------------------------------------- -->
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="user-info">
-          <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-          <p class="username">Username</p>
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>Information</h4>
+            <p>Open: 8 AM - 10 PM</p>
+            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
         </div>
-        <ul class="sidebar-menu">
-          <li>
-            <a href="Homepage.html"><i class="fas fa-home"></i> Home</a>
-          </li>
-          <li>
-            <a href="historyOrder"><i class="fas fa-history"></i> History Order</a>
-          </li>
-          <li>
-            <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
-          </li>
-          <li>
-            <a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a>
-          </li>
-          <li>
-            <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-          </li>
-        </ul>
-      </div>
-    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <h4>Information</h4>
-                <p>Open: 8 AM - 10 PM</p>
-                <p>
-                    PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh
-                </p>
-            </div>
-            <div class="footer-services">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="link-to-construction" class="service-item">Construction Koi pond</a></li>
-                    <li><a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a></li>
-                    <li><a href="link-to-design" class="service-item">Design upon requirements</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact</h4>
-                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-                <p>
-                    <i class="fa-brands fa-facebook"></i>
-                    <a href="https://facebook.com" target="_blank">Visit Us</a>
-                </p>
-            </div>
+        <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="link-to-construction">Construction Koi Pond</a></li>
+                <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
+                <li><a href="link-to-design">Design upon Requirements</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+            <p>
+                <i class="fa-brands fa-facebook"></i>
+                <a href="https://facebook.com" target="_blank">Visit Us</a>
+            </p>
         </div>
     </div>
+</div>
 
-    </body>
-    </html>
+</body>
+</html>

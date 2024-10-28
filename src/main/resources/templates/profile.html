@@ -1,85 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  />
 
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+  <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+  />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script
-      src="/javascript/profile.js"
-      defer
-    ></script>
-    <link rel="stylesheet" href="/css/profile.css" />
-    <title>Profile</title>
-  </head>
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script
+          src="/javascript/profile.js"
+          defer
+  ></script>
+  <link rel="stylesheet" href="/css/profile.css" />
+  <title>Profile</title>
+</head>
 
-  <body>
-    <!-------------------- HEADER-------------------->
-    <div class="nav">
-      <!-- Hamburger button -->
-      <div class="nav-button">
-        <button id="menu-toggle" class="btn">&#9776;</button>
-      </div>
+<body>
+<!-------------------- HEADER-------------------->
+<div class="nav">
+  <!-- Hamburger button -->
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
 
-      <!-- Logo -->
-      <div class="nav-logo">
-        <p>LOGO</p>
-      </div>
+  <!-- Logo -->
+  <div class="nav-logo">
+    <p>LOGO</p>
+  </div>
 
-      <!-- Nav Menu -->
-      <div class="nav-menu" id="navMenu">
-        <ul>
-          <li><a href="/" class="link">Home</a></li>
-          <li><a href="about.html" class="link">About</a></li>
-          <li><a href="blog.html" class="link">Blog</a></li>
-          <li><a href="service.html" class="link">Services</a></li>
-          <li><a href="Availableproject.html" class="link">Product</a></li>
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a href="/" class="link">Home</a></li>
+      <li><a href="about.html" class="link">About</a></li>
+      <li><a href="blog.html" class="link">Blog</a></li>
+      <li><a href="service.html" class="link">Services</a></li>
+      <li><a href="Availableproject.html" class="link">Product</a></li>
 
-          <!-- Cart -->
+      <!-- Cart -->
+      <li>
+        <a href="#" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge">0</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i>Username
+          <i class="fas fa-caret-down"></i>
+        </a>
+
+        <!-- Dropdown menu -->
+        <ul class="dropdown-menu">
           <li>
-            <a href="#" class="icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="notification-badge">0</span>
-            </a>
+            <a href="profile.html"
+            ><i class="fas fa-user-circle"></i> Profile</a
+            >
           </li>
-
           <li>
-            <a href="#" class="icon" id="accountIcon">
-              <i class="fas fa-user-circle"></i>Username
-              <i class="fas fa-caret-down"></i>
-            </a>
-
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li>
-                <a href="profile.html"
-                  ><i class="fas fa-user-circle"></i> Profile</a
-                >
-              </li>
-              <li>
-                <a href="login.html"
-                  ><i class="fas fa-sign-out-alt"></i> Log Out</a
-                >
-              </li>
-            </ul>
+            <a href="login.html"
+            ><i class="fas fa-sign-out-alt"></i> Log Out</a
+            >
           </li>
         </ul>
-      </div>
-    </div>
+      </li>
+    </ul>
+  </div>
+</div>
 
 <!-- Hero Section -->
 <section class="hero-section">
@@ -197,7 +197,7 @@
         </li>
         <li>
           <a href="historyOrder.html"
-            ><i class="fas fa-history"></i> History Order</a
+          ><i class="fas fa-history"></i> History Order</a
           >
         </li>
         <li>
@@ -228,17 +228,17 @@
           <ul>
             <li>
               <a href="link-to-construction" class="service-item"
-                >Construction Koi pond</a
+              >Construction Koi pond</a
               >
             </li>
             <li>
               <a href="link-to-cleaning" class="service-item"
-                >Cleaning and maintenance</a
+              >Cleaning and maintenance</a
               >
             </li>
             <li>
               <a href="link-to-design" class="service-item"
-                >Design upon requirements</a
+              >Design upon requirements</a
               >
             </li>
           </ul>
@@ -254,5 +254,5 @@
         </div>
       </div>
     </div>
-  </body>
+</body>
 </html>

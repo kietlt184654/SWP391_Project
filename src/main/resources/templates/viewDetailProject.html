@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="/css/viewDetailProject.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="nav">
+  <div class="nav-logo"><p>LOGO</p></div>
+  <div class="nav-menu">
+    <ul>
+      <li><a href="/manageConstruction.html">Overview</a></li>
+      <li><a href="/taskBoard.html">Task Board</a></li>
+      <li><a href="/taskList.html">Task List</a></li>
+      <li><a href="/construction.html">Construction Plan & Layers</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Project Details -->
+<div class="project-container">
+  <div class="project">
+    <div class="project-content">
+      <div class="col-md-6 project-image">
+        <img th:src="@{${project.img}}" alt="Project Image" />
+      </div>
+      <div class="col-md-6 text-content">
+        <h4 th:text="${project.name}">Project Name</h4>
+        <p>
+          <strong>Description:</strong> <span th:text="${project.description}">Project Description</span><br>
+          <strong>Status:</strong> <span th:text="${project.status}">Project Status</span><br>
+          <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br>
+          <strong>End Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br>
+          <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
+          <strong>Priority:</strong> <span th:text="${project.priority}">Priority</span><br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs for Additional Information (Tasks, Progress, Finish) -->
+<div class="tab-bar">
+  <div class="tab" onclick="showContent('task')">Task</div>
+  <div class="tab" onclick="showContent('progress')">Progress</div>
+  <div class="tab" onclick="showContent('finish')">Finish</div>
+</div>
+
+<div class="tab-content" id="task-content">
+  <!-- Task Form in Horizontal Layout -->
+  <form class="horizontal-form" th:action="@{'/tasks/project/' + ${project.projectID} + '/assign'}" method="post">
+    <div class="form-group">
+      <label for="task">Task Description:</label>
+      <textarea id="task" name="taskDescription" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="staff">Select Staff:</label>
+      <!-- Button to open the modal -->
+      <button type="button" id="openStaffModal" class="select-btn">Select Staff</button>
+      <!-- Hidden input to store the selected staff ID -->
+      <input type="hidden" id="staffId" name="staffId" />
+      <!-- Display the selected staff member -->
+      <span id="selectedStaff" class="staff-info"></span>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" class="submit-btn">Assign Task</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal for selecting staff -->
+<div id="staffModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h4>Select a Staff Member</h4>
+    <div id="staffList">
+      <!-- Example list, to be populated dynamically -->
+      <div class="staff-item" onclick="selectStaff(1, 'John Doe', 'Engineer', 'john@example.com', '123-456-7890')">
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Role:</strong> Engineer</p>
+      </div>
+      <!-- Add more staff items dynamically -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal logic
+  const modal = document.getElementById("staffModal");
+  const openModalBtn = document.getElementById("openStaffModal");
+  const closeModalBtn = document.getElementsByClassName("close")[0];
+  const selectedStaffDisplay = document.getElementById("selectedStaff");
+
+  openModalBtn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  closeModalBtn.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function selectStaff(id, name, role, email, phone) {
+    document.getElementById("staffId").value = id;
+    selectedStaffDisplay.innerText = `${name} - ${role}`;
+    modal.style.display = "none";
+  }
+</script>
+
+</body>
+</html>

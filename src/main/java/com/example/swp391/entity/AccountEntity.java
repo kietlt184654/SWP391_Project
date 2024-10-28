@@ -13,8 +13,8 @@ import lombok.AllArgsConstructor;
 public class AccountEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "AccountId")  // Tên cột chính xác
+
+    @Column(name = "AccountID")  // Tên cột chính xác
     private int accountId;
 
     @Column(name = "AccountName", nullable = false)  // Thêm trường AccountName
@@ -29,17 +29,16 @@ public class AccountEntity {
     @Column(name = "Email", nullable = false)  // Tên cột chính xác
     private String email;
 
-    @Column(name = "Phonenumber", nullable = false)  // Tên cột chính xác
+    @Column(name = "PhoneNumber", nullable = false)  // Tên cột chính xác
     private String phoneNumber;
-
-    @Column(name = "ResetToken", length = 100)  // Thêm trường reset token
+    @Column(name = "ResetToken")
     private String token;
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
 
-    @Column(name = "Images")  // Tên cột chính xác
+    @Column(name = "Images")
     private String images;
-
     @Column(name = "Status", nullable = false)  // Thêm trường Status
     private Boolean status;  // Sử dụng Boolean cho kiểu BIT
+
 }

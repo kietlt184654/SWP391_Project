@@ -1,15 +1,18 @@
 package com.example.swp391.service;
 
-import com.example.swp391.entity.*;
-import com.example.swp391.repository.ProjectMaterialDetailRepository;
+import com.example.swp391.entity.ProjectEntity;
+import com.example.swp391.entity.StaffEntity;
+import com.example.swp391.entity.StaffProjectEntity;
+import com.example.swp391.entity.StaffProjectId;
 import com.example.swp391.repository.ProjectRepository;
+
+import com.example.swp391.repository.StaffProjectRepository;
+import com.example.swp391.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -18,52 +21,36 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @Autowired
-    private ProjectMaterialDetailRepository projectMaterialDetailRepository;
+//    @Autowired
+//    private StaffRepository staffRepository;
+//
+//    @Autowired
+//    private StaffProjectRepository staffProjectRepository;
 
-    // Tìm kiếm dự án theo ID
-    public Optional<ProjectEntity> findProjectById(Long projectId) {
-        return projectRepository.findById(projectId);
-    }
-
-    // Lấy tất cả các dự án
-    public List<ProjectEntity> getAllProjects() {
+    // Hàm để lấy danh sách tất cả các dự án
+    public List<ProjectEntity> findAll() {
         return projectRepository.findAll();
     }
 
-    // Lưu dự án (thêm mới hoặc cập nhật)
-    public ProjectEntity saveProject(ProjectEntity project) {
-        return projectRepository.save(project);
+    @Autowired
+    private StaffRepository staffRepository;
+    @Autowired
+    private StaffProjectRepository staffProjectRepository;
+
+
+
+//    // Thêm staff vào dự án
+//    public void addStaffToProject(Integer staffID, Integer projectID) {
+//        // Tìm kiếm staff và project
+//        StaffEntity staff = staffRepository.findById(staffID).orElseThrow(() -> new IllegalArgumentException("Invalid staff ID"));
+//        ProjectEntity project = projectRepository.findById(projectID).orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
+//
+//        // Tạo đối tượng StaffProjectEntity để lưu vào bảng trung gian
+//        StaffProjectId staffProjectId = new StaffProjectId(staffID, projectID);
+//        StaffProjectEntity staffProject = new StaffProjectEntity(staffProjectId, staff, project, new Date(), null);
+//        staffProjectRepository.save(staffProject);
+//    }
+    public Optional<ProjectEntity> getProjectById(Integer projectId) {
+        return projectRepository.findById(projectId);
     }
-
-    // Cập nhật dự án
-    public void updateProject(ProjectEntity project) {
-        projectRepository.save(project);  // Cập nhật dự án
-    }
-
-    // Xóa dự án theo ID
-    public void deleteProjectById(Long projectId) {
-        if (projectRepository.existsById(projectId)) {
-            projectRepository.deleteById(projectId);
-        }
-    }
-    // Tạo chi tiết nguyên vật liệu cho dự án
-    private void createProjectMaterialDetails(ProjectEntity project, DesignEntity design) {
-        for (Map.Entry<MaterialEntity, Integer> entry : design.getMaterialQuantities().entrySet()) {
-            MaterialEntity material = entry.getKey();
-            int quantityUsed = entry.getValue();
-
-            ProjectMaterialDetailEntity detail = new ProjectMaterialDetailEntity();
-            detail.setProject(project);
-            detail.setMaterial(material);
-            detail.setQuantityUsed(quantityUsed);
-
-            projectMaterialDetailRepository.save(detail);
-        }
-    }
-
-
-
-    }
-
-
+}

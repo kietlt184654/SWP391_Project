@@ -1,12 +1,14 @@
 package com.example.swp391.controller;
 
-import com.example.swp391.DTO.AccountRegistrationDTO;
 import com.example.swp391.entity.AccountEntity;
+import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.service.AccountService;
-import com.example.swp391.service.EmailService;
+import com.example.swp391.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +18,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.List;
 
 @Controller
 @RequestMapping("/account")
 public class AccountController {
     @Autowired
     private AccountService accountService;
-
-
+    @Autowired
+private CustomerService customerService;
 
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
@@ -33,11 +36,18 @@ public class AccountController {
         if (account != null) {
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
-            return "Homepage";
+            if (account.getAccountTypeID().equals("Customer")) {
+                return "Homepage";
+            } else if (account.getAccountTypeID().equals("Manager")) {
+                return "manager";
+            } else if (account.getAccountTypeID().equals("Consulting Staff")) {
+                return "FormConsulting";
+            }
         } else {
-            model.addAttribute("message", "Invalid username or password");
-            return "login";
+            // Xử lý khi tài khoản không tồn tại hoặc mật khẩu sai
+            model.addAttribute("messageLogin", "Invalid username or password");
         }
+        return "login";
     }
 
     @PostMapping("/logout")
@@ -49,7 +59,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("userDTO") AccountRegistrationDTO userDTO, Model model) {
+    public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
         // Kiểm tra email đã tồn tại
         if (accountService.checkIfEmailExists(userDTO.getEmail())) {
             model.addAttribute("emailError", "Email đã được sử dụng");
@@ -62,14 +72,13 @@ public class AccountController {
             return "register";
         }
 
-        // Đăng ký tài khoản mới bằng AccountRegistrationDTO
-        try {
-            accountService.registerUser(userDTO);
-        } catch (Exception e) {
-            model.addAttribute("registrationError", e.getMessage());
-            return "register";
-        }
-
+        // Tạo tài khoản mới và lưu trực tiếp mật khẩu (không mã hóa)
+        AccountEntity account = new AccountEntity();
+        account.setAccountName(userDTO.getAccountName());
+        account.setPassword(userDTO.getPassword()); // Lưu trực tiếp mật khẩu không mã hóa
+        account.setEmail(userDTO.getEmail());
+        // Lưu tài khoản vào cơ sở dữ liệu
+        accountService.registerUser(account);
         return "login"; // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
     }
 
@@ -103,8 +112,10 @@ public class AccountController {
 
         return "editprofile"; // Trả về view "edit-profile.html"
     }
-
     private static final String uploadDir = "D:\\K5\\SWP391\\UpdateImg";
+    // Định nghĩa đường dẫn thư mục upload trong application.properties
+    //@Value("${upload.directory}")
+
 
     @PostMapping("/update-profile")
     public String updateProfile(@RequestParam("profileImage") MultipartFile profileImage,
@@ -129,7 +140,7 @@ public class AccountController {
                 Path uploadPath = Paths.get(uploadDir, fileName);
 
                 // Tạo thư mục nếu chưa tồn tại
-                if (!Files.exists(uploadPath.getParent())) {
+                if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath.getParent());
                 }
 
@@ -152,7 +163,7 @@ public class AccountController {
         loggedInUser.setAddress(address);
 
         // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
-//        accountService.updateAccount(loggedInUser);
+        accountService.updateAccount(loggedInUser);
 
         // Cập nhật session với thông tin mới của người dùng
         session.setAttribute("loggedInUser", loggedInUser);
@@ -160,11 +171,39 @@ public class AccountController {
 
         return "profile";  // Quay lại trang profile sau khi lưu thành công
     }
+
+    // Hàm hiển thị danh sách khách hàng
+    @GetMapping("/customers")
+    public String showAllCustomers(Model model) {
+        // Lấy danh sách tất cả khách hàng
+        List<AccountEntity> customers = accountService.getAllCustomers();
+
+        // Đưa danh sách vào model để hiển thị trên giao diện
+        model.addAttribute("customers", customers);
+
+        // Trả về tên template Thymeleaf
+        return "manageCustomer";
+    }
+//    @GetMapping("/customers")
+//    public String showAllCustomers(Model model) {
+//        List<Object[]> customers = customerService.getAllCustomersWithAccountInfo();
+//        model.addAttribute("customers", customers);
+//        return "manageCustomer";
+//    }
+    @GetMapping("/dashboardAccount")
+    public String showDashboard(Model model) {
+        long userCount = accountService.countUsers(); // Lấy số lượng tài khoản từ DB
+        model.addAttribute("userCount", userCount); // Gửi dữ liệu sang template Thymeleaf
+        return "manager"; // Tên của template HTML (manager.html)
+    }
+
+
     // Hiển thị trang forgot-password.html
     @GetMapping("/forgot-password-form")
     public String showForgotPasswordForm() {
         return "forgotPassword";  // Trả về view forgot-password.html
     }
+
     // Gửi email lấy token khi quên mật khẩu
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
@@ -176,6 +215,7 @@ public class AccountController {
         }
         return "redirect:/account/forgot-password-form";  // Điều hướng đến trang quên mật khẩu
     }
+
     @GetMapping("/reset-password-form")
     public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
         model.addAttribute("token", token);  // Đưa token vào model để sử dụng trong form
@@ -195,4 +235,5 @@ public class AccountController {
         }
         return "redirect:/login";  // Điều hướng đến trang đăng nhập sau khi đặt lại mật khẩu thành công
     }
+
 }

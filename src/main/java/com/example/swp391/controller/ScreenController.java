@@ -27,7 +27,7 @@ public class ScreenController {
     }
     @GetMapping("/design")
     public String showDesignPage(Model model) {
-            return "Design";
+        return "Design";
     }
     @GetMapping("/designDetail")
     public String showDesignDetailPage(Model model) {
@@ -36,6 +36,10 @@ public class ScreenController {
     @GetMapping("/designService")
     public String showDesignServicePage(Model model) {
         return "designService";
+    }
+    @GetMapping("/maintenanceServices")
+    public String showMaintenanceServicesPage(Model model) {
+        return "MaintenanceServices";
     }
 
 }

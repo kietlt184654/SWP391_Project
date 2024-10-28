@@ -15,12 +15,12 @@ import lombok.AllArgsConstructor;
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long customerID;
+
+    private int customerID;
 
     @ManyToOne
-    @JoinColumn(name = "AccountID")
+    @JoinColumn(name = "AccountID")  // Đảm bảo rằng cột AccountID tồn tại trong DB và ánh xạ đúng
     private AccountEntity account;
 
-    private String additionalInfor;
+    private String additionalInfo;
 }
