@@ -14,13 +14,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <script
-      src="/src/main/resources/static/javascript/manageConstruction.js"
+      src="/src/main/resources/static/javascript/viewDetailProject.js"
       defer
     ></script>
 
     <link
       rel="stylesheet"
-      href="/src/main/resources/static/css/manageConstruction.css"
+      href="/src/main/resources/static/css/viewDetailProject.css"
     />
     <title>View project detail</title>
   </head>
@@ -97,53 +97,278 @@
       <div class="tab" onclick="showContent('task')">Task</div>
       <div class="tab" onclick="showContent('progress')">Progress</div>
       <div class="tab" onclick="showContent('finish')">Finish</div>
+    </div>
 
-      <div class="tab-content" id="task-content">
-        <h3>Task</h3>
-        <div class="row members">
-          <div class="col-xs-2 member">
-            <img
-              src="/src/main/resources/static/img/ava1.jpeg"
-              alt="Tom"
-              class="member-img"
-            />
-            <span>Quỳnh Như (You)</span>
+    <div class="tab-content" id="task-content">
+      <div class="project-members">
+        <div class="header">
+          <h2>Project Members</h2>
+          <button class="add-btn">+</button>
+          <div class="list-customer" id="list-customer" style="display: none">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Customer Name</th>
+                  <th>Role ID</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Point</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>
+                    <img
+                      src="/src/main/resources/static/img/ava1.jpeg"
+                      alt="Customer 1"
+                      width="50"
+                    />
+                    <p>Quynhu</p>
+                  </td>
+                  <td>Customer</td>
+                  <td>0972423242</td>
+                  <td>15B Nguyễn Tư Nghiêm, p Bình Trưng Tây, Q2</td>
+                  <td>150</td>
+                  <td><button class="add-member">Add</button></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>
+                    <img
+                      src="/src/main/resources/static/img/ava1.jpeg"
+                      alt="Customer 1"
+                      width="50"
+                    />
+                    <p>Anna</p>
+                  </td>
+                  <td>Customer</td>
+                  <td>0903092242</td>
+                  <td>Sala village</td>
+                  <td>120</td>
+                  <td><button class="add-member">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="col-xs-2 member">
-            <img
-              src="/src/main/resources/static/img/ava1.jpeg"
-              alt="Tom"
-              class="member-img"
-            />
-            <span>Tử Kiệt</span>
-          </div>
-          <div class="col-xs-2 member">
-            <img
-              src="/src/main/resources/static/img/ava1.jpeg"
-              alt="Tom"
-              class="member-img"
-            />
-            <span>Gia Kiện</span>
-          </div>
-          <div class="col-xs-2 member">
-            <img
-              src="/src/main/resources/static/img/ava1.jpeg"
-              alt="Tom"
-              class="member-img"
-            />
-            <span>Thái An</span>
+        </div>
+        <div class="members-container">
+          <div class="members-list">
+            <div class="member">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Tom Schwabin"
+                class="avatar"
+              />
+              <div class="member-info">
+                <span class="name">Tom Schwabin (You)</span>
+              </div>
+              <i class="fa-solid fa-ellipsis-vertical toggle-info"></i>
+              <div class="member-details" style="display: none">
+                <p>Email: tom@example.com</p>
+                <p>Phone: 123-456-7890</p>
+                <!-- Các thông tin chi tiết khác -->
+              </div>
+            </div>
+
+            <div class="member">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Christian"
+                class="avatar"
+              />
+              <div class="member-info">
+                <span class="name">Christian</span>
+              </div>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+            <div class="member">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Chris Tomson"
+                class="avatar"
+              />
+              <div class="member-info">
+                <span class="name">Chris Tomson</span>
+              </div>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
           </div>
 
-          <div class="col-xs-2 text-center add-member">+ Add new member</div>
+          <div class="members-list">
+            <div class="member">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Elisse"
+                class="avatar"
+              />
+              <div class="member-info">
+                <span class="name">Elisse</span>
+              </div>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+            <div class="member">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Anna"
+                class="avatar"
+              />
+              <div class="member-info">
+                <span class="name">Anna</span>
+              </div>
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-content" id="progress-content">
-        <h3>Progress</h3>
-      </div>
+    <div class="tab-content" id="progress-content" style="display: none">
+      <div class="task-board">
+        <div class="task-header">
+          <span class="header-task-name">Task Name</span>
+          <span class="header-assignee">Assigned</span>
+        </div>
+        <!-- To do section -->
+        <div class="task-section">
+          <div class="section-header">
+            <span>To do</span>
+            <span class="task-count">2</span>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name"
+              >Build whole new floor in building Four on right block with
+              current situation</span
+            >
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name">Water for apartment 2</span>
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <button class="add-task-btn">
+            <i class="fa-solid fa-circle-plus"></i> Add task
+          </button>
+        </div>
 
-      <div class="tab-content" id="finish-content">
-        <h3>Finish</h3>
+        <!-- In Progress section -->
+        <div class="task-section">
+          <div class="section-header">
+            <span>In Progress</span>
+            <span class="task-count">6</span>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name"
+              >Build whole new floor in building Four on right block with
+              current situation</span
+            >
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name"
+              >Create new project for Floor 2, Apartment 3</span
+            >
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name"
+              >Construction Inspection for Building C</span
+            >
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name">Fix windows on Floor 1</span>
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <div class="task-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="task-name">First steps with Garage</span>
+            <div class="task-assigned">
+              <img
+                src="/src/main/resources/static/img/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span class="assignee">Christian</span>
+            </div>
+          </div>
+          <button class="add-task-btn">
+            <i class="fa-solid fa-circle-plus"></i> Add task
+          </button>
+        </div>
+
+        <!-- Done section -->
+        <div class="task-section">
+          <div class="section-header">
+            <span>Done</span>
+            <span class="task-count">4</span>
+          </div>
+          <div class="done-section">
+            <div class="task-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <span class="task-name">Fix windows on Floor 1</span>
+              <div class="task-assigned">
+                <img
+                  src="/src/main/resources/static/img/avatar.jpg"
+                  alt="Avatar"
+                  class="avatar"
+                />
+                <span class="assignee">Christian</span>
+              </div>
+            </div>
+            <button class="add-task-btn">Finish</button>
+          </div>
+        </div>
       </div>
     </div>
 
