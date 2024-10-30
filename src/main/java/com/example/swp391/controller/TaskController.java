@@ -71,8 +71,9 @@ private StaffProjectService projectStaffService;
 
         // Gọi service để lưu thông tin vào cơ sở dữ liệu
         projectStaffService.assignStaffToProject(projectId, staffId, taskDescription, deadline);
-        redirectAttributes.addFlashAttribute("successMessage", "Staff assigned successfully");
-        // Chuyển hướng về trang Staff List với projectId
+        redirectAttributes.addFlashAttribute("successMessage", "Assign staff to project successfully");
+        redirectAttributes.addFlashAttribute("taskDescription", taskDescription);
+        redirectAttributes.addFlashAttribute("assignedStaffId", staffId);
         return "redirect:/staff/list?projectId=" + projectId;
     }
 

@@ -12,7 +12,9 @@
 <body>
 
 <!-- Thông báo thành công nếu có -->
-<div th:if="${successMessage}" th:text="${successMessage}" id="success-alert" style="display: none;"></div>
+<div th:if="${successMessage}" id="success-alert" style="display: none;">
+  <strong th:text="${successMessage}"></strong>
+</div>
 
 <!-- Navigation -->
 <div class="nav">
@@ -47,14 +49,13 @@
       <th>Description Task</th>
       <th>Deadline</th>
       <th>Action</th>
-
     </tr>
     </thead>
     <tbody>
     <th:block th:each="staff : ${staffList}">
       <tr>
         <td th:text="${projectId}">Project</td>
-        <td th:text="${staff.account.getAccountId()}">Staff Name</td>
+        <td th:text="${staff.account.getAccountId()}">Staff ID</td>
         <td th:text="${staff.account.accountName}">Staff Name</td>
         <td th:text="${staff.role}">Staff Role</td>
         <td th:text="${staff.account.email}">Staff Email</td>
@@ -71,7 +72,7 @@
         </td>
 
         <td> <!-- Form to assign staff to project -->
-          <form th:action="@{/tasks/project/assign}" method="post">
+          <form class="assign-form" th:action="@{/tasks/project/assign}" method="post">
             <input type="hidden" name="projectId" th:value="${projectId}" />
             <input type="hidden" name="staffId" th:value="${staff.staffID}" />
             <input type="hidden" name="taskDescription" class="task-input-hidden" />
@@ -84,6 +85,12 @@
     </tbody>
   </table>
 </div>
+
+<!-- Nút quay về Chi Tiết Dự Án -->
+<div class="back-button-container" style="text-align: center; margin-top: 20px;">
+  <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary">Quay về Chi Tiết Dự Án</a>
+</div>
+
 
 <!-- Footer -->
 <div class="footer">

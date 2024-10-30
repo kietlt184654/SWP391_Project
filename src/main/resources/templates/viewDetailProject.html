@@ -67,7 +67,7 @@
 
 
       <input type="hidden" id="projectId" name="projectId" /> <!-- Giá trị này sẽ là ID của dự án hiện tại -->
-        <input type="hidden" id="staffId" name="staffId" />
+      <input type="hidden" id="staffId" name="staffId" />
 
 
       <!-- Hidden input to store the selected staff ID -->
@@ -79,49 +79,49 @@
 
 
 
-<!-- Modal for selecting staff -->
-<div id="staffModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h4>Select a Staff Member</h4>
-    <div id="staffList">
-      <!-- Example list, to be populated dynamically -->
-      <div class="staff-item" onclick="selectStaff(1, 'John Doe', 'Engineer', 'john@example.com', '123-456-7890')">
-        <p><strong>Name:</strong> John Doe</p>
-        <p><strong>Role:</strong> Engineer</p>
+    <!-- Modal for selecting staff -->
+    <div id="staffModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h4>Select a Staff Member</h4>
+        <div id="staffList">
+          <!-- Example list, to be populated dynamically -->
+          <div class="staff-item" onclick="selectStaff(1, 'John Doe', 'Engineer', 'john@example.com', '123-456-7890')">
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Role:</strong> Engineer</p>
+          </div>
+          <!-- Add more staff items dynamically -->
+        </div>
       </div>
-      <!-- Add more staff items dynamically -->
     </div>
-  </div>
-</div>
 
-<script>
-  // Modal logic
-  const modal = document.getElementById("staffModal");
-  const openModalBtn = document.getElementById("openStaffModal");
-  const closeModalBtn = document.getElementsByClassName("close")[0];
-  const selectedStaffDisplay = document.getElementById("selectedStaff");
+    <script>
+      // Modal logic
+      const modal = document.getElementById("staffModal");
+      const openModalBtn = document.getElementById("openStaffModal");
+      const closeModalBtn = document.getElementsByClassName("close")[0];
+      const selectedStaffDisplay = document.getElementById("selectedStaff");
 
-  openModalBtn.onclick = function () {
-    modal.style.display = "block";
-  }
+      openModalBtn.onclick = function () {
+        modal.style.display = "block";
+      }
 
-  closeModalBtn.onclick = function () {
-    modal.style.display = "none";
-  }
+      closeModalBtn.onclick = function () {
+        modal.style.display = "none";
+      }
 
-  window.onclick = function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  }
+      window.onclick = function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      }
 
-  function selectStaff(id, name, role, email, phone) {
-    document.getElementById("staffId").value = id;
-    selectedStaffDisplay.innerText = `${name} - ${role}`;
-    modal.style.display = "none";
-  }
-</script>
+      function selectStaff(id, name, role, email, phone) {
+        document.getElementById("staffId").value = id;
+        selectedStaffDisplay.innerText = `${name} - ${role}`;
+        modal.style.display = "none";
+      }
+    </script>
 
 </body>
 </html>

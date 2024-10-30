@@ -30,28 +30,17 @@ public class ProjectController {
         return "show_projects";
     }
 
-//    // API lấy danh sách nhân viên có role là 'Staff'
-//    @GetMapping("/staff/list")
-//    @ResponseBody
-//    public List<StaffEntity> getStaffList() {
-//        return staffService.getAllStaffWithRole();  // Lấy danh sách nhân viên có vai trò 'Staff'
-//    }
-//
-//    // API thêm staff vào dự án
-//    @PostMapping("/staff/addToProject")
-//    @ResponseBody
-//    public ResponseEntity<String> addStaffToProject(@RequestParam Integer staffID, @RequestParam Integer projectID) {
-//        projectService.addStaffToProject(staffID, projectID);  // Thêm nhân viên vào dự án
-//        return ResponseEntity.ok("Staff added successfully to the project");
-//    }
-
     @GetMapping("/viewDetailProject/{projectID}")
     public String showDetailProject(@PathVariable Integer projectID, Model model) {
         ProjectEntity project = projectService.getProjectById(projectID)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectID));
         model.addAttribute("project", project);
-        return "viewDetailProject"; // Name of the HTML file for displaying the project details
+        model.addAttribute("projectId", projectID); // Thêm projectId vào model để sử dụng trong view
+        return "viewDetailProject"; // Tên của file HTML cho trang chi tiết dự án
     }
+
+
+
 
 
 
