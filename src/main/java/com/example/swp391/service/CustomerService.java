@@ -2,7 +2,9 @@ package com.example.swp391.service;
 
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
+import com.example.swp391.entity.PointEntity;
 import com.example.swp391.repository.CustomerRepository;
+import com.example.swp391.repository.PointRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class CustomerService {
     private EntityManager entityManager;
 @Autowired
     private CustomerRepository customerRepository;
+@Autowired
+private PointRepository pointRepository;
     public long countUsers() {
         return customerRepository.count();
     }
@@ -37,4 +41,36 @@ public class CustomerService {
     public void save(CustomerEntity customer) {
         customerRepository.save(customer);
     }
+    public void updateCustomerPoints(CustomerEntity customer, int pointsEarned) {
+        // Tạo một đối tượng PointEntity mới để lưu điểm tích lũy thêm vào
+        PointEntity newPoint = new PointEntity();
+        newPoint.setCustomer(customer);
+        newPoint.setPoints(pointsEarned);
+
+        // Thêm điểm mới vào danh sách điểm tích lũy của khách hàng
+        customer.getPointsHistory().add(newPoint);
+
+        // Lưu khách hàng và điểm mới vào cơ sở dữ liệu
+        customerRepository.save(customer);
+        pointRepository.save(newPoint);
+    }
+    // Phương thức tính tổng điểm của khách hàng
+    public int calculateTotalPoints(CustomerEntity customer) {
+        return pointRepository.findTotalPointsByCustomer(customer.getCustomerID());
+    }
+
+    // Phương thức tính mức giảm giá dựa trên điểm tích lũy của khách hàng
+    public double calculatePointDiscount(CustomerEntity customer) {
+        int totalPoints = calculateTotalPoints(customer);
+        if (totalPoints >= 10000) {
+            return 0.15; // Giảm 15%
+        } else if (totalPoints >= 5000) {
+            return 0.10; // Giảm 10%
+        } else if (totalPoints >= 10) {
+            return 0.05; // Giảm 5%
+        } else {
+            return 0.0; // Không giảm giá
+        }
+    }
+
 }

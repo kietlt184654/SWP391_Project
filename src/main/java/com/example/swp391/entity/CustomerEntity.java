@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -24,4 +26,13 @@ public class CustomerEntity {
     private AccountEntity account;
 
     private String additionalInfo;
-}
+    // Quan hệ một-nhiều với PointEntity
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch =FetchType.EAGER)
+    private List<PointEntity> pointsHistory = new ArrayList<>();
+
+    // Phương thức để tính tổng số điểm
+    public int getTotalPoints() {
+        return pointsHistory.stream().mapToInt(PointEntity::getPoints).sum();
+    }
+    }
+

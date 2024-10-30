@@ -52,4 +52,6 @@ public class ProjectEntity {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentEntity> payments = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<PointEntity> points = new ArrayList<>(); // Quan hệ một-nhiều với PointEntity
 }

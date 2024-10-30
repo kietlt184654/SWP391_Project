@@ -37,4 +37,19 @@ public class CartEntity {
     public int getTotalQuantity() {
         return designItems.values().stream().mapToInt(Integer::intValue).sum();
     }
+    private int calculatePoints(CartEntity cart) {
+        int totalPoints = 0;
+        for (Map.Entry<DesignEntity, Integer> entry : cart.getDesignItems().entrySet()) {
+            double projectCost = entry.getKey().getPrice() * entry.getValue();
+            totalPoints += (int) (projectCost / 10000); // Ví dụ: 10,000 VND = 1 điểm
+        }
+        return totalPoints;
+    }
+    // Phương thức tính tổng giá trị của giỏ hàng
+    public double calculateTotalAmount() {
+        return designItems.entrySet().stream()
+                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
+    }
+
 }

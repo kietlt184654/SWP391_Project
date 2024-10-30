@@ -3,15 +3,15 @@ package com.example.swp391.service;
 import com.example.swp391.entity.*;
 import com.example.swp391.repository.CustomerRepository;
 import com.example.swp391.repository.PaymentRepository;
+import com.example.swp391.repository.PointRepository;
 import com.example.swp391.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class ProjectService {
@@ -24,6 +24,8 @@ public class ProjectService {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private PointRepository pointRepository;
 
 //    @Autowired
 //    private StaffRepository staffRepository;
@@ -58,45 +60,59 @@ public class ProjectService {
         return projectRepository.findById(projectId);
     }
     @Transactional
-    public void createProjectFromCart(CartEntity cart, CustomerEntity customer, String paymentStatus, String transactionId) {
-        Date paymentDate = new Date(); // Current payment date
-        double totalCartAmount = 0;
+    public int createProjectFromCart(CartEntity cart, CustomerEntity customer, String paymentStatus, double discountRate) {
+        int totalPointsEarned = 0;
 
         for (Map.Entry<DesignEntity, Integer> entry : cart.getDesignItems().entrySet()) {
             DesignEntity design = entry.getKey();
             int quantity = entry.getValue();
 
-            // Calculate the total project cost based on the design and quantity
-            double projectCost = design.getPrice() * quantity;
-            totalCartAmount += projectCost;
+            // Tính tổng chi phí gốc của dự án
+            double originalProjectCost = design.getPrice() * quantity;
+            // Tính chi phí dự án sau khi áp dụng giảm giá
+            double projectCost = originalProjectCost * (1 - discountRate);
 
-            // Create a new project for each design
+            // Tạo ProjectEntity và lưu vào cơ sở dữ liệu
             ProjectEntity project = new ProjectEntity();
-            project.setName("Project for Design: " + design.getDesignName());
-            project.setDescription("Auto-generated project for design: " + design.getDesignName());
-            project.setTotalCost(projectCost);
+            project.setName(design.getDesignName());
+            project.setDescription(design.getDescription());
+            project.setTotalCost(projectCost); // Lưu chi phí sau giảm giá
             project.setDesign(design);
             project.setCustomer(customer);
-            project.setStartDate(new Date()); // Current start date
-            project.setStatus("Pending"); // Initial project status
+            project.setStartDate(new Date());
+            project.setStatus("Pending");
 
-            projectRepository.save(project); // Save ProjectEntity first to generate ProjectID
+            projectRepository.save(project);
 
-            // Create and save the payment details
+            // Tính điểm tích lũy dựa trên chi phí gốc của dự án (không giảm giá)
+            int pointsEarned = (int) (originalProjectCost / 100);
+            totalPointsEarned += pointsEarned;
+
+            // Tạo PointEntity và lưu vào cơ sở dữ liệu
+            PointEntity point = new PointEntity();
+            point.setCustomer(customer);
+            point.setProject(project);
+            point.setPoints(pointsEarned);
+
+            pointRepository.save(point);
+
+            // Tạo PaymentEntity và lưu vào cơ sở dữ liệu
             PaymentEntity payment = new PaymentEntity();
-            payment.setTransactionId(transactionId); // Transaction ID
-            payment.setAmount(projectCost);
-            payment.setPaymentDate(paymentDate);
+            payment.setTransactionId(UUID.randomUUID().toString());
+            payment.setAmount(projectCost); // Gán chi phí sau giảm giá cho PaymentEntity
+            payment.setPaymentDate(new Date()); // Đảm bảo thiết lập ngày thanh toán
             payment.setPaymentStatus(paymentStatus);
             payment.setCustomer(customer);
-            payment.setProject(project); // Set the project in payment after it's saved
+            payment.setProject(project);
 
-            paymentRepository.save(payment); // Save PaymentEntity after ProjectID is set
-
-            // Establish two-way relationship if necessary
-            project.getPayments().add(payment);
+            paymentRepository.save(payment);
         }
+
+        // Trả về tổng điểm tích lũy để sử dụng trong các bước tiếp theo
+        return totalPointsEarned;
     }
+
+
 
 
 

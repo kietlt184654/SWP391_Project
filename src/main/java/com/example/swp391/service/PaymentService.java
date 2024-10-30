@@ -16,16 +16,4 @@ public class PaymentService {
         paymentRepository.save(payment);
     }
 
-  // Tìm kiếm thanh toán theo ID (nếu cần)
-//    public PaymentEntity findPaymentById(Long paymentId) {
-//        return paymentRepository.findById(paymentId).orElse(null);
-//    }
-//
-   // Xóa một thanh toán (nếu cần)
-//    public void deletePayment(Long paymentId) {
-//        paymentRepository.deleteById(paymentId);
-//    }
-//    public PaymentEntity findPaymentByTransactionId(String transactionId) {
-//        return paymentRepository.findByTransactionId(transactionId);
-//    }
 }
