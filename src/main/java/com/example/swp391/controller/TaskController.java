@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +23,19 @@ import java.util.Optional;
 public class TaskController {
     @Autowired
     private StaffService staffService;
-
+@Autowired
+private StaffProjectService projectStaffService;
     @GetMapping("/staff/list")
-   public String listStaff(Model model) {
-        List<StaffEntity> staffList = staffService.getStaffByRole("Construction Staff");
+    public String showStaffList(@RequestParam("projectId") Integer projectId, Model model) {
+        // Lấy danh sách staff từ service
+        List<StaffEntity> staffList = staffService.getAllStaff();
+
+        // Thêm projectId và staffList vào model
+        model.addAttribute("projectId", projectId);
         model.addAttribute("staffList", staffList);
-        return "staffList";
+
+        // Trả về tên view
+        return "staffList"; // Tên file staffList.html
     }
 
     @GetMapping("/staff/add")
@@ -54,6 +62,18 @@ public class TaskController {
         staffService.deleteStaff(staffId);
         return "redirect:/staff/list";
     }
+    @PostMapping("/tasks/project/assign")
+    public String assignStaffToProject(
+            @RequestParam("projectId") Integer projectId,
+            @RequestParam("staffId") Integer staffId,
+            @RequestParam("taskDescription") String taskDescription,
+            @RequestParam("deadline") String deadline, RedirectAttributes redirectAttributes) {
 
+        // Gọi service để lưu thông tin vào cơ sở dữ liệu
+        projectStaffService.assignStaffToProject(projectId, staffId, taskDescription, deadline);
+        redirectAttributes.addFlashAttribute("successMessage", "Staff assigned successfully");
+        // Chuyển hướng về trang Staff List với projectId
+        return "redirect:/staff/list?projectId=" + projectId;
+    }
 
 }

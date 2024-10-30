@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff List</title>
-  <link rel="stylesheet" href="/css/staffList.css"> <!-- Link to the CSS file -->
+  <link rel="stylesheet" href="/css/staffList.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
+
+<!-- Thông báo thành công nếu có -->
+<div th:if="${successMessage}" th:text="${successMessage}" id="success-alert" style="display: none;"></div>
 
 <!-- Navigation -->
 <div class="nav">
@@ -35,21 +38,47 @@
   <table class="staff-table">
     <thead>
     <tr>
+      <th>ID Project</th>
+      <th>ID Staff</th>
       <th>Staff Name</th>
       <th>Role</th>
       <th>Email</th>
       <th>Phone</th>
+      <th>Description Task</th>
+      <th>Deadline</th>
       <th>Action</th>
+
     </tr>
     </thead>
     <tbody>
     <th:block th:each="staff : ${staffList}">
       <tr>
+        <td th:text="${projectId}">Project</td>
+        <td th:text="${staff.account.getAccountId()}">Staff Name</td>
         <td th:text="${staff.account.accountName}">Staff Name</td>
         <td th:text="${staff.role}">Staff Role</td>
         <td th:text="${staff.account.email}">Staff Email</td>
         <td th:text="${staff.account.phoneNumber}">Staff Phone</td>
-        <td><a th:href="@{/tasks/project/${staff.staffID}/assign}" class="assign-btn">Assign</a></td>
+
+        <!-- Task Description Column -->
+        <td>
+          <input type="text" placeholder="Enter task description" class="task-input" />
+        </td>
+
+        <!-- Deadline Column -->
+        <td>
+          <input type="date" class="deadline-input" />
+        </td>
+
+        <td> <!-- Form to assign staff to project -->
+          <form th:action="@{/tasks/project/assign}" method="post">
+            <input type="hidden" name="projectId" th:value="${projectId}" />
+            <input type="hidden" name="staffId" th:value="${staff.staffID}" />
+            <input type="hidden" name="taskDescription" class="task-input-hidden" />
+            <input type="hidden" name="deadline" class="deadline-input-hidden" />
+            <button type="submit" class="assign-btn">Assign</button>
+          </form>
+        </td>
       </tr>
     </th:block>
     </tbody>
@@ -71,6 +100,29 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Hiển thị thông báo thành công nếu tồn tại
+  const successAlert = document.getElementById('success-alert');
+  if (successAlert && successAlert.textContent) {
+    alert(successAlert.textContent); // Hiển thị thông báo thành công bằng alert
+  }
+
+  document.querySelectorAll('.staff-container tr').forEach((row) => {
+    const taskInput = row.querySelector('.task-input');
+    const deadlineInput = row.querySelector('.deadline-input');
+    const hiddenTaskInput = row.querySelector('.task-input-hidden');
+    const hiddenDeadlineInput = row.querySelector('.deadline-input-hidden');
+
+    if (taskInput && hiddenTaskInput) {
+      taskInput.addEventListener('input', () => hiddenTaskInput.value = taskInput.value);
+    }
+
+    if (deadlineInput && hiddenDeadlineInput) {
+      deadlineInput.addEventListener('input', () => hiddenDeadlineInput.value = deadlineInput.value);
+    }
+  });
+</script>
 
 </body>
 </html>

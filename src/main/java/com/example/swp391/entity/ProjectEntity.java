@@ -29,6 +29,5 @@ public class ProjectEntity {
     private Integer formRequestId;
     private String priority;
     private String img;
-//    @OneToMany(mappedBy = "project")
-//    private List<StaffProjectEntity> staffProjects;
+
 }

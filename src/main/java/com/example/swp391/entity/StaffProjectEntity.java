@@ -5,29 +5,38 @@ import lombok.NoArgsConstructor; // Tạo constructor không tham số
 import lombok.AllArgsConstructor; // Tạo constructor với tất cả tham số
 import com.example.swp391.entity.StaffEntity;  // Đảm bảo đường dẫn đúng
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "StaffProject")
 public class StaffProjectEntity {
 
 
-    @EmbeddedId
-    private StaffProjectId id;  // Khóa chính tổng hợp
+
+    @Id
+
+    @Column(name = "StaffProjectID")
+    private int staffProjectID;
 
     @ManyToOne
-    @MapsId("staffID")  // Ánh xạ khóa tổng hợp StaffID
-    @JoinColumn(name = "staffID", referencedColumnName = "staffID")
+    @JoinColumn(name = "StaffID", referencedColumnName = "StaffID", nullable = false) // Ensures StaffID cannot be null
     private StaffEntity staff;
 
     @ManyToOne
-    @MapsId("projectID")  // Ánh xạ khóa tổng hợp ProjectID
-    @JoinColumn(name = "projectID", referencedColumnName = "projectID")
+    @JoinColumn(name = "ProjectID", referencedColumnName = "ProjectID", nullable = false) // Ensures ProjectID cannot be null
     private ProjectEntity project;
 
-    private Date assignmentDate;
+    @Column(name = "AssignmentDate")
+    private LocalDate assignmentDate; // `LocalDate` for date-only fields in Java
+
+    @Column(name = "ProgressImage")
     private String progressImage;
-    private String Task;
+
+    @Column(name = "Task")
+    private String task;
 }

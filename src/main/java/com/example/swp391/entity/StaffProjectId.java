@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Embeddable
 public class StaffProjectId implements Serializable {
 
-    private Integer staffID;
-    private Integer projectID;
+    private Integer StaffID;
+    private Integer ProjectID;
 
 }

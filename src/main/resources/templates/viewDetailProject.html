@@ -38,6 +38,7 @@
           <strong>End Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br>
           <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
           <strong>Priority:</strong> <span th:text="${project.priority}">Priority</span><br>
+          <strong>Project ID:</strong> <span th:text="${project.projectID}">Project ID</span><br>
         </p>
       </div>
     </div>
@@ -60,17 +61,23 @@
     </div>
 
     <div class="form-group">
-      <a href="/staff/list" class="select-btn">Select Staff</a>
+
+
+      <a th:href="@{/staff/list(projectId=${project.projectID})}" class="btn btn-primary">Select Staff</a>
+
+
+      <input type="hidden" id="projectId" name="projectId" /> <!-- Giá trị này sẽ là ID của dự án hiện tại -->
+        <input type="hidden" id="staffId" name="staffId" />
+
+
       <!-- Hidden input to store the selected staff ID -->
-      <input type="hidden" id="staffId" name="staffId" />
+
       <!-- Display the selected staff member -->
       <span id="selectedStaff" class="staff-info"></span>
+
     </div>
 
-    <!-- Submit Button -->
-    <div class="form-group">
-      <button type="submit" class="submit-btn">Assign Task</button>
-    </div>
+
 
 <!-- Modal for selecting staff -->
 <div id="staffModal" class="modal">
