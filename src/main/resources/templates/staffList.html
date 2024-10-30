@@ -48,6 +48,7 @@
       <th>Phone</th>
       <th>Description Task</th>
       <th>Deadline</th>
+      <th>Progress</th> <!-- New Progress Column -->
       <th>Action</th>
     </tr>
     </thead>
@@ -71,12 +72,22 @@
           <input type="date" class="deadline-input" />
         </td>
 
+        <!-- Progress Dropdown Column -->
+        <td>
+          <select class="progress-dropdown" name="status">
+            <option value="To Do">To Do</option>
+            <option value="In-Progress">In Progress</option>
+            <option value="Done">Done</option>
+          </select>
+        </td>
+
         <td> <!-- Form to assign staff to project -->
           <form class="assign-form" th:action="@{/tasks/project/assign}" method="post">
             <input type="hidden" name="projectId" th:value="${projectId}" />
             <input type="hidden" name="staffId" th:value="${staff.staffID}" />
             <input type="hidden" name="taskDescription" class="task-input-hidden" />
             <input type="hidden" name="deadline" class="deadline-input-hidden" />
+            <input type="hidden" name="status" class="status-input" /> <!-- Hidden input for the selected status -->
             <button type="submit" class="assign-btn">Assign</button>
           </form>
         </td>
@@ -90,7 +101,6 @@
 <div class="back-button-container" style="text-align: center; margin-top: 20px;">
   <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary">Quay về Chi Tiết Dự Án</a>
 </div>
-
 
 <!-- Footer -->
 <div class="footer">
@@ -118,8 +128,10 @@
   document.querySelectorAll('.staff-container tr').forEach((row) => {
     const taskInput = row.querySelector('.task-input');
     const deadlineInput = row.querySelector('.deadline-input');
+    const progressDropdown = row.querySelector('.progress-dropdown');
     const hiddenTaskInput = row.querySelector('.task-input-hidden');
     const hiddenDeadlineInput = row.querySelector('.deadline-input-hidden');
+    const hiddenStatusInput = row.querySelector('.status-input');
 
     if (taskInput && hiddenTaskInput) {
       taskInput.addEventListener('input', () => hiddenTaskInput.value = taskInput.value);
@@ -127,6 +139,10 @@
 
     if (deadlineInput && hiddenDeadlineInput) {
       deadlineInput.addEventListener('input', () => hiddenDeadlineInput.value = deadlineInput.value);
+    }
+
+    if (progressDropdown && hiddenStatusInput) {
+      progressDropdown.addEventListener('change', () => hiddenStatusInput.value = progressDropdown.value);
     }
   });
 </script>

@@ -21,6 +21,8 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private StaffService staffService;
+    @Autowired
+    private StaffProjectService staffProjectService;
 
 
     @GetMapping("/showProjects")
@@ -34,8 +36,12 @@ public class ProjectController {
     public String showDetailProject(@PathVariable Integer projectID, Model model) {
         ProjectEntity project = projectService.getProjectById(projectID)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectID));
+
+        List<StaffProjectEntity> tasks = staffProjectService.getTasksByProjectId(projectID); // Lấy danh sách tasks
         model.addAttribute("project", project);
-        model.addAttribute("projectId", projectID); // Thêm projectId vào model để sử dụng trong view
+        model.addAttribute("projectId", projectID); // Thêm projectId vào model
+        model.addAttribute("tasks", tasks); // Thêm danh sách tasks vào model
+
         return "viewDetailProject"; // Tên của file HTML cho trang chi tiết dự án
     }
 

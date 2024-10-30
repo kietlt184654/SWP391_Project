@@ -9,6 +9,7 @@ import com.example.swp391.service.ProjectService;
 import com.example.swp391.service.StaffProjectService;
 import com.example.swp391.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,9 @@ public class TaskController {
     private StaffService staffService;
 @Autowired
 private StaffProjectService projectStaffService;
+    @Autowired
+    private StaffProjectService staffProjectService;
+
     @GetMapping("/staff/list")
     public String showStaffList(@RequestParam("projectId") Integer projectId, Model model) {
         // Lấy danh sách staff từ service
@@ -67,14 +71,24 @@ private StaffProjectService projectStaffService;
             @RequestParam("projectId") Integer projectId,
             @RequestParam("staffId") Integer staffId,
             @RequestParam("taskDescription") String taskDescription,
-            @RequestParam("deadline") String deadline, RedirectAttributes redirectAttributes) {
+            @RequestParam("deadline") String deadline,
+            @RequestParam("status") String status,RedirectAttributes redirectAttributes) {
 
         // Gọi service để lưu thông tin vào cơ sở dữ liệu
-        projectStaffService.assignStaffToProject(projectId, staffId, taskDescription, deadline);
+        projectStaffService.assignStaffToProject(projectId, staffId, taskDescription, deadline,status);
         redirectAttributes.addFlashAttribute("successMessage", "Assign staff to project successfully");
         redirectAttributes.addFlashAttribute("taskDescription", taskDescription);
         redirectAttributes.addFlashAttribute("assignedStaffId", staffId);
         return "redirect:/staff/list?projectId=" + projectId;
+    }
+    // Method to fetch tasks by status
+    @GetMapping("/tasks")
+    @ResponseBody
+    public List<StaffProjectEntity> getTasksByStatus(@RequestParam(value = "status", required = false) String status) {
+        if (status == null || status.equals("all")) {
+            return staffProjectService.getAllTasks(); // Method to fetch all tasks
+        }
+        return staffProjectService.getTasksByStatus(status);
     }
 
 }

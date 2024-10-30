@@ -59,7 +59,7 @@ h2 {
     max-width: 1200px;
     border-collapse: collapse;
     margin-top: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho bảng */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .staff-table th, .staff-table td {
@@ -82,20 +82,56 @@ h2 {
     background-color: #f1f1f1;
 }
 
-/* Task Description and Deadline Input */
-.task-input, .deadline-input {
-    width: 90%;
-    padding: 8px 10px;
+/* Task Description Input */
+/* Task Description Input - Wider */
+.task-input {
+    width: 100%; /* Occupies full width within its cell */
+    height: 2.5rem;
+    padding: 10px 12px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     transition: all 0.3s ease;
     outline: none;
+    resize: vertical;
 }
 
-.task-input:focus, .deadline-input:focus {
+.task-input:focus {
     border-color: #007bff;
-    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3); /* Thêm bóng đổ khi focus */
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Progress Dropdown with Color-coded Options */
+.progress-dropdown {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Colors for Dropdown Options */
+.progress-dropdown option[value="todo"] {
+    color: #28a745; /* Green for To Do */
+}
+
+.progress-dropdown option[value="in-progress"] {
+    color: #ffc107; /* Yellow for In Progress */
+}
+
+.progress-dropdown option[value="done"] {
+    color: #007bff; /* Blue for Done */
+}
+
+/* Task Row Hover and Styling */
+.staff-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.staff-table td {
+    text-align: center;
 }
 
 /* Assign Button */

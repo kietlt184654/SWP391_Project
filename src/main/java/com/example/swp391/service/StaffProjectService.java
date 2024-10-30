@@ -25,7 +25,10 @@ public class StaffProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
-    public void assignStaffToProject(Integer projectId, Integer staffId, String taskDescription, String deadline) {
+    @Autowired
+    private StaffProjectRepository staffProjectRepository;
+
+    public void assignStaffToProject(Integer projectId, Integer staffId, String taskDescription, String deadline,String status) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate parsedDeadline = LocalDate.parse(deadline, formatter);
 
@@ -51,6 +54,7 @@ public class StaffProjectService {
         // Set the generated StaffProjectID
         staffProject.setStaffProjectID(newStaffProjectID);
         staffProject.setStaff(staff);
+        staffProject.setStatus(status);
         staffProject.setProject(project);
         staffProject.setTask(taskDescription);
         staffProject.setAssignmentDate(parsedDeadline);
@@ -58,5 +62,13 @@ public class StaffProjectService {
         // Save the new staff project assignment
         projectStaffRepository.save(staffProject);
     }
-
+    public List<StaffProjectEntity> getTasksByProjectId(Integer projectId) {
+        return staffProjectRepository.findByProject_ProjectID(projectId); // Sử dụng tên phương thức đã sửa
+    }
+    public List<StaffProjectEntity> getTasksByStatus(String status) {
+        return staffProjectRepository.findByStatus(status); // Sử dụng tên phương thức đã sửa
+    }
+    public List<StaffProjectEntity> getAllTasks() {
+        return staffProjectRepository.findAll(); // Sử dụng tên phương thức đã sửa
+    }
 }

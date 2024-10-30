@@ -39,4 +39,7 @@ public class StaffProjectEntity {
 
     @Column(name = "Task")
     private String task;
+
+    @Column(name = "Status")
+    private String status;
 }

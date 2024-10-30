@@ -2,19 +2,23 @@
 const menuToggle = document.getElementById("menu-toggle");
 const sidebar = document.getElementById("sidebar");
 
-menuToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("show");
-});
+if (menuToggle && sidebar) {
+    menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+    });
+}
 
 // Dropdown Menu Toggle
 const accountIcon = document.getElementById("accountIcon");
 const dropdownMenu = document.querySelector(".dropdown-menu");
 
-accountIcon.addEventListener("click", (event) => {
-    event.preventDefault();
-    dropdownMenu.style.display =
-        dropdownMenu.style.display === "block" ? "none" : "block";
-});
+if (accountIcon && dropdownMenu) {
+    accountIcon.addEventListener("click", (event) => {
+        event.preventDefault();
+        dropdownMenu.style.display =
+            dropdownMenu.style.display === "block" ? "none" : "block";
+    });
+}
 
 // Toggle Project Content
 document.querySelectorAll(".toggle-btn").forEach((btn) => {
@@ -56,68 +60,28 @@ function showContent(contentType) {
             break;
     }
 }
+
 // Elements
 const modal = document.getElementById("staffModal");
-const openModalBtn = document.getElementById("openStaffModal");
 const closeModalBtn = document.getElementsByClassName("close")[0];
+const selectedStaffDisplay = document.getElementById("selectedStaff");
 const staffIdInput = document.getElementById("staffId");
-const selectedStaffText = document.getElementById("selectedStaff");
-
-// Elements to display staff details in modal
-const staffName = document.getElementById("staffName");
-const staffRole = document.getElementById("staffRole");
-const staffEmail = document.getElementById("staffEmail");
-const staffPhone = document.getElementById("staffPhone");
+const openModalBtn = document.getElementById("openStaffModal");
 const selectStaffBtn = document.getElementById("selectStaffBtn");
 
 // Open modal when "Select Staff" button is clicked
-openModalBtn.onclick = function () {
-    modal.style.display = "block";
-
-    // Populate modal with data from a list of staff
-    // Here, an example array of staff for demonstration
-    const staffList = [
-        { id: 1, name: "John Doe", role: "Construction Staff", email: "john@example.com", phone: "123-456-7890" },
-        { id: 2, name: "Jane Smith", role: "Construction Staff", email: "jane@example.com", phone: "098-765-4321" }
-    ];
-
-    // Render staff list as options (simulating dynamic population)
-    let staffOptions = document.createElement("ul");
-    staffOptions.innerHTML = '';
-    staffList.forEach(staff => {
-        let listItem = document.createElement("li");
-        listItem.innerHTML = `<button type="button" class="staff-selection-btn" data-staff-id="${staff.id}" data-staff-name="${staff.name}" data-staff-role="${staff.role}" data-staff-email="${staff.email}" data-staff-phone="${staff.phone}">${staff.name}</button>`;
-        staffOptions.appendChild(listItem);
-    });
-
-    // Replace staff details in modal with generated list
-    const staffDetailsContainer = document.getElementById("staffDetails");
-    staffDetailsContainer.innerHTML = "";
-    staffDetailsContainer.appendChild(staffOptions);
-
-    // Add event listeners to staff options
-    document.querySelectorAll(".staff-selection-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            // Populate the modal with staff details
-            staffName.textContent = button.getAttribute("data-staff-name");
-            staffRole.textContent = button.getAttribute("data-staff-role");
-            staffEmail.textContent = button.getAttribute("data-staff-email");
-            staffPhone.textContent = button.getAttribute("data-staff-phone");
-
-            // Attach event to Select button inside modal
-            selectStaffBtn.onclick = function () {
-                staffIdInput.value = button.getAttribute("data-staff-id");
-                selectedStaffText.textContent = `Selected Staff: ${staffName.textContent}`;
-                modal.style.display = "none";
-            };
-        });
-    });
-};
+if (openModalBtn) {
+    openModalBtn.onclick = function () {
+        modal.style.display = "block";
+    };
+}
 
 // Close modal when "x" button is clicked
-closeModalBtn.onclick = function () {
-    modal.style.display = "none";
-};
+if (closeModalBtn) {
+    closeModalBtn.onclick = function () {
+        modal.style.display = "none";
+    };
+}
 
 // Close modal when clicking outside of it
 window.onclick = function (event) {
@@ -126,4 +90,86 @@ window.onclick = function (event) {
     }
 };
 
+// Function to select a staff member and close modal
+function selectStaff(id, name, role, email, phone) {
+    if (staffIdInput) {
+        staffIdInput.value = id;
+    }
+    if (selectedStaffDisplay) {
+        selectedStaffDisplay.innerText = `${name} - ${role}`;
+    }
+    modal.style.display = "none";
+}
+// function showContent(status) {
+//     fetch(`/projects?status=${status}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             const taskContainer = document.querySelector('.assigned-tasks ul');
+//             taskContainer.innerHTML = ""; // Clear existing projects
+//
+//             data.forEach(project => {
+//                 const taskItem = document.createElement('li');
+//                 taskItem.classList.add('task-item');
+//
+//                 taskItem.innerHTML = `
+//                     <div class="task-details">
+//                         <span class="task-name"><strong>Project Name:</strong> ${project.name}</span>
+//                         <span class="task-description"><strong>Description:</strong> ${project.description}</span>
+//                         <span class="task-progress"><strong>Status:</strong> ${project.status}</span>
+//                         <span class="task-deadline"><strong>End Date:</strong> ${project.endDate}</span>
+//                     </div>
+//                 `;
+//
+//                 taskContainer.appendChild(taskItem);
+//             });
+//         })
+//         .catch(error => console.error("Error fetching projects:", error));
+// }
+//
+// // Event listeners for tabs
+// document.querySelector(".tab[onclick='showContent(\"in-progress\")']").onclick = () => showContent('in-progress');
+// document.querySelector(".tab[onclick='showContent(\"done\")']").onclick = () => showContent('done');
+// // Function to filter tasks by status
+// Function to filter tasks by status
+function filterByStatus(status) {
+    const url = status === 'all' ? '/tasks' : `/tasks?status=${status}`;
+    console.log(`Fetching tasks with URL: ${url}`); // Debugging log
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const taskContainer = document.querySelector('.assigned-tasks ul');
+            taskContainer.innerHTML = ""; // Clear existing tasks
+
+            if (data.length === 0) {
+                taskContainer.innerHTML = "<li>No tasks available.</li>"; // Handle no tasks
+            }
+
+            data.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.classList.add('task-item');
+                taskItem.innerHTML = `
+                    <div class="task-details">
+                        <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> ${task.task}</span>
+                        <span class="task-staff"><strong>Tên nhân viên:</strong> ${task.staff.account.accountName}</span>
+                        <span class="task-progress"><strong>Progress:</strong> ${task.status}</span>
+                        <span class="task-deadline"><strong>Thời hạn:</strong> ${task.assignmentDate}</span>
+                    </div>
+                `;
+                taskContainer.appendChild(taskItem);
+            });
+        })
+        .catch(error => console.error("Error fetching tasks:", error));
+}
+
+// Event listeners for tabs
+document.querySelectorAll('.tab-bar .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const status = tab.getAttribute('data-status') === 'task' ? 'all' : tab.getAttribute('data-status');
+        filterByStatus(status);
+
+        // Update active tab styling
+        document.querySelectorAll('.tab-bar .tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    });
+});
 
