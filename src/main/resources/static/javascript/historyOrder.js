@@ -88,3 +88,19 @@ const updateSteps = (e) => {
 buttons.forEach((button) => {
   button.addEventListener("click", updateSteps);
 });
+
+// sort by status order
+function sortOrders() {
+  const sortValue = document.getElementById("sortStatus").value;
+  const orders = document.querySelectorAll(".order-item"); // Lấy tất cả các phần tử đơn hàng
+
+  orders.forEach((order) => {
+    const status = order.getAttribute("data-status"); // Lấy trạng thái từ thuộc tính data-status
+
+    if (sortValue === "all" || status === sortValue) {
+      order.style.display = "block"; // Hiển thị đơn hàng phù hợp
+    } else {
+      order.style.display = "none"; // Ẩn đơn hàng không phù hợp
+    }
+  });
+}
