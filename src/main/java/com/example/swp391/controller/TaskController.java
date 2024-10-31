@@ -8,6 +8,7 @@ import com.example.swp391.service.AccountService;
 import com.example.swp391.service.ProjectService;
 import com.example.swp391.service.StaffProjectService;
 import com.example.swp391.service.StaffService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
@@ -91,6 +92,22 @@ private StaffProjectService projectStaffService;
             return staffProjectService.getAllTasks(); // Method to fetch all tasks
         }
         return staffProjectService.getTasksByStatus(status);
+    }
+    @GetMapping("/dashboard")
+    public String staffDashboard(Model model, HttpSession session) {
+        // Lấy thông tin người dùng hiện tại từ session
+        AccountEntity currentUser = (AccountEntity) session.getAttribute("loggedInUser");
+
+        // Nếu chưa đăng nhập hoặc không phải Staff thì chuyển về trang đăng nhập
+        if (currentUser == null || !"Construction Staff".equals(currentUser.getAccountTypeID())) {
+            return "redirect:/login";
+        }
+
+        int staffId = currentUser.getStaff().getStaffID(); // Lấy StaffID từ đối tượng Account
+        List<StaffProjectEntity> staffProjects = staffProjectService.getAssignedProjects(staffId);
+        model.addAttribute("staffProjects", staffProjects);
+
+        return "StaffTask"; // Trả về view 'StaffTask'
     }
 
 }

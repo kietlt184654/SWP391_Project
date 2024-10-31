@@ -100,37 +100,7 @@ function selectStaff(id, name, role, email, phone) {
     }
     modal.style.display = "none";
 }
-// function showContent(status) {
-//     fetch(`/projects?status=${status}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const taskContainer = document.querySelector('.assigned-tasks ul');
-//             taskContainer.innerHTML = ""; // Clear existing projects
-//
-//             data.forEach(project => {
-//                 const taskItem = document.createElement('li');
-//                 taskItem.classList.add('task-item');
-//
-//                 taskItem.innerHTML = `
-//                     <div class="task-details">
-//                         <span class="task-name"><strong>Project Name:</strong> ${project.name}</span>
-//                         <span class="task-description"><strong>Description:</strong> ${project.description}</span>
-//                         <span class="task-progress"><strong>Status:</strong> ${project.status}</span>
-//                         <span class="task-deadline"><strong>End Date:</strong> ${project.endDate}</span>
-//                     </div>
-//                 `;
-//
-//                 taskContainer.appendChild(taskItem);
-//             });
-//         })
-//         .catch(error => console.error("Error fetching projects:", error));
-// }
-//
-// // Event listeners for tabs
-// document.querySelector(".tab[onclick='showContent(\"in-progress\")']").onclick = () => showContent('in-progress');
-// document.querySelector(".tab[onclick='showContent(\"done\")']").onclick = () => showContent('done');
-// // Function to filter tasks by status
-// Function to filter tasks by status
+
 function filterByStatus(status) {
     const url = status === 'all' ? '/tasks' : `/tasks?status=${status}`;
     console.log(`Fetching tasks with URL: ${url}`); // Debugging log

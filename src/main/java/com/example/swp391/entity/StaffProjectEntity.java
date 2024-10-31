@@ -3,11 +3,10 @@ import jakarta.persistence.*;
 import lombok.Data;           // Tự động sinh getter, setter, toString, hashCode, equals
 import lombok.NoArgsConstructor; // Tạo constructor không tham số
 import lombok.AllArgsConstructor; // Tạo constructor với tất cả tham số
-import com.example.swp391.entity.StaffEntity;  // Đảm bảo đường dẫn đúng
+
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Entity
 @Data
@@ -42,4 +41,5 @@ public class StaffProjectEntity {
 
     @Column(name = "Status")
     private String status;
+
 }

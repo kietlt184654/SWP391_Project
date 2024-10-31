@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 public class StaffEntity {
     @Id
     @Column(name = "StaffID")
-    private Integer staffID;  // Primary Key without auto-increment (ID manually set)
+    private Integer staffID;
 
-    @ManyToOne
-    @JoinColumn(name = "AccountID")
+    @OneToOne
+    @JoinColumn(name = "AccountID", referencedColumnName = "AccountID", nullable = false) // Khóa ngoại trỏ đến AccountEntity
     private AccountEntity account;
 
     @Column(name = "Role")
-    private String role;  // Role of the staff (matching database column name)
+    private String role;
 }

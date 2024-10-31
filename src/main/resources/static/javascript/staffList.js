@@ -23,7 +23,10 @@ window.onclick = function(event) {
         closeModal();
     }
 }
-
+// Get the current date in the format required by the date input
+const today = new Date().toISOString().split('T')[0];
+// Set the min attribute to today's date
+document.getElementById("deadline-input").setAttribute("min", today);
 document.querySelectorAll('.staff-container tr').forEach((row) => {
     const taskInput = row.querySelector('.task-input');
     const deadlineInput = row.querySelector('.deadline-input');

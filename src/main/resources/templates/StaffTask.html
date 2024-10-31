@@ -1,68 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Employee Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="/css/StaffTask.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="/css/StaffTask.css">
 </head>
 <body>
-
-<!-- Navbar -->
-<div class="nav">
-    <div class="nav-logo"><p>LOGO</p></div>
+<div class="container">
+    <h2>Danh sách dự án được gán</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Project ID</th>
+            <th>Tên dự án</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Deadline</th>
+            <th>Trạng thái</th>
+            <th>Task Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="staffProject : ${staffProjects}">
+            <tr>
+                <td th:text="${staffProject.project.projectID}">Project ID</td>
+                <td th:text="${staffProject.project.name}">Tên dự án</td>
+                <td th:text="${staffProject.project.startDate}">Ngày bắt đầu</td>
+                <td th:text="${staffProject.project.endDate}">Ngày kết thúc</td>
+                <td th:text="${staffProject.assignmentDate}">Deadline</td>
+                <td th:text="${staffProject.status}">Trạng thái</td>
+                <td th:text="${staffProject.task}">Task Description</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
 </div>
-
-<!-- Login Form -->
-<div class="login-container">
-    <h2>Employee Login</h2>
-    <form id="loginForm" method="post" action="/login"> <!-- Change the action to your login endpoint -->
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-        </div>
-        <button type="submit" class="btn">Login</button>
-    </form>
-</div>
-
-<!-- Assigned Tasks Section (Displayed after login) -->
-<div class="assigned-tasks">
-    <h3>Your Assigned Tasks:</h3>
-    <ul>
-        <!-- Example task list (you would generate this dynamically based on logged-in user) -->
-        <li class="task-item">
-            <strong>Task:</strong> <span>Build new floor in building Four</span><br>
-            <strong>Due Date:</strong> <span>2024-11-30</span><br>
-            <strong>Status:</strong> <span>In Progress</span>
-        </li>
-        <li class="task-item">
-            <strong>Task:</strong> <span>Water for apartment 2</span><br>
-            <strong>Due Date:</strong> <span>2024-11-15</span><br>
-            <strong>Status:</strong> <span>To Do</span>
-        </li>
-    </ul>
-</div>
-
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-info">
-            <h4>Information</h4>
-            <p>Open: 8 AM - 10 PM</p>
-            <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
-        </div>
-        <div class="footer-contact">
-            <h4>Contact</h4>
-            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>

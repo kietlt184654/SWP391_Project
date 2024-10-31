@@ -1,9 +1,6 @@
 package com.example.swp391.service;
 
-import com.example.swp391.entity.ProjectEntity;
-import com.example.swp391.entity.StaffEntity;
-import com.example.swp391.entity.StaffProjectEntity;
-import com.example.swp391.entity.StaffProjectId;
+import com.example.swp391.entity.*;
 import com.example.swp391.repository.ProjectRepository;
 import com.example.swp391.repository.StaffProjectRepository;
 import com.example.swp391.repository.StaffRepository;
@@ -71,4 +68,10 @@ public class StaffProjectService {
     public List<StaffProjectEntity> getAllTasks() {
         return staffProjectRepository.findAll(); // Sử dụng tên phương thức đã sửa
     }
+
+    // Hàm lấy danh sách các dự án của nhân viên
+    public List<StaffProjectEntity> getAssignedProjects(int staffId) {
+        return staffProjectRepository.findByStaff_StaffID(staffId);
+    }
+
 }

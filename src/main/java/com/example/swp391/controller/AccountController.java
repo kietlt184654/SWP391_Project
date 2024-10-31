@@ -2,8 +2,11 @@ package com.example.swp391.controller;
 
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
+import com.example.swp391.entity.StaffProjectAssignmentEntity;
+import com.example.swp391.entity.StaffProjectEntity;
 import com.example.swp391.service.AccountService;
 import com.example.swp391.service.CustomerService;
+import com.example.swp391.service.StaffProjectService;
 import jakarta.servlet.http.HttpSession;
 
 import jakarta.validation.Valid;
@@ -28,7 +31,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-private CustomerService customerService;
+private StaffProjectService staffProjectService;
 
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
@@ -36,12 +39,15 @@ private CustomerService customerService;
         if (account != null) {
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
+
             if (account.getAccountTypeID().equals("Customer")) {
                 return "Homepage";
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
                 return "FormConsulting";
+            } else if (account.getAccountTypeID().equals("Construction Staff")) {
+                return "redirect:/dashboard"; // Chuyển hướng đến `/dashboard`
             }
         } else {
             // Xử lý khi tài khoản không tồn tại hoặc mật khẩu sai
@@ -49,6 +55,7 @@ private CustomerService customerService;
         }
         return "login";
     }
+
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {
