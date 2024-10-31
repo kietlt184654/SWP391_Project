@@ -51,6 +51,8 @@ private CustomerService customerService;
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
                 return "FormConsulting";
+            }else if (account.getAccountTypeID().equals("Construction Staff")) {
+                return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
             }
         } else {
             model.addAttribute("messageLogin", "Invalid username or password");

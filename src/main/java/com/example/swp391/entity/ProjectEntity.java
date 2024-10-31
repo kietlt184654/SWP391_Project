@@ -19,7 +19,7 @@ public class ProjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProjectID")
-    private int projectId;
+    private int projectID;
 
     @Column(name = "Name")
     private String name;
@@ -46,6 +46,8 @@ public class ProjectEntity {
 
     @Column(name = "Status")
     private String status;
+
+    private String img;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectMaterialDetailEntity> projectMaterials = new ArrayList<>();

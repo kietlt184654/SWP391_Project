@@ -1,16 +1,21 @@
-package com.example.swp391.repository;//package com.example.swp391.repository;
-//
-//import com.example.swp391.entity.StaffProjectEntity;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.stereotype.Repository;
-//
-//import java.util.List;
-//@Repository
-//public interface StaffProjectRepository extends JpaRepository<StaffProjectEntity, Long> {
-//
-//    // Lấy tất cả các nhiệm vụ dựa trên ProjectID
-//    List<StaffProjectEntity> findByProjectProjectId(Long projectId);
-//
-//    // Lấy tất cả các nhiệm vụ dựa trên StaffID (nếu cần)
-//    List<StaffProjectEntity> findByStaffStaffID(Long staffId);
-//}
+package com.example.swp391.repository;
+
+import com.example.swp391.entity.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface StaffProjectRepository extends JpaRepository<StaffProjectEntity, Integer> {
+    StaffProjectEntity findTopByOrderByStaffProjectIDDesc();
+    List<StaffProjectEntity> findByProject_ProjectID(Integer projectID);
+    List<StaffProjectEntity> findByStatus(String status);
+
+    List<StaffProjectEntity> findByStaff_StaffID(int staffId);
+    Optional<StaffProjectEntity> findByProject_ProjectIDAndStaff_StaffID(int projectId, int staffId);
+    StaffProjectEntity findByStaffProjectID(int staffProjectID);
+}

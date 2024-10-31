@@ -1,0 +1,209 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Navigation */
+.nav {
+    background-color: #343a40;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo p {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #17a2b8;
+}
+
+/* Page Title */
+h2 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2rem;
+    color: #343a40;
+}
+
+/* Staff List Container */
+.staff-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.staff-table {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.staff-table th, .staff-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.staff-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+}
+
+.staff-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.staff-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Task Description Input */
+/* Task Description Input - Wider */
+.task-input {
+    width: 100%; /* Occupies full width within its cell */
+    height: 2.5rem;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    outline: none;
+    resize: vertical;
+}
+
+.task-input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Progress Dropdown with Color-coded Options */
+.progress-dropdown {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Colors for Dropdown Options */
+.progress-dropdown option[value="todo"] {
+    color: #28a745; /* Green for To Do */
+}
+
+.progress-dropdown option[value="in-progress"] {
+    color: #ffc107; /* Yellow for In Progress */
+}
+
+.progress-dropdown option[value="done"] {
+    color: #007bff; /* Blue for Done */
+}
+
+/* Task Row Hover and Styling */
+.staff-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.staff-table td {
+    text-align: center;
+}
+
+/* Assign Button */
+.assign-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.assign-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.footer-info, .footer-contact {
+    max-width: 300px;
+}
+
+.footer-info h4, .footer-contact h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.footer-contact p, .footer-info p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .staff-table {
+        width: 100%;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-info, .footer-contact {
+        margin-bottom: 20px;
+    }
+}

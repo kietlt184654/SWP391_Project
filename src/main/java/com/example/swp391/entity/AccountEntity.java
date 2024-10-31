@@ -43,4 +43,9 @@ public class AccountEntity {
     // Thiết lập quan hệ một-một với CustomerEntity
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CustomerEntity customer;
+
+    // Thêm liên kết với StaffEntity
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL) // cascade để đồng bộ hóa dữ liệu
+    private StaffEntity staff;
+
 }

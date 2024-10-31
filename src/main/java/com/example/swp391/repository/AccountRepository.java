@@ -4,6 +4,8 @@ import com.example.swp391.entity.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
    AccountEntity findByAccountNameAndPassword(String accountName, String password);
@@ -14,4 +16,5 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
    //AccountEntity findByEmail(String email);
    // Tìm kiếm tài khoản theo token khôi phục mật khẩu
    AccountEntity findByToken(String token);
+
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProjectMaterialDetailRepository extends JpaRepository<ProjectMaterialDetailEntity, Long> {
 
     // Tìm chi tiết vật liệu theo projectId
-    List<ProjectMaterialDetailEntity> findByProject_ProjectId(Long projectId);
+    List<ProjectMaterialDetailEntity> findByProject_ProjectID(Long projectId);
 
 
 }
