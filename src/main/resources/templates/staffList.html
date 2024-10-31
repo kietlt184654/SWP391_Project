@@ -75,8 +75,8 @@
         <!-- Progress Dropdown Column -->
         <td>
           <select class="progress-dropdown" name="status">
-            <option value="To Do">To Do</option>
-            <option value="In-Progress">In Progress</option>
+            <option value="To Do" selected>To Do</option>
+            <option value="In Progress">In Progress</option>
             <option value="Done">Done</option>
           </select>
         </td>
@@ -87,7 +87,7 @@
             <input type="hidden" name="staffId" th:value="${staff.staffID}" />
             <input type="hidden" name="taskDescription" class="task-input-hidden" />
             <input type="hidden" name="deadline" class="deadline-input-hidden" />
-            <input type="hidden" name="status" class="status-input" /> <!-- Hidden input for the selected status -->
+            <input type="hidden" name="status" class="status-input" value="To Do" /> <!-- Hidden input for the selected status -->
             <button type="submit" class="assign-btn">Assign</button>
           </form>
         </td>

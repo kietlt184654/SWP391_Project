@@ -72,13 +72,15 @@ private StaffProjectService projectStaffService;
             @RequestParam("staffId") Integer staffId,
             @RequestParam("taskDescription") String taskDescription,
             @RequestParam("deadline") String deadline,
-            @RequestParam("status") String status,RedirectAttributes redirectAttributes) {
+            @RequestParam("status") String status,
+            RedirectAttributes redirectAttributes) {
 
-        // Gọi service để lưu thông tin vào cơ sở dữ liệu
-        projectStaffService.assignStaffToProject(projectId, staffId, taskDescription, deadline,status);
+        // Log the received status
+        System.out.println("Received status: " + status);
+
+        // Continue with processing
+        projectStaffService.assignStaffToProject(projectId, staffId, taskDescription, deadline, status);
         redirectAttributes.addFlashAttribute("successMessage", "Assign staff to project successfully");
-        redirectAttributes.addFlashAttribute("taskDescription", taskDescription);
-        redirectAttributes.addFlashAttribute("assignedStaffId", staffId);
         return "redirect:/staff/list?projectId=" + projectId;
     }
     // Method to fetch tasks by status
