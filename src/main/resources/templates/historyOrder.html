@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 
     <link
       rel="stylesheet"
@@ -81,64 +82,132 @@
 
     <!--  content -->
     <!-- Hero Section -->
-    <section class="hero-section">
+    <div class="history-container">
+      <h1>HISTORY ORDER</h1>
       <div class="hero-content">
-        <img src="/src/main/resources/static/img/koi_des.webp" />
-        <h1>Profile</h1>
         <ol class="breadcrumb">
-          <li><a href="Homepage.html">Home</a></li>
-
-          <li class="active-link">Profile</li>
+          <li><a href="profile.html">Profile</a></li>
+          <li class="active"><a href="historyOrder.html">History Order</a></li>
         </ol>
       </div>
-    </section>
-
-    <!-- Main content -->
-    <div class="order-history-container">
-      <h1>Your Orders</h1>
-
-      <!-- Example of an Order -->
-      <div class="order-card">
-        <!-- Progress Steps with Vertical Line -->
-        <div class="progress-steps">
-          <div class="progress-line"></div>
-          <!-- Vertical line -->
-
-          <div class="progress-step completed">
-            <div class="step-circle"></div>
-            <div class="step-label">Depart<br /><small>26.05.2024</small></div>
-          </div>
-          <div class="progress-step completed">
-            <div class="step-circle"></div>
-            <div class="step-label">Shipped<br /><small>26.05.2024</small></div>
-          </div>
-          <div class="progress-step incomplete">
-            <div class="step-circle"></div>
-            <div class="step-label">Delivered<br /><small>Pending</small></div>
-          </div>
-        </div>
-
-        <!-- Order Image -->
-        <div class="order-image">
-          <img
-            src="/src/main/resources/static/img/a3.jpeg"
-            alt="Order Product Image"
-          />
-        </div>
-
-        <!-- Order Details -->
-        <div class="order-details">
-          <div class="order-id">#12345</div>
-          <div class="order-status">In process</div>
-          <p>Placed on: 2024-10-26</p>
-          <p>Order location: Koi Pond Construction Service</p>
-          <p>Product: Koi Pond Construction Service</p>
-          <p>Total: $1500.00</p>
-          <a href="#" class="more-detail">More Detail</a>
-        </div>
+    </div>
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchOrders"
+        placeholder="Enter order ID or keyword"
+        onkeyup="filterOrders()"
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <div class="filter-sort-container">
+      <!-- Date Range Filter -->
+      <div class="date-filter">
+        <label for="startDate">From:</label>
+        <input type="date" id="startDate" onchange="filterByDate()" />
+        <label for="endDate">To:</label>
+        <input type="date" id="endDate" onchange="filterByDate()" />
       </div>
 
-      <!-- Repeat .order-card for additional orders -->
+      <!-- Sort by Status -->
+      <div class="sort-container">
+        <label for="sortStatus">Sort by:</label>
+        <select id="sortStatus" onchange="sortOrders()">
+          <option value="all">All</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="in-process">In process</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="order-card">
+      <div class="order-status">
+        <div class="timeline"></div>
+        <ul>
+          <li class="status-item completed">
+            Depart <br /><span>24.05.2024</span>
+          </li>
+          <li class="status-item completed">
+            Shipped <br /><span>24.05.2024</span>
+          </li>
+          <li class="status-item in-progress">
+            Delivered <br /><span>24.05.2024</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="order-details">
+        <button class="close-btn">×</button>
+        <div class="image-container">
+          <img
+            src="/src/main/resources/static/img/a2.jpg"
+            alt="Product Image"
+          />
+        </div>
+        <div class="order-info">
+          <p class="order-id">
+            #1<span class="status cancelled">Cancelled</span>
+          </p>
+          <p class="order-date">24.05.2024</p>
+          <p class="location-title">Order location</p>
+          <p class="location">123,đường hihi, phường CCC, quận 1</p>
+        </div>
+
+        <div class="order-price">
+          Total: <span class="price">100.000.000VND</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Card 2 with Multiple Images -->
+
+    <div class="order-card">
+      <div class="order-status">
+        <div class="timeline"></div>
+        <ul>
+          <li class="status-item completed">
+            Depart <br /><span>24.05.2024</span>
+          </li>
+          <li class="status-item completed">
+            Shipped <br /><span>24.05.2024</span>
+          </li>
+          <li class="status-item delivered">
+            Delivered <br /><span>24.05.2024</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="order-details">
+        <button class="close-btn">×</button>
+        <div class="image-container">
+          <img
+            src="/src/main/resources/static/img/a2.jpg"
+            alt="Product Image"
+          />
+        </div>
+        <div class="order-info">
+          <p class="order-id">
+            #3 <span class="status in-process">In process</span>
+          </p>
+          <p class="order-date">24.05.2024</p>
+          <p class="location-title">Order location</p>
+          <p class="location">123, đường ABC, phường DEF, Quận 2</p>
+        </div>
+        <div class="order-price">
+          Total: <span class="price">100.000.000VND</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-bar">
+      <a href="#" class="w3-bar-item w3-button">&laquo;</a>
+      <a href="#" class="w3-bar-item w3-button">1</a>
+      <a href="#" class="w3-bar-item w3-button">2</a>
+      <a href="#" class="w3-bar-item w3-button">3</a>
+      <a href="#" class="w3-bar-item w3-button">4</a>
+      <a href="#" class="w3-bar-item w3-button">&raquo;</a>
     </div>
 
     <!-- ---------------------------------------------------------------------------------------------------------- -->
@@ -158,13 +227,15 @@
           >
         </li>
         <li>
-          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+          <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
         </li>
         <li>
           <a href="#"><i class="fas fa-cog"></i> Settings</a>
         </li>
         <li>
-          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+          <a href="Homepage.html"
+            ><i class="fas fa-sign-out-alt"></i> Log Out</a
+          >
         </li>
       </ul>
     </div>
