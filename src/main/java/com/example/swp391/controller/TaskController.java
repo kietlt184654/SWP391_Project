@@ -109,5 +109,33 @@ private StaffProjectService projectStaffService;
 
         return "StaffTask"; // Trả về view 'StaffTask'
     }
+    @PostMapping("/accept")
+    public String acceptProject(@RequestParam("projectID") int projectId,
+                                @RequestParam("currentStatus") String currentStatus,
+                                RedirectAttributes redirectAttributes) {
+        String newStatus;
+        if ("To Do".equals(currentStatus)) {
+            newStatus = "In-Progress";
+        } else if ("In-Progress".equals(currentStatus)) {
+            newStatus = "Done";
+        } else {
+            newStatus = currentStatus; // Nếu trạng thái không nằm trong To Do hoặc In-Progress thì giữ nguyên
+        }
+
+        boolean success = staffProjectService.setStatusForStaffProject(projectId, newStatus);
+
+        String message;
+        if (success) {
+            message = "Project status updated successfully.";
+        } else {
+            message = "Failed to update project status.";
+        }
+
+        // Thêm message vào RedirectAttributes để truyền thông báo cho trang /dashboard
+        redirectAttributes.addFlashAttribute("message", message);
+
+        return "redirect:/dashboard"; // Quay trở lại trang bảng danh sách sau khi cập nhật
+    }
+
 
 }

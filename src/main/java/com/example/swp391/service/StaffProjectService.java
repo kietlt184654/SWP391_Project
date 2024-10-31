@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StaffProjectService {
@@ -74,4 +75,19 @@ public class StaffProjectService {
         return staffProjectRepository.findByStaff_StaffID(staffId);
     }
 
+    public boolean setStatusForStaffProject(int staffProjectId, String newStatus) {
+        Optional<StaffProjectEntity> optionalStaffProject = staffProjectRepository.findById(staffProjectId);
+
+        if (optionalStaffProject.isPresent()) {
+            StaffProjectEntity staffProject = optionalStaffProject.get();
+            staffProject.setStatus(newStatus);
+            staffProjectRepository.save(staffProject);
+            return true;
+        } else {
+            return false; // StaffProject không tìm thấy
+        }
+    }
+    // Hàm để cập nhật trạng thái của StaffProject
+
 }
+
