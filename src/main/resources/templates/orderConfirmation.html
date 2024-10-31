@@ -39,6 +39,7 @@
                 <th>Quantity</th>
                 <th>Unit Price (USD)</th>
                 <th>Total Price (USD)</th>
+                <th> Total after Discount(USD)</th>
             </tr>
             </thead>
             <tbody>
@@ -47,6 +48,7 @@
                 <td th:text="${entry.value}">1</td>
                 <td th:text="${entry.key.price}">50.00</td>
                 <td th:text="${entry.key.price * entry.value}">50.00</td>
+                <td th:text="${discountedTotalAmount}">0.00</td>
             </tr>
             </tbody>
         </table>

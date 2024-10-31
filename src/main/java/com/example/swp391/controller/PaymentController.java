@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -86,30 +87,67 @@ public class PaymentController {
         return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
     }
 
-    private String processServicePayment(String paymentMethod, CustomerEntity customer, HttpSession session,
-                                         RedirectAttributes redirectAttributes, String paymentStatus) {
-        Map<DesignEntity, Integer> designItems = (Map<DesignEntity, Integer>) session.getAttribute("designItems");
-        if (designItems == null || designItems.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "You have not selected any service.");
-            return "redirect:/services/serviceForm";
-        }
-
-        if (!materialService.checkMaterialsForDesignItems(designItems)) {
-            redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the selected services.");
-            return "redirect:/services/serviceForm";
-        }
-
-        materialService.updateMaterialsAfterCheckoutForDesignItems(designItems);
-        double discountRate = customerService.calculatePointDiscount(customer);
-        double totalAmount = designItems.keySet().stream().mapToDouble(d -> d.getPrice() * designItems.get(d)).sum();
-        double discountedTotalAmount = totalAmount * (1 - discountRate);
-        int totalPointsEarned = projectService.createProjectFromService(designItems, customer, paymentStatus, discountRate);
-
-        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, designItems);
-
-        session.removeAttribute("designItems"); // Xóa danh sách dịch vụ sau thanh toán
-        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
+//    private String processServicePayment(String paymentMethod, CustomerEntity customer, HttpSession session,
+//                                         RedirectAttributes redirectAttributes, String paymentStatus) {
+//        Map<DesignEntity, Integer> designItems = (Map<DesignEntity, Integer>) session.getAttribute("designItems");
+//        if (designItems == null || designItems.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("error", "You have not selected any service.");
+//            return "redirect:/services/serviceForm";
+//        }
+//
+//        if (!materialService.checkMaterialsForDesignItems(designItems)) {
+//            redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the selected services.");
+//            return "redirect:/services/serviceForm";
+//        }
+//
+//        materialService.updateMaterialsAfterCheckoutForDesignItems(designItems);
+//        double discountRate = customerService.calculatePointDiscount(customer);
+//        double totalAmount = designItems.keySet().stream().mapToDouble(d -> d.getPrice() * designItems.get(d)).sum();
+//        double discountedTotalAmount = totalAmount * (1 - discountRate);
+//        int totalPointsEarned = projectService.createProjectFromService(designItems, customer, paymentStatus, discountRate);
+//
+//        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, designItems);
+//
+//        session.removeAttribute("designItems"); // Xóa danh sách dịch vụ sau thanh toán
+//        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
+//    }
+private String processServicePayment(String paymentMethod, CustomerEntity customer, HttpSession session,
+                                     RedirectAttributes redirectAttributes, String paymentStatus) {
+    // Lấy thông tin thiết kế từ session với tên mới là "designs"
+    Map<DesignEntity, Integer> designs = (Map<DesignEntity, Integer>) session.getAttribute("designs");
+    if (designs == null || designs.isEmpty()) {
+        redirectAttributes.addFlashAttribute("error", "You have not selected any service.");
+        return "redirect:/services/serviceForm";
     }
+
+    // Tạo một biến mới designItems để xử lý logic sau này
+    Map<DesignEntity, Integer> designItems = new HashMap<>(designs);
+
+    // Kiểm tra vật liệu đủ để thực hiện các dịch vụ đã chọn
+    if (!materialService.checkMaterialsForDesignItems(designItems)) {
+        redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the selected services.");
+        return "redirect:/services/serviceForm";
+    }
+
+    // Cập nhật kho sau khi thanh toán
+    materialService.updateMaterialsAfterCheckoutForDesignItems(designItems);
+
+    // Tính toán giảm giá và tổng chi phí
+    double discountRate = customerService.calculatePointDiscount(customer);
+    double totalAmount = designItems.keySet().stream().mapToDouble(d -> d.getPrice() * designItems.get(d)).sum();
+    double discountedTotalAmount = totalAmount * (1 - discountRate);
+
+    // Tạo dự án từ dịch vụ và tính điểm thưởng
+    int totalPointsEarned = projectService.createProjectFromService(designItems, customer, paymentStatus, discountRate);
+
+    // Lưu thông tin thanh toán vào session với "designItems"
+    storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, designItems);
+
+    // Xóa thông tin dịch vụ sau khi thanh toán
+    session.removeAttribute("designs");
+    return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
+}
+
 
     private void storePaymentDetailsInSession(HttpSession session, double totalAmount, double discountRate,
                                               double discountedTotalAmount, int totalPointsEarned, String paymentStatus,

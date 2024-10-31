@@ -6,6 +6,7 @@ import com.example.swp391.repository.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class MaterialService {
 
     @Autowired
     private MaterialChangeLogRepository materialChangeLogRepository;
+
 
     /**
      * Lấy danh sách tất cả nguyên vật liệu
@@ -137,4 +139,11 @@ public class MaterialService {
             }
         }
     }
+
+    public List<MaterialChangeLogEntity> getAllMaterialChangeHistory() {
+        List<MaterialChangeLogEntity> changeLogs = materialChangeLogRepository.findAll();
+        changeLogs.sort(Comparator.comparing(MaterialChangeLogEntity::getChangeDate).reversed());
+        return changeLogs;
+    }
+
 }

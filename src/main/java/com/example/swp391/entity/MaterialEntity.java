@@ -31,4 +31,7 @@ public class MaterialEntity {
 
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DesignMaterialQuantity> designQuantities = new ArrayList<>();
+    // Quan hệ một-nhiều với MaterialChangeLogEntity để lưu lịch sử chỉnh sửa
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MaterialChangeLogEntity> changeLogs = new ArrayList<>();
 }

@@ -31,5 +31,5 @@ public class MaterialChangeLogEntity {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ChangeDate")
-    private Date changeDate;
+    private Date changeDate = new Date();
 }

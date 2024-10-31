@@ -55,11 +55,12 @@ public class MaintenanceController {
         List<DesignEntity> selectedDesigns = designService.getDesignsByIds(selectedDesignIds);
 
         if ("payment".equals(action)) {
-            Map<DesignEntity, Integer> designItems = selectedDesigns.stream()
+            Map<DesignEntity, Integer> designs = selectedDesigns.stream()
                     .collect(Collectors.toMap(design -> design, design -> 1)); // Mặc định mỗi dịch vụ có số lượng là 1
 
             // Lưu vào session với tên "designItems" cho dễ truy xuất trong PaymentController
-            session.setAttribute("designItems", designItems);
+            session.setAttribute("designs", designs);
+//            session.setAttribute("designItems", designItems);
 
             model.addAttribute("selectedDesigns", selectedDesigns);
             return "Payment";

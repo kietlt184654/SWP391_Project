@@ -74,7 +74,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="entry : ${session.designItems}">
+            <tr th:each="entry : ${session.designs}">
                 <td th:text="${entry.key.designId}">Service ID</td>
                 <td><img th:src="@{${entry.key.img} ?: '/img/defaultService.jpg'}" alt="Service Image" width="100"/></td>
                 <td th:text="${entry.key.designName}">Service Name</td>

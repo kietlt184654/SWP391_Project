@@ -1,5 +1,6 @@
 package com.example.swp391.controller;
 
+import com.example.swp391.entity.MaterialChangeLogEntity;
 import com.example.swp391.entity.MaterialEntity;
 import com.example.swp391.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,18 @@ public class MaterialController {
         // Redirect đến trang danh sách sau khi cập nhật thành công
         return "redirect:/materials/list";
     }
+//    @GetMapping("/{materialId}/historyofchanging")
+//    public String showMaterialHistory(@PathVariable Long materialId, Model model) {
+//        List<MaterialChangeLogEntity> changeLogs = materialService.getMaterialChangeHistory(materialId);
+//        model.addAttribute("changeLogs", changeLogs);
+//        return "material-historychanging"; // Trả về view hiển thị lịch sử chỉnh sửa
+//    }
+@GetMapping("/historyofchanging")
+public String showAllMaterialHistory(Model model) {
+        List<MaterialChangeLogEntity> changeLogs = materialService.getAllMaterialChangeHistory();
+        model.addAttribute("changeLogs", changeLogs);
+    return "material-historychanging"; // Trả về trang hiển thị toàn bộ lịch sử
+}
+
 
 }
