@@ -115,6 +115,9 @@
 
     <!-- Payment Info Section -->
     <form th:action="@{/payment/create}" method="post">
+        <!-- Hidden input for source -->
+        <input type="hidden" name="source" value="CART"> <!-- Đảm bảo `source` được truyền là CART -->
+
         <div class="payment-info">
             <h2>Payment</h2>
             <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
@@ -123,47 +126,47 @@
         </div>
     </form>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <div class="user-info">
-        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username" th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</p>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="user-info">
+            <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+            <p class="username" th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</p>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-history"></i> History Order</a></li>
+            <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+        </ul>
     </div>
-    <ul class="sidebar-menu">
-        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="#"><i class="fas fa-history"></i> History Order</a></li>
-        <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
-        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-    </ul>
-</div>
 
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-info">
-            <h4>Information</h4>
-            <p>Open: 8 AM - 10 PM</p>
-            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
-        </div>
-        <div class="footer-services">
-            <h4>Services</h4>
-            <ul>
-                <li><a href="link-to-construction">Construction Koi Pond</a></li>
-                <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
-                <li><a href="link-to-design">Design upon Requirements</a></li>
-            </ul>
-        </div>
-        <div class="footer-contact">
-            <h4>Contact</h4>
-            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-            <p><i class="fa-brands fa-facebook"></i>
-                <a href="https://facebook.com" target="_blank">Visit Us</a>
-            </p>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <h4>Information</h4>
+                <p>Open: 8 AM - 10 PM</p>
+                <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+            </div>
+            <div class="footer-services">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="link-to-construction">Construction Koi Pond</a></li>
+                    <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
+                    <li><a href="link-to-design">Design upon Requirements</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+                <p><i class="fa-brands fa-facebook"></i>
+                    <a href="https://facebook.com" target="_blank">Visit Us</a>
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>

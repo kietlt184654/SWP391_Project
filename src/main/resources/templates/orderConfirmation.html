@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Confirmation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/orderConfirmation.css">
 </head>
 <body>
 
@@ -43,7 +42,6 @@
             </tr>
             </thead>
             <tbody>
-            <!-- Loop through each design item in the cart -->
             <tr th:each="entry : ${designItems}">
                 <td th:text="${entry.key.designName}">Design 1</td>
                 <td th:text="${entry.value}">1</td>
@@ -54,7 +52,7 @@
         </table>
     </div>
 
-    <!-- Redirect to Profile or Home -->
+    <!-- Redirect Buttons -->
     <div class="redirect-buttons">
         <a href="/" class="btn btn-primary">Back to Home</a>
         <a href="/account/profile" class="btn btn-secondary">View Profile</a>

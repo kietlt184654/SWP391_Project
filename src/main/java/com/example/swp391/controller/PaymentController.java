@@ -1,5 +1,6 @@
 package com.example.swp391.controller;
 
+import com.example.swp391.dto.PaymentSource;
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CartEntity;
 import com.example.swp391.entity.CustomerEntity;
@@ -36,82 +37,105 @@ public class PaymentController {
     @PostMapping("/create")
     public String createPayment(
             @RequestParam("payment-method") String paymentMethod,
+            @RequestParam("source") PaymentSource source,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
-        // Lấy thông tin người dùng hiện tại từ session
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
         if (loggedInUser == null || loggedInUser.getCustomer() == null) {
             redirectAttributes.addFlashAttribute("error", "Please complete your customer information before making a payment.");
             return "redirect:/account/profile";
         }
 
-        // Lấy giỏ hàng từ session
+        CustomerEntity customer = loggedInUser.getCustomer();
+        String paymentStatus = "Success";
+
+        switch (source) {
+            case CART:
+                return processCartPayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
+            case SERVICE:
+                return processServicePayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
+            default:
+                redirectAttributes.addFlashAttribute("error", "Invalid payment source.");
+                return "redirect:/cart/view";
+        }
+    }
+
+    private String processCartPayment(String paymentMethod, CustomerEntity customer, HttpSession session,
+                                      RedirectAttributes redirectAttributes, String paymentStatus) {
         CartEntity cart = (CartEntity) session.getAttribute("cart");
         if (cart == null || cart.getDesignItems().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Your cart is empty.");
             return "redirect:/cart/view";
         }
 
-        // Kiểm tra nguyên vật liệu trong kho
-        boolean isStockAvailable = materialService.checkMaterialsForCart(cart);
-        if (!isStockAvailable) {
+        if (!materialService.checkMaterialsForCart(cart)) {
             redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the designs in your cart.");
             return "redirect:/cart/view";
         }
 
-        // Thiết lập trạng thái thanh toán
-        String paymentStatus = "Success";
+        materialService.updateMaterialsAfterCheckout(cart);
+        double discountRate = customerService.calculatePointDiscount(customer);
+        double totalAmount = cart.calculateTotalAmount();
+        double discountedTotalAmount = totalAmount * (1 - discountRate);
+        int totalPointsEarned = projectService.createProjectFromCart(cart, customer, paymentStatus, discountRate);
 
-        // Xử lý thanh toán và cập nhật thông tin
-        if ("cod".equals(paymentMethod) || "bank-transfer".equals(paymentMethod)) {
-            // Cập nhật kho vật liệu
-            materialService.updateMaterialsAfterCheckout(cart);
+        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, cart.getDesignItems());
 
-            // Lấy tổng điểm của khách hàng và tính giảm giá dựa trên điểm
-            CustomerEntity customer = loggedInUser.getCustomer();
-            double discountRate = customerService.calculatePointDiscount(customer);
+        session.removeAttribute("cart"); // Xóa giỏ hàng sau thanh toán
+        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
+    }
 
-            // Tính tổng giá trị của giỏ hàng và giá trị sau khi giảm giá
-            double totalAmount = cart.calculateTotalAmount();
-            double discountAmount = totalAmount * discountRate;
-            double discountedTotalAmount = totalAmount - discountAmount;
-
-            // Tạo dự án từ giỏ hàng và nhận điểm tích lũy
-            int totalPointsEarned = projectService.createProjectFromCart(cart, customer, paymentStatus, discountRate);
-
-            // Tạo transactionId ngẫu nhiên cho phiên giao dịch
-            String transactionId = UUID.randomUUID().toString();
-            // Định dạng các giá trị cần thiết trước khi lưu vào session
-            String formattedTotalAmount = String.format("%.2f", totalAmount);
-            String formattedDiscountRate = String.format("%.2f", discountRate * 100); // Để hiển thị dạng phần trăm
-            String formattedDiscountAmount = String.format("%.2f", discountAmount);
-            String formattedDiscountedTotalAmount = String.format("%.2f", discountedTotalAmount);
-            // Lưu thông tin thanh toán vào session cho trang xác nhận
-            session.setAttribute("transactionId", transactionId);
-            session.setAttribute("totalAmount", formattedTotalAmount);
-            session.setAttribute("discountRate", formattedDiscountRate);
-            session.setAttribute("discountAmount", formattedDiscountAmount);
-            session.setAttribute("discountedTotalAmount", formattedDiscountedTotalAmount);
-            session.setAttribute("pointsEarned", totalPointsEarned);
-            session.setAttribute("paymentStatus", paymentStatus);
-            session.setAttribute("designItems", cart.getDesignItems()); // Lưu designItems vào session
-
-            // Xóa giỏ hàng sau khi thanh toán thành công
-            session.removeAttribute("cart");
-
-            if ("cod".equals(paymentMethod)) {
-                redirectAttributes.addFlashAttribute("message", "Your order has been placed successfully via COD.");
-                return "redirect:/payment/confirmation"; // Điều hướng đến trang xác nhận đơn hàng
-            } else {
-                redirectAttributes.addFlashAttribute("message", "Please complete your bank transfer to finalize your order.");
-                return "redirect:/payment/instructions"; // Điều hướng đến trang hướng dẫn thanh toán qua ngân hàng
-            }
+    private String processServicePayment(String paymentMethod, CustomerEntity customer, HttpSession session,
+                                         RedirectAttributes redirectAttributes, String paymentStatus) {
+        Map<DesignEntity, Integer> designItems = (Map<DesignEntity, Integer>) session.getAttribute("designItems");
+        if (designItems == null || designItems.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "You have not selected any service.");
+            return "redirect:/services/serviceForm";
         }
 
-        // Nếu phương thức thanh toán không hợp lệ
-        redirectAttributes.addFlashAttribute("error", "Invalid payment method selected.");
-        return "redirect:/cart/view";
+        if (!materialService.checkMaterialsForDesignItems(designItems)) {
+            redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the selected services.");
+            return "redirect:/services/serviceForm";
+        }
+
+        materialService.updateMaterialsAfterCheckoutForDesignItems(designItems);
+        double discountRate = customerService.calculatePointDiscount(customer);
+        double totalAmount = designItems.keySet().stream().mapToDouble(d -> d.getPrice() * designItems.get(d)).sum();
+        double discountedTotalAmount = totalAmount * (1 - discountRate);
+        int totalPointsEarned = projectService.createProjectFromService(designItems, customer, paymentStatus, discountRate);
+
+        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, designItems);
+
+        session.removeAttribute("designItems"); // Xóa danh sách dịch vụ sau thanh toán
+        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
+    }
+
+    private void storePaymentDetailsInSession(HttpSession session, double totalAmount, double discountRate,
+                                              double discountedTotalAmount, int totalPointsEarned, String paymentStatus,
+                                              Map<DesignEntity, Integer> designItems) {
+        String transactionId = UUID.randomUUID().toString();
+        session.setAttribute("transactionId", transactionId);
+        session.setAttribute("totalAmount", String.format("%.2f", totalAmount));
+        session.setAttribute("discountRate", String.format("%.2f", discountRate * 100)); // Hiển thị dưới dạng phần trăm
+        session.setAttribute("discountAmount", String.format("%.2f", totalAmount - discountedTotalAmount));
+        session.setAttribute("discountedTotalAmount", String.format("%.2f", discountedTotalAmount));
+        session.setAttribute("pointsEarned", totalPointsEarned);
+        session.setAttribute("paymentStatus", paymentStatus);
+        session.setAttribute("designItems", designItems);
+    }
+
+    private String handleRedirectAfterPayment(String paymentMethod, RedirectAttributes redirectAttributes) {
+        if ("cod".equals(paymentMethod)) {
+            redirectAttributes.addFlashAttribute("message", "Your order has been placed successfully via COD.");
+            return "redirect:/payment/confirmation";
+        } else if ("bank-transfer".equals(paymentMethod)) {
+            redirectAttributes.addFlashAttribute("message", "Please complete your bank transfer to finalize your order.");
+            return "redirect:/payment/instructions";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Invalid payment method selected.");
+            return "redirect:/cart/view";
+        }
     }
 
     @Transactional
@@ -123,16 +147,14 @@ public class PaymentController {
             return "redirect:/login"; // Chuyển hướng về trang đăng nhập nếu chưa đăng nhập
         }
 
-        // Lấy thông tin thanh toán từ session
         String transactionId = (String) session.getAttribute("transactionId");
-        String totalAmount = (String) session.getAttribute("totalAmount"); // Đã định dạng
-        String discountRate = (String) session.getAttribute("discountRate"); // Đã định dạng (phần trăm)
-        String discountAmount = (String) session.getAttribute("discountAmount"); // Đã định dạng
-        String discountedTotalAmount = (String) session.getAttribute("discountedTotalAmount"); // Đã định dạng
+        String totalAmount = (String) session.getAttribute("totalAmount");
+        String discountRate = (String) session.getAttribute("discountRate");
+        String discountAmount = (String) session.getAttribute("discountAmount");
+        String discountedTotalAmount = (String) session.getAttribute("discountedTotalAmount");
         Integer pointsEarned = (Integer) session.getAttribute("pointsEarned");
         String paymentStatus = (String) session.getAttribute("paymentStatus");
 
-        // Kiểm tra null và thiết lập giá trị mặc định nếu cần
         String formattedTotalAmount = (totalAmount != null) ? totalAmount : "0.00";
         String formattedDiscountRate = (discountRate != null) ? discountRate : "0.00";
         String formattedDiscountAmount = (discountAmount != null) ? discountAmount : "0.00";
@@ -140,18 +162,24 @@ public class PaymentController {
         int earnedPoints = (pointsEarned != null) ? pointsEarned : 0;
         String status = (paymentStatus != null) ? paymentStatus : "N/A";
 
-        // Thông tin khách hàng
         CustomerEntity customer = loggedInUser.getCustomer();
         int totalPoints = customer.getTotalPoints();
 
         Map<DesignEntity, Integer> designItems = null;
         try {
+            // Kiểm tra session để lấy `designItems` từ `CART` hoặc `SERVICE`
             designItems = (Map<DesignEntity, Integer>) session.getAttribute("designItems");
+            if (designItems == null) {
+                // Nếu `designItems` chưa tồn tại, kiểm tra xem có thuộc `cart` không
+                CartEntity cart = (CartEntity) session.getAttribute("cart");
+                if (cart != null) {
+                    designItems = cart.getDesignItems();
+                }
+            }
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
 
-        // Đưa các giá trị vào model để truyền sang giao diện
         model.addAttribute("transactionId", transactionId);
         model.addAttribute("totalAmount", formattedTotalAmount);
         model.addAttribute("discountRate", formattedDiscountRate);
@@ -164,7 +192,7 @@ public class PaymentController {
         model.addAttribute("totalPoints", totalPoints);
         model.addAttribute("designItems", designItems);
 
-        // Xóa thông tin thanh toán khỏi session sau khi hiển thị xong
+        // Xóa session sau khi sử dụng
         session.removeAttribute("transactionId");
         session.removeAttribute("totalAmount");
         session.removeAttribute("discountRate");
@@ -173,8 +201,8 @@ public class PaymentController {
         session.removeAttribute("pointsEarned");
         session.removeAttribute("paymentStatus");
         session.removeAttribute("designItems");
+        session.removeAttribute("cart");
 
-        return "orderConfirmation"; // Tên của template Thymeleaf
+        return "orderConfirmation";
     }
-
 }

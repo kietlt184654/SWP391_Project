@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Service Request Form</title>
+</head>
+<body>
+<h1>Service Request Form</h1>
+<form action="#" th:action="@{/services/submitServiceForm}" th:object="${serviceRequest}" method="post">
+    <label for="serviceType">Select Service Type:</label>
+    <select id="serviceType" name="serviceType" th:field="*{serviceType}">
+        <option value="Maintenance">Bảo Dưỡng</option>
+        <option value="Cleaning">Vệ Sinh</option>
+    </select>
+
+    <label for="size">Select Size:</label>
+    <select id="size" name="size" th:field="*{size}">
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+    </select>
+
+    <label for="budget">Budget:</label>
+    <input type="number" id="budget" th:field="*{budget}" placeholder="Enter your budget">
+
+    <label for="completionTime">Estimated Completion Time (days):</label>
+    <input type="number" id="completionTime" th:field="*{estimatedCompletionTime}" placeholder="Completion time in days">
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

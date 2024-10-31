@@ -28,9 +28,6 @@ public class MaterialService {
 
     /**
      * Tìm nguyên vật liệu theo ID
-     *
-     * @param materialId ID của nguyên vật liệu
-     * @return Đối tượng MaterialEntity hoặc ném IllegalArgumentException nếu không tìm thấy
      */
     public MaterialEntity findById(Long materialId) {
         return materialRepository.findById(materialId)
@@ -39,10 +36,6 @@ public class MaterialService {
 
     /**
      * Cập nhật số lượng nguyên vật liệu và ghi log thay đổi
-     *
-     * @param materialId     ID của nguyên vật liệu cần cập nhật
-     * @param quantityChange Số lượng thay đổi
-     * @param reason         Lý do thay đổi số lượng
      */
     public void updateMaterialQuantity(Long materialId, int quantityChange, String reason) {
         MaterialEntity material = findById(materialId);
@@ -63,6 +56,7 @@ public class MaterialService {
         changeLog.setChangeDate(new Date());
         materialChangeLogRepository.save(changeLog);
     }
+
     /**
      * Kiểm tra nguyên vật liệu cho tất cả thiết kế trong giỏ hàng
      */
@@ -71,12 +65,11 @@ public class MaterialService {
             DesignEntity design = entry.getKey();
             int quantityInCart = entry.getValue();
 
-            // Gọi phương thức checkMaterialsForDesign cho từng thiết kế
             if (!checkMaterialsForDesign(design, quantityInCart)) {
-                return false; // Nếu bất kỳ thiết kế nào không đủ nguyên vật liệu, trả về false
+                return false; // Không đủ nguyên vật liệu cho thiết kế
             }
         }
-        return true; // Nếu tất cả thiết kế đều có đủ nguyên vật liệu, trả về true
+        return true; // Đủ nguyên vật liệu cho tất cả thiết kế trong giỏ hàng
     }
 
     /**
@@ -87,7 +80,6 @@ public class MaterialService {
             MaterialEntity material = designMaterial.getMaterial();
             int totalRequiredQuantity = designMaterial.getQuantityNeeded() * quantityInCart;
 
-            // Kiểm tra xem có đủ nguyên vật liệu không
             if (material.getStockQuantity() < totalRequiredQuantity) {
                 return false;
             }
@@ -96,7 +88,7 @@ public class MaterialService {
     }
 
     /**
-     * Xử lý giảm số lượng nguyên vật liệu trong kho sau khi thanh toán thành công
+     * Xử lý giảm số lượng nguyên vật liệu trong kho sau khi thanh toán thành công cho giỏ hàng
      */
     public void updateMaterialsAfterCheckout(CartEntity cart) {
         for (Map.Entry<DesignEntity, Integer> entry : cart.getDesignItems().entrySet()) {
@@ -106,6 +98,39 @@ public class MaterialService {
             for (DesignMaterialQuantity designMaterial : design.getMaterialQuantities()) {
                 MaterialEntity material = designMaterial.getMaterial();
                 int totalRequiredQuantity = designMaterial.getQuantityNeeded() * quantityInCart;
+
+                material.setStockQuantity(material.getStockQuantity() - totalRequiredQuantity);
+                materialRepository.save(material);
+            }
+        }
+    }
+
+    /**
+     * Kiểm tra nguyên vật liệu cho tất cả thiết kế trong dịch vụ (service)
+     */
+    public boolean checkMaterialsForDesignItems(Map<DesignEntity, Integer> designItems) {
+        for (Map.Entry<DesignEntity, Integer> entry : designItems.entrySet()) {
+            DesignEntity design = entry.getKey();
+            int quantity = entry.getValue();
+
+            if (!checkMaterialsForDesign(design, quantity)) {
+                return false; // Không đủ nguyên vật liệu cho thiết kế trong dịch vụ
+            }
+        }
+        return true; // Đủ nguyên vật liệu cho tất cả thiết kế trong dịch vụ
+    }
+
+    /**
+     * Xử lý giảm số lượng nguyên vật liệu trong kho sau khi thanh toán thành công cho dịch vụ (service)
+     */
+    public void updateMaterialsAfterCheckoutForDesignItems(Map<DesignEntity, Integer> designItems) {
+        for (Map.Entry<DesignEntity, Integer> entry : designItems.entrySet()) {
+            DesignEntity design = entry.getKey();
+            int quantity = entry.getValue();
+
+            for (DesignMaterialQuantity designMaterial : design.getMaterialQuantities()) {
+                MaterialEntity material = designMaterial.getMaterial();
+                int totalRequiredQuantity = designMaterial.getQuantityNeeded() * quantity;
 
                 material.setStockQuantity(material.getStockQuantity() - totalRequiredQuantity);
                 materialRepository.save(material);

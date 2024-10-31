@@ -113,6 +113,51 @@ public class ProjectService {
     }
 
 
+    @Transactional
+    public int createProjectFromService(Map<DesignEntity, Integer> designItems, CustomerEntity customer, String paymentStatus, double discountRate) {
+        int totalPointsEarned = 0;
+
+        for (Map.Entry<DesignEntity, Integer> entry : designItems.entrySet()) {
+            DesignEntity design = entry.getKey();
+            int quantity = entry.getValue();
+
+            double originalProjectCost = design.getPrice() * quantity;
+            double projectCost = originalProjectCost * (1 - discountRate);
+
+            ProjectEntity project = new ProjectEntity();
+            project.setName(design.getDesignName());
+            project.setDescription(design.getDescription());
+            project.setTotalCost(projectCost);
+            project.setDesign(design);
+            project.setCustomer(customer);
+            project.setStartDate(new Date());
+            project.setStatus("Pending");
+
+            projectRepository.save(project);
+
+            int pointsEarned = (int) (originalProjectCost / 100);
+            totalPointsEarned += pointsEarned;
+
+            PointEntity point = new PointEntity();
+            point.setCustomer(customer);
+            point.setProject(project);
+            point.setPoints(pointsEarned);
+
+            pointRepository.save(point);
+
+            PaymentEntity payment = new PaymentEntity();
+            payment.setTransactionId(UUID.randomUUID().toString());
+            payment.setAmount(projectCost);
+            payment.setPaymentDate(new Date());
+            payment.setPaymentStatus(paymentStatus);
+            payment.setCustomer(customer);
+            payment.setProject(project);
+
+            paymentRepository.save(payment);
+        }
+
+        return totalPointsEarned;
+    }
 
 
 

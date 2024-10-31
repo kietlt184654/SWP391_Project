@@ -3,6 +3,8 @@ package com.example.swp391.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 public class ScreenController {
     @GetMapping("/")
@@ -37,9 +39,8 @@ public class ScreenController {
     public String showDesignServicePage(Model model) {
         return "designService";
     }
-    @GetMapping("/maintenanceServices")
-    public String showMaintenanceServicesPage(Model model) {
-        return "MaintenanceServices";
-    }
+//    @GetMapping("/services")
+//    public String showServicesPage(Model model) { return "MaintenanceServices";}
+
 
 }

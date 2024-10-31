@@ -23,8 +23,8 @@ public class DesignController {
 //show thiet ke
     @GetMapping("/showAllDesign")
     public String showProducts(Model model) {
-        // Lấy danh sách sản phẩm từ service
-        List<DesignEntity> products = designService.getAllProducts();
+        // Lấy danh sách các thiết kế có typeDesignId = 1 từ service
+        List<DesignEntity> products = designService.getDesignsByTypeId();
         model.addAttribute("design", products);
         return "Availableproject"; // Trả về trang "Availableproject.html"
     }
