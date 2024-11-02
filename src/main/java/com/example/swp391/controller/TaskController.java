@@ -110,7 +110,7 @@ private StaffProjectService projectStaffService;
         return "StaffTask"; // Trả về view 'StaffTask'
     }
     @PostMapping("/accept")
-    public String acceptProject(@RequestParam("projectID") int projectId,
+    public String acceptProject(@RequestParam("staffProjectID") int staffProjectId,
                                 @RequestParam("currentStatus") String currentStatus,
                                 RedirectAttributes redirectAttributes) {
         String newStatus;
@@ -122,7 +122,7 @@ private StaffProjectService projectStaffService;
             newStatus = currentStatus; // Nếu trạng thái không nằm trong To Do hoặc In-Progress thì giữ nguyên
         }
 
-        boolean success = staffProjectService.setStatusForStaffProject(projectId, newStatus);
+        boolean success = staffProjectService.setStatusForStaffProject(staffProjectId, newStatus);
 
         String message;
         if (success) {
@@ -135,6 +135,17 @@ private StaffProjectService projectStaffService;
         redirectAttributes.addFlashAttribute("message", message);
 
         return "redirect:/dashboard"; // Quay trở lại trang bảng danh sách sau khi cập nhật
+    }
+    @GetMapping("/project/images/{staffProjectID}")
+    public String viewProjectImages(@PathVariable Integer staffProjectID, Model model) {
+        StaffProjectEntity staffProject = staffProjectService.findById(staffProjectID);
+
+        if (staffProject == null || staffProject.getProgressImage() == null || staffProject.getProgressImage().isEmpty()) {
+            model.addAttribute("noImagesMessage", "Chưa cập nhật hình ảnh");
+        } else {
+            model.addAttribute("progressImages", staffProject.getProgressImage());
+        }
+        return "viewProjectImages"; // Trang HTML để hiển thị hình ảnh
     }
 
 

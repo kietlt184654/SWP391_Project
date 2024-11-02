@@ -34,7 +34,7 @@
                 <td th:text="${staffProject.task}">Task Description</td>
                 <td>
                     <form class="accept-form" th:action="@{/accept}" method="post">
-                        <input type="hidden" th:name="projectID" th:value="${staffProject.project.projectID}" />
+                        <input type="hidden" th:name="staffProjectID" th:value="${staffProject.staffProjectID}" />
                         <input type="hidden" th:name="currentStatus" th:value="${staffProject.status}" />
                         <button type="submit" class="accept">Accept</button>
                     </form>

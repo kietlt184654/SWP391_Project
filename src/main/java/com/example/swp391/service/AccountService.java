@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
@@ -74,9 +75,24 @@ private EmailService emailService;
         accountRepository.save(user);
     }
 
-    public List<AccountEntity> findStaffByRole(String role) {
-        return accountRepository.findByAccountTypeID(role);
+    public AccountEntity createAccount(AccountEntity account) {
+        // Validate account details before saving
+        if (account == null || account.getEmail() == null || account.getAccountName() == null) {
+            throw new IllegalArgumentException("Account details are incomplete or null");
+        }
+        AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
+
+        if (lastAccount != null) {
+            // Tăng giá trị AccountID thủ công
+            account.setAccountId(lastAccount.getAccountId() + 1);
+        } else {
+            // Nếu bảng trống, bắt đầu từ AccountID = 1
+            account.setAccountId(1);
+        }
+
+        return accountRepository.save(account);
     }
+
 
 
     public AccountEntity findByToken(String token) {

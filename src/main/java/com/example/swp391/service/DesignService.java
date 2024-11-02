@@ -33,4 +33,13 @@ public class DesignService {
     public DesignEntity saveProduct(DesignEntity product) {
         return designRepository.save(product);
     }
+
+    public DesignEntity createDesign(DesignEntity design) {
+        // Validate design details before saving
+        if (design == null || design.getDesignName() == null || design.getDescription() == null) {
+            throw new IllegalArgumentException("Design details are incomplete or null");
+        }
+        // Save the design to the repository
+        return designRepository.save(design);
+    }
 }

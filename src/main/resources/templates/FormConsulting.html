@@ -9,14 +9,14 @@
 <body>
 <div class="container">
     <h1>Invoice and Consultation Entry</h1>
-    <form id="invoiceForm">
+    <form id="invoiceForm" th:action="@{/projects/submitInvoice}" method="post">
         <div class="form-section">
             <h2>User Information</h2>
             <label for="customerName">Customer Name:</label>
             <input type="text" id="customerName" name="customerName" required>
 
             <label for="email">Email:</label>
-            <input type="text" id="email" name="customerName" required>
+            <input type="text" id="email" name="email" required>
 
             <label for="customerPhone">Customer Phone Number:</label>
             <input type="tel" id="customerPhone" name="customerPhone" required>
@@ -64,7 +64,10 @@
         <button type="submit">Submit Invoice</button>
     </form>
 
-    <div id="result"></div>
+    <div id="result">
+        <!-- Display success message if available -->
+        <p th:text="${messageConsulting}"></p>
+    </div>
 </div>
 <script src="/javascript/FormConsulting.js"></script>
 </body>

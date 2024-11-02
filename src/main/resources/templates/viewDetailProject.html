@@ -58,6 +58,7 @@
   <div class="tab" data-status="in-progress">Progress</div> <!-- Show 'In Progress' tasks -->
   <div class="tab" data-status="done">Finish</div>       <!-- Show 'Done' tasks -->
 </div>
+
 <!-- Assigned Tasks Section -->
 <div class="assigned-tasks">
   <h3>Các nhiệm vụ đã được phân công:</h3>
@@ -69,6 +70,13 @@
           <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
           <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
           <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>
+
+          <!-- Nút Xem Hình Ảnh -->
+          <button class="view-image-button"
+                  th:onclick="'window.location.href=\'/project/images/' + ${task.staffProjectID} + '\'"
+                  type="button">
+            Xem Hình Ảnh
+          </button>
         </div>
       </li>
     </th:block>

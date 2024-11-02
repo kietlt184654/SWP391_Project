@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Images</title>
+    <link rel="stylesheet" href="/css/viewProjectImages.css">
+</head>
+<body>
+
+<h2>Hình ảnh tiến độ dự án</h2>
+
+<div class="images-container">
+    <th:block th:if="${progressImages != null}">
+        <th:block th:each="image : ${progressImages}">
+            <img th:src="@{${image}}" alt="Progress Image" class="progress-image" />
+        </th:block>
+    </th:block>
+
+    <!-- Hiển thị thông báo khi không có hình ảnh -->
+    <p th:if="${noImagesMessage != null}" th:text="${noImagesMessage}"></p>
+</div>
+
+<a href="/project/detail" class="back-button">Quay lại</a>
+
+</body>
+</html>

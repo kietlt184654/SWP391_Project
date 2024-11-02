@@ -20,13 +20,15 @@ public class ProjectEntity {
     private Integer projectID;  // Khóa chính
 
     private String description;
-    private LocalDate endDate;  // Sử dụng LocalDate hoặc java.sql.Date thay vì java.util.Date nếu chỉ cần ngày
     private String name;
+    private LocalDate endDate;  // Sử dụng LocalDate hoặc java.sql.Date thay vì java.util.Date nếu chỉ cần ngày
+
     private LocalDate startDate;
+
     private String status;
     private Float totalCost;
     private Long designId;
-    private Integer formRequestId;
+
     private String priority;
     private String img;
 
