@@ -49,6 +49,28 @@ public class DesignService {
         return designRepository.findByTypeDesign_TypeDesignIdAndSizeAndPriceLessThanEqualAndEstimatedCompletionTimeLessThanEqual(
                 4L, serviceRequest.getSize(), serviceRequest.getBudget(), serviceRequest.getEstimatedCompletionTime());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
         /**
          * Lấy tất cả các thiết kế hiện có (status = Available)
          * @return Danh sách các DesignEntity có status là Available

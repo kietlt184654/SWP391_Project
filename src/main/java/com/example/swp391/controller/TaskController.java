@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class TaskController {
     @Autowired
-    private StaffService staffService ;
+    private StaffService staffService;
     @Autowired
     private StaffProjectService projectStaffService;
     @Autowired
@@ -67,6 +67,7 @@ public class TaskController {
         staffService.deleteStaff(staffId);
         return "redirect:/staff/list";
     }
+
     @PostMapping("/tasks/project/assign")
     public String assignStaffToProject(
             @RequestParam("projectId") Integer projectId,
@@ -84,6 +85,7 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("successMessage", "Assign staff to project successfully");
         return "redirect:/staff/list?projectId=" + projectId;
     }
+
     // Method to fetch tasks by status
     @GetMapping("/tasks")
     @ResponseBody
@@ -93,6 +95,7 @@ public class TaskController {
         }
         return staffProjectService.getTasksByStatus(status);
     }
+
     @GetMapping("/dashboard")
     public String staffDashboard(Model model, HttpSession session) {
         // Lấy thông tin người dùng hiện tại từ session
@@ -115,8 +118,8 @@ public class TaskController {
                                 RedirectAttributes redirectAttributes) {
         String newStatus;
         if ("To Do".equals(currentStatus)) {
-            newStatus = "In-Progress";
-        } else if ("In-Progress".equals(currentStatus)) {
+            newStatus = "In Progress";
+        } else if ("In Progress".equals(currentStatus)) {
             newStatus = "Done";
         } else {
             newStatus = currentStatus; // Nếu trạng thái không nằm trong To Do hoặc In-Progress thì giữ nguyên
@@ -136,6 +139,4 @@ public class TaskController {
 
         return "redirect:/dashboard"; // Quay trở lại trang bảng danh sách sau khi cập nhật
     }
-
-
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Staff")
 public class StaffEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "StaffID")
     private Integer staffID;
 

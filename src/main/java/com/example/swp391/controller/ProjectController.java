@@ -27,7 +27,7 @@ public class ProjectController {
 
     @GetMapping("/showProjects")
     public String showProjects(Model model) {
-        List<ProjectEntity> projects = projectService.findAll();  // Giả sử có phương thức lấy tất cả các project
+        List<ProjectEntity> projects = projectService.findAllByProjectIdOrderByProjectIdDesc;  // Giả sử có phương thức lấy tất cả các project
         model.addAttribute("projects", projects);
         return "show_projects";
     }

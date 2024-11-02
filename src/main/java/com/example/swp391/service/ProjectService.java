@@ -6,6 +6,7 @@ import com.example.swp391.repository.PaymentRepository;
 import com.example.swp391.repository.PointRepository;
 import com.example.swp391.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,6 +16,7 @@ import java.util.*;
 
 @Service
 public class ProjectService {
+
 
     @Autowired
     private ProjectRepository projectRepository;
@@ -76,6 +78,7 @@ public class ProjectService {
             ProjectEntity project = new ProjectEntity();
             project.setName(design.getDesignName());
             project.setDescription(design.getDescription());
+            project.setImg(design.getImg());
             project.setTotalCost(projectCost); // Lưu chi phí sau giảm giá
             project.setDesign(design);
             project.setCustomer(customer);
@@ -127,6 +130,7 @@ public class ProjectService {
             ProjectEntity project = new ProjectEntity();
             project.setName(design.getDesignName());
             project.setDescription(design.getDescription());
+            project.setImg(design.getImg());
             project.setTotalCost(projectCost);
             project.setDesign(design);
             project.setCustomer(customer);
@@ -159,6 +163,6 @@ public class ProjectService {
         return totalPointsEarned;
     }
 
-
+    public List<ProjectEntity> findAllByProjectIdOrderByProjectIdDesc;
 
 }

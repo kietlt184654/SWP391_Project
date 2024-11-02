@@ -14,8 +14,7 @@
     <tr>
       <th>Project ID</th>
       <th>Tên dự án</th>
-      <th>Ngày bắt đầu</th>
-      <th>Ngày kết thúc</th>
+      <
       <th>Deadline</th>
       <th>Trạng thái</th>
       <th>Task Description</th>
@@ -27,15 +26,14 @@
       <tr>
         <td th:text="${staffProject.project.projectID}">Project ID</td>
         <td th:text="${staffProject.project.name}">Tên dự án</td>
-        <td th:text="${staffProject.project.startDate}">Ngày bắt đầu</td>
-        <td th:text="${staffProject.project.endDate}">Ngày kết thúc</td>
+
         <td th:text="${staffProject.assignmentDate}">Deadline</td>
         <td th:text="${staffProject.status}">Trạng thái</td>
         <td th:text="${staffProject.task}">Task Description</td>
         <td>
           <form class="accept-form" th:action="@{/accept}" method="post">
             <input type="hidden" th:name="projectID" th:value="${staffProject.project.projectID}" />
-            <input type="hidden" th:name="currentStatus" th:value="${staffProject.status}" />
+            <input type="hidden" th:name="currentStatus" th:value="${staffProject.status}"/>
             <button type="submit" class="accept">Accept</button>
           </form>
         </td>

@@ -74,7 +74,7 @@ public class StaffProjectService {
     public List<StaffProjectEntity> getAssignedProjects(int staffId) {
         return staffProjectRepository.findByStaff_StaffID(staffId);
     }
-
+    @Transactional
     public boolean setStatusForStaffProject(int staffProjectId, String newStatus) {
         Optional<StaffProjectEntity> optionalStaffProject = staffProjectRepository.findById(staffProjectId);
 

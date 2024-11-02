@@ -1,5 +1,6 @@
 package com.example.swp391.controller;
 
+import com.example.swp391.Config.VNPayService;
 import com.example.swp391.dto.PaymentSource;
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CartEntity;
@@ -8,6 +9,7 @@ import com.example.swp391.entity.DesignEntity;
 import com.example.swp391.service.CustomerService;
 import com.example.swp391.service.MaterialService;
 import com.example.swp391.service.ProjectService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,8 @@ public class PaymentController {
     private ProjectService projectService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private VNPayService vnPayService;
 
     @Transactional
     @PostMapping("/create")
@@ -87,30 +91,6 @@ public class PaymentController {
         return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
     }
 
-//    private String processServicePayment(String paymentMethod, CustomerEntity customer, HttpSession session,
-//                                         RedirectAttributes redirectAttributes, String paymentStatus) {
-//        Map<DesignEntity, Integer> designItems = (Map<DesignEntity, Integer>) session.getAttribute("designItems");
-//        if (designItems == null || designItems.isEmpty()) {
-//            redirectAttributes.addFlashAttribute("error", "You have not selected any service.");
-//            return "redirect:/services/serviceForm";
-//        }
-//
-//        if (!materialService.checkMaterialsForDesignItems(designItems)) {
-//            redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the selected services.");
-//            return "redirect:/services/serviceForm";
-//        }
-//
-//        materialService.updateMaterialsAfterCheckoutForDesignItems(designItems);
-//        double discountRate = customerService.calculatePointDiscount(customer);
-//        double totalAmount = designItems.keySet().stream().mapToDouble(d -> d.getPrice() * designItems.get(d)).sum();
-//        double discountedTotalAmount = totalAmount * (1 - discountRate);
-//        int totalPointsEarned = projectService.createProjectFromService(designItems, customer, paymentStatus, discountRate);
-//
-//        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, designItems);
-//
-//        session.removeAttribute("designItems"); // Xóa danh sách dịch vụ sau thanh toán
-//        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
-//    }
 private String processServicePayment(String paymentMethod, CustomerEntity customer, HttpSession session,
                                      RedirectAttributes redirectAttributes, String paymentStatus) {
     // Lấy thông tin thiết kế từ session với tên mới là "designs"
@@ -152,7 +132,7 @@ private String processServicePayment(String paymentMethod, CustomerEntity custom
     private void storePaymentDetailsInSession(HttpSession session, double totalAmount, double discountRate,
                                               double discountedTotalAmount, int totalPointsEarned, String paymentStatus,
                                               Map<DesignEntity, Integer> designItems) {
-        String transactionId = UUID.randomUUID().toString();
+        String transactionId = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "").substring(0, 15);
         session.setAttribute("transactionId", transactionId);
         session.setAttribute("totalAmount", String.format("%.2f", totalAmount));
         session.setAttribute("discountRate", String.format("%.2f", discountRate * 100)); // Hiển thị dưới dạng phần trăm
@@ -169,12 +149,66 @@ private String processServicePayment(String paymentMethod, CustomerEntity custom
             return "redirect:/payment/confirmation";
         } else if ("bank-transfer".equals(paymentMethod)) {
             redirectAttributes.addFlashAttribute("message", "Please complete your bank transfer to finalize your order.");
-            return "redirect:/payment/instructions";
+            return "redirect:/payment/vnpay";
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid payment method selected.");
             return "redirect:/cart/view";
         }
     }
+    @GetMapping("/vnpay")
+    public String initiateVnPayPayment(HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
+            // Lấy transactionId và đảm bảo chỉ chứa các ký tự hợp lệ
+            String transactionId = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "").substring(0, 8);
+
+            // Lấy giá trị từ session
+            Object discountedTotalAmountObj = session.getAttribute("discountedTotalAmount");
+            if (discountedTotalAmountObj == null) {
+                redirectAttributes.addFlashAttribute("error", "Cannot find the total amount to process payment.");
+                return "redirect:/cart/view";
+            }
+
+            // Chuyển đổi giá trị thành double
+            double discountedTotalAmount;
+            try {
+                discountedTotalAmount = Double.parseDouble(discountedTotalAmountObj.toString());
+            } catch (NumberFormatException e) {
+                redirectAttributes.addFlashAttribute("error", "Invalid total amount format. Please try again.");
+                return "redirect:/cart/view";
+            }
+
+            // Chuyển đổi số tiền từ đồng sang đơn vị xu và thành số nguyên (long)
+            long vnpAmount = (long) (discountedTotalAmount * 1000);
+            // Tạo URL thanh toán qua VNPay
+            String orderInfo = "Thanh toán đơn hàng " + transactionId;
+            String paymentUrl = vnPayService.createOrder((int) vnpAmount, orderInfo, "http://localhost:8080/payment");
+
+
+            // Chuyển hướng người dùng đến VNPay để thực hiện thanh toán
+            return "redirect:" + paymentUrl;
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "An error occurred while processing VNPay payment. Please try again.");
+            return "redirect:/cart/view";
+        }
+    }
+    @GetMapping("/vnpay-payment")
+    public String handleVnPayReturn(HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
+        int paymentStatus = vnPayService.orderReturn(request);
+
+        if (paymentStatus == 1) {
+            // Lưu thông tin giao dịch vào session
+            session.setAttribute("transactionId", request.getParameter("vnp_TransactionNo"));
+            session.setAttribute("totalAmount", request.getParameter("vnp_Amount"));
+            session.setAttribute("paymentStatus", "Success");
+            return "redirect:/payment/confirmation";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Giao dịch không thành công. Vui lòng thử lại.");
+            return "redirect:/cart/view";
+        }
+    }
+
+
 
     @Transactional
     @GetMapping("/confirmation")
