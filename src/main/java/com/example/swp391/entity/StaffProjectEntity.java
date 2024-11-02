@@ -1,4 +1,5 @@
 package com.example.swp391.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;           // Tự động sinh getter, setter, toString, hashCode, equals
 import lombok.NoArgsConstructor; // Tạo constructor không tham số
@@ -24,6 +25,7 @@ public class StaffProjectEntity {
 
     @ManyToOne
     @JoinColumn(name = "StaffID", referencedColumnName = "StaffID", nullable = false) // Ensures StaffID cannot be null
+
     private StaffEntity staff;
 
     @ManyToOne

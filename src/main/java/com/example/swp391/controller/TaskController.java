@@ -90,14 +90,17 @@ private StaffProjectService projectStaffService;
         redirectAttributes.addFlashAttribute("successMessage", "Assign staff to project successfully");
         return "redirect:/staff/list?projectId=" + projectId;
     }
-    // Method to fetch tasks by status
-    @GetMapping("/tasks")
-    @ResponseBody
-    public List<StaffProjectEntity> getTasksByStatus(@RequestParam(value = "status", required = false) String status) {
-        if (status == null || status.equals("all")) {
-            return staffProjectService.getAllTasks(); // Method to fetch all tasks
+    @GetMapping("/filterTasks")
+    public String filterTasks(@RequestParam(required = false, defaultValue = "All") String status, Model model) {
+        List<StaffProjectEntity> tasks;
+        if ("All".equals(status)) {
+            tasks = staffProjectService.getAllTasks();
+        } else {
+            tasks = staffProjectService.getTasksByStatus(status);
         }
-        return staffProjectService.getTasksByStatus(status);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("currentStatus", status);
+        return "viewDetailProject";
     }
     @GetMapping("/dashboard")
     public String staffDashboard(Model model, HttpSession session) {
@@ -185,5 +188,13 @@ private StaffProjectService projectStaffService;
         }
 
         return "redirect:/dashboard";
+    }
+    @PostMapping("/deleteService/{id}")
+    public String deleteStaffProject(@PathVariable("id") int staffProjectID,
+                                     @RequestParam("projectID") int projectID,
+                                     RedirectAttributes redirectAttributes) {
+        staffProjectService.deleteStaffProjectById(staffProjectID);
+        redirectAttributes.addFlashAttribute("successMessageDeleteTask", "Task deleted successfully.");
+        return "redirect:/projects/viewDetailProject/" + projectID;
     }
 }

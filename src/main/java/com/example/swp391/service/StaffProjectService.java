@@ -63,6 +63,10 @@ public class StaffProjectService {
 //        // Save the new staff project assignment
 //        projectStaffRepository.save(staffProject);
 //    }
+
+public void deleteStaffProjectById(int id) {
+    staffProjectRepository.deleteById(id);
+}
 public void assignStaffToProject(Integer projectId, Integer staffId, String taskDescription, String deadline, String status) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate parsedDeadline = LocalDate.parse(deadline, formatter);

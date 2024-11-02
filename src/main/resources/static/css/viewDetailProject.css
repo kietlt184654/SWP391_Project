@@ -485,3 +485,61 @@ body {
 .detail-button:hover {
     background-color: #0056b3;
 }
+.filter-buttons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background-color: #4CAF50; /* Màu nền */
+    color: white;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background-color: #45a049;
+}
+.btn-filter {
+    padding: 8px 16px;
+    margin: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.btn-filter:hover {
+    background-color: #ddd;
+}
+
+.btn-filter.active {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+/* CSS cho nút xóa */
+.btn-delete {
+    background-color: #ff4d4d; /* Màu nền đỏ nổi bật */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Không viền */
+    padding: 8px 16px; /* Khoảng cách padding bên trong */
+    font-size: 14px; /* Kích thước chữ */
+    border-radius: 4px; /* Bo góc nhẹ */
+    cursor: pointer; /* Thay đổi con trỏ chuột */
+    transition: background-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+}
+
+/* Hiệu ứng khi di chuột qua */
+.btn-delete:hover {
+    background-color: #cc0000; /* Màu đỏ đậm hơn khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+}
+
+/* Hiệu ứng khi nhấn vào */
+.btn-delete:active {
+    background-color: #b30000; /* Màu đỏ sậm hơn khi nhấn */
+    transform: scale(0.98); /* Nhấn nút hơi thu nhỏ */
+}

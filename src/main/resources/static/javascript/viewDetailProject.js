@@ -101,6 +101,7 @@ function selectStaff(id, name, role, email, phone) {
     modal.style.display = "none";
 }
 
+// Hàm để lọc task theo status
 function filterByStatus(status) {
     const url = status === 'all' ? '/tasks' : `/tasks?status=${status}`;
     console.log(`Fetching tasks with URL: ${url}`); // Debugging log
@@ -109,17 +110,15 @@ function filterByStatus(status) {
         .then(data => {
             const taskContainer = document.querySelector('.assigned-tasks ul');
             taskContainer.innerHTML = ""; // Clear existing tasks
-
             if (data.length === 0) {
                 taskContainer.innerHTML = "<li>No tasks available.</li>"; // Handle no tasks
             }
-
             data.forEach(task => {
                 const taskItem = document.createElement('li');
                 taskItem.classList.add('task-item');
                 taskItem.innerHTML = `
                     <div class="task-details">
-                        <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> ${task.task}</span>
+                        <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> ${task.staff.task}</span>
                         <span class="task-staff"><strong>Tên nhân viên:</strong> ${task.staff.account.accountName}</span>
                         <span class="task-progress"><strong>Progress:</strong> ${task.status}</span>
                         <span class="task-deadline"><strong>Thời hạn:</strong> ${task.assignmentDate}</span>
@@ -130,13 +129,11 @@ function filterByStatus(status) {
         })
         .catch(error => console.error("Error fetching tasks:", error));
 }
-
 // Event listeners for tabs
 document.querySelectorAll('.tab-bar .tab').forEach(tab => {
     tab.addEventListener('click', () => {
         const status = tab.getAttribute('data-status') === 'task' ? 'all' : tab.getAttribute('data-status');
         filterByStatus(status);
-
         // Update active tab styling
         document.querySelectorAll('.tab-bar .tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
