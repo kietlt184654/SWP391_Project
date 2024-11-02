@@ -71,12 +71,8 @@
           <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
           <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>
 
-          <!-- Nút Xem Hình Ảnh -->
-          <button class="view-image-button"
-                  th:onclick="'window.location.href=\'/project/images/' + ${task.staffProjectID} + '\'"
-                  type="button">
-            Xem Hình Ảnh
-          </button>
+          <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
+
         </div>
       </li>
     </th:block>

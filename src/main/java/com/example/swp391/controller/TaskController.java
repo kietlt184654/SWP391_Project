@@ -9,15 +9,21 @@ import com.example.swp391.service.ProjectService;
 import com.example.swp391.service.StaffProjectService;
 import com.example.swp391.service.StaffService;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 
@@ -147,6 +153,37 @@ private StaffProjectService projectStaffService;
         }
         return "viewProjectImages"; // Trang HTML để hiển thị hình ảnh
     }
+    private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task"; // Đường dẫn lưu trữ hình ảnh trên server
 
+    @PostMapping("/uploadProgressImage")
+    public String uploadProgressImage(@RequestParam("file") MultipartFile file,
+                                      @RequestParam("url") String url,
+                                      @RequestParam("staffProjectID") Integer staffProjectID,
+                                      RedirectAttributes redirectAttributes) {
 
+        String imagePath = null;
+
+        try {
+            if (!file.isEmpty()) {
+                Path path = Paths.get(UPLOAD_DIR, file.getOriginalFilename());
+                Files.write(path, file.getBytes());
+                imagePath = "/uploads/" + file.getOriginalFilename();
+            } else if (url != null && !url.isEmpty()) {
+                imagePath = url;
+            }
+
+            if (imagePath != null) {
+                staffProjectService.updateProgressImage(staffProjectID, imagePath);
+                redirectAttributes.addFlashAttribute("message", "Cập nhật hình ảnh thành công!");
+            } else {
+                redirectAttributes.addFlashAttribute("message", "Vui lòng tải lên một tệp hoặc nhập URL.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", "Lỗi khi tải lên hình ảnh.");
+        }
+
+        return "redirect:/dashboard";
+    }
 }

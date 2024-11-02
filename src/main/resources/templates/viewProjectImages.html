@@ -12,16 +12,21 @@
 
 <div class="images-container">
     <th:block th:if="${progressImages != null}">
-        <th:block th:each="image : ${progressImages}">
-            <img th:src="@{${image}}" alt="Progress Image" class="progress-image" />
+        <th:block th:each="imagePath : ${progressImages}">
+<!--            <img th:src="@{|${imagePath}|}" alt="Progress Image" class="progress-image" />-->
+            <img th:src="${imagePath}" alt="Progress Image" class="progress-image" />
+
         </th:block>
     </th:block>
 
     <!-- Hiển thị thông báo khi không có hình ảnh -->
     <p th:if="${noImagesMessage != null}" th:text="${noImagesMessage}"></p>
 </div>
-
+<div class="back-button-container" style="text-align: center; margin-top: 20px;">
+    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary">Quay về Chi Tiết Dự Án</a>
+</div>
 <a href="/project/detail" class="back-button">Quay lại</a>
+<!-- Nút quay về Chi Tiết Dự Án -->
 
 </body>
 </html>

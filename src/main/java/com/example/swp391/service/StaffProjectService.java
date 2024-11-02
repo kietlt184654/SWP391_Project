@@ -142,7 +142,14 @@ public void assignStaffToProject(Integer projectId, Integer staffId, String task
         return staffProjectRepository.findById(staffProjectID)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy StaffProject"));
     }
-    // Hàm để cập nhật trạng thái của StaffProject
 
+    // Hàm để cập nhật trạng thái của StaffProject
+    @Transactional
+    public void updateProgressImage(Integer staffProjectID, String imagePath) {
+        StaffProjectEntity staffProject = staffProjectRepository.findById(staffProjectID)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án của nhân viên"));
+        staffProject.setProgressImage(imagePath);
+        staffProjectRepository.save(staffProject);
+    }
 }
 
