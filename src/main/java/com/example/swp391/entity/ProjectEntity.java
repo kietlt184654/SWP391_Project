@@ -4,38 +4,32 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import java.util.Date;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 @Entity
 @Table(name = "Project")
-@Data
-@NoArgsConstructor
+@Data                         // Tự động sinh getter, setter, toString, hashCode, equals
+@NoArgsConstructor             // Tự động sinh constructor không tham số
 @AllArgsConstructor
 public class ProjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int projectId;
+    private Integer projectID;  // Khóa chính
+
+    private String description;
     private String name;
-    private String description; // Mô tả dự án
-    private double totalCost;
-    @ManyToOne
-    @JoinColumn(name = "formRequestId")
-    private FormRequestEntity formRequest;
+    private LocalDate endDate;  // Sử dụng LocalDate hoặc java.sql.Date thay vì java.util.Date nếu chỉ cần ngày
 
-    @ManyToOne
-    @JoinColumn(name = "designId")
-    private DesignEntity design;
-
-    @ManyToOne
-    @JoinColumn(name = "customerId")
-    private CustomerEntity customerId;
-
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
-
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private LocalDate startDate;
 
     private String status;
+    private Float totalCost;
+    private Long designId;
+
+    private String priority;
+    private String img;
+
 }

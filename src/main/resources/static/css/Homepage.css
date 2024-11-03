@@ -262,7 +262,7 @@ body {
 
 .card-title-2 {
   background-color: #2980B9;
-  ;
+;
   text-align: center;
   color: #eaeaea;
   font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", sans-serif;
@@ -348,10 +348,12 @@ body {
 }
 
 /* Slideshow container */
+/* carousel */
+
 .carousel{
   width: 100vw;
   height: 100vh;
-  margin-top: 100px;
+  margin-top: -50px;
   overflow: hidden;
   position: relative;
 }
@@ -487,17 +489,17 @@ body {
 
 
 @keyframes animate {
-  
+
   from{
-      opacity: 0;
-      transform: translate(0, 100px);
-      filter: blur(33px);
+    opacity: 0;
+    transform: translate(0, 100px);
+    filter: blur(33px);
   }
 
   to{
-      opacity: 1;
-      transform: translate(0);
-      filter: blur(0);
+    opacity: 1;
+    transform: translate(0);
+    filter: blur(0);
   }
 }
 
@@ -556,7 +558,7 @@ body {
 }
 
 @keyframes runningTime {
-  
+
   from{width: 0%;}
   to{width: 100%;}
 
@@ -566,45 +568,44 @@ body {
 /* Responsive Design */
 
 @media screen and (max-width: 999px){
-  
+
   header{
-      padding-left: 50px;
+    padding-left: 50px;
   }
 
   .list .item .content{
-      left: 50px;
+    left: 50px;
   }
 
   .content .title, .content .name{
-      font-size: 70px;
+    font-size: 70px;
   }
 
   .content .des{
-      font-size: 16px;
+    font-size: 16px;
   }
 
 }
 
 @media screen and (max-width: 690px){
   header nav a{
-      font-size: 14px;
-      margin-right: 0;
+    font-size: 14px;
+    margin-right: 0;
   }
 
   .list .item .content{
-      top: 40%;
+    top: 40%;
   }
 
   .content .title, .content .name{
-      font-size: 45px;
+    font-size: 45px;
   }
 
   .content .btn button{
-      padding: 10px 15px;
-      font-size: 14px;
+    padding: 10px 15px;
+    font-size: 14px;
   }
 }
-
 /* Caption text */
 .text {
   color: #f2f2f2;
