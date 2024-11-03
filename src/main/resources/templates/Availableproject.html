@@ -50,6 +50,12 @@
 
 <body>
 <h1 style="text-align: center; margin-top: 120px; background-color: #3c7363; color: white; border-radius: 95px; ">Available Project</h1>
+<div class="search-container">
+  <input type="text" placeholder="Search...">
+  <a href="">
+    <li class="fas fa-search "></li>
+  </a>
+</div>
 <div class="container">
   <div th:if="${design}" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     <div th:each="product : ${design}" class="col">

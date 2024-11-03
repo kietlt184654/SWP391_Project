@@ -1,5 +1,6 @@
 package com.example.swp391.controller;
 
+import com.example.swp391.entity.ProjectEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class ScreenController {
     }
     @GetMapping("/design")
     public String showDesignPage(Model model) {
-            return "Design";
+        return "Design";
     }
     @GetMapping("/designDetail")
     public String showDesignDetailPage(Model model) {
@@ -37,5 +38,11 @@ public class ScreenController {
     public String showDesignServicePage(Model model) {
         return "designService";
     }
+    @GetMapping("/maintenanceServices")
+    public String showMaintenanceServicesPage(Model model) {
+        return "MaintenanceServices";
+    }
+
+
 
 }

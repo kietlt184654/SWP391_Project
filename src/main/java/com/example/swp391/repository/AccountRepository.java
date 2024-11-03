@@ -4,15 +4,18 @@ import com.example.swp391.entity.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer> {
-
-   // Tìm kiếm tài khoản theo tên người dùng
+   AccountEntity findByAccountNameAndPassword(String accountName, String password);
    AccountEntity findByAccountName(String accountName);
 
-   // Tìm kiếm tài khoản theo email
+   AccountEntity findTopByOrderByAccountIdDesc();
    AccountEntity findByEmail(String email);
-
+   //AccountEntity findByEmail(String email);
    // Tìm kiếm tài khoản theo token khôi phục mật khẩu
-   AccountEntity findBytoken(String token);
+   AccountEntity findByToken(String token);
+   List<AccountEntity> findByAccountTypeID(String accountTypeID);
 }

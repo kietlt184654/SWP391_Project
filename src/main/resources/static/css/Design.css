@@ -311,7 +311,7 @@ h1 {
   justify-content: center;
   flex-direction: column;
   color: white;
-  
+
 }
 .hero-section::before {
   content: '';

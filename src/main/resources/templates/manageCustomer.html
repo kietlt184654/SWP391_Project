@@ -1,167 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="/css/manageCustomer.css" />
+  <script src="/javascript/manageCustomer.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <title>Manage customer</title>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav">
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
+  <div class="nav-logo">
+    <p>LOGO</p>
+  </div>
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a href="Homepage.html" class="link">Home</a></li>
+      <li><a href="about.html" class="link">About</a></li>
+      <li><a href="blog.html" class="link">Blog</a></li>
+      <li><a href="services.html" class="link">Services</a></li>
+      <li><a href="Availableproject.html" class="link">Product</a></li>
+    </ul>
+  </div>
+</div>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+<!-- Content -->
+<h1>Customer Information</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Customer ID</th>
+    <th>Image</th>
+    <th>Customer Name</th>
+    <th>Role ID</th>
+    <th>Phone Number</th>
+    <th>Address</th>
+    <th>Point</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Vòng lặp qua danh sách khách hàng -->
+  <tr th:each="customer, stat : ${customers}" th:if="${customer.accountTypeID == 'Customer'}">
+    <td th:text="${stat.count}"></td> <!-- Dùng biến stat.count để tạo số tự động -->
+    <td><img th:src="@{${customer.images}}" alt="Customer Image" width="50" /></td>
+    <td th:text="${customer.accountName}"></td>
+    <td th:text="${customer.accountTypeID}"></td>
+    <td th:text="${customer.phoneNumber}"></td>
+    <td th:text="${customer.address}"></td>
+    <td th:text="0"></td> <!-- Thêm cột Point nếu có -->
+    <td><i class="bi bi-pencil-square"></i></td>
+  </tr>
+<!--  <tr th:each="customer : ${customers}">-->
+<!--    <td th:text="${customer[0]}"></td> &lt;!&ndash; customerID &ndash;&gt;-->
+<!--    <td><img th:src="@{${customer[5]}}" alt="Customer Image" width="50" /></td> &lt;!&ndash; image &ndash;&gt;-->
+<!--    <td th:text="${customer[1]}"></td> &lt;!&ndash; accountName &ndash;&gt;-->
+<!--    <td th:text="${customer[2]}"></td> &lt;!&ndash; accountTypeID &ndash;&gt;-->
+<!--    <td th:text="${customer[3]}"></td> &lt;!&ndash; phoneNumber &ndash;&gt;-->
+<!--    <td th:text="${customer[4]}"></td> &lt;!&ndash; address &ndash;&gt;-->
+<!--    <td th:text="0"></td> &lt;!&ndash; Point nếu cần &ndash;&gt;-->
+<!--    <td><i class="bi bi-pencil-square"></i></td>-->
+<!--  </tr>-->
+  </tbody>
+</table>
 
-    <link
-      rel="stylesheet"
-      href="/src/main/resources/static/css/manageCustomer.css"
-    />
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="user-info">
+    <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+    <p class="username">Username</p>
+  </div>
+  <ul class="sidebar-menu">
+    <li><a href="Homepage.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a></li>
+    <li><a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a></li>
+    <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+  </ul>
+</div>
 
-    <script
-      src="/src/main/resources/static/javascript/manageCustomer.js"
-      defer
-    ></script>
-    <title>Manage customer</title>
-  </head>
-
-  <body>
-    <div class="nav">
-      <!-- Hamburger button -->
-      <div class="nav-button">
-        <button id="menu-toggle" class="btn">&#9776;</button>
-      </div>
-
-      <!-- Logo -->
-      <div class="nav-logo">
-        <p>LOGO</p>
-      </div>
-
-      <!-- Nav Menu -->
-      <div class="nav-menu" id="navMenu">
-        <ul>
-          <li><a href="Homepage.html" class="link">Home</a></li>
-          <li><a href="about.html" class="link">About</a></li>
-          <li><a href="blog.html" class="link">Blog</a></li>
-          <li><a href="services.html" class="link">Services</a></li>
-          <li><a href="Availableproject.html" class="link">Product</a></li>
-
-          <li>
-            <a href="#" class="icon" id="accountIcon">
-              <i class="fas fa-user-circle"></i>StaffName
-              <i class="fas fa-caret-down"></i>
-            </a>
-
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li>
-                <a href="profile.html"
-                  ><i class="fas fa-user-circle"></i> Profile</a
-                >
-              </li>
-              <li>
-                <a href="login.html"
-                  ><i class="fas fa-sign-out-alt"></i> Log Out</a
-                >
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
     </div>
-
-    <!-- Content -->
-    <h1>Customer Information</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Customer ID</th>
-          <th>Image</th>
-          <th>Customer Name</th>
-          <th>Role ID</th>
-          <th>Phone Number</th>
-          <th>Address</th>
-          <th>Point</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td><img src="customer1.jpg" alt="Customer 1" width="50" /></td>
-          <td>Quynhu</td>
-          <td>Customer</td>
-          <td>0972423242</td>
-          <td>15B Nguyễn Tư Nghiêm, p Bình Trưng Tây, Q2</td>
-          <td>150</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td><img src="customer2.jpg" alt="Customer 2" width="50" /></td>
-          <td>Tramy</td>
-          <td>Customer</td>
-          <td>0903092242</td>
-          <td>Sala village</td>
-          <td>120</td>
-        </tr>
-        <!-- Thêm các dòng khác ở đây -->
-      </tbody>
-    </table>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="user-info">
-        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username">Username</p>
-      </div>
-      <ul class="sidebar-menu">
-        <li>
-          <a href="Homepage.html"><i class="fas fa-home"></i> Home</a>
-        </li>
-
-        <li>
-          <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
-        </li>
-        <li>
-          <a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a>
-        </li>
-        <li>
-          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-        </li>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li>Construction Koi pond</li>
+        <li>Cleaning and maintenance</li>
+        <li>Design upon requirements</li>
       </ul>
     </div>
-
-    <!-- Footer -->
-    <div class="footer">
-      <div class="footer-container">
-        <div class="footer-info">
-          <h4>Information</h4>
-          <p>Open: 8 AM - 10 PM</p>
-
-          <p>
-            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-            Minh
-          </p>
-        </div>
-        <div class="footer-services">
-          <h4>Services</h4>
-          <ul>
-            <li>Construction Koi pond</li>
-            <li>Cleaning and maintenance</li>
-            <li>Design upon requirements</li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Contact</h4>
-          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-          <p>
-            <i class="fa-brands fa-facebook"></i>
-            <a href="https://facebook.com" target="_blank">Visit Us</a>
-          </p>
-        </div>
-      </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

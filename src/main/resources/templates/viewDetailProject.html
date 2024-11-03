@@ -1,443 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="/css/viewDetailProject.css" />
+</head>
+<body>
+<!-- Hiển thị thông báo thành công nếu có -->
+<div th:if="${successMessageDeleteTask != null}" class="alert alert-success">
+  <p th:text="${successMessageDeleteTask}"></p>
+</div>
+<!-- Navbar -->
+<div class="nav">
+  <div class="nav-logo"><p>LOGO</p></div>
+  <div class="nav-menu">
+    <ul>
+      <li><a href="/manageConstruction.html">Overview</a></li>
+      <li><a href="/taskBoard.html">Task Board</a></li>
+      <li><a href="/taskList.html">Task List</a></li>
+      <li><a href="/construction.html">Construction Plan & Layers</a></li>
+    </ul>
+  </div>
+</div>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script
-      src="/src/main/resources/static/javascript/viewDetailProject.js"
-      defer
-    ></script>
-
-    <link
-      rel="stylesheet"
-      href="/src/main/resources/static/css/viewDetailProject.css"
-    />
-    <title>View project detail</title>
-  </head>
-
-  <body>
-    <div class="nav">
-      <!-- Hamburger button -->
-      <div class="nav-button">
-        <button id="menu-toggle" class="btn">&#9776;</button>
+<!-- Project Details -->
+<div class="project-container">
+  <div class="project">
+    <div class="project-content">
+      <div class="col-md-6 project-image">
+        <img th:src="@{${project.img}}" alt="Project Image" />
       </div>
-
-      <!-- Logo -->
-      <div class="nav-logo">
-        <p>LOGO</p>
-      </div>
-
-      <!-- Nav Menu -->
-      <div class="nav-menu" id="navMenu">
-        <ul>
-          <li><a href="manageConstruction.html" class="link">Overview</a></li>
-          <li><a href="taskBoard.html" class="link">Task Board</a></li>
-          <li><a href="taskList.html" class="link">Task List</a></li>
-          <li>
-            <a href="construction.html" class="link"
-              >Construction Plan & Layers</a
-            >
-          </li>
-
-          <li>
-            <a href="#" class="icon" id="accountIcon">
-              <i class="fas fa-user-circle"></i>Username
-              <i class="fas fa-caret-down"></i>
-            </a>
-
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-              </li>
-              <li>
-                <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div class="col-md-6 text-content">
+        <h4 th:text="${project.name}">Project Name</h4>
+        <p>
+          <strong>Description:</strong> <span th:text="${project.description}">Project Description</span><br>
+          <strong>Status:</strong> <span th:text="${project.status}">Project Status</span><br>
+          <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br>
+          <strong>End Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br>
+          <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
+          <strong>Priority:</strong> <span th:text="${project.priority}">Priority</span><br>
+          <strong>Project ID:</strong> <span th:text="${project.projectID}">Project ID</span><br>
+        </p>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Body -->
-    <div class="project-container">
-      <div class="project">
-        <div class="project-content">
-          <div class="col-md-6 project-image">
-            <img src="/src/main/resources/static/img/a1.jpg" alt="Koi Pond 1" />
-          </div>
-          <div class="col-md-6 text-content">
-            <h4>Elegant Koi Pond</h4>
-            <p>
-              1.Information<br />
-              <strong>Customer Name:</strong> Nguyen Van A<br />
-              <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh
-              City<br />
-              <strong>Phone Number:</strong> 0909 123 456<br />
-              <strong>Email:</strong> nguyenvana@example.com<br /><br />
-              2. Construction Timeline<br />
-              <strong>Start Date:</strong> November 1, 2024<br />
-              <strong>Completion Date:</strong> November 20, 2024<br /><br />
-            </p>
+<a th:href="@{/staff/list(projectId=${project.projectID})}" class="btn btn-primary">Select Staff</a>
+
+<div class="filter-buttons">
+  <form th:action="@{/filterTasks}" method="get">
+    <button type="submit" name="status" value="All" th:classappend="${currentStatus == 'All' ? 'active' : ''}">All</button>
+    <button type="submit" name="status" value="To Do" th:classappend="${currentStatus == 'To Do' ? 'active' : ''}">To Do</button>
+    <button type="submit" name="status" value="In-Progress" th:classappend="${currentStatus == 'In-Progress' ? 'active' : ''}">In-Progress</button>
+    <button type="submit" name="status" value="Done" th:classappend="${currentStatus == 'Done' ? 'active' : ''}">Done</button>
+  </form>
+</div>
+
+<!-- Assigned Tasks Section -->
+<div class="assigned-tasks">
+  <h3>Các nhiệm vụ đã được phân công:</h3>
+  <ul>
+    <th:block th:each="task : ${tasks}">
+      <div class="task-item">
+        <div class="task-details">
+          <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> <span th:text="${task.task}"></span></span>
+          <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
+          <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
+          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>
+
+          <!-- Nhóm các nút vào một div để căn chỉnh dễ dàng hơn -->
+          <div class="task-buttons">
+            <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
+            <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
+              <input type="hidden" name="projectID" th:value="${project.projectID}" />
+              <button type="submit" class="btn-delete">Xóa</button>
+            </form>
           </div>
         </div>
       </div>
-    </div>
-    <div class="tab-bar">
-      <div class="tab" onclick="showContent('task')">Task</div>
-      <div class="tab" onclick="showContent('progress')">Progress</div>
-      <div class="tab" onclick="showContent('finish')">Finish</div>
-    </div>
 
-    <div class="tab-content" id="task-content">
-      <div class="project-members">
-        <div class="header">
-          <h2>Project Members</h2>
-          <button class="add-btn">+</button>
-          <div class="list-customer" id="list-customer" style="display: none">
-            <table>
-              <thead>
-                <tr>
-                  <th>Customer ID</th>
-                  <th>Customer Name</th>
-                  <th>Role ID</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Point</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>
-                    <img
-                      src="/src/main/resources/static/img/ava1.jpeg"
-                      alt="Customer 1"
-                      width="50"
-                    />
-                    <p>Quynhu</p>
-                  </td>
-                  <td>Customer</td>
-                  <td>0972423242</td>
-                  <td>15B Nguyễn Tư Nghiêm, p Bình Trưng Tây, Q2</td>
-                  <td>150</td>
-                  <td><button class="add-member">Add</button></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    <img
-                      src="/src/main/resources/static/img/ava1.jpeg"
-                      alt="Customer 1"
-                      width="50"
-                    />
-                    <p>Anna</p>
-                  </td>
-                  <td>Customer</td>
-                  <td>0903092242</td>
-                  <td>Sala village</td>
-                  <td>120</td>
-                  <td><button class="add-member">Add</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="members-container">
-          <div class="members-list">
-            <div class="member">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Tom Schwabin"
-                class="avatar"
-              />
-              <div class="member-info">
-                <span class="name">Tom Schwabin (You)</span>
-              </div>
-              <i class="fa-solid fa-ellipsis-vertical toggle-info"></i>
-              <div class="member-details" style="display: none">
-                <p>Email: tom@example.com</p>
-                <p>Phone: 123-456-7890</p>
-                <!-- Các thông tin chi tiết khác -->
-              </div>
-            </div>
+      </li>
+    </th:block>
+  </ul>
+</div>
 
-            <div class="member">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Christian"
-                class="avatar"
-              />
-              <div class="member-info">
-                <span class="name">Christian</span>
-              </div>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="member">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Chris Tomson"
-                class="avatar"
-              />
-              <div class="member-info">
-                <span class="name">Chris Tomson</span>
-              </div>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-          </div>
-
-          <div class="members-list">
-            <div class="member">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Elisse"
-                class="avatar"
-              />
-              <div class="member-info">
-                <span class="name">Elisse</span>
-              </div>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="member">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Anna"
-                class="avatar"
-              />
-              <div class="member-info">
-                <span class="name">Anna</span>
-              </div>
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="progress-content" style="display: none">
-      <div class="task-board">
-        <div class="task-header">
-          <span class="header-task-name">Task Name</span>
-          <span class="header-assignee">Assigned</span>
-        </div>
-        <!-- To do section -->
-        <div class="task-section">
-          <div class="section-header">
-            <span>To do</span>
-            <span class="task-count">2</span>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name"
-              >Build whole new floor in building Four on right block with
-              current situation</span
-            >
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name">Water for apartment 2</span>
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <button class="add-task-btn">
-            <i class="fa-solid fa-circle-plus"></i> Add task
-          </button>
-        </div>
-
-        <!-- In Progress section -->
-        <div class="task-section">
-          <div class="section-header">
-            <span>In Progress</span>
-            <span class="task-count">6</span>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name"
-              >Build whole new floor in building Four on right block with
-              current situation</span
-            >
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name"
-              >Create new project for Floor 2, Apartment 3</span
-            >
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name"
-              >Construction Inspection for Building C</span
-            >
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name">Fix windows on Floor 1</span>
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <div class="task-item">
-            <i class="fa-solid fa-circle-check"></i>
-            <span class="task-name">First steps with Garage</span>
-            <div class="task-assigned">
-              <img
-                src="/src/main/resources/static/img/avatar.jpg"
-                alt="Avatar"
-                class="avatar"
-              />
-              <span class="assignee">Christian</span>
-            </div>
-          </div>
-          <button class="add-task-btn">
-            <i class="fa-solid fa-circle-plus"></i> Add task
-          </button>
-        </div>
-
-        <!-- Done section -->
-        <div class="task-section">
-          <div class="section-header">
-            <span>Done</span>
-            <span class="task-count">4</span>
-          </div>
-          <div class="done-section">
-            <div class="task-item">
-              <i class="fa-solid fa-circle-check"></i>
-              <span class="task-name">Fix windows on Floor 1</span>
-              <div class="task-assigned">
-                <img
-                  src="/src/main/resources/static/img/avatar.jpg"
-                  alt="Avatar"
-                  class="avatar"
-                />
-                <span class="assignee">Christian</span>
-              </div>
-            </div>
-            <button class="add-task-btn">Finish</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="user-info">
-        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username">Username</p>
-      </div>
-      <ul class="sidebar-menu">
-        <li>
-          <a href="#"><i class="fas fa-home"></i> Home</a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-history"></i> History Order</a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-cog"></i> Settings</a>
-        </li>
-        <li>
-          <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
-    <div class="footer">
-      <div class="footer-container">
-        <div class="footer-info">
-          <h4>Information</h4>
-          <p>Open: 8 AM - 10 PM</p>
-          <p>
-            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-            Minh
-          </p>
-        </div>
-        <div class="footer-services">
-          <h4>Services</h4>
-          <ul>
-            <li>
-              <a href="link-to-construction" class="service-item"
-                >Construction Koi pond</a
-              >
-            </li>
-            <li>
-              <a href="link-to-cleaning" class="service-item"
-                >Cleaning and maintenance</a
-              >
-            </li>
-            <li>
-              <a href="link-to-design" class="service-item"
-                >Design upon requirements</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Contact</h4>
-          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-          <p>
-            <i class="fa-brands fa-facebook"></i>
-            <a href="https://facebook.com" target="_blank">Visit Us</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </body>
+<!-- Link to the external JavaScript file -->
+<script src="/javascript/viewDetailProject.js"></script>
+</body>
 </html>
