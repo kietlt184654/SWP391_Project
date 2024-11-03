@@ -1,28 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Bootstrap -->
-  <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-  />
-
-  <link
-          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-          rel="stylesheet"
-  />
-
-  <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-  />
-  <script
-          src="/javascript/profile.js"
-          defer
-  ></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="/javascript/profile.js" defer></script>
   <link rel="stylesheet" href="/css/profile.css" />
   <title>Profile</title>
 </head>
@@ -30,17 +16,12 @@
 <body>
 <!-------------------- HEADER-------------------->
 <div class="nav">
-  <!-- Hamburger button -->
   <div class="nav-button">
     <button id="menu-toggle" class="btn">&#9776;</button>
   </div>
-
-  <!-- Logo -->
   <div class="nav-logo">
     <p>LOGO</p>
   </div>
-
-  <!-- Nav Menu -->
   <div class="nav-menu" id="navMenu">
     <ul>
       <li><a href="/" class="link">Home</a></li>
@@ -48,33 +29,16 @@
       <li><a href="blog.html" class="link">Blog</a></li>
       <li><a href="service.html" class="link">Services</a></li>
       <li><a href="Availableproject.html" class="link">Product</a></li>
-
-      <!-- Cart -->
       <li>
-        <a href="#" class="icon">
-          <i class="fas fa-shopping-cart"></i>
+        <a href="#" class="icon"><i class="fas fa-shopping-cart"></i>
           <span class="notification-badge">0</span>
         </a>
       </li>
-
       <li>
-        <a href="#" class="icon" id="accountIcon">
-          <i class="fas fa-user-circle"></i>Username
-          <i class="fas fa-caret-down"></i>
-        </a>
-
-        <!-- Dropdown menu -->
+        <a href="#" class="icon" id="accountIcon"><i class="fas fa-user-circle"></i>Username <i class="fas fa-caret-down"></i></a>
         <ul class="dropdown-menu">
-          <li>
-            <a href="profile.html"
-            ><i class="fas fa-user-circle"></i> Profile</a
-            >
-          </li>
-          <li>
-            <a href="login.html"
-            ><i class="fas fa-sign-out-alt"></i> Log Out</a
-            >
-          </li>
+          <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a></li>
+          <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
         </ul>
       </li>
     </ul>
@@ -100,7 +64,10 @@
     <!-- Profile Information Sidebar -->
     <div class="col-md-4">
       <div class="profile-sidebar text-center">
-        <img th:src="@{${accountEntity.images} ?: '/img/defaultAva.jpg'}" alt="User Avatar" class="rounded-circle img-thumbnail" />
+        <!-- Display user image from local uploads directory -->
+<!--        <img th:src="${accountEntity.images}" alt="User Avatar" class="rounded-circle img-thumbnail" />-->
+        <img th:src="${accountEntity.images}" alt="User Avatar" class="rounded-circle img-thumbnail" />
+
         <h3 class="username" th:text="${accountEntity.accountName}"></h3>
         <p class="user-role" th:text="'Role: ' + ${accountEntity.accountTypeID}"></p>
         <button class="btn btn-primary mt-2">Change Avatar</button>
@@ -110,149 +77,59 @@
     <!-- Profile Details Form -->
     <div class="col-md-8">
       <h2 class="info-header">Edit Profile Information</h2>
-      <form action="#" method="POST">
+      <form>
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" class="form-control" th:value="${accountEntity.accountName}" readonly />
         </div>
-
         <div class="form-group">
           <label for="phone">Phone Number</label>
           <input type="text" id="phone" name="phone" class="form-control" th:value="${accountEntity.phoneNumber}" readonly />
         </div>
-
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" class="form-control" th:value="${accountEntity.email}" readonly />
         </div>
-
         <div class="form-group">
           <label for="address">Address</label>
           <input type="text" id="address" name="address" class="form-control" th:value="${accountEntity.address}" />
         </div>
-
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" class="form-control" th:value="${accountEntity.password}" readonly />
         </div>
-
-        <button type="submit" class="btn btn-success mt-3">Save Changes</button>
       </form>
-
-      <!-- Adding navigation buttons -->
       <div class="mt-4">
-        <a href="/" class="btn btn-primary">Back to Home</a>
-        <a href="/account/edit-profile" class="btn btn-warning">Edit Profile</a>
+        <a th:href="@{/}" class="btn btn-primary">Back to Home</a>
+        <a th:href="@{/account/edit-profile}" class="btn btn-warning">Edit Profile</a>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- order tracking -->
-    <div class="tracking-header">Order tracking</div>
-    <div class="container">
-      <div class="steps">
-        <div class="step">
-          <span class="circle active">1</span>
-          <p class="step-info">Order complete</p>
-        </div>
-        <div class="step">
-          <span class="circle">2</span>
-          <p class="step-info">Prepare for construction</p>
-        </div>
-        <div class="step">
-          <span class="circle">3</span>
-          <p class="step-info">Construction</p>
-        </div>
-        <div class="step">
-          <span class="circle">4</span>
-          <p class="step-info">Construction completed</p>
-        </div>
-        <div class="step">
-          <span class="circle">5</span>
-          <p class="step-info">Check quality</p>
-        </div>
-        <div class="step">
-          <span class="circle">6</span>
-          <p class="step-info">Handover</p>
-        </div>
-        <div class="progress-bar">
-          <div class="indicator"></div>
-        </div>
-      </div>
-      <div class="buttons">
-        <button id="prev" disabled>Prev</button>
-        <button id="next">Next</button>
-      </div>
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
     </div>
-
-    <!-- ---------------------------------------------------------------------------------------------------------- -->
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="user-info">
-        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username">Username</p>
-      </div>
-      <ul class="sidebar-menu">
-        <li>
-          <a href="Homepage.html"><i class="fas fa-home"></i> Home</a>
-        </li>
-        <li>
-          <a href="historyOrder.html"
-          ><i class="fas fa-history"></i> History Order</a
-          >
-        </li>
-        <li>
-          <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
-        </li>
-        <li>
-          <a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a>
-        </li>
-        <li>
-          <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-        </li>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="link-to-construction" class="service-item">Construction Koi pond</a></li>
+        <li><a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a></li>
+        <li><a href="link-to-design" class="service-item">Design upon requirements</a></li>
       </ul>
     </div>
-
-    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
-    <div class="footer">
-      <div class="footer-container">
-        <div class="footer-info">
-          <h4>Information</h4>
-          <p>Open: 8 AM - 10 PM</p>
-          <p>
-            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-            Minh
-          </p>
-        </div>
-        <div class="footer-services">
-          <h4>Services</h4>
-          <ul>
-            <li>
-              <a href="link-to-construction" class="service-item"
-              >Construction Koi pond</a
-              >
-            </li>
-            <li>
-              <a href="link-to-cleaning" class="service-item"
-              >Cleaning and maintenance</a
-              >
-            </li>
-            <li>
-              <a href="link-to-design" class="service-item"
-              >Design upon requirements</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Contact</h4>
-          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-          <p>
-            <i class="fa-brands fa-facebook"></i>
-            <a href="https://facebook.com" target="_blank">Visit Us</a>
-          </p>
-        </div>
-      </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p><i class="fa-brands fa-facebook"></i><a href="https://facebook.com" target="_blank">Visit Us</a></p>
     </div>
+  </div>
+</div>
 </body>
 </html>

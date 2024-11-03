@@ -36,6 +36,9 @@ private EmailService emailService;
     public boolean checkIfAccountNameExists(String username) {
         return accountRepository.findByAccountName(username)!=null;
     }
+    public AccountEntity saveAccount(AccountEntity account) {
+        return accountRepository.save(account);
+    }
     public synchronized void registerUser(AccountEntity userDTO) {
         // Tìm tài khoản có AccountID lớn nhất hiện có
         AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();

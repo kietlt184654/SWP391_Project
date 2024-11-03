@@ -543,3 +543,21 @@ body {
     background-color: #b30000; /* Màu đỏ sậm hơn khi nhấn */
     transform: scale(0.98); /* Nhấn nút hơi thu nhỏ */
 }
+/* Styles for alert messages */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: relative;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-success p {
+    margin: 0;
+}

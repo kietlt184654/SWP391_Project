@@ -189,6 +189,7 @@ private StaffProjectService projectStaffService;
 
         return "redirect:/dashboard";
     }
+
     @PostMapping("/deleteService/{id}")
     public String deleteStaffProject(@PathVariable("id") int staffProjectID,
                                      @RequestParam("projectID") int projectID,

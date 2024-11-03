@@ -30,14 +30,7 @@ public class DesignController {
         model.addAttribute("design", products);
         return "Availableproject"; // Trả về trang "Availableproject.html"
     }
-    //    // Phương thức tìm kiếm mẫu có sẵn theo tên (chỉ hiển thị mẫu có sẵn)
-//    @GetMapping("/search")
-//    public String findDesignByName(@RequestParam("name") String name, Model model) {
-//        List<DesignEnity> designs = designService.findDesignByName(name); // Gọi phương thức từ service
-//        model.addAttribute("designs", designs); // Thêm kết quả vào model
-//        return "designList"; // Trả về view hiển thị danh sách các thiết kế
-//    }
-    // Hiển thị chi tiết sản phẩm
+
     @GetMapping("/{id}")
     public String getDesignDetail(@PathVariable("id") Long id, Model model) {
         Optional<DesignEntity> designOpt = designService.getProductById(id);

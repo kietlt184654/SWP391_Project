@@ -1,28 +1,26 @@
 package com.example.swp391.controller;
 
 import com.example.swp391.entity.AccountEntity;
-import com.example.swp391.entity.CustomerEntity;
-import com.example.swp391.entity.StaffProjectAssignmentEntity;
-import com.example.swp391.entity.StaffProjectEntity;
+
 import com.example.swp391.service.AccountService;
-import com.example.swp391.service.CustomerService;
+
 import com.example.swp391.service.StaffProjectService;
 import jakarta.servlet.http.HttpSession;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.List;
 
 @Controller
@@ -109,20 +107,27 @@ private StaffProjectService staffProjectService;
     @GetMapping("/edit-profile")
     public String editProfileForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
+
+        // Kiểm tra người dùng đã đăng nhập
         if (loggedInUser == null) {
             redirectAttributes.addFlashAttribute("message", "Please login first.");
             return "redirect:/login";
         }
 
+        // Tìm tài khoản người dùng đã đăng nhập bằng email
         AccountEntity account = accountService.findByEmail(loggedInUser.getEmail());
-        model.addAttribute("accountEntity", account);
+        if (account != null) {
+            model.addAttribute("accountEntity", account);
+        } else {
+            redirectAttributes.addFlashAttribute("message", "User not found.");
+            return "redirect:/";
+        }
 
-        return "editprofile"; // Trả về view "edit-profile.html"
+        // Trả về view "editprofile.html"
+        return "editprofile";
     }
-    private static final String uploadDir = "D:\\K5\\SWP391\\UpdateImg";
-    // Định nghĩa đường dẫn thư mục upload trong application.properties
-    //@Value("${upload.directory}")
-
+    // Đường dẫn lưu trữ hình ảnh trên server
+    private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task";
 
     @PostMapping("/update-profile")
     public String updateProfile(@RequestParam("profileImage") MultipartFile profileImage,
@@ -136,25 +141,20 @@ private StaffProjectService staffProjectService;
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             redirectAttributes.addFlashAttribute("message", "Please log in first.");
-            return "login";
+            return "redirect:/login"; // Điều hướng về trang đăng nhập nếu chưa đăng nhập
         }
 
         try {
-            // Nếu người dùng có upload ảnh mới
             if (!profileImage.isEmpty()) {
-                // Lưu file ảnh vào thư mục upload
-                String fileName = profileImage.getOriginalFilename();
-                Path uploadPath = Paths.get(uploadDir, fileName);
+                // Đổi tên file để tránh trùng lặp
+                String fileName = System.currentTimeMillis() + "_" + profileImage.getOriginalFilename();
+                Path uploadPath = Paths.get(UPLOAD_DIR, fileName);
 
-                // Tạo thư mục nếu chưa tồn tại
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath.getParent());
-                }
+                // Lưu file ảnh vào thư mục đích
+                Files.createDirectories(uploadPath.getParent()); // Tạo thư mục nếu chưa tồn tại
+                Files.write(uploadPath, profileImage.getBytes()); // Ghi file vào đường dẫn
 
-                // Lưu file ảnh vào thư mục
-                profileImage.transferTo(new File(uploadPath.toString()));
-
-                // Lưu đường dẫn ảnh vào cơ sở dữ liệu (chỉ đường dẫn tương đối)
+                // Cập nhật đường dẫn ảnh trong cơ sở dữ liệu
                 loggedInUser.setImages("/uploads/" + fileName);
             }
         } catch (IOException e) {
@@ -176,8 +176,9 @@ private StaffProjectService staffProjectService;
         session.setAttribute("loggedInUser", loggedInUser);
         redirectAttributes.addFlashAttribute("message", "Profile updated successfully!");
 
-        return "profile";  // Quay lại trang profile sau khi lưu thành công
+        return "redirect:/account/profile";  // Quay lại trang profile sau khi lưu thành công
     }
+
 
     // Hàm hiển thị danh sách khách hàng
     @GetMapping("/customers")
@@ -191,12 +192,7 @@ private StaffProjectService staffProjectService;
         // Trả về tên template Thymeleaf
         return "manageCustomer";
     }
-//    @GetMapping("/customers")
-//    public String showAllCustomers(Model model) {
-//        List<Object[]> customers = customerService.getAllCustomersWithAccountInfo();
-//        model.addAttribute("customers", customers);
-//        return "manageCustomer";
-//    }
+
     @GetMapping("/dashboardAccount")
     public String showDashboard(Model model) {
         long userCount = accountService.countUsers(); // Lấy số lượng tài khoản từ DB
