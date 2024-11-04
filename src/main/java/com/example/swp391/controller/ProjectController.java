@@ -3,7 +3,7 @@ package com.example.swp391.controller;
 import com.example.swp391.entity.*;
 import com.example.swp391.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
+
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
@@ -32,20 +33,28 @@ private DesignService designService;
         return "show_projects";
     }
 
-    @GetMapping("/viewDetailProject/{projectID}")
-    public String showDetailProject(@PathVariable Integer projectID, Model model) {
-        ProjectEntity project = projectService.getProjectById(projectID)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectID));
+@GetMapping("/viewDetailProject/{projectID}")
+public String showDetailProject(@PathVariable Integer projectID, Model model) {
+    ProjectEntity project = projectService.getProjectById(projectID)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectID));
 
-        List<StaffProjectEntity> tasks = staffProjectService.getTasksByProjectId(projectID); // Lấy danh sách tasks
-        model.addAttribute("project", project);
-        model.addAttribute("projectId", projectID); // Thêm projectId vào model
-        model.addAttribute("tasks", tasks); // Thêm danh sách tasks vào model
+    List<StaffProjectEntity> tasks = staffProjectService.getTasksByProjectId(projectID);
+    model.addAttribute("project", project);
+    model.addAttribute("projectID", projectID); // Lưu projectID vào session
+    model.addAttribute("tasks", tasks);
 
-        return "viewDetailProject"; // Tên của file HTML cho trang chi tiết dự án
-    }
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final int PASSWORD_LENGTH = 10;
+    return "viewDetailProject";
+}
+
+
+//-------------------------------------------------------------------------------------
+
+
+
+
+
+        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        private static final int PASSWORD_LENGTH = 10;
 
     private String generateRandomPassword() {
         SecureRandom random = new SecureRandom();

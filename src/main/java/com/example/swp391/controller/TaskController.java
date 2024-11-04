@@ -190,12 +190,12 @@ private StaffProjectService projectStaffService;
         return "redirect:/dashboard";
     }
 
-    @PostMapping("/deleteService/{id}")
-    public String deleteStaffProject(@PathVariable("id") int staffProjectID,
-                                     @RequestParam("projectID") int projectID,
-                                     RedirectAttributes redirectAttributes) {
-        staffProjectService.deleteStaffProjectById(staffProjectID);
-        redirectAttributes.addFlashAttribute("successMessageDeleteTask", "Task deleted successfully.");
-        return "redirect:/projects/viewDetailProject/" + projectID;
-    }
+        @PostMapping("/deleteService/{id}")
+        public String deleteStaffProject(@PathVariable("id") int staffProjectID,
+                                         @RequestParam("projectID") int projectID,
+                                         RedirectAttributes redirectAttributes) {
+            staffProjectService.deleteStaffProjectById(staffProjectID);
+            redirectAttributes.addFlashAttribute("successMessageDeleteTask", "Task deleted successfully.");
+            return "redirect:/projects/viewDetailProject/" + projectID;
+        }
 }

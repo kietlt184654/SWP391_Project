@@ -140,3 +140,17 @@ document.querySelectorAll('.tab-bar .tab').forEach(tab => {
     });
 });
 
+// JavaScript cho popup xác nhận
+let formToDelete;
+
+function showPopup(form) {
+    formToDelete = form;  // Lưu form cần xóa
+    document.getElementById('confirmPopup').style.display = 'flex';
+}
+
+function confirmDelete(isConfirmed) {
+    document.getElementById('confirmPopup').style.display = 'none';
+    if (isConfirmed) {
+        formToDelete.submit();
+    }
+}

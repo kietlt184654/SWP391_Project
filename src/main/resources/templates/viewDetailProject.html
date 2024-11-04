@@ -24,7 +24,15 @@
     </ul>
   </div>
 </div>
-
+<div class="popup-overlay" id="confirmPopup">
+  <div class="popup-box">
+    <h3>Bạn có chắc chắn muốn xóa nhiệm vụ này không?</h3>
+    <div class="popup-buttons">
+      <button class="confirm-btn" onclick="confirmDelete(true)">Xóa</button>
+      <button class="cancel-btn" onclick="confirmDelete(false)">Hủy</button>
+    </div>
+  </div>
+</div>
 <!-- Project Details -->
 <div class="project-container">
   <div class="project">
@@ -72,13 +80,13 @@
           <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>
 
           <!-- Nhóm các nút vào một div để căn chỉnh dễ dàng hơn -->
-          <div class="task-buttons">
-            <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
-            <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
-              <input type="hidden" name="projectID" th:value="${project.projectID}" />
-              <button type="submit" class="btn-delete">Xóa</button>
-            </form>
-          </div>
+            <div class="task-buttons">
+              <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
+              <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
+                <input type="hidden" name="projectID" th:value="${project.projectID}" />
+                <button type="submit" class="btn-delete">Xóa</button>
+              </form>
+            </div>
         </div>
       </div>
 

@@ -24,8 +24,7 @@
 </div>
 
 <div class="back-button-container">
-    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary back-button">Quay về Chi Tiết Dự Án</a>
-    <a href="/project/detail" class="back-button">Quay lại</a>
+    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${staffProjectID})}" class="back-button">Quay lại</a>
 </div>
 <div class="delete-button-container" style="text-align: center; margin-top: 20px;">
     <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">

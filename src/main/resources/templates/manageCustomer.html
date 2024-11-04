@@ -45,7 +45,11 @@
   <tbody>
   <tr th:each="customer : ${customers}" th:if="${customer.accountTypeID == 'Customer'}">
     <td th:text="${customer.getAccountId()}"></td>
-    <td><img th:src="@{${customer.images}}" alt="Customer Image" /></td>
+    <td>
+    <td>
+      <img th:if="${customer.images != null}" th:src="@{${customer.images}}" alt="Customer Image" />
+      <img th:if="${customer.images == null}" th:src="@{/img/defaultAva.jpg}" alt="Default Customer Image" />
+    </td>
     <td th:text="${customer.accountName}"></td>
     <td th:text="${customer.accountTypeID}"></td>
     <td th:text="${customer.phoneNumber}"></td>
