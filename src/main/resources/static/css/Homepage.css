@@ -985,3 +985,32 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* Add this keyframe animation for the reload effect */
+@keyframes reloadAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply the animation to the card titles */
+.card-title-1 {
+    color: black; /* Ensure text color is black */
+    animation: reloadAnimation 1s ease-in-out infinite; /* Add animation */
+}
+
+.card-title-2 {
+    color: black; /* Ensure text color is black */
+    animation: reloadAnimation 1s ease-in-out infinite; /* Add animation */
+}
+
+.card-title-3 {
+    color: black; /* Ensure text color is black */
+    animation: reloadAnimation 1s ease-in-out infinite; /* Add animation */
+}
+
