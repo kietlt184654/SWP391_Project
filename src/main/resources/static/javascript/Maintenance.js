@@ -130,3 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Assuming you have a way to set the selected date
     // Example: document.getElementById('selectedDate').value = '2023-10-01';
 });
+// side bar
+const menuToggle = document.getElementById("menu-toggle");
+const sidebar = document.getElementById("sidebar");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("show");
+});
