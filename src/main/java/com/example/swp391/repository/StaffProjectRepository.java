@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface StaffProjectRepository extends JpaRepository<StaffProjectEntity, Integer> {
     StaffProjectEntity findTopByOrderByStaffProjectIDDesc();
-    List<StaffProjectEntity> findByProject_ProjectID(Integer projectID);
-List<StaffProjectEntity> findByStatus(String status);
+    List<StaffProjectEntity> findByProject_ProjectID(Long projectID);
+    List<StaffProjectEntity> findByStatus(String status);
 
     List<StaffProjectEntity> findByStaff_StaffID(int staffId);
     Optional<StaffProjectEntity> findByProject_ProjectIDAndStaff_StaffID(int projectId, int staffId);

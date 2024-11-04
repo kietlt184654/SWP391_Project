@@ -1,382 +1,173 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="/javascript/viewProductDetail.js" defer></script>
+  <link rel="stylesheet" href="/css/viewProductDetail.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script src="/javascript/viewProductDetail.js" defer></script>
-    <link rel="stylesheet" href="/css/viewProductDetail.css" />
+  <title th:text="${design.designName}">Product Detail</title>
+</head>
 
-    <title th:text="${design.designName}">View Product Detail</title>
-  </head>
+<body>
+<!-- HEADER -->
+<div class="nav">
+  <!-- Hamburger button -->
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
 
-  <body>
-    <!-- HEADER -->
-    <div class="nav">
-      <!-- Hamburger button -->
-      <div class="nav-button">
-        <button id="menu-toggle" class="btn">&#9776;</button>
-      </div>
+  <!-- Logo -->
+  <div class="nav-logo">
+    <p>LOGO</p>
+  </div>
 
-      <!-- Logo -->
-      <div class="nav-logo">
-        <p>LOGO</p>
-      </div>
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a href="/about" class="link">About</a></li>
+      <li><a href="/blog" class="link">Blog</a></li>
+      <li><a href="/services" class="link">Services</a></li>
+      <li><a href="/products" class="link">Product</a></li>
 
-      <!-- Nav Menu -->
-      <div class="nav-menu" id="navMenu">
-        <ul>
-          <li><a th:href="@{/}" class="link">Home</a></li>
-          <li><a href="/about" class="link">About</a></li>
-          <li><a href="/blog" class="link">Blog</a></li>
-          <li><a href="/services" class="link">Services</a></li>
-          <li><a href="/products" class="link">Product</a></li>
+      <!-- Cart -->
+      <li>
+        <a href="/cart" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge" th:text="${cartItemCount}">0</span>
+        </a>
+      </li>
 
-          <!-- Cart -->
-          <li>
-            <a href="/cart" class="icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="notification-badge" th:text="${cartItemCount}"
-                >0</span
-              >
-            </a>
-          </li>
+      <!-- Account Section -->
+      <li>
+        <a href="#" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i>
+          <span th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</span>
+          <i class="fas fa-caret-down"></i>
+        </a>
 
-          <li>
-            <a href="#" class="icon" id="accountIcon">
-              <i class="fas fa-user-circle"></i>
-              <span th:text="${username}">Username</span>
-              <i class="fas fa-caret-down"></i>
-            </a>
-
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li>
-                <a href="/profile"
-                  ><i class="fas fa-user-circle"></i> Profile</a
-                >
-              </li>
-              <li>
-                <a href="/logout"
-                  ><i class="fas fa-sign-out-alt"></i> Log Out</a
-                >
-              </li>
-            </ul>
-          </li>
+        <!-- Dropdown menu for logged in user -->
+        <ul class="dropdown-menu" th:if="${loggedInUser != null}">
+          <li><a href="/profile"><i class="fas fa-user-circle"></i> Profile</a></li>
+          <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
         </ul>
-      </div>
-    </div>
-    <!-- ----------------------------------------------------------------------------------------------------------- -->
+      </li>
+    </ul>
+  </div>
+</div>
 
-    <!-- Show product detail -->
+<!-- Show product detail -->
+<div class="container" th:object="${design}">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/products">Products</a></li>
+    <li class="active" th:text="${design.designName}">Product Detail</li>
+  </ol>
 
-    <div class="container" th:object="${design}">
-      <div class="container" th:object="${images}">
-        <ol class="breadcrumb">
-          <li><a href="/">Home</a></li>
-          <li><a href="/products">Products</a></li>
-          <li class="active" th:text="${design.designName}">Product Detail</li>
-        </ol>
-
-        <div class="container bootdey">
-          <div class="col-md-12">
-            <section class="panel">
-              <div class="panel-body">
-                <div class="col-md-6">
-                  <div class="pro-img-details">
-                    <!-- Sử dụng Thymeleaf để hiển thị hình ảnh chính -->
-                    <img
-                      th:src="@{${design.img}}"
-                      alt="[[${design.designName}]]"
-                      class="img-responsive"
-                    />
-                  </div>
-                  <div class="pro-img-list">
-                    <!-- Nếu có nhiều hình ảnh, bạn có thể sử dụng Thymeleaf để lặp qua chúng -->
-                    <a href="#">
-                      <img
-                        th:src="@{${design.img}}"
-                        alt="[[${design.designName}]]"
-                        class="img-thumbnail"
-                      />
-                    </a>
-                    <a href="#">
-                      <img
-                        th:src="@{${design.img}}"
-                        alt="[[${design.designName}]]"
-                        class="img-thumbnail"
-                      />
-                    </a>
-                    <a href="#">
-                      <img
-                        th:src="@{${design.img}}"
-                        alt="[[${design.designName}]]"
-                        class="img-thumbnail"
-                      />
-                    </a>
-                  </div>
-
-                  <div class="img-navigation">
-                    <span id="prev-btn">
-                      <i class="fas fa-chevron-left"></i>
-                    </span>
-                    <span id="next-btn">
-                      <i class="fas fa-chevron-right"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-md-6 body-right">
-                  <!-- Sử dụng Thymeleaf để hiển thị tên sản phẩm -->
-                  <h3 th:text="${design.designName}">Product Name</h3>
-                  <!-- Sử dụng Thymeleaf để hiển thị mô tả -->
-                  <p th:text="${design.description}">
-                    Product description goes here.
-                  </p>
-                  <div class="product_meta">
-                    <span class="posted_in">
-                      <strong>Size:</strong>
-                      <a rel="tag" href="#" th:text="${design.size}">Size</a>
-                    </span>
-                    <span class="tagged_as">
-                      <strong>Water Capacity:</strong>
-                      <a rel="tag" href="#" th:text="${design.waterCapacity}"
-                        >Water Capacity</a
-                      >
-                    </span>
-                    <span class="tagged_as">
-                      <strong>Design Type:</strong>
-                      <a rel="tag" href="#" th:text="${design.designType}"
-                        >Design Type</a
-                      >
-                    </span>
-                    <span class="tagged_as">
-                      <strong>Status:</strong>
-                      <a rel="tag" href="#" th:text="${design.status}"
-                        >Status</a
-                      >
-                    </span>
-                    <span class="tagged_as">
-                      <strong>Estimated Completion Time:</strong>
-                      <a
-                        rel="tag"
-                        href="#"
-                        th:text="${design.estimatedCompletionTime} + ' days'"
-                        >Estimated Completion Time</a
-                      >
-                    </span>
-                    <span class="tagged_as">
-                      <strong>Shape of Pond:</strong>
-                      <a rel="tag" href="#" th:text="${design.shapeOfPond}"
-                        >Shape of Pond</a
-                      >
-                    </span>
-                  </div>
-                  <!-- price -->
-                  <div class="price">
-                    <!-- Nếu có giá cũ, giữ lại; nếu không, bạn có thể xóa phần này -->
-                    <!-- <span class="amount-old" th:text="${design.oldPrice}">Old Price</span> -->
-                    <span class="pro-price" th:text="${design.price} + ' $'"
-                      >Price</span
-                    >
-                  </div>
-                  <!-- quantity -->
-                  <div class="quantity-container">
-                    <button class="quantity-btn" id="decrease">-</button>
-                    <input
-                      type="number"
-                      id="quantity"
-                      th:value="${1}"
-                      <!--
-                      Giá
-                      trị
-                      mặc
-                      định
-                      --
-                    />
-                    min="1" max="1000" step="1" />
-                    <button class="quantity-btn" id="increase">+</button>
-                  </div>
-
-                  <div class="button-cart">
-                    <div class="button-group">
-                      <form th:action="@{/cart/add}" method="post">
-                        <input
-                          type="hidden"
-                          name="designId"
-                          th:value="${design.designId}"
-                        />
-                        <input type="hidden" name="quantity" th:value="${1}" />
-                        <button class="btn btn-cart" type="submit">
-                          <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-                        </button>
-                      </form>
-                      <button class="btn btn-buy">Mua ngay</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+  <div class="container bootdey">
+    <div class="col-md-12">
+      <section class="panel">
+        <div class="panel-body">
+          <div class="col-md-6">
+            <div class="pro-img-details">
+              <img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-responsive" />
+            </div>
+            <div class="pro-img-list">
+              <!-- List of Images if multiple -->
+              <a href="#"><img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-thumbnail" /></a>
+            </div>
+            <div class="img-navigation">
+              <span id="prev-btn"><i class="fas fa-chevron-left"></i></span>
+              <span id="next-btn"><i class="fas fa-chevron-right"></i></span>
+            </div>
           </div>
-        </div>
 
-        <!-- Description of product -->
-        <div class="tab-bar">
-          <div class="tab" onclick="showContent('description')">
-            Description
-          </div>
-          <!-- Loại bỏ tab "Review" -->
-        </div>
+          <div class="col-md-6 body-right">
+            <h3 th:text="${design.designName}">Product Name</h3>
+            <p th:text="${design.description}">Product description goes here.</p>
 
-        <div class="tab-content" id="description-content">
-          <h3>Description</h3>
-          <ul>
-            <li>
-              <strong>Description:</strong>
-              <span th:text="${design.description}">
-                Design description goes here.
-              </span>
-            </li>
-            <li>
-              <strong>Size:</strong>
-              <span th:text="${design.size}"> Size description. </span>
-            </li>
-            <li>
-              <strong>Water Capacity:</strong>
-              <span th:text="${design.waterCapacity}">
-                Water capacity description.
-              </span>
-            </li>
-            <li>
-              <strong>Design Type:</strong>
-              <span th:text="${design.designType}">
-                Design type description.
-              </span>
-            </li>
-            <li>
-              <strong>Status:</strong>
-              <span th:text="${design.status}"> Status description. </span>
-            </li>
-            <li>
-              <strong>Estimated Completion Time:</strong>
-              <span th:text="${design.getEstimatedCompletionTime()} + ' days'">
-                Estimated completion time description.
-              </span>
-            </li>
-            <li>
-              <strong>Shape of Pond:</strong>
-              <span th:text="${design.shapeOfPond}">
-                Shape of pond description.
-              </span>
-            </li>
-          </ul>
-        </div>
+            <div class="product_meta">
+              <span class="posted_in"><strong>Size:</strong> <a th:text="${design.size}">Size</a></span>
+              <span class="tagged_as"><strong>Water Capacity:</strong> <a th:text="${design.waterCapacity}">Water Capacity</a></span>
+              <span class="tagged_as"><strong>Status:</strong> <a th:text="${design.status}">Status</a></span>
+              <span class="tagged_as"><strong>Estimated Completion Time:</strong> <a th:text="${design.estimatedCompletionTime} + ' days'">Estimated Completion Time</a></span>
+              <span class="tagged_as"><strong>Shape of Pond:</strong> <a th:text="${design.shapeOfPond}">Shape of Pond</a></span>
+            </div>
 
-        <!-- Other Products -->
-        <div class="related-products-section">
-          <h3 class="related-products-heading">Related Products</h3>
+            <div class="price">
+              <span class="pro-price" th:text="${design.price} + ' $'">Price</span>
+            </div>
 
-          <div class="row thumbnail-content">
-            <div class="col-sm-4" th:each="related : ${relatedProducts}">
-              <div class="thumbnail">
-                <img
-                  th:src="@{${related.img}}"
-                  alt="[[${related.designName}]]"
-                  class="img-responsive"
-                />
-                <div class="caption">
-                  <p th:text="${related.designName}">Related Product Name</p>
-                </div>
+            <div class="quantity-container">
+              <button class="quantity-btn" id="decrease">-</button>
+              <input type="number" id="quantity" min="1" max="1000" step="1" value="1" />
+              <button class="quantity-btn" id="increase">+</button>
+            </div>
+
+            <div class="button-cart">
+              <div class="button-group">
+                <form th:action="@{/cart/add}" method="post">
+                  <input type="hidden" name="designId" th:value="${design.designId}" />
+                  <input type="hidden" name="quantity" value="1" />
+                  <button class="btn btn-cart" type="submit"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                </form>
+                <button class="btn btn-buy">Buy Now</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
+  </div>
 
-    <!-- ---------------------------------------------------------------------------------------------------------- -->
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="user-info">
-        <img src="/images/avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username" th:text="${username}">Username</p>
-      </div>
-      <ul class="sidebar-menu">
-        <li>
-          <a href="/"><i class="fas fa-home"></i> Home</a>
-        </li>
-        <li>
-          <a href="/history-order"
-            ><i class="fas fa-history"></i> History Order</a
-          >
-        </li>
-        <li>
-          <a href="/profile"><i class="fas fa-user-circle"></i> Profile</a>
-        </li>
-        <li>
-          <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
-        </li>
-        <li>
-          <a href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-        </li>
+  <!-- Description of product -->
+  <div class="tab-bar">
+    <div class="tab" onclick="showContent('description')">Description</div>
+  </div>
+
+  <div class="tab-content" id="description-content">
+    <h3>Description</h3>
+    <ul>
+      <li><strong>Description:</strong> <span th:text="${design.description}">Description goes here.</span></li>
+      <li><strong>Size:</strong> <span th:text="${design.size}">Size description.</span></li>
+      <li><strong>Water Capacity:</strong> <span th:text="${design.waterCapacity}">Water capacity description.</span></li>
+      <li><strong>Status:</strong> <span th:text="${design.status}">Status description.</span></li>
+      <li><strong>Estimated Completion Time:</strong> <span th:text="${design.estimatedCompletionTime} + ' days'">Completion Time</span></li>
+      <li><strong>Shape of Pond:</strong> <span th:text="${design.shapeOfPond}">Shape of Pond</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+    </div>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services/construction" class="service-item">Construction Koi pond</a></li>
+        <li><a href="/services/cleaning" class="service-item">Cleaning and maintenance</a></li>
+        <li><a href="/services/design" class="service-item">Design upon requirements</a></li>
       </ul>
     </div>
-
-    <!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
-    <div class="footer">
-      <div class="footer-container">
-        <div class="footer-info">
-          <h4>Information</h4>
-          <p>Open: 8 AM - 10 PM</p>
-          <p>
-            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-            Minh
-          </p>
-        </div>
-        <div class="footer-services">
-          <h4>Services</h4>
-          <ul>
-            <li>
-              <a href="/services/construction" class="service-item"
-                >Construction Koi pond</a
-              >
-            </li>
-            <li>
-              <a href="/services/cleaning" class="service-item"
-                >Cleaning and maintenance</a
-              >
-            </li>
-            <li>
-              <a href="/services/design" class="service-item"
-                >Design upon requirements</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Contact</h4>
-          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-          <p>
-            <i class="fa-brands fa-facebook"></i>
-            <a href="https://facebook.com" target="_blank">Visit Us</a>
-          </p>
-        </div>
-      </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p><i class="fa-brands fa-facebook"></i> <a href="https://facebook.com" target="_blank">Visit Us</a></p>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

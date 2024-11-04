@@ -1,7 +1,6 @@
 package com.example.swp391.controller;
 
 import com.example.swp391.entity.CartEntity;
-import com.example.swp391.entity.CartEntity;
 import com.example.swp391.entity.DesignEntity;
 import com.example.swp391.service.DesignService;
 import jakarta.servlet.http.HttpSession;

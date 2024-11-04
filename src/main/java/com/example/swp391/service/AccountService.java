@@ -2,12 +2,11 @@ package com.example.swp391.service;
 
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
-import com.example.swp391.entity.StaffEntity;
 import com.example.swp391.repository.AccountRepository;
 import com.example.swp391.repository.CustomerRepository;
-import com.example.swp391.repository.StaffRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,16 +14,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
-    @Autowired
-    private StaffRepository staffRepository;
     @Autowired
     private JavaMailSender mailSender;
 private EmailService emailService;
@@ -42,10 +37,6 @@ private EmailService emailService;
     public boolean checkIfAccountNameExists(String username) {
         return accountRepository.findByAccountName(username)!=null;
     }
-    public AccountEntity saveAccount(AccountEntity account) {
-        return accountRepository.save(account);
-    }
-
     public synchronized void registerUser(AccountEntity userDTO) {
         // Tìm tài khoản có AccountID lớn nhất hiện có
         AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
@@ -85,23 +76,6 @@ private EmailService emailService;
         accountRepository.save(user);
     }
 
-    public AccountEntity createAccount(AccountEntity account) {
-        // Validate account details before saving
-        if (account == null || account.getEmail() == null || account.getAccountName() == null) {
-            throw new IllegalArgumentException("Account details are incomplete or null");
-        }
-        AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
-
-        if (lastAccount != null) {
-            // Tăng giá trị AccountID thủ công
-            account.setAccountId(lastAccount.getAccountId() + 1);
-        } else {
-            // Nếu bảng trống, bắt đầu từ AccountID = 1
-            account.setAccountId(1);
-        }
-
-        return accountRepository.save(account);
-    }
 
 
 
@@ -149,13 +123,8 @@ private EmailService emailService;
         }
 
     }
-    public boolean deleteCustomerById(int id) {
-        if (accountRepository.existsById(id)) {
-            accountRepository.deleteById(id); // Xóa khách hàng nếu tồn tại
-            return true;
-        } else {
-            return false; // Trả về false nếu khách hàng không tồn tại
-        }
+    public AccountEntity getCurrentAccount(HttpSession session) {
+        return (AccountEntity) session.getAttribute("loggedInUser");
     }
     public boolean checkIfEmailExistsAndSendResetLink(String email) {
         AccountEntity user = accountRepository.findByEmail(email);

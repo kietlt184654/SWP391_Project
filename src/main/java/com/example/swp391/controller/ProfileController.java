@@ -1,4 +1,4 @@
-//package com.example.swp391.controller;
+package com.example.swp391.controller;//package com.example.swp391.controller;
 //import com.example.swp391.entity.AccountEntity;
 //import com.example.swp391.service.AccountService;
 //import jakarta.servlet.http.HttpSession;

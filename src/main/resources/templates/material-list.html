@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách Nguyên vật liệu</title>
+    <style>
+        /* Thêm CSS cho giao diện */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e2e2e2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Danh sách Nguyên vật liệu</h1>
+
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+<div th:if="${error}">
+    <p th:text="${error}" style="color: red;"></p>
+</div>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Số lượng</th>
+        <th>Đơn vị</th>
+        <th>Cập nhật số lượng</th>
+    </tr>
+    <tr th:each="material : ${materials}">
+        <td th:text="${material.materialId}"></td>
+        <td th:text="${material.materialName}"></td>
+        <td th:text="${material.stockQuantity}"></td>
+        <td th:text="${material.unit}"></td>
+        <td>
+            <form th:action="@{/materials/{materialId}/update-quantity(materialId=${material.materialId})}" method="post">
+                <label>Số lượng thay đổi:</label>
+                <input type="number" name="quantityChange" required>
+                <label>Lý do thay đổi:</label>
+                <input type="text" name="reason" required>
+                <button type="submit">Cập nhật</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

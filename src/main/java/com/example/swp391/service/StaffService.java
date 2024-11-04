@@ -13,7 +13,7 @@ public class StaffService {
     @Autowired
     private StaffRepository staffRepository;
 
-   public List<StaffEntity> getStaffByRole(String role) {
+    public List<StaffEntity> getStaffByRole(String role) {
         return staffRepository.findByRole(role);
     }
 

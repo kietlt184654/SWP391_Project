@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Images</title>
-    <link rel="stylesheet" href="/css/viewProjectImages.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Images</title>
+  <link rel="stylesheet" href="/css/viewProjectImages.css">
 </head>
 <body>
 
 <h2>Hình ảnh tiến độ dự án</h2>
 
 <div class="images-container">
-    <th:block th:if="${progressImages != null}">
-        <th:block th:each="imagePath : ${progressImages}">
-            <div class="image-card">
-                <img th:src="${imagePath}" alt="Progress Image" class="progress-image" />
-            </div>
-        </th:block>
+  <th:block th:if="${progressImages != null}">
+    <th:block th:each="imagePath : ${progressImages}">
+      <div class="image-card">
+        <img th:src="${imagePath}" alt="Progress Image" class="progress-image" />
+      </div>
     </th:block>
+  </th:block>
 
-    <!-- Hiển thị thông báo khi không có hình ảnh -->
-    <p th:if="${noImagesMessage != null}" th:text="${noImagesMessage}"></p>
+  <!-- Hiển thị thông báo khi không có hình ảnh -->
+  <p th:if="${noImagesMessage != null}" th:text="${noImagesMessage}"></p>
 </div>
 
 <div class="back-button-container">
-    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary back-button">Quay về Chi Tiết Dự Án</a>
-    <a href="/project/detail" class="back-button">Quay lại</a>
+  <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${staffProjectID})}" class="back-button">Quay lại</a>
 </div>
 <div class="delete-button-container" style="text-align: center; margin-top: 20px;">
-    <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">
-        <button type="submit" class="red-button">Xóa Dịch Vụ</button>
-    </form>
+  <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">
+    <button type="submit" class="red-button">Xóa Dịch Vụ</button>
+  </form>
 </div>
 </body>
 </html>

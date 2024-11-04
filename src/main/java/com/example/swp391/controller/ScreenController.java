@@ -1,9 +1,9 @@
 package com.example.swp391.controller;
 
-import com.example.swp391.entity.ProjectEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 @Controller
 public class ScreenController {
     @GetMapping("/")
@@ -38,15 +38,8 @@ public class ScreenController {
     public String showDesignServicePage(Model model) {
         return "designService";
     }
-    @GetMapping("/maintenanceServices")
-    public String showMaintenanceServicesPage(Model model) {
-        return "MaintenanceServices";
-    }
-    @GetMapping("/forgot-password-form")
-    public String showForgotPasswordForm(Model model) {
-        return "forgotPassword";
-    }
-
+//    @GetMapping("/services")
+//    public String showServicesPage(Model model) { return "MaintenanceServices";}
 
 
 }
