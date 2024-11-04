@@ -49,77 +49,69 @@
               >Don't have an account?
               <a th:href="@{/register}">Sign Up</a></span
             >
-            <header>Login</header>
-          </div>
+        <header>Login</header>
+      </div>
 
-          <form th:method="post" th:action="@{/account/login}">
-            <div class="input-box">
-              <input
-                id="accountName"
-                name="accountName"
-                type="text"
-                class="input-field"
-                placeholder="accountName"
-              />
-              <i class="bx bx-user"></i>
-            </div>
-            <div class="input-box">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                class="input-field"
-                placeholder="Password"
-              />
-              <i class="bx bx-lock-alt"></i>
-            </div>
-            <div
-              th:if="${message != null}"
-              class="error-message"
-              style="color: red"
-            >
-              <p th:text="${message}"></p>
-            </div>
-            <div class="input-box">
-              <input type="submit" class="submit" value="Sign In" />
-            </div>
-          </form>
-          <div class="btn-social">
-            <div class="btn-google">
-              <i class="fab fa-google"></i> Sign in with Google
-            </div>
-            <div class="btn-facebook">
-              <i class="fab fa-facebook-f"></i> Sign in with Facebook
-            </div>
-          </div>
-          <div class="two-col">
-            <div class="one">
-              <input type="checkbox" id="login-check" />
-              <label for="login-check"> Remember Me</label>
-            </div>
-            <!-- Liên kết tới trang quên mật khẩu -->
-            <div class="two">
-              <a
-                th:href="@{/account/forgot-password-form}"
-                style="color: blue; text-decoration: underline; cursor: pointer"
-              >
-                Forgot password?
-              </a>
-            </div>
-          </div>
+      <form th:method="post" th:action="@{/account/login}">
+        <div class="input-box">
+
+          <input
+                  id="accountName"
+                  name="accountName"
+                  type="text"
+                  class="input-field"
+                  placeholder="accountName"
+          />
+          <i class="bx bx-user"></i>
+        </div>
+        <div class="input-box">
+
+          <input id="password" name="password" type="password" class="input-field" placeholder="Password" />
+          <i class="bx bx-lock-alt"></i>
+        </div>
+        <div th:if="${messageLogin != null}" class="error-message" style="color:red;">
+          <p th:text="${messageLogin}"></p>
+        </div>
+        <div class="input-box">
+          <input type="submit" class="submit" value="Sign In" />
+        </div>
+
+      </form>
+      <div class="btn-social">
+        <div class="btn-google">
+          <i class="fab fa-google"></i> Sign in with Google
+        </div>
+        <div class="btn-facebook">
+          <i class="fab fa-facebook-f"></i> Sign in with Facebook
         </div>
       </div>
-    </div>
+      <div class="two-col">
+        <div class="one">
+          <input type="checkbox" id="login-check" />
+          <label for="login-check"> Remember Me</label>
+        </div>
+        <!-- Liên kết tới trang quên mật khẩu -->
+        <div class="two">
+          <a th:href="@{/forgot-password-form}" style="color: blue; text-decoration: underline; cursor: pointer;">
+            Forgot password?
+          </a>
+        </div>
 
-    <script>
-      function myMenuFunction() {
-        var i = document.getElementById("navMenu");
-        if (i.className === "nav-menu") {
-          i.className += " responsive";
-        } else {
-          i.className = "nav-menu";
-        }
-      }
-    </script>
-  </body>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+    if (i.className === "nav-menu") {
+      i.className += " responsive";
+    } else {
+      i.className = "nav-menu";
+    }
+  }
+</script>
+</body>
 </html>
