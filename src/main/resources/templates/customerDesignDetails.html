@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Thiết Kế</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Chi Tiết Thiết Kế</h2>
+    <div>
+        <p><strong>ID Thiết Kế:</strong> <span th:text="${design.designId}"></span></p>
+        <p><strong>Tên:</strong> <span th:text="${design.designName}"></span></p>
+        <p><strong>Mô Tả:</strong> <span th:text="${design.description}"></span></p>
+        <p><strong>Giá:</strong> <span th:text="${design.price}"></span> VNĐ</p>
+        <p><strong>Dung Tích Nước:</strong> <span th:text="${design.waterCapacity}"></span> lít</p>
+        <p><strong>Hình Dạng:</strong> <span th:text="${design.shapeOfPond}"></span></p>
+        <p><strong>Kích Cỡ:</strong> <span th:text="${design.size}"></span></p>
+        <p><strong>Trạng Thái:</strong> <span th:text="${design.status}"></span></p>
+    </div>
+    <a th:href="@{'/customer/dashboard'}" class="btn btn-default">Quay lại Bảng Điều Khiển</a>
+    <a th:if="${design.status.name() == 'NeedToPayment'}"
+       th:href="@{'/customer/design/' + ${design.designId} + '/payment'}"
+       class="btn btn-success">Thanh Toán</a>
+</div>
+</body>
+</html>

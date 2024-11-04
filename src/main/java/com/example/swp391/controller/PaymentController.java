@@ -4,6 +4,7 @@ import com.example.swp391.Config.VNPayService;
 import com.example.swp391.dto.PaymentSource;
 import com.example.swp391.entity.*;
 import com.example.swp391.service.CustomerService;
+import com.example.swp391.service.DesignService;
 import com.example.swp391.service.MaterialService;
 import com.example.swp391.service.ProjectService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +35,8 @@ public class PaymentController {
     private CustomerService customerService;
     @Autowired
     private VNPayService vnPayService;
+    @Autowired
+    private DesignService designService;
 
     @Transactional
     @PostMapping("/create")
@@ -41,7 +44,7 @@ public class PaymentController {
             @RequestParam("payment-method") String paymentMethod,
             @RequestParam("source") PaymentSource source,
             HttpSession session,
-            @RequestParam(value = "projectId", required = false) Long projectId,
+            @RequestParam(value = "designId", required = false) Long designId,
             RedirectAttributes redirectAttributes) {
 
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
@@ -59,50 +62,56 @@ public class PaymentController {
                 return processCartPayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
             case SERVICE:
                 return processServicePayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
-//            case PROJECT:
-//                if (projectId == null) {
-//                    redirectAttributes.addFlashAttribute("error", "Project ID is required for project payments.");
-//                    return "redirect:/customer/dashboard";
-//                }
-//                return createProjectPayment(paymentMethod, projectId, session, redirectAttributes);
+            case PROJECT:
+                return processProjectPayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
+
             default:
                 redirectAttributes.addFlashAttribute("error", "Invalid payment source.");
                 return "redirect:/cart/view";
         }
     }
-//    private String createProjectPayment(
-//            @RequestParam("payment-method") String paymentMethod,
-//            @RequestParam("projectId") Long projectId,
-//            HttpSession session,
-//            RedirectAttributes redirectAttributes) {
-//
-//        AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
-//        if (loggedInUser == null || loggedInUser.getCustomer() == null) {
-//            redirectAttributes.addFlashAttribute("error", "Please complete your customer information before making a payment.");
-//            return "redirect:/account/profile";
-//        }
-//
-//        CustomerEntity customer = loggedInUser.getCustomer();
-//        String paymentStatus = "Success";
-//
-//        // Lấy thông tin dự án từ projectService
-//        ProjectEntity project = projectService.findById(projectId);
-//        if (project.getCustomer().getCustomerID() != customer.getCustomerID()) {
-//            redirectAttributes.addFlashAttribute("error", "Project not found or access denied.");
-//            return "redirect:/customer/dashboard";
-//        }
-//
-//        // Tổng chi phí của dự án
-//        double totalAmount = project.getTotalCost();
-//        double discountRate = customerService.calculatePointDiscount(customer);
-//        double discountedTotalAmount = totalAmount * (1 - discountRate);
-//
-//        // Lưu chi tiết thanh toán vào session
-//        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, 0, paymentStatus, null);
-//        project.setStatus("Paid"); // Thay đổi trạng thái thành "Paid"
-//        projectService.save(project); // Lưu cập nhật vào cơ sở dữ liệu
-//        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
-//    }
+    private String processProjectPayment(String paymentMethod, CustomerEntity customer, HttpSession session,
+                                         RedirectAttributes redirectAttributes, String paymentStatus) {
+        // Lấy thông tin thiết kế từ session với tên mới là "designs"
+        Map<DesignEntity, Integer> designs = (Map<DesignEntity, Integer>) session.getAttribute("designForPayment");
+        if (designs == null || designs.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "You have not selected any service.");
+            return "redirect:/services/serviceForm";
+        }
+
+        // Tạo một biến mới designItems để xử lý logic sau này
+        Map<DesignEntity, Integer> designItems = new HashMap<>(designs);
+
+        // Kiểm tra vật liệu đủ để thực hiện các dịch vụ đã chọn
+        if (!materialService.checkMaterialsForDesignItems(designItems)) {
+            redirectAttributes.addFlashAttribute("error", "Not enough materials in stock for the selected services.");
+            return "redirect:/services/serviceForm";
+        }
+
+        // Cập nhật kho sau khi thanh toán
+        materialService.updateMaterialsAfterCheckoutForDesignItems(designItems);
+
+        // Tính toán giảm giá và tổng chi phí
+        double discountRate = customerService.calculatePointDiscount(customer);
+        double totalAmount = designItems.keySet().stream().mapToDouble(d -> d.getPrice() * designItems.get(d)).sum();
+        double discountedTotalAmount = totalAmount * (1 - discountRate);
+
+        // Tạo dự án từ dịch vụ và tính điểm thưởng
+        int totalPointsEarned = projectService.createProjectFromService(designItems, customer, paymentStatus, discountRate);
+
+        // Lưu thông tin thanh toán vào session với "designItems"
+        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, totalPointsEarned, paymentStatus, designItems);
+// Cập nhật trạng thái thiết kế thành Available
+        for (DesignEntity design : designItems.keySet()) {
+            design.setStatus(DesignEntity.Status.Available);
+            designService.save(design); // Lưu cập nhật vào cơ sở dữ liệu
+        }
+        // Xóa thông tin dịch vụ sau khi thanh toán
+        session.removeAttribute("designForPayment");
+        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
+    }
+
+
 
 
 
@@ -218,7 +227,7 @@ private String processServicePayment(String paymentMethod, CustomerEntity custom
             }
 
             // Chuyển đổi số tiền từ đồng sang đơn vị xu và thành số nguyên (long)
-            long vnpAmount = (long) (discountedTotalAmount * 1000);
+            long vnpAmount = (long) (discountedTotalAmount * 1000 );
             // Tạo URL thanh toán qua VNPay
             String orderInfo = "Thanh toán đơn hàng " + transactionId;
             String paymentUrl = vnPayService.createOrder((int) vnpAmount, orderInfo, "http://localhost:8080/payment");

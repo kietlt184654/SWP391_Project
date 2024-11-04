@@ -1,0 +1,51 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Thiết Kế</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Chi Tiết Thiết Kế</h2>
+    <div>
+        <p><strong>ID:</strong> <span th:text="${design.designId}"></span></p>
+        <p><strong>Tên:</strong> <span th:text="${design.designName}"></span></p>
+        <p><strong>Mô Tả:</strong> <span th:text="${design.description}"></span></p>
+    </div>
+
+    <h3>Thêm Nguyên Liệu</h3>
+    <form th:action="@{'/manager/designs/' + ${design.designId} + '/approve'}" method="post">
+        <div id="materialsContainer">
+            <div class="form-group">
+                <label for="material_0">Nguyên Liệu</label>
+                <select class="form-control" id="material_0" name="materials[0].materialId">
+                    <option value="" disabled selected>Chọn nguyên liệu</option>
+                    <option th:each="material : ${materials}"
+                            th:value="${material.materialId}"
+                            th:text="${material.materialName + ' (' + material.unit + ')'}"></option>
+                </select>
+                <input type="number" class="form-control" name="materials[0].quantityNeeded" placeholder="Số lượng" min="1">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Duyệt và Thêm Nguyên Liệu</button>
+        <button type="button" class="btn btn-danger" onclick="rejectDesign()">Từ Chối Thiết Kế</button>
+    </form>
+</div>
+
+<script>
+    function rejectDesign() {
+        if (confirm("Bạn có chắc chắn muốn từ chối thiết kế này không?")) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = /*[[@{'/manager/designs/' + ${design.designId} + '/reject'}]]*/ '';
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+</body>
+</html>
+

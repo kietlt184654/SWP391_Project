@@ -57,7 +57,7 @@ public class DesignEntity {
     }
 
     public enum Status {
-        Available, Unavailable, Pending, NeedToPayment
+        Available, Unavailable, Pending, Rejected, NeedToPayment
     }
     @OneToMany(mappedBy = "design", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<DesignMaterialQuantity> designMaterialQuantities; // Danh sách các vật liệu cần thiết

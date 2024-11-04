@@ -50,7 +50,7 @@ public class AccountController {
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
-                return "redirect:/HomeConsulting";
+                return "consultingHome";
             } else if (account.getAccountTypeID().equals("Construction Staff")) {
                 return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
             }

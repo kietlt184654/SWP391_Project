@@ -171,5 +171,9 @@ public class MaterialService {
     public MaterialEntity save(MaterialEntity material) {
         return materialRepository.save(material);
     }
+    // Phương thức tìm tất cả nguyên liệu
+    public List<MaterialEntity> findAll() {
+        return materialRepository.findAll();
+    }
 
 }

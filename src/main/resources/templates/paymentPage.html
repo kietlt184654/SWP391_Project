@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <title>Design Payment</title>
@@ -26,11 +24,8 @@
 
         <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
             <a th:href="@{/account/profile}" class="d-flex align-items-center">
-                <img th:src="@{${session.loggedInUser.images} ?: '/img/defaultAva.jpg'}"
-                     alt="User Avatar"
-                     class="rounded-circle"
-                     width="40"
-                     height="40">
+                <img th:src="@{${session.loggedInUser.images} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                     class="rounded-circle" width="40" height="40">
                 <span class="ms-2" th:text="${session.loggedInUser.accountName}">AccountName</span>
             </a>
             <form th:action="@{/account/logout}" method="post" class="ms-3">
@@ -39,7 +34,6 @@
         </div>
     </div>
 
-    <!-- Logo -->
     <div class="nav-logo">
         <p>LOGO</p>
     </div>
@@ -47,7 +41,8 @@
 
 <!-- Hero Section -->
 <section class="hero-section">
-    <div class="hero-content text-center">
+    <div class="hero-content">
+        <img src="/img/design_payment.jpg" alt="Design Payment" />
         <h1>Design Payment</h1>
         <ol class="breadcrumb">
             <li><a href="/homepage.html">Home</a></li>
@@ -57,31 +52,67 @@
     </div>
 </section>
 
-<!-- Design Details Section -->
+<!-- Selected Design Section -->
 <div class="container">
-    <div class="selected-design mt-4">
-        <h2>Design Details</h2>
+    <div class="selected-design">
+        <h2>Selected Design</h2>
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>Design ID</th>
                 <th>Design Name</th>
                 <th>Description</th>
-                <th>Total Cost</th>
+                <th>Cost</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td th:text="${design.designId}">Design ID</td>
-                <td th:text="${design.designName}">Design Name</td>
-                <td th:text="${design.description}">Description</td>
-                <td th:text="${#numbers.formatDecimal(paymentAmount, 1, 2)}">Total Cost</td>
+                <td th:text="${designforproject.designId}">Design ID</td>
+                <td th:text="${designforproject.designName}">Design Name</td>
+                <td th:text="${designforproject.description}">Description</td>
+                <td th:text="${#numbers.formatDecimal(paymentAmount, 1, 2)}">Cost</td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Payment Method Selection -->
-    <div class="payment-info mt-4">
-        <h2>Select Payment Method</h2>
-        <
+    <!-- Payment Info Section -->
+    <div class="payment-info">
+        <h2>Payment</h2>
+        <form th:action="@{/payment/create}" method="post">
+            <input type="hidden" name="source" value="PROJECT"> <!-- Pass 'CART' as the source -->
+            <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
+            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
+            <button type="submit" class="checkout-btn">Check Out</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>Information</h4>
+            <p>Open: 8 AM - 10 PM</p>
+            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+        </div>
+        <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="link-to-design">Design Services</a></li>
+                <li><a href="link-to-payment">Payment Information</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+            <p><i class="fa-brands fa-facebook"></i>
+                <a href="https://facebook.com" target="_blank">Visit Us</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

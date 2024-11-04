@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ Nhân Viên Tư Vấn</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Trang Chủ Nhân Viên Tư Vấn</h2>
+
+    <!-- Thông báo thành công -->
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        <p th:text="${message}"></p>
+    </div>
+
+    <!-- Nút thêm thiết kế -->
+    <a th:href="@{/HomeConsulting/add}" class="btn btn-primary">Thêm Thiết Kế Mới</a>
+
+    <!-- Các nội dung khác của trang -->
+</div>
+</body>
+</html>
