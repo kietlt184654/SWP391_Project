@@ -15,4 +15,7 @@ public interface DesignRepository extends JpaRepository<DesignEntity, Long> {
      * @return Danh sách các DesignEntity có status được chỉ định
      */
     List<DesignEntity> findByStatus(DesignEntity.Status status);
+    // Phương thức để tìm kiếm thiết kế theo trạng thái và TypeDesignId
+    List<DesignEntity> findByStatusAndTypeDesign_TypeDesignId(DesignEntity.Status status, long typeDesignId);
+    List<DesignEntity> findByCustomerReference(Long customerReference);
 }

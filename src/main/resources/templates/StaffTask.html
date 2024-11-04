@@ -14,7 +14,8 @@
     <tr>
       <th>Project ID</th>
       <th>Tên dự án</th>
-      <
+      <th>Ngày bắt đầu</th>
+      <th>Ngày kết thúc</th>
       <th>Deadline</th>
       <th>Trạng thái</th>
       <th>Task Description</th>
@@ -26,15 +27,23 @@
       <tr>
         <td th:text="${staffProject.project.projectID}">Project ID</td>
         <td th:text="${staffProject.project.name}">Tên dự án</td>
-
+        <td th:text="${staffProject.project.startDate}">Ngày bắt đầu</td>
         <td th:text="${staffProject.assignmentDate}">Deadline</td>
         <td th:text="${staffProject.status}">Trạng thái</td>
         <td th:text="${staffProject.task}">Task Description</td>
         <td>
           <form class="accept-form" th:action="@{/accept}" method="post">
-            <input type="hidden" th:name="projectID" th:value="${staffProject.project.projectID}" />
-            <input type="hidden" th:name="currentStatus" th:value="${staffProject.status}"/>
+            <input type="hidden" th:name="staffProjectID" th:value="${staffProject.staffProjectID}" />
+            <input type="hidden" th:name="currentStatus" th:value="${staffProject.status}" />
             <button type="submit" class="accept">Accept</button>
+          </form>
+
+          <!-- Form Upload Image -->
+          <form th:action="@{/uploadProgressImage}" method="post" enctype="multipart/form-data" style="margin-top: 10px;">
+            <input type="hidden" name="staffProjectID" th:value="${staffProject.staffProjectID}" />
+            <input type="file" name="file" accept="image/*" />
+            <input type="text" name="url" placeholder="Hoặc nhập URL hình ảnh" />
+            <button type="submit">Upload Image</button>
           </form>
         </td>
       </tr>

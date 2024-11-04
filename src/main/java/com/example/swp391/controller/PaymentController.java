@@ -2,10 +2,7 @@ package com.example.swp391.controller;
 
 import com.example.swp391.Config.VNPayService;
 import com.example.swp391.dto.PaymentSource;
-import com.example.swp391.entity.AccountEntity;
-import com.example.swp391.entity.CartEntity;
-import com.example.swp391.entity.CustomerEntity;
-import com.example.swp391.entity.DesignEntity;
+import com.example.swp391.entity.*;
 import com.example.swp391.service.CustomerService;
 import com.example.swp391.service.MaterialService;
 import com.example.swp391.service.ProjectService;
@@ -44,6 +41,39 @@ public class PaymentController {
             @RequestParam("payment-method") String paymentMethod,
             @RequestParam("source") PaymentSource source,
             HttpSession session,
+            @RequestParam(value = "projectId", required = false) Long projectId,
+            RedirectAttributes redirectAttributes) {
+
+        AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null || loggedInUser.getCustomer() == null) {
+            redirectAttributes.addFlashAttribute("error", "Please complete your customer information before making a payment.");
+            return "redirect:/account/profile";
+        }
+
+
+        CustomerEntity customer = loggedInUser.getCustomer();
+        String paymentStatus = "Success";
+
+        switch (source) {
+            case CART:
+                return processCartPayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
+            case SERVICE:
+                return processServicePayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
+            case PROJECT:
+                if (projectId == null) {
+                    redirectAttributes.addFlashAttribute("error", "Project ID is required for project payments.");
+                    return "redirect:/customer/dashboard";
+                }
+                return createProjectPayment(paymentMethod, projectId, session, redirectAttributes);
+            default:
+                redirectAttributes.addFlashAttribute("error", "Invalid payment source.");
+                return "redirect:/cart/view";
+        }
+    }
+    private String createProjectPayment(
+            @RequestParam("payment-method") String paymentMethod,
+            @RequestParam("projectId") Long projectId,
+            HttpSession session,
             RedirectAttributes redirectAttributes) {
 
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
@@ -55,16 +85,26 @@ public class PaymentController {
         CustomerEntity customer = loggedInUser.getCustomer();
         String paymentStatus = "Success";
 
-        switch (source) {
-            case CART:
-                return processCartPayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
-            case SERVICE:
-                return processServicePayment(paymentMethod, customer, session, redirectAttributes, paymentStatus);
-            default:
-                redirectAttributes.addFlashAttribute("error", "Invalid payment source.");
-                return "redirect:/cart/view";
+        // Lấy thông tin dự án từ projectService
+        ProjectEntity project = projectService.findById(projectId);
+        if (project.getCustomer().getCustomerID() != customer.getCustomerID()) {
+            redirectAttributes.addFlashAttribute("error", "Project not found or access denied.");
+            return "redirect:/customer/dashboard";
         }
+
+        // Tổng chi phí của dự án
+        double totalAmount = project.getTotalCost();
+        double discountRate = customerService.calculatePointDiscount(customer);
+        double discountedTotalAmount = totalAmount * (1 - discountRate);
+
+        // Lưu chi tiết thanh toán vào session
+        storePaymentDetailsInSession(session, totalAmount, discountRate, discountedTotalAmount, 0, paymentStatus, null);
+        project.setStatus("Paid"); // Thay đổi trạng thái thành "Paid"
+        projectService.save(project); // Lưu cập nhật vào cơ sở dữ liệu
+        return handleRedirectAfterPayment(paymentMethod, redirectAttributes);
     }
+
+
 
     private String processCartPayment(String paymentMethod, CustomerEntity customer, HttpSession session,
                                       RedirectAttributes redirectAttributes, String paymentStatus) {

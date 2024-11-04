@@ -8,13 +8,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <title>Project Payment</title>
+    <title>Design Payment</title>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="nav">
-    <!-- User Login Info -->
     <div class="nav-button">
         <div th:if="${session.loggedInUser == null}">
             <form th:action="@{/login}" method="GET" style="display: inline;">
@@ -48,79 +47,41 @@
 
 <!-- Hero Section -->
 <section class="hero-section">
-    <div class="hero-content">
-        <img src="/img/project_payment.jpg" alt="Project Payment" />
-        <h1>Project Payment</h1>
+    <div class="hero-content text-center">
+        <h1>Design Payment</h1>
         <ol class="breadcrumb">
             <li><a href="/homepage.html">Home</a></li>
-            <li><a href="/projects.html">Projects</a></li>
-            <li class="active">Project Payment</li>
+            <li><a href="/designs.html">Designs</a></li>
+            <li class="active">Design Payment</li>
         </ol>
     </div>
 </section>
 
-<!-- Selected Project Section -->
+<!-- Design Details Section -->
 <div class="container">
-    <div class="selected-project">
-        <h2>Project Details</h2>
+    <div class="selected-design mt-4">
+        <h2>Design Details</h2>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Project ID</th>
-                <th>Project Name</th>
+                <th>Design ID</th>
+                <th>Design Name</th>
                 <th>Description</th>
                 <th>Total Cost</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td th:text="${project.projectID}">Project ID</td>
-                <td th:text="${project.name}">Project Name</td>
-                <td th:text="${project.description}">Description</td>
+                <td th:text="${design.designId}">Design ID</td>
+                <td th:text="${design.designName}">Design Name</td>
+                <td th:text="${design.description}">Description</td>
                 <td th:text="${#numbers.formatDecimal(paymentAmount, 1, 2)}">Total Cost</td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Payment Info Section -->
-    <form th:action="@{/payment/complete}" method="post">
-        <input type="hidden" name="projectId" th:value="${project.projectID}">
-        <div class="payment-info">
-            <h2>Select Payment Method</h2>
-            <input type="radio" id="cod" name="paymentMethod" value="cod" checked /> COD<br />
-            <input type="radio" id="bank-transfer" name="paymentMethod" value="bank-transfer" /> Bank Transfer<br /><br />
-            <button type="submit" class="checkout-btn btn btn-primary">Proceed to Payment</button>
-        </div>
-    </form>
-</div>
-
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-info">
-            <h4>Information</h4>
-            <p>Open: 8 AM - 10 PM</p>
-            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
-        </div>
-        <div class="footer-services">
-            <h4>Services</h4>
-            <ul>
-                <li><a href="link-to-construction">Construction Koi Pond</a></li>
-                <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
-                <li><a href="link-to-design">Design upon Requirements</a></li>
-            </ul>
-        </div>
-        <div class="footer-contact">
-            <h4>Contact</h4>
-            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-            <p><i class="fa-brands fa-facebook"></i>
-                <a href="https://facebook.com" target="_blank">Visit Us</a>
-            </p>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>
+    <!-- Payment Method Selection -->
+    <div class="payment-info mt-4">
+        <h2>Select Payment Method</h2>
+        <

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Account")
 @Data
@@ -47,5 +49,8 @@ public class AccountEntity {
     // Thêm liên kết với StaffEntity
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL) // cascade để đồng bộ hóa dữ liệu
     private StaffEntity staff;
+
+//    @OneToMany(mappedBy = "senderAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<ChatMessage> sentMessages;
 
 }

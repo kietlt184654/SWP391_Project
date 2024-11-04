@@ -2,6 +2,7 @@ package com.example.swp391.service;
 
 import com.example.swp391.dto.ServiceRequest;
 import com.example.swp391.entity.DesignEntity;
+import com.example.swp391.entity.ProjectEntity;
 import com.example.swp391.repository.DesignRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,8 @@ public class DesignService {
     @Autowired
     private DesignRepository designRepository;
 
-    public List<DesignEntity> getAllProducts() {
-        return designRepository.findAll(); // Lấy tất cả các sản phẩm từ database
-    }
+
+
 
     public DesignEntity findDesignById(Long id) {
         return designRepository.findById(id).orElse(null);
@@ -31,13 +31,6 @@ public class DesignService {
     public List<DesignEntity> getDesignsByTypeId() {
         return designRepository.findByTypeDesign_TypeDesignId(1L); // Sử dụng 1L cho giá trị typeDesignId = 1
     }
-    public List<DesignEntity> getMaintenanceDesigns() {
-        return designRepository.findByTypeDesign_TypeDesignId(3L);
-    }
-
-    public List<DesignEntity> getCleaningDesigns() {
-        return designRepository.findByTypeDesign_TypeDesignId(4L);
-    }
     // Tìm thiết kế bảo dưỡng phù hợp
     public List<DesignEntity> findSuitableMaintenanceDesigns(ServiceRequest serviceRequest) {
         return designRepository.findByTypeDesign_TypeDesignIdAndSizeAndPriceLessThanEqualAndEstimatedCompletionTimeLessThanEqual(
@@ -49,26 +42,6 @@ public class DesignService {
         return designRepository.findByTypeDesign_TypeDesignIdAndSizeAndPriceLessThanEqualAndEstimatedCompletionTimeLessThanEqual(
                 4L, serviceRequest.getSize(), serviceRequest.getBudget(), serviceRequest.getEstimatedCompletionTime());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     
         /**
@@ -87,5 +60,25 @@ public class DesignService {
         public List<DesignEntity> getDesignsByIds(List<Long> designIds) {
             return designRepository.findAllById(designIds);
         }
+    public DesignEntity findById(Long id) {
+        Optional<DesignEntity> design = designRepository.findById(id);
+        return design.orElse(null);
+    }
+
+    public void save(DesignEntity design) {
+        designRepository.save(design);
+    }
+
+    public void deleteById(Long id) {
+        designRepository.deleteById(id);
+    }
+
+    // Phương thức để tìm các thiết kế có trạng thái và loại thiết kế nhất định
+    public List<DesignEntity> findByStatusAndTypeDesignId(DesignEntity.Status status, long typeDesignId) {
+        return designRepository.findByStatusAndTypeDesign_TypeDesignId(status, typeDesignId);
+    }
+    public List<DesignEntity> findDesignsByCustomerReference(Long customerId) {
+        return designRepository.findByCustomerReference(customerId);
+    }
     }
 

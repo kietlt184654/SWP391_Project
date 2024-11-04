@@ -56,11 +56,16 @@
     <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
   </ul>
 </div>
-
+<div th:if="${errorMessageEditProfile}" class="alert alert-success">
+  <p th:text="${errorMessageEditProfile}"></p>
+</div>
+<div th:if="${successMessageEditProfile}" class="alert alert-success">
+  <p th:text="${successMessageEditProfile}"></p>
+</div>
 <!-- Profile Edit Form -->
 <div class="container">
   <h2>Edit Profile</h2>
-  <form class="profile-form" action="/account/update-profile" method="POST" enctype="multipart/form-data">
+  <form class="profile-form" th:action="@{/account/update-profile}" method="post" enctype="multipart/form-data">
     <!-- Avatar Upload -->
     <div class="avatar-upload">
       <div class="avatar">

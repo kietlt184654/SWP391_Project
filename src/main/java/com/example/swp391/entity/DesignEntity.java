@@ -57,7 +57,7 @@ public class DesignEntity {
     }
 
     public enum Status {
-        Available, Unavailable, Pending
+        Available, Unavailable, Pending, NeedToPayment
     }
     @OneToMany(mappedBy = "design", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<DesignMaterialQuantity> designMaterialQuantities; // Danh sách các vật liệu cần thiết
@@ -65,4 +65,7 @@ public class DesignEntity {
     public List<DesignMaterialQuantity> getMaterialQuantities() {
         return this.designMaterialQuantities; // Trả về danh sách các vật liệu cần thiết
     }
+    @Column(name = "CustomerReference")
+    private Long customerReference;
+
 }

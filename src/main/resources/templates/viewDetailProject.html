@@ -63,15 +63,22 @@
   <h3>Các nhiệm vụ đã được phân công:</h3>
   <ul>
     <th:block th:each="task : ${tasks}">
-      <li class="task-item">
+      <div class="task-item">
         <div class="task-details">
           <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> <span th:text="${task.task}"></span></span>
           <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
           <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
 <!--          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>-->
           <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${task.assignmentDate}">Assignment Date</span></span>
+          <div class="task-buttons">
+            <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
+            <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
+              <input type="hidden" name="projectID" th:value="${project.projectID}" />
+              <button type="submit" class="btn-delete">Xóa</button>
+            </form>
+          </div>
         </div>
-      </li>
+      </div>
     </th:block>
   </ul>
 </div>

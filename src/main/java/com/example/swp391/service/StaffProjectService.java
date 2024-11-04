@@ -6,6 +6,8 @@ import com.example.swp391.repository.StaffProjectRepository;
 import com.example.swp391.repository.StaffRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,13 +22,18 @@ public class StaffProjectService {
     private StaffProjectRepository projectStaffRepository;
     @Autowired
     private StaffRepository staffRepository; // Thêm repository để tìm kiếm StaffEntity
-
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     private ProjectRepository projectRepository;
     @Autowired
     private StaffProjectRepository staffProjectRepository;
 
-    public void assignStaffToProject(Integer projectId, Integer staffId, String taskDescription, String deadline,String status) {
+
+    public void deleteStaffProjectById(int id) {
+        staffProjectRepository.deleteById(id);
+    }
+    public void assignStaffToProject(Long projectId, Integer staffId, String taskDescription, String deadline, String status) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate parsedDeadline = LocalDate.parse(deadline, formatter);
 
@@ -59,8 +66,22 @@ public class StaffProjectService {
 
         // Save the new staff project assignment
         projectStaffRepository.save(staffProject);
+
+        // Send notification email
+        sendAssignmentEmail(staff.getAccount().getEmail(), project.getName(), taskDescription, deadline);
     }
-    public List<StaffProjectEntity> getTasksByProjectId(Integer projectId) {
+
+    private void sendAssignmentEmail(String email, String projectName, String taskDescription, String deadline) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("You have been assigned to a new project: " + projectName);
+        message.setText("Dear Staff,\n\nYou have been assigned to the project: " + projectName +
+                ".\n\nTask: " + taskDescription + "\nDeadline: " + deadline +
+                "\n\nPlease check your account for more details.\n\nBest regards,\nProject Management Team");
+
+        mailSender.send(message);
+    }
+    public List<StaffProjectEntity> getTasksByProjectId(Long projectId) {
         return staffProjectRepository.findByProject_ProjectID(projectId); // Sử dụng tên phương thức đã sửa
     }
     public List<StaffProjectEntity> getTasksByStatus(String status) {
@@ -87,6 +108,17 @@ public class StaffProjectService {
             return false; // StaffProject không tìm thấy
         }
     }
-    // Hàm để cập nhật trạng thái của StaffProject
+    public StaffProjectEntity findById(Integer staffProjectID) {
+        return staffProjectRepository.findById(staffProjectID)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy StaffProject"));
+    }
 
+    // Hàm để cập nhật trạng thái của StaffProject
+    @Transactional
+    public void updateProgressImage(Integer staffProjectID, String imagePath) {
+        StaffProjectEntity staffProject = staffProjectRepository.findById(staffProjectID)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án của nhân viên"));
+        staffProject.setProgressImage(imagePath);
+        staffProjectRepository.save(staffProject);
+    }
 }

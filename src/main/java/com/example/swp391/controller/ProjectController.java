@@ -27,13 +27,13 @@ public class ProjectController {
 
     @GetMapping("/showProjects")
     public String showProjects(Model model) {
-        List<ProjectEntity> projects = projectService.findAllByProjectIdOrderByProjectIdDesc;  // Giả sử có phương thức lấy tất cả các project
+        List<ProjectEntity> projects = projectService.findAll();  // Giả sử có phương thức lấy tất cả các project
         model.addAttribute("projects", projects);
         return "show_projects";
     }
 
     @GetMapping("/viewDetailProject/{projectID}")
-    public String showDetailProject(@PathVariable Integer projectID, Model model) {
+    public String showDetailProject(@PathVariable Long projectID, Model model) {
         ProjectEntity project = projectService.getProjectById(projectID)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectID));
 

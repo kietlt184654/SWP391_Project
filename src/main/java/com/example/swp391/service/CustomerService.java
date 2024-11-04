@@ -3,8 +3,10 @@ package com.example.swp391.service;
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.entity.PointEntity;
+import com.example.swp391.entity.ProjectEntity;
 import com.example.swp391.repository.CustomerRepository;
 import com.example.swp391.repository.PointRepository;
+import com.example.swp391.repository.ProjectRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 @Autowired
 private PointRepository pointRepository;
+@Autowired
+private ProjectRepository projectRepository;
+
     public long countUsers() {
         return customerRepository.count();
     }
@@ -72,5 +77,10 @@ private PointRepository pointRepository;
             return 0.0; // Không giảm giá
         }
     }
+    public CustomerEntity findById(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new IllegalArgumentException("Khách hàng không tồn tại với ID: " + customerId));
+    }
+
 
 }

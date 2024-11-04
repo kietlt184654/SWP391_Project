@@ -9,15 +9,21 @@ import com.example.swp391.service.ProjectService;
 import com.example.swp391.service.StaffProjectService;
 import com.example.swp391.service.StaffService;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 
@@ -67,10 +73,9 @@ public class TaskController {
         staffService.deleteStaff(staffId);
         return "redirect:/staff/list";
     }
-
     @PostMapping("/tasks/project/assign")
     public String assignStaffToProject(
-            @RequestParam("projectId") Integer projectId,
+            @RequestParam("projectId") Long projectId,
             @RequestParam("staffId") Integer staffId,
             @RequestParam("taskDescription") String taskDescription,
             @RequestParam("deadline") String deadline,
@@ -85,17 +90,18 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("successMessage", "Assign staff to project successfully");
         return "redirect:/staff/list?projectId=" + projectId;
     }
-
-    // Method to fetch tasks by status
-    @GetMapping("/tasks")
-    @ResponseBody
-    public List<StaffProjectEntity> getTasksByStatus(@RequestParam(value = "status", required = false) String status) {
-        if (status == null || status.equals("all")) {
-            return staffProjectService.getAllTasks(); // Method to fetch all tasks
+    @GetMapping("/filterTasks")
+    public String filterTasks(@RequestParam(required = false, defaultValue = "All") String status, Model model) {
+        List<StaffProjectEntity> tasks;
+        if ("All".equals(status)) {
+            tasks = staffProjectService.getAllTasks();
+        } else {
+            tasks = staffProjectService.getTasksByStatus(status);
         }
-        return staffProjectService.getTasksByStatus(status);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("currentStatus", status);
+        return "viewDetailProject";
     }
-
     @GetMapping("/dashboard")
     public String staffDashboard(Model model, HttpSession session) {
         // Lấy thông tin người dùng hiện tại từ session
@@ -113,19 +119,19 @@ public class TaskController {
         return "StaffTask"; // Trả về view 'StaffTask'
     }
     @PostMapping("/accept")
-    public String acceptProject(@RequestParam("projectID") int projectId,
+    public String acceptProject(@RequestParam("staffProjectID") Integer staffProjectId,
                                 @RequestParam("currentStatus") String currentStatus,
                                 RedirectAttributes redirectAttributes) {
         String newStatus;
         if ("To Do".equals(currentStatus)) {
-            newStatus = "In Progress";
-        } else if ("In Progress".equals(currentStatus)) {
+            newStatus = "In-Progress";
+        } else if ("In-Progress".equals(currentStatus)) {
             newStatus = "Done";
         } else {
             newStatus = currentStatus; // Nếu trạng thái không nằm trong To Do hoặc In-Progress thì giữ nguyên
         }
 
-        boolean success = staffProjectService.setStatusForStaffProject(projectId, newStatus);
+        boolean success = staffProjectService.setStatusForStaffProject(staffProjectId, newStatus);
 
         String message;
         if (success) {
@@ -138,5 +144,58 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("message", message);
 
         return "redirect:/dashboard"; // Quay trở lại trang bảng danh sách sau khi cập nhật
+    }
+    @GetMapping("/project/images/{staffProjectID}")
+    public String viewProjectImages(@PathVariable Integer staffProjectID, Model model) {
+        StaffProjectEntity staffProject = staffProjectService.findById(staffProjectID);
+
+        if (staffProject == null || staffProject.getProgressImage() == null || staffProject.getProgressImage().isEmpty()) {
+            model.addAttribute("noImagesMessage", "Chưa cập nhật hình ảnh");
+        } else {
+            model.addAttribute("progressImages", staffProject.getProgressImage());
+        }
+        return "viewProjectImages"; // Trang HTML để hiển thị hình ảnh
+    }
+    private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task"; // Đường dẫn lưu trữ hình ảnh trên server
+
+    @PostMapping("/uploadProgressImage")
+    public String uploadProgressImage(@RequestParam("file") MultipartFile file,
+                                      @RequestParam("url") String url,
+                                      @RequestParam("staffProjectID") Integer staffProjectID,
+                                      RedirectAttributes redirectAttributes) {
+
+        String imagePath = null;
+
+        try {
+            if (!file.isEmpty()) {
+                Path path = Paths.get(UPLOAD_DIR, file.getOriginalFilename());
+                Files.write(path, file.getBytes());
+                imagePath = "/uploads/" + file.getOriginalFilename();
+            } else if (url != null && !url.isEmpty()) {
+                imagePath = url;
+            }
+
+            if (imagePath != null) {
+                staffProjectService.updateProgressImage(staffProjectID, imagePath);
+                redirectAttributes.addFlashAttribute("message", "Cập nhật hình ảnh thành công!");
+            } else {
+                redirectAttributes.addFlashAttribute("message", "Vui lòng tải lên một tệp hoặc nhập URL.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", "Lỗi khi tải lên hình ảnh.");
+        }
+
+        return "redirect:/dashboard";
+    }
+
+    @PostMapping("/deleteService/{id}")
+    public String deleteStaffProject(@PathVariable("id") int staffProjectID,
+                                     @RequestParam("projectID") int projectID,
+                                     RedirectAttributes redirectAttributes) {
+        staffProjectService.deleteStaffProjectById(staffProjectID);
+        redirectAttributes.addFlashAttribute("successMessageDeleteTask", "Task deleted successfully.");
+        return "redirect:/projects/viewDetailProject/" + projectID;
     }
 }

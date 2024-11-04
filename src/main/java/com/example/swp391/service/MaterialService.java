@@ -35,6 +35,10 @@ public class MaterialService {
         return materialRepository.findById(materialId)
                 .orElseThrow(() -> new IllegalArgumentException("Material not found"));
     }
+    // Phương thức tìm nguyên liệu theo tên
+    public MaterialEntity findByName(String materialName) {
+        return materialRepository.findByMaterialName(materialName);
+    }
 
     /**
      * Cập nhật số lượng nguyên vật liệu và ghi log thay đổi
@@ -58,6 +62,7 @@ public class MaterialService {
         changeLog.setChangeDate(new Date());
         materialChangeLogRepository.save(changeLog);
     }
+
 
     /**
      * Kiểm tra nguyên vật liệu cho tất cả thiết kế trong giỏ hàng
@@ -144,6 +149,27 @@ public class MaterialService {
         List<MaterialChangeLogEntity> changeLogs = materialChangeLogRepository.findAll();
         changeLogs.sort(Comparator.comparing(MaterialChangeLogEntity::getChangeDate).reversed());
         return changeLogs;
+    }
+    public void updateMaterialQuantityForDesign(Long materialId, int quantityChange) {
+        // Tìm kiếm nguyên liệu từ DB
+        MaterialEntity material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new IllegalArgumentException("Material not found"));
+
+        // Tính toán số lượng mới
+        int newQuantity = material.getStockQuantity() + quantityChange;
+
+        // Nếu số lượng mới < 0, báo lỗi vì số lượng nguyên liệu không đủ
+        if (newQuantity < 0) {
+            throw new IllegalArgumentException("Số lượng nguyên vật liệu không đủ cho nguyên liệu: " + material.getMaterialName());
+        }
+
+        // Cập nhật số lượng trong kho
+        material.setStockQuantity(newQuantity);
+        materialRepository.save(material);
+    }
+    // Phương thức lưu MaterialEntity
+    public MaterialEntity save(MaterialEntity material) {
+        return materialRepository.save(material);
     }
 
 }

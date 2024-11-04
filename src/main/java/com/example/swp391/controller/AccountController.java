@@ -26,7 +26,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-private CustomerService customerService;
+    private CustomerService customerService;
 
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
@@ -50,8 +50,8 @@ private CustomerService customerService;
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
-                return "FormConsulting";
-            }else if (account.getAccountTypeID().equals("Construction Staff")) {
+                return "redirect:/HomeConsulting";
+            } else if (account.getAccountTypeID().equals("Construction Staff")) {
                 return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
             }
         } else {
@@ -123,10 +123,12 @@ private CustomerService customerService;
 
         return "editprofile"; // Trả về view "edit-profile.html"
     }
-    private static final String uploadDir = "D:\\K5\\SWP391\\UpdateImg";
-    // Định nghĩa đường dẫn thư mục upload trong application.properties
-    //@Value("${upload.directory}")
 
+
+
+
+    // Đường dẫn lưu trữ hình ảnh trên server
+    private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task";
 
     @PostMapping("/update-profile")
     public String updateProfile(@RequestParam("profileImage") MultipartFile profileImage,
@@ -140,25 +142,20 @@ private CustomerService customerService;
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             redirectAttributes.addFlashAttribute("message", "Please log in first.");
-            return "login";
+            return "redirect:/login"; // Điều hướng về trang đăng nhập nếu chưa đăng nhập
         }
 
         try {
-            // Nếu người dùng có upload ảnh mới
             if (!profileImage.isEmpty()) {
-                // Lưu file ảnh vào thư mục upload
-                String fileName = profileImage.getOriginalFilename();
-                Path uploadPath = Paths.get(uploadDir, fileName);
+                // Đổi tên file để tránh trùng lặp
+                String fileName = System.currentTimeMillis() + "_" + profileImage.getOriginalFilename();
+                Path uploadPath = Paths.get(UPLOAD_DIR, fileName);
 
-                // Tạo thư mục nếu chưa tồn tại
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath.getParent());
-                }
+                // Lưu file ảnh vào thư mục đích
+                Files.createDirectories(uploadPath.getParent()); // Tạo thư mục nếu chưa tồn tại
+                Files.write(uploadPath, profileImage.getBytes()); // Ghi file vào đường dẫn
 
-                // Lưu file ảnh vào thư mục
-                profileImage.transferTo(new File(uploadPath.toString()));
-
-                // Lưu đường dẫn ảnh vào cơ sở dữ liệu (chỉ đường dẫn tương đối)
+                // Cập nhật đường dẫn ảnh trong cơ sở dữ liệu
                 loggedInUser.setImages("/uploads/" + fileName);
             }
         } catch (IOException e) {
@@ -180,8 +177,9 @@ private CustomerService customerService;
         session.setAttribute("loggedInUser", loggedInUser);
         redirectAttributes.addFlashAttribute("message", "Profile updated successfully!");
 
-        return "profile";  // Quay lại trang profile sau khi lưu thành công
+        return "redirect:/account/profile";  // Quay lại trang profile sau khi lưu thành công
     }
+
 
     // Hàm hiển thị danh sách khách hàng
     @GetMapping("/customers")
@@ -195,7 +193,8 @@ private CustomerService customerService;
         // Trả về tên template Thymeleaf
         return "manageCustomer";
     }
-//    @GetMapping("/customers")
+
+    //    @GetMapping("/customers")
 //    public String showAllCustomers(Model model) {
 //        List<Object[]> customers = customerService.getAllCustomersWithAccountInfo();
 //        model.addAttribute("customers", customers);
@@ -215,36 +214,43 @@ private CustomerService customerService;
         return "forgotPassword";  // Trả về view forgot-password.html
     }
 
-    // Gửi email lấy token khi quên mật khẩu
+
+
     @PostMapping("/forgot-password")
-    public String forgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
-        try {
-            accountService.sendResetPasswordLink(email);  // Gọi service để gửi email với token
-            redirectAttributes.addFlashAttribute("message", "Password reset link sent to your email.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Email not found.");
+    public String forgotPassword(@RequestParam("email") String email, Model model) {
+        boolean emailExists = accountService.checkIfEmailExistsAndSendResetLink(email);
+
+        if (emailExists) {
+            model.addAttribute("successMessage", "A password reset link has been sent to your email.");
+        } else {
+            model.addAttribute("errorMessage", "Email not found. Please register a new account.");
         }
-        return "redirect:/account/forgot-password-form";  // Điều hướng đến trang quên mật khẩu
+
+        return "forgotPassword"; // Trả về lại trang nhập email
     }
 
-    @GetMapping("/reset-password-form")
+    // Hiển thị form đặt lại mật khẩu
+    @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
-        model.addAttribute("token", token);  // Đưa token vào model để sử dụng trong form
-        return "resetPassword";  // Trả về trang resetPassword.html
+        model.addAttribute("token", token);
+        return "resetPassword"; // Tên của file HTML trong thư mục templates
     }
 
-    // Đặt lại mật khẩu bằng token
+    // Xử lý yêu cầu đặt lại mật khẩu sau khi người dùng nhập mật khẩu mới
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam("token") String token,
                                 @RequestParam("newPassword") String newPassword,
-                                RedirectAttributes redirectAttributes) {
-        try {
-            accountService.updatePassword(token, newPassword);  // Cập nhật mật khẩu mới
-            redirectAttributes.addFlashAttribute("message", "Password updated successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Invalid or expired token.");
+                                Model model) {
+        // Gọi service để kiểm tra token và đặt lại mật khẩu
+        boolean isResetSuccessful = accountService.resetPassword(token, newPassword);
+        if (isResetSuccessful) {
+            model.addAttribute("successMessage", "Your password has been reset successfully.");
+            return "login"; // Chuyển đến trang đăng nhập sau khi đặt lại thành công
+        } else {
+            model.addAttribute("errorMessage", "Invalid or expired token.");
+            return "resetPassword"; // Quay lại trang đặt lại mật khẩu với thông báo lỗi
         }
-        return "redirect:/login";  // Điều hướng đến trang đăng nhập sau khi đặt lại mật khẩu thành công
+
     }
 
 }

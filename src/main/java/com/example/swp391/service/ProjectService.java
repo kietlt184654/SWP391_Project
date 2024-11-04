@@ -6,10 +6,8 @@ import com.example.swp391.repository.PaymentRepository;
 import com.example.swp391.repository.PointRepository;
 import com.example.swp391.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.util.*;
@@ -58,7 +56,7 @@ public class ProjectService {
 //        StaffProjectEntity staffProject = new StaffProjectEntity(staffProjectId, staff, project, new Date(), null);
 //        staffProjectRepository.save(staffProject);
 //    }
-    public Optional<ProjectEntity> getProjectById(Integer projectId) {
+    public Optional<ProjectEntity> getProjectById(Long projectId) {
         return projectRepository.findById(projectId);
     }
     @Transactional
@@ -164,5 +162,13 @@ public class ProjectService {
     }
 
     public List<ProjectEntity> findAllByProjectIdOrderByProjectIdDesc;
+    public ProjectEntity save(ProjectEntity project) {
+        return projectRepository.save(project);
+    }
+    public ProjectEntity findById(Long projectId) {
+        Optional<ProjectEntity> projectOptional = projectRepository.findById(projectId);
+        return projectOptional.orElse(null);
+    }
+
 
 }
