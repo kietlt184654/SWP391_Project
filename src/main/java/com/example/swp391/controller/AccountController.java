@@ -4,11 +4,13 @@ import com.example.swp391.entity.AccountEntity;
 
 import com.example.swp391.service.AccountService;
 
+import com.example.swp391.service.CustomerService;
 import com.example.swp391.service.StaffProjectService;
 import jakarta.servlet.http.HttpSession;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,8 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
 private StaffProjectService staffProjectService;
+    @Autowired
+    private CustomerService customerService;
 
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
@@ -200,43 +204,54 @@ private StaffProjectService staffProjectService;
         return "manager"; // Tên của template HTML (manager.html)
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable int id, RedirectAttributes redirectAttributes) {
+        // Gọi hàm xóa trong AccountService
+        boolean isDeleted = customerService.deleteCustomerById(id);
 
-    // Hiển thị trang forgot-password.html
-    @GetMapping("/forgot-password-form")
-    public String showForgotPasswordForm() {
-        return "forgotPassword";  // Trả về view forgot-password.html
-    }
-
-    // Gửi email lấy token khi quên mật khẩu
-    @PostMapping("/forgot-password")
-    public String forgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
-        try {
-            accountService.sendResetPasswordLink(email);  // Gọi service để gửi email với token
-            redirectAttributes.addFlashAttribute("message", "Password reset link sent to your email.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Email not found.");
+        // Thêm thông báo vào RedirectAttributes để chuyển hướng hiển thị trên giao diện
+        if (isDeleted) {
+            redirectAttributes.addFlashAttribute("messageDeleteUser", "Customer deleted successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("messageDeleteUser", "Customer not found.");
         }
-        return "redirect:/account/forgot-password-form";  // Điều hướng đến trang quên mật khẩu
-    }
 
-    @GetMapping("/reset-password-form")
+        // Chuyển hướng lại trang quản lý khách hàng
+        return "redirect:/account/customer";
+    }
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestParam("email") String email, Model model) {
+        boolean emailExists = accountService.checkIfEmailExistsAndSendResetLink(email);
+
+        if (emailExists) {
+            model.addAttribute("successMessage", "A password reset link has been sent to your email.");
+        } else {
+            model.addAttribute("errorMessage", "Email not found. Please register a new account.");
+        }
+
+        return "forgotPassword"; // Trả về lại trang nhập email
+    }
+    // Hiển thị form đặt lại mật khẩu
+    @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
-        model.addAttribute("token", token);  // Đưa token vào model để sử dụng trong form
-        return "resetPassword";  // Trả về trang resetPassword.html
+        model.addAttribute("token", token);
+        return "resetPassword"; // Tên của file HTML trong thư mục templates
     }
 
-    // Đặt lại mật khẩu bằng token
+    // Xử lý yêu cầu đặt lại mật khẩu sau khi người dùng nhập mật khẩu mới
     @PostMapping("/reset-password")
     public String resetPassword(@RequestParam("token") String token,
                                 @RequestParam("newPassword") String newPassword,
-                                RedirectAttributes redirectAttributes) {
-        try {
-            accountService.updatePassword(token, newPassword);  // Cập nhật mật khẩu mới
-            redirectAttributes.addFlashAttribute("message", "Password updated successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Invalid or expired token.");
+                                Model model) {
+        // Gọi service để kiểm tra token và đặt lại mật khẩu
+        boolean isResetSuccessful = accountService.resetPassword(token, newPassword);
+        if (isResetSuccessful) {
+            model.addAttribute("successMessage", "Your password has been reset successfully.");
+            return "login"; // Chuyển đến trang đăng nhập sau khi đặt lại thành công
+        } else {
+            model.addAttribute("errorMessage", "Invalid or expired token.");
+            return "resetPassword"; // Quay lại trang đặt lại mật khẩu với thông báo lỗi
         }
-        return "redirect:/login";  // Điều hướng đến trang đăng nhập sau khi đặt lại mật khẩu thành công
     }
 
 }

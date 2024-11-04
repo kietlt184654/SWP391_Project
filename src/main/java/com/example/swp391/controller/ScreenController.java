@@ -42,6 +42,10 @@ public class ScreenController {
     public String showMaintenanceServicesPage(Model model) {
         return "MaintenanceServices";
     }
+    @GetMapping("/forgot-password-form")
+    public String showForgotPasswordForm(Model model) {
+        return "forgotPassword";
+    }
 
 
 
