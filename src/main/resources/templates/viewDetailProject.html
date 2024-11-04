@@ -8,10 +8,7 @@
   <link rel="stylesheet" href="/css/viewDetailProject.css" />
 </head>
 <body>
-<!-- Hiển thị thông báo thành công nếu có -->
-<div th:if="${successMessageDeleteTask != null}" class="alert alert-success">
-  <p th:text="${successMessageDeleteTask}"></p>
-</div>
+
 <!-- Navbar -->
 <div class="nav">
   <div class="nav-logo"><p>LOGO</p></div>
@@ -37,10 +34,10 @@
         <p>
           <strong>Description:</strong> <span th:text="${project.description}">Project Description</span><br>
           <strong>Status:</strong> <span th:text="${project.status}">Project Status</span><br>
-          <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br>
-          <strong>End Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br>
+          <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
+          <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
           <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
-          <strong>Priority:</strong> <span th:text="${project.priority}">Priority</span><br>
+
           <strong>Project ID:</strong> <span th:text="${project.projectID}">Project ID</span><br>
         </p>
       </div>
@@ -49,16 +46,18 @@
 </div>
 
 <a th:href="@{/staff/list(projectId=${project.projectID})}" class="btn btn-primary">Select Staff</a>
-
-<div class="filter-buttons">
-  <form th:action="@{/filterTasks}" method="get">
-    <button type="submit" name="status" value="All" th:classappend="${currentStatus == 'All' ? 'active' : ''}">All</button>
-    <button type="submit" name="status" value="To Do" th:classappend="${currentStatus == 'To Do' ? 'active' : ''}">To Do</button>
-    <button type="submit" name="status" value="In-Progress" th:classappend="${currentStatus == 'In-Progress' ? 'active' : ''}">In-Progress</button>
-    <button type="submit" name="status" value="Done" th:classappend="${currentStatus == 'Done' ? 'active' : ''}">Done</button>
-  </form>
+<!-- Tabs for Additional Information -->
+<!--<div class="tab-bar">-->
+<!--  <div class="tab" onclick="showContent('task')">Task</div>-->
+<!--  <div class="tab" onclick="showContent('progress')">Progress</div>-->
+<!--  <div class="tab" onclick="showContent('finish')">Finish</div>-->
+<!--</div>-->
+<div class="tab-bar">
+  <div class="tab" data-status="task">Task</div>        <!-- Show all tasks -->
+  <div class="tab" data-status="To Do">To Do</div>       <!-- Show 'To Do' tasks -->
+  <div class="tab" data-status="in-progress">Progress</div> <!-- Show 'In Progress' tasks -->
+  <div class="tab" data-status="done">Finish</div>       <!-- Show 'Done' tasks -->
 </div>
-
 <!-- Assigned Tasks Section -->
 <div class="assigned-tasks">
   <h3>Các nhiệm vụ đã được phân công:</h3>
@@ -69,9 +68,8 @@
           <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> <span th:text="${task.task}"></span></span>
           <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
           <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
-          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>
-
-          <!-- Nhóm các nút vào một div để căn chỉnh dễ dàng hơn -->
+<!--          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>-->
+          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${task.assignmentDate}">Assignment Date</span></span>
           <div class="task-buttons">
             <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
             <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
@@ -81,10 +79,22 @@
           </div>
         </div>
       </div>
-
-      </li>
     </th:block>
   </ul>
+</div>
+
+<!-- Modal for selecting staff -->
+<div id="staffModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h4>Select a Staff Member</h4>
+    <div id="staffList">
+      <div class="staff-item" onclick="selectStaff(1, 'John Doe', 'Engineer', 'john@example.com', '123-456-7890')">
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Role:</strong> Engineer</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Link to the external JavaScript file -->

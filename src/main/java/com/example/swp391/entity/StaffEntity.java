@@ -10,9 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 @Table(name = "Staff")
 public class StaffEntity {
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "StaffID")
     private Integer staffID;
 

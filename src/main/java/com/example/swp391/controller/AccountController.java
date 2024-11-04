@@ -1,28 +1,23 @@
 package com.example.swp391.controller;
 
 import com.example.swp391.entity.AccountEntity;
-
+import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.service.AccountService;
-
 import com.example.swp391.service.CustomerService;
-import com.example.swp391.service.StaffProjectService;
 import jakarta.servlet.http.HttpSession;
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.Files;
 import java.util.List;
 
 @Controller
@@ -30,8 +25,6 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-    @Autowired
-private StaffProjectService staffProjectService;
     @Autowired
     private CustomerService customerService;
 
@@ -42,17 +35,26 @@ private StaffProjectService staffProjectService;
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
 
+            // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
             if (account.getAccountTypeID().equals("Customer")) {
+                // Kiểm tra nếu customer chưa tồn tại
+                if (!customerService.existsByAccount(account)) {
+                    CustomerEntity customer = new CustomerEntity();
+                    customer.setAccount(account);
+                    customer.setAdditionalInfo("");  // Bạn có thể thêm thông tin bổ sung tùy ý
+
+                    // Lưu Customer mới vào cơ sở dữ liệu
+                    customerService.save(customer);
+                }
                 return "Homepage";
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
-                return "FormConsulting";
+                return "redirect:/HomeConsulting";
             } else if (account.getAccountTypeID().equals("Construction Staff")) {
-                return "redirect:/dashboard"; // Chuyển hướng đến `/dashboard`
+                return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
             }
         } else {
-            // Xử lý khi tài khoản không tồn tại hoặc mật khẩu sai
             model.addAttribute("messageLogin", "Invalid username or password");
         }
         return "login";
@@ -111,25 +113,20 @@ private StaffProjectService staffProjectService;
     @GetMapping("/edit-profile")
     public String editProfileForm(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
-
-        // Kiểm tra người dùng đã đăng nhập
         if (loggedInUser == null) {
             redirectAttributes.addFlashAttribute("message", "Please login first.");
             return "redirect:/login";
         }
 
-        // Tìm tài khoản người dùng đã đăng nhập bằng email
         AccountEntity account = accountService.findByEmail(loggedInUser.getEmail());
-        if (account != null) {
-            model.addAttribute("accountEntity", account);
-        } else {
-            redirectAttributes.addFlashAttribute("message", "User not found.");
-            return "redirect:/";
-        }
+        model.addAttribute("accountEntity", account);
 
-        // Trả về view "editprofile.html"
-        return "editprofile";
+        return "editprofile"; // Trả về view "edit-profile.html"
     }
+
+
+
+
     // Đường dẫn lưu trữ hình ảnh trên server
     private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task";
 
@@ -197,6 +194,12 @@ private StaffProjectService staffProjectService;
         return "manageCustomer";
     }
 
+    //    @GetMapping("/customers")
+//    public String showAllCustomers(Model model) {
+//        List<Object[]> customers = customerService.getAllCustomersWithAccountInfo();
+//        model.addAttribute("customers", customers);
+//        return "manageCustomer";
+//    }
     @GetMapping("/dashboardAccount")
     public String showDashboard(Model model) {
         long userCount = accountService.countUsers(); // Lấy số lượng tài khoản từ DB
@@ -204,21 +207,15 @@ private StaffProjectService staffProjectService;
         return "manager"; // Tên của template HTML (manager.html)
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteCustomer(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        // Gọi hàm xóa trong AccountService
-        boolean isDeleted = customerService.deleteCustomerById(id);
 
-        // Thêm thông báo vào RedirectAttributes để chuyển hướng hiển thị trên giao diện
-        if (isDeleted) {
-            redirectAttributes.addFlashAttribute("messageDeleteUser", "Customer deleted successfully.");
-        } else {
-            redirectAttributes.addFlashAttribute("messageDeleteUser", "Customer not found.");
-        }
-
-        // Chuyển hướng lại trang quản lý khách hàng
-        return "redirect:/account/customer";
+    // Hiển thị trang forgot-password.html
+    @GetMapping("/forgot-password-form")
+    public String showForgotPasswordForm() {
+        return "forgotPassword";  // Trả về view forgot-password.html
     }
+
+
+
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestParam("email") String email, Model model) {
         boolean emailExists = accountService.checkIfEmailExistsAndSendResetLink(email);
@@ -231,6 +228,7 @@ private StaffProjectService staffProjectService;
 
         return "forgotPassword"; // Trả về lại trang nhập email
     }
+
     // Hiển thị form đặt lại mật khẩu
     @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
@@ -252,6 +250,7 @@ private StaffProjectService staffProjectService;
             model.addAttribute("errorMessage", "Invalid or expired token.");
             return "resetPassword"; // Quay lại trang đặt lại mật khẩu với thông báo lỗi
         }
+
     }
 
 }

@@ -1,4 +1,4 @@
-//package com.example.swp391.entity;
+package com.example.swp391.entity;//package com.example.swp391.entity;
 //
 //import jakarta.persistence.*;
 //import lombok.Data;
@@ -10,7 +10,7 @@
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class RatingFeedbackEntity {
+//public class RatingFeedbackEnity {
 //
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
