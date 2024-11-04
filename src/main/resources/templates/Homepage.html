@@ -24,12 +24,7 @@
             <li><a href="#" class="link">About</a></li>
             <li><a href="#" class="link">Blog</a></li>
             <li>
-                <a href="#" class="link">Services</a>
-                <ul>
-                    <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
-                    <li><a th:href="@{/services}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
-                </ul>
-
+                <a th:href="@{/design}" style="color: white;">Services</a>
             </li>
             <li><a href="#" class="link">Product</a></li>
         </ul>
@@ -87,7 +82,6 @@
                     connection with nature. Peaceful and harmonious.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
         </div>
@@ -103,7 +97,6 @@
                     relaxation.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -121,7 +114,6 @@
                     serene scene.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -139,7 +131,6 @@
                     lighting under the waterfall.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -156,7 +147,6 @@
                     serene scene.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -173,7 +163,6 @@
                     connection with nature. Peaceful and harmonious.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -190,7 +179,6 @@
                     relaxation.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -208,7 +196,6 @@
                     lighting under the waterfall.</div>
                 <div class="btn">
                     <button>See More</button>
-                    <button>Subscribe</button>
                 </div>
             </div>
 
@@ -251,8 +238,7 @@
 </section>
 <section class="projects-section">
     <div class="container">
-        <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our
-            Projects</h2>
+        <h2 class="text-center mb-4 section-header">Our Projects</h2>
         <div class="row">
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="project-card">
@@ -300,7 +286,10 @@
         <div class="card h-100">
             <img src="/img/refund.jpg" class="card-img-top" alt="refund">
             <div class="card-body">
-                <h3 class="card-title-1">Return Policy</h3>
+                <h3 class="card-title-1">
+                    <i class="fas fa-undo fa-spin" id="reloadIcon1" style="color: #c0392b;"></i> 
+                    <span id="returnPolicyTitle" style="color:black">RETURN POLICY</span>
+                </h3>
                 <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
             </div>
             <div class="card-footer">
@@ -312,7 +301,10 @@
         <div class="card h-100">
             <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
             <div class="card-body">
-                <h3 class="card-title-2">Professional Team</h3>
+                <h3 class="card-title-2">
+                    <i class="fas fa-users fa-bounce" id="reloadIcon2" style="color: #2980b9;"></i> 
+                    <span id="professionalTeamTitle" style="color:black">PROFESSIONAL TEAM</span>
+                </h3>
                 <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
             </div>
             <div class="card-footer">
@@ -324,7 +316,10 @@
         <div class="card h-100">
             <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
             <div class="card-body">
-                <h3 class="card-title-3">Shipping Policy</h3>
+                <h3 class="card-title-3">
+                    <i class="fas fa-truck fa-bounce" id="reloadIcon3" style="color: #27ae60;"></i> 
+                    <span id="shippingPolicyTitle" style="color:black">SHIPPING POLICY</span>
+                </h3>
                 <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
             </div>
             <div class="card-footer">

@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', function() {
         bookingForm.reset();
         bookingForm.style.display = 'none';
         generateCalendar(); // Regenerate calendar to show booked date
+
+        // Display the success message
+        document.getElementById('displayCustomerName').innerText = customerName;
+        document.getElementById('displayPondSize').innerText = document.getElementById('pondSize').value;
+        document.getElementById('displayServiceDate').innerText = selectedDate;
+        document.getElementById('successMessage').style.display = 'block';
     });
 
     generateCalendar();
