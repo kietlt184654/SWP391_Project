@@ -75,7 +75,7 @@ body {
     top: 0;
     width: 100%;
     height: 60px; 
-    background: #266CA9; 
+    background: white; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     z-index: 100;
     display: flex;
@@ -84,7 +84,7 @@ body {
 }
 
 .nav-logo p {
-    color: white;
+    color: black;
     font-size: 18px; 
     font-weight: 600;
     margin-right: 100px; 
@@ -113,7 +113,7 @@ body {
 
 .nav-menu ul li a {
     text-decoration: none;
-    color: white; 
+    color: black; 
     font-weight: 500;
     font-size: 16px; 
     padding: 8px; 
@@ -501,12 +501,6 @@ body {
 }
 
 /* Carousel */
-
-
-
-
-
-
 /* next prev arrows */
 
 .arrows{
@@ -758,7 +752,7 @@ body {
 }
 /* -------------------Footer----------------- */
 .footer {
-  background-color: #01082D;
+  background-color: #000000;
   padding: 20px;
   border-top: 1px solid #ccc;
   width: 100%;
@@ -949,23 +943,45 @@ body {
 .card-title-1 i,
 .card-title-2 i,
 .card-title-3 i {
-    font-size: 30px; /* Adjust size as needed */
-    margin-right: 10px; /* Space between icon and text */
+    font-size: 30px;
+    margin-right: 10px;
 }
 
 .section-header {
-    font-size: 2.5rem; /* Increase font size */
-    font-weight: bold; /* Make it bold */
-    color: white; /* Change text color to white */
-    background-color: #266CA9; /* Match the navbar color */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-    text-transform: uppercase; /* Make text uppercase */
-    letter-spacing: 1px; /* Add letter spacing */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3c7363; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: background-color 0.3s; 
 }
 
-.section-header:hover {
-    background-color: #1e4e7a; /* Darker shade on hover */
+/* Style for the Rating and Feedback section header */
+.rating-feedback-header {
+    font-size: 2.5rem; /* Same size as Our Projects */
+    font-weight: bold;
+    color: white;
+    background-color: #3c7363; /* Same background color */
+    padding: 20px; /* Same padding */
+    border-radius: 10px; /* Same border radius */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Same shadow effect */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Letter spacing */
+    text-align: center; /* Center the text */
+    margin: 20px 0; /* Add margin for spacing */
 }
+
+/* Style for the Rating and Feedback section container */
+.rating-feedback {
+    margin-top: 70px; /* Adjust margin as needed */
+    margin-bottom: 70px; /* Adjust margin as needed */
+    padding: 20px; /* Add padding */
+    background-color: #f8f9fa; /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+

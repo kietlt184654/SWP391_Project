@@ -1,116 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Available Products</title>
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <!-- <link rel="stylesheet" href="/css/Homepage.css">
   <link rel="stylesheet" href="/css/Availableproject.css"> -->
-  <link rel="stylesheet" href="/src/main/resources/static/css/Homepage.css">
-  <link rel="stylesheet" href="/src/main/resources/static/css/Availableproject.css">
+  <link rel="stylesheet" href="/css/Availableproject.css">
 </head>
-<nav class="nav" th:fragment="nav">
-  <div class="nav-logo">
-    <p>LOGO</p>
-  </div>
-  <div class="nav-menu" id="navMenu">
-    <ul>
-      <li><a th:href="@{/}" class="link">Home</a></li>
-      <li><a href="#" class="link">About</a></li>
-      <li><a href="#" class="link">Blog</a></li>
-      <li>
-        <a href="#" class="link">Services</a>
-        <ul>
-          <li><a href="/templates/Design.html">Desing Koi Pond</a></li>
-          <li><a href="#">Koi Pond Service</a></li>
-        </ul>
-      </li>
-      <li><a href="#" class="link">Product</a></li>
-    </ul>
-  </div>
-  <div class="nav-button">
-    <form th:action="@{/}" method="post">
-      <button class="btn white-btn" id="loginBtn" onclick="login()">
-        <a href="/templates/login.html" style="text-decoration: none; color:black;">Login</a>
-      </button>
-    </form>
-    <button class="btn" id="registerBtn" onclick="register()">
-      Sign Up
-    </button>
-    </form>
-  </div>
-  <div class="nav-menu-btn">
-    <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-  </div>
-</nav>
-<br>
 
 <body>
-<h1 style="text-align: center; margin-top: 120px; background-color: #3c7363; color: white; border-radius: 95px; ">Available Project</h1>
-<div class="search-container">
-  <input type="text" placeholder="Search...">
-  <a href="">
-    <li class="fas fa-search "></li>
-  </a>
-</div>
-<div class="container">
-  <div th:if="${design}" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <div th:each="product : ${design}" class="col">
-      <div class="card h-100">
-        <img th:src="@{${product.img}}" class="card-img-top" alt="Product Image">
-        <div class="card-body">
-          <h5 class="card-title" th:text="${product.getDesignName()}">Product Name</h5>
-          <p class="card-text" th:text="${product.getPrice()} + ' $'">Price</p>
-
-          <a th:href="@{/design/{id}(id=${product.designId})}" class="btn btn-primary" style="background-color: #3c7363;">Detail</a>
-
-
-        </div>
-      </div>
+  <div class="nav">
+    <!-- Hamburger button -->
+    <div class="nav-button">
+      <button id="menu-toggle" class="btn">&#9776;</button>
     </div>
 
-    <!-- Add more products as needed -->
-  </div>
-  <br>
-</div>
-<div class="footer">
-  <div class="footer-container">
-    <div class="footer-info">
-      <h4>Information</h4>
-      <p>Open: 8 AM - 10 PM</p>
-      <p>
-        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-        Minh
-      </p>
+    <!-- Logo -->
+    <div class="nav-logo">
+      <p>KoiPond</p>
     </div>
-    <div class="footer-services">
-      <h4>Services</h4>
+
+    <!-- Nav Menu -->
+    <div class="nav-menu" id="navMenu">
       <ul>
+        <li><a href="#" class="link">Home</a></li>
+        <li><a href="#" class="link">About</a></li>
+        <li><a href="#" class="link">Blog</a></li>
+        <li><a href="#" class="link">Services</a></li>
+        <li><a href="#" class="link">Product</a></li>
+
+        <!-- Cart -->
         <li>
-          <a href="link-to-construction" class="service-item">Construction Koi pond</a>
+          <a href="#" class="icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="notification-badge">0</span>
+
+          </a>
         </li>
         <li>
-          <a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a>
-        </li>
-        <li>
-          <a href="link-to-design" class="service-item">Design upon requirements</a>
+          <a href="#" class="icon" id="accountIcon">
+            <i class="fas fa-user-circle"></i>
+            <span th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</span>
         </li>
       </ul>
     </div>
-    <div class="footer-contact">
-      <h4>Contact</h4>
-      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-      <p>
-        <i class="fa-brands fa-facebook"></i>
-        <a href="https://facebook.com" target="_blank">Visit Us</a>
-      </p>
+  </div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="user-info">
+      <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+      <p class="username">Username</p>
+    </div>
+    <ul class="sidebar-menu">
+      <li>
+        <a href="#"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-history"></i> History Order</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+      </li>
+    </ul>
+  </div>
+  <h1>Available Project</h1>
+  <div class="search-container">
+    <input type="text" placeholder="Search...">
+    <a href="#">
+      <li class="fas fa-search"></li>
+    </a>
+  </div>
+  <div class="container">
+    <div th:if="${design}" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div th:each="product : ${design}" class="col">
+        <div class="card h-100">
+          <img th:src="@{${product.img}}" class="card-img-top" alt="Product Image">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${product.getDesignName()}">Product Name</h5>
+            <p class="card-text" th:text="${product.getPrice()} + ' $'">Price</p>
+            <a th:href="@{/design/{id}(id=${product.designId})}" class="btn btn-primary" style="background-color: #3c7363;">Detail</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+  <div class="footer">
+    <div class="footer-container">
+      <div class="footer-info">
+        <h4>Information</h4>
+        <p>Open: 8 AM - 10 PM</p>
+        <p>
+          PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+          Minh
+        </p>
+      </div>
+      <div class="footer-services">
+        <h4>Services</h4>
+        <ul>
+          <li>
+            <a href="link-to-construction" class="service-item">Construction Koi pond</a>
+          </li>
+          <li>
+            <a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a>
+          </li>
+          <li>
+            <a href="link-to-design" class="service-item">Design upon requirements</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+        <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+        <p>
+          <i class="fa-brands fa-facebook"></i>
+          <a href="https://facebook.com" target="_blank">Visit Us</a>
+        </p>
+      </div>
     </div>
   </div>
-</div>
+  <script src="/javascript/Services.js"></script>
 </body>
 
 </html>
