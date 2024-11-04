@@ -60,7 +60,7 @@ public class MaintenanceController {
 
             // Lưu vào session với tên "designItems" cho dễ truy xuất trong PaymentController
             session.setAttribute("designs", designs);
-//            session.setAttribute("designItems", designItems);
+
 
             model.addAttribute("selectedDesigns", selectedDesigns);
             return "Payment";

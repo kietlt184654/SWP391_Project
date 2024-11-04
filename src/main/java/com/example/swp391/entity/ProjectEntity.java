@@ -19,7 +19,7 @@ public class ProjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProjectID")
-    private int projectID;
+    private Long projectID;
 
     @Column(name = "Name")
     private String name;

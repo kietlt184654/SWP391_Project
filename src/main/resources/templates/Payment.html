@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <title>Project Payment</title>
+    <title>Service Payment</title>
 </head>
 <body>
 
@@ -49,50 +49,50 @@
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-content">
-        <img src="/img/project_payment.jpg" alt="Project Payment" />
-        <h1>Project Payment</h1>
+        <img src="/img/project_payment.jpg" alt="Service Payment" />
+        <h1>Service Payment</h1>
         <ol class="breadcrumb">
             <li><a href="/homepage.html">Home</a></li>
-            <li><a href="/projects.html">Projects</a></li>
-            <li class="active">Project Payment</li>
+            <li><a href="/services.html">Services</a></li>
+            <li class="active">Service Payment</li>
         </ol>
     </div>
 </section>
 
-<!-- Selected Project Section -->
+<!-- Selected Services Section -->
 <div class="container">
     <div class="selected-project">
-        <h2>Project Details</h2>
+        <h2>Selected Services</h2>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Project ID</th>
-                <th>Project Name</th>
+                <th>Service ID</th>
+                <th>Service Name</th>
                 <th>Description</th>
-                <th>Total Cost</th>
+                <th>Cost</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td th:text="${project.projectID}">Project ID</td>
-                <td th:text="${project.name}">Project Name</td>
-                <td th:text="${project.description}">Description</td>
-                <td th:text="${#numbers.formatDecimal(paymentAmount, 1, 2)}">Total Cost</td>
+            <tr th:each="design : ${selectedDesigns}">
+                <td th:text="${design.designId}">Service ID</td>
+                <td th:text="${design.designName}">Service Name</td>
+                <td th:text="${design.description}">Description</td>
+                <td th:text="${#numbers.formatDecimal(design.price, 1, 2)}">Cost</td>
             </tr>
             </tbody>
         </table>
     </div>
 
     <!-- Payment Info Section -->
-    <form th:action="@{/payment/complete}" method="post">
-        <input type="hidden" name="projectId" th:value="${project.projectID}">
-        <div class="payment-info">
-            <h2>Select Payment Method</h2>
-            <input type="radio" id="cod" name="paymentMethod" value="cod" checked /> COD<br />
-            <input type="radio" id="bank-transfer" name="paymentMethod" value="bank-transfer" /> Bank Transfer<br /><br />
-            <button type="submit" class="checkout-btn btn btn-primary">Proceed to Payment</button>
-        </div>
-    </form>
+    <div class="payment-info">
+        <h2>Payment</h2>
+        <form th:action="@{/payment/create}" method="post">
+            <input type="hidden" name="source" value="SERVICE"> <!-- Pass 'CART' as the source -->
+            <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
+            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
+            <button type="submit" class="checkout-btn">Check Out</button>
+        </form>
+    </div>
 </div>
 
 <!-- Footer -->
