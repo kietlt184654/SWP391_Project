@@ -3,6 +3,7 @@ body {
   background-color: #f8f9fa;
   color: #333;
   line-height: 1.6;
+  margin: 0;
 }
 
 .container {
@@ -20,55 +21,68 @@ h1 {
 
 .card {
   background-color: #fff;
-  border: 1px solid #dee2e6;
-  border-radius: 0.25rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  transition: all 0.3s ease-in-out;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
   margin-bottom: 100%;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
-  color: #007bff;
-  font-size: 1.25rem;
+  color: #003366;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
 .card-text {
   margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #333;
 }
 
 .btn-primary,
-.btn-secondary {
-  padding: 0.375rem 0.75rem;
+.btn-secondary,
+.btn-success {
+  padding: 10px 20px;
   font-size: 1rem;
   line-height: 1.5;
-  border-radius: 0.25rem;
+  border-radius: 20px;
   transition: all 0.15s ease-in-out;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #266CA9;
+  border: none;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #5c5a5a;
+  color: #266CA9;
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #266CA9;
+  border: none;
 }
 
 .btn-secondary:hover {
   background-color: #5a6268;
-  border-color: #545b62;
+  color: #266CA9;
+}
+
+.btn-success {
+  background-color: #266CA9;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #5a6268;
+  color: #266CA9;
 }
 
 .modal-content {
@@ -335,7 +349,7 @@ h1 {
   color: white;
 }
 .hover-card {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.7);
   transition: background-color 0.3s ease;
   border: none;
   border-radius: 10px;
@@ -343,5 +357,28 @@ h1 {
   padding: 20px;
 }
 .hover-card:hover {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem; /* Smaller title on mobile */
+        margin-top: 300px; /* Adjust margin for smaller screens */
+    }
+
+    .card {
+        margin-bottom: 20px; /* Reduce margin between cards */
+    }
+
+    .nav {
+        flex-direction: column; /* Stack navigation items on smaller screens */
+    }
+
+    .nav-menu {
+        display: none; /* Hide menu on small screens */
+    }
+
+    .nav-menu-btn {
+        display: block; /* Show menu button */
+    }
 }
