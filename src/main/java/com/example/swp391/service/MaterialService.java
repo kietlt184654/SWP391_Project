@@ -175,5 +175,9 @@ public class MaterialService {
     public List<MaterialEntity> findAll() {
         return materialRepository.findAll();
     }
+    public void deleteMaterialById(Long materialId) {
+        materialRepository.deleteById(materialId);
+    }
+
 
 }

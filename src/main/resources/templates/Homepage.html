@@ -24,16 +24,13 @@
             <li><a href="#" class="link">About</a></li>
             <li><a href="#" class="link">Blog</a></li>
             <li>
-                <a href="#" class="link">Services</a>
-                <ul>
-                    <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
-                    <li><a th:href="@{/services/serviceForm}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
-                </ul>
+            <li><a th:href="@{/design}">Services</a>
 
             </li>
             <li><a href="#" class="link">Product</a></li>
             <!-- Liên kết tĩnh đến Customer Dashboard -->
             <li><a th:href="@{/customer/dashboard}" class="link">Customer Dashboard</a></li>
+            <li><a th:href="@{customer/customer-projects}" class="link">ViewProject</a></li>
 
 
         </ul>

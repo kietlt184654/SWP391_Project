@@ -109,7 +109,7 @@
                 <th>Price</th>
                 <th>Estimated Completion Time</th>
             </tr>
-            <tr th:each="design : ${designs}">
+            <tr th:each="design : ${designs}" >
                 <td><input type="checkbox" name="selectedDesignIds" th:value="${design.designId}"/></td>
                 <td th:text="${design.designId}"></td>
                 <td th:text="${design.designName}"></td>

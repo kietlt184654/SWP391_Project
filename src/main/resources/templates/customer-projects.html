@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dự Án Của Khách Hàng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Dự Án Của Khách Hàng</h1>
+
+    <div th:each="project : ${projects}">
+        <h2>Dự án: <span th:text="${project.name}"></span></h2>
+        <p>Mô tả: <span th:text="${project.description}"></span></p>
+        <p>Ngày bắt đầu: <span th:text="${project.startDate}"></span></p>
+        <p>Ngày kết thúc: <span th:text="${project.endDate}"></span></p>
+        <p>Tổng chi phí: <span th:text="${project.totalCost}"></span></p>
+        <p>Trạng thái: <span th:text="${project.status}"></span></p>
+
+        <h3>Chi tiết Nguyên vật liệu</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Tên Nguyên Vật Liệu</th>
+                <th>Số Lượng Sử Dụng</th>
+                <th>Ngày Sử Dụng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="materialDetail : ${project.projectMaterials}">
+                <td th:text="${materialDetail.material.materialName}"></td>
+                <td th:text="${materialDetail.quantityUsed}"></td>
+                <td th:text="${materialDetail.usedDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+</div>
+
+</body>
+</html>

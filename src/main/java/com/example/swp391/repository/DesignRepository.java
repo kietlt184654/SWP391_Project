@@ -2,6 +2,7 @@ package com.example.swp391.repository;
 
 import com.example.swp391.entity.DesignEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface DesignRepository extends JpaRepository<DesignEntity, Long> {
     // Phương thức để tìm kiếm thiết kế theo trạng thái và TypeDesignId
     List<DesignEntity> findByStatusAndTypeDesign_TypeDesignId(DesignEntity.Status status, long typeDesignId);
     List<DesignEntity> findByCustomerReference(Long customerReference);
+    List<DesignEntity> findByCustomerReferenceAndStatus(Long customerReference, DesignEntity.Status status);
+    // Lấy tất cả các thiết kế có typeId là 3 hoặc 4
+    @Query("SELECT d FROM DesignEntity d WHERE d.typeDesign.typeDesignId = 3L OR d.typeDesign.typeDesignId = 4L ")
+    List<DesignEntity> findDesignsByTypeId3Or4();
 }

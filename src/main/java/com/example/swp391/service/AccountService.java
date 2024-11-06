@@ -68,6 +68,10 @@ private EmailService emailService;
         return accountRepository.findByEmail(email);
     }
 
+
+    public AccountEntity save(AccountEntity account) {
+        return accountRepository.save(account);
+    }
     public void updatePassword(AccountEntity user, String newPassword) {
         // Không mã hóa, chỉ cập nhật mật khẩu trực tiếp
         user.setPassword(newPassword);

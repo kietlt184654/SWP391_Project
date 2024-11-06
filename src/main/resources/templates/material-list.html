@@ -25,11 +25,33 @@
         tr:hover {
             background-color: #e2e2e2;
         }
+        .btn-delete {
+            color: white;
+            background-color: red;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <h1>Danh sách Nguyên vật liệu</h1>
+
+<!-- Biểu mẫu thêm nguyên vật liệu mới -->
+<h2>Thêm Nguyên vật liệu Mới</h2>
+<form th:action="@{/materials/add}" method="post">
+    <label for="materialName">Tên:</label>
+    <input type="text" id="materialName" name="materialName" required>
+
+    <label for="stockQuantity">Số lượng:</label>
+    <input type="number" id="stockQuantity" name="stockQuantity" required>
+
+    <label for="unit">Đơn vị:</label>
+    <input type="text" id="unit" name="unit" required>
+
+    <button type="submit">Thêm Nguyên Vật Liệu</button>
+</form>
 
 <div th:if="${message}">
     <p th:text="${message}"></p>
@@ -45,6 +67,7 @@
         <th>Số lượng</th>
         <th>Đơn vị</th>
         <th>Cập nhật số lượng</th>
+        <th>Xóa</th>
     </tr>
     <tr th:each="material : ${materials}">
         <td th:text="${material.materialId}"></td>
@@ -58,6 +81,11 @@
                 <label>Lý do thay đổi:</label>
                 <input type="text" name="reason" required>
                 <button type="submit">Cập nhật</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/materials/{materialId}/delete(materialId=${material.materialId})}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                <button type="submit" class="btn-delete">Xóa</button>
             </form>
         </td>
     </tr>

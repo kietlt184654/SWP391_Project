@@ -19,7 +19,9 @@ public class DesignService {
     @Autowired
     private DesignMaterialQuantityService designMaterialQuantityService;
 
-
+    public List<DesignEntity> getDesignsByTypeId3Or4() {
+        return designRepository.findDesignsByTypeId3Or4();
+    }
     public DesignEntity findDesignById(Long id) {
         return designRepository.findById(id).orElse(null);
     }
@@ -99,6 +101,9 @@ public class DesignService {
 
     public void addMaterialToDesign(DesignMaterialQuantity designMaterialQuantity) {
         designMaterialQuantityService.save(designMaterialQuantity);
+    }
+    public List<DesignEntity> findNeedToPaymentDesignsByCustomerReference(Long customerReference) {
+        return designRepository.findByCustomerReferenceAndStatus(customerReference, DesignEntity.Status.NeedToPayment);
     }
 }
 

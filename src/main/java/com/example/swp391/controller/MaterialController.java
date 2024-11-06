@@ -54,6 +54,29 @@ public class MaterialController {
 //        model.addAttribute("changeLogs", changeLogs);
 //        return "material-historychanging"; // Trả về view hiển thị lịch sử chỉnh sửa
 //    }
+// Endpoint xử lý yêu cầu xóa
+@PostMapping("/{materialId}/delete")
+public String deleteMaterial(@PathVariable Long materialId) {
+    materialService.deleteMaterialById(materialId);
+    return "redirect:/materials/list"; // Chuyển hướng về trang danh sách sau khi xóa
+}
+    // Endpoint để xử lý thêm nguyên vật liệu mới
+    @PostMapping("/add")
+    public String addMaterial(
+            @RequestParam("materialName") String materialName,
+            @RequestParam("stockQuantity") int stockQuantity,
+            @RequestParam("unit") String unit,
+            Model model) {
+
+        MaterialEntity material = new MaterialEntity();
+        material.setMaterialName(materialName);
+        material.setStockQuantity(stockQuantity);
+        material.setUnit(unit);
+
+        materialService.save(material);
+        model.addAttribute("message", "Nguyên vật liệu đã được thêm thành công!");
+        return "redirect:/materials/list";
+    }
 @GetMapping("/historyofchanging")
 public String showAllMaterialHistory(Model model) {
         List<MaterialChangeLogEntity> changeLogs = materialService.getAllMaterialChangeHistory();

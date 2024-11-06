@@ -37,7 +37,6 @@ public class AccountEntity {
     private String token;
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
-
     @Column(name = "Images")
     private String images;
     @Column(name = "Status", nullable = false)  // Thêm trường Status

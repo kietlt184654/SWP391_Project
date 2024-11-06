@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -19,23 +17,50 @@
     <h3>Thêm Nguyên Liệu</h3>
     <form th:action="@{'/manager/designs/' + ${design.designId} + '/approve'}" method="post">
         <div id="materialsContainer">
-            <div class="form-group">
+            <!-- Mẫu nguyên liệu ban đầu -->
+            <div class="form-group material-group">
                 <label for="material_0">Nguyên Liệu</label>
-                <select class="form-control" id="material_0" name="materials[0].materialId">
+                <select class="form-control material-select" id="material_0" name="materials[0].materialId">
                     <option value="" disabled selected>Chọn nguyên liệu</option>
                     <option th:each="material : ${materials}"
                             th:value="${material.materialId}"
                             th:text="${material.materialName + ' (' + material.unit + ')'}"></option>
                 </select>
-                <input type="number" class="form-control" name="materials[0].quantityNeeded" placeholder="Số lượng" min="1">
+                <input type="number" class="form-control material-quantity" name="materials[0].quantityNeeded" placeholder="Số lượng" min="1">
             </div>
         </div>
+
+        <button type="button" class="btn btn-primary" onclick="addMaterial()">Thêm Nguyên Liệu</button>
         <button type="submit" class="btn btn-success">Duyệt và Thêm Nguyên Liệu</button>
         <button type="button" class="btn btn-danger" onclick="rejectDesign()">Từ Chối Thiết Kế</button>
     </form>
 </div>
 
 <script>
+    let materialCount = 1; // Đếm số lượng nguyên liệu để đặt tên cho các trường
+
+    function addMaterial() {
+        const container = document.getElementById('materialsContainer');
+
+        // Lưu lại HTML của phần tử nguyên liệu đầu tiên để sao chép
+        const firstMaterialGroup = document.querySelector('.material-group').cloneNode(true);
+
+        // Cập nhật lại các thuộc tính ID và name để chúng duy nhất cho mỗi nhóm nguyên liệu
+        const select = firstMaterialGroup.querySelector('.material-select');
+        const quantity = firstMaterialGroup.querySelector('.material-quantity');
+
+        select.id = `material_${materialCount}`;
+        select.name = `materials[${materialCount}].materialId`;
+        select.value = ""; // Đặt lại giá trị về rỗng
+
+        quantity.name = `materials[${materialCount}].quantityNeeded`;
+        quantity.value = ""; // Đặt lại số lượng về rỗng
+
+        // Thêm phần tử đã sao chép vào container
+        container.appendChild(firstMaterialGroup);
+        materialCount++; // Tăng biến đếm
+    }
+
     function rejectDesign() {
         if (confirm("Bạn có chắc chắn muốn từ chối thiết kế này không?")) {
             const form = document.createElement('form');
@@ -48,4 +73,3 @@
 </script>
 </body>
 </html>
-

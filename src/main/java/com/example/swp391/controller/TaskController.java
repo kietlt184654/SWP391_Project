@@ -124,8 +124,8 @@ public class TaskController {
                                 RedirectAttributes redirectAttributes) {
         String newStatus;
         if ("To Do".equals(currentStatus)) {
-            newStatus = "In-Progress";
-        } else if ("In-Progress".equals(currentStatus)) {
+            newStatus = "In Progress";
+        } else if ("In Progress".equals(currentStatus)) {
             newStatus = "Done";
         } else {
             newStatus = currentStatus; // Nếu trạng thái không nằm trong To Do hoặc In-Progress thì giữ nguyên

@@ -28,7 +28,13 @@ public class MaterialEntity {
 
     @Column(name = "Unit")
     private String unit;
-
+//    @Column(name = "Status", nullable = false, length = 50)
+//    @Enumerated(EnumType.STRING)
+//    private DesignEntity.Status status;
+//
+//    public enum Status {
+//        Available, Unavailable, OutofStock
+//    }
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DesignMaterialQuantity> designQuantities = new ArrayList<>();
     // Quan hệ một-nhiều với MaterialChangeLogEntity để lưu lịch sử chỉnh sửa

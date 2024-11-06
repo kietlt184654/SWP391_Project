@@ -1,10 +1,7 @@
 package com.example.swp391.service;
 
 import com.example.swp391.entity.*;
-import com.example.swp391.repository.CustomerRepository;
-import com.example.swp391.repository.PaymentRepository;
-import com.example.swp391.repository.PointRepository;
-import com.example.swp391.repository.ProjectRepository;
+import com.example.swp391.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +23,8 @@ public class ProjectService {
     private CustomerRepository customerRepository;
     @Autowired
     private PointRepository pointRepository;
+    @Autowired
+    private ProjectMaterialDetailRepository projectMaterialDetailRepository;
 
 //    @Autowired
 //    private StaffRepository staffRepository;
@@ -37,6 +36,7 @@ public class ProjectService {
     public List<ProjectEntity> findAll() {
         return projectRepository.findAll();
     }
+
 
 //    @Autowired
 //    private StaffRepository staffRepository;
@@ -84,6 +84,16 @@ public class ProjectService {
             project.setStatus("Pending");
 
             projectRepository.save(project);
+            List<DesignMaterialQuantity> designMaterials = design.getDesignMaterialQuantities();
+            for (DesignMaterialQuantity designMaterial : designMaterials) {
+                ProjectMaterialDetailEntity projectMaterialDetail = new ProjectMaterialDetailEntity();
+                projectMaterialDetail.setProject(project);
+                projectMaterialDetail.setMaterial(designMaterial.getMaterial());
+                projectMaterialDetail.setQuantityUsed(designMaterial.getQuantityNeeded() * quantity); // Nhân số lượng theo số lượng trong giỏ hàng
+                projectMaterialDetail.setUsedDate(new Date()); // Có thể thay đổi nếu cần thiết
+
+                projectMaterialDetailRepository.save(projectMaterialDetail);
+            }
 
             // Tính điểm tích lũy dựa trên chi phí gốc của dự án (không giảm giá)
             int pointsEarned = (int) (originalProjectCost / 100);
@@ -136,6 +146,16 @@ public class ProjectService {
             project.setStatus("Pending");
 
             projectRepository.save(project);
+            List<DesignMaterialQuantity> designMaterials = design.getDesignMaterialQuantities();
+            for (DesignMaterialQuantity designMaterial : designMaterials) {
+                ProjectMaterialDetailEntity projectMaterialDetail = new ProjectMaterialDetailEntity();
+                projectMaterialDetail.setProject(project);
+                projectMaterialDetail.setMaterial(designMaterial.getMaterial());
+                projectMaterialDetail.setQuantityUsed(designMaterial.getQuantityNeeded() * quantity); // Nhân số lượng theo số lượng trong giỏ hàng
+                projectMaterialDetail.setUsedDate(new Date()); // Có thể thay đổi nếu cần thiết
+
+                projectMaterialDetailRepository.save(projectMaterialDetail);
+            }
 
             int pointsEarned = (int) (originalProjectCost / 100);
             totalPointsEarned += pointsEarned;
@@ -170,7 +190,10 @@ public class ProjectService {
         return projectOptional.orElse(null);
     }
 
-
+    // Lấy danh sách dự án của khách hàng, bao gồm cả chi tiết nguyên vật liệu
+    public List<ProjectEntity> getProjectsByCustomerId(Long customerId) {
+        return projectRepository.findByCustomerCustomerID(customerId);
+    }
 
 
 }

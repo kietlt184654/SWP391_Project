@@ -3,14 +3,17 @@ package com.example.swp391.controller;
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.entity.DesignEntity;
+import com.example.swp391.entity.ProjectEntity;
 import com.example.swp391.service.CustomerService;
 import com.example.swp391.service.DesignService;
+import com.example.swp391.service.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,8 @@ public class CustomerController {
 
     @Autowired
     private DesignService designService;
+    @Autowired
+    private ProjectService projectService;
 
     // Hiển thị bảng điều khiển cho khách hàng với danh sách thiết kế
     @GetMapping("/customer/dashboard")
@@ -41,7 +46,8 @@ public class CustomerController {
         }
 
         // Lấy danh sách thiết kế của khách hàng với trạng thái cần thanh toán hoặc có sẵn
-        List<DesignEntity> designs = designService.findDesignsByCustomerReference(customer.getCustomerID());
+        List<DesignEntity> designs = designService.findNeedToPaymentDesignsByCustomerReference(customer.getCustomerID());
+
         model.addAttribute("customer", customer);
         model.addAttribute("designs", designs);
         return "customerDashboard";
@@ -99,4 +105,22 @@ public class CustomerController {
         model.addAttribute("paymentAmount", design.getPrice());
         return "paymentPage";
     }
+    @GetMapping("account/customer/customer-projects")
+    public String viewCustomerProjects(Model model, HttpSession session) {
+        AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
+
+        if (account == null || account.getCustomer() == null) {
+            model.addAttribute("errorMessage", "Bạn cần đăng nhập để tiến hành thanh toán.");
+            return "errorPage";
+        }
+
+        // Lấy customerID từ tài khoản trong session
+        Long customerId = account.getCustomer().getCustomerID();
+
+        List<ProjectEntity> projects = projectService.getProjectsByCustomerId(customerId);
+        model.addAttribute("projects", projects);
+
+        return "customer-projects"; // Trỏ đến trang Thymeleaf để hiển thị danh sách dự án
+    }
+
 }

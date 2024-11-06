@@ -47,7 +47,7 @@ public class MaintenanceController {
                                         HttpSession session) {
         if (selectedDesignIds == null || selectedDesignIds.isEmpty()) {
             model.addAttribute("errorMessage", "Please select at least one service to proceed.");
-            List<DesignEntity> suitableDesigns = designService.getAllAvailableDesigns();
+            List<DesignEntity> suitableDesigns = designService.getDesignsByTypeId3Or4();
             model.addAttribute("designs", suitableDesigns);
             return "Availableservice";
         }
