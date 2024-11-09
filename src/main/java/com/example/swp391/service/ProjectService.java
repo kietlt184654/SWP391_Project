@@ -195,5 +195,10 @@ public class ProjectService {
         return projectRepository.findByCustomerCustomerID(customerId);
     }
 
-
+    public List<ProjectEntity> getCompletedProjectsByCustomerId(Long customerId) {
+        return projectRepository.findByCustomer_CustomerIDAndStatus(customerId, "COMPLETE");
+    }
+    public List<ProjectEntity> getIncompleteProjectsByCustomerId(Long customerId) {
+        return projectRepository.findByCustomer_CustomerIDAndStatusNot(customerId, "COMPLETE");
+    }
 }

@@ -45,24 +45,39 @@
       <div class="top">
         <span>Have an account? <a th:href="@{/login}">Login</a></span>
         <header>Sign Up</header>
-      </div> <form th:action="@{/account/register}" th:object="${userDTO}" method="post">
-      <div class="input-box">
-        <input type="text" class="input-field" placeholder="Username" name="accountName" required />
-        <i class="bx bx-user"></i>
       </div>
-      <div th:if="${usernameError}" class="error-message" style="color: red;">[[${usernameError}]]</div>  <div class="input-box">
-      <input type="email" class="input-field" placeholder="Email" name="email" required />
-      <i class="bx bx-envelope"></i>
-    </div>
-      <div th:if="${emailError}" class="error-message" style="color: red;">[[${emailError}]]</div>
-      <div class="input-box">
-        <input type="password" class="input-field" placeholder="Password" name="password" required />
-        <i class="bx bx-lock-alt"></i>
-      </div>
-      <div class="input-box">
-        <input type="submit" class="submit" value="Register" />
-      </div>
-    </form>
+
+      <!-- Form đăng ký -->
+      <form th:action="@{/account/register}" th:object="${userDTO}" method="post">
+        <!-- Trường Tên người dùng -->
+        <div class="input-box">
+          <input type="text" class="input-field" placeholder="Username" name="accountName"
+                 th:value="${name != null ? name : ''}" required />
+          <i class="bx bx-user"></i>
+        </div>
+        <div th:if="${usernameError}" class="error-message" style="color: red;">[[${usernameError}]]</div>
+
+        <!-- Trường Email -->
+        <div class="input-box">
+          <input type="email" class="input-field" placeholder="Email" name="email"
+                 th:value="${email != null ? email : ''}" required />
+          <i class="bx bx-envelope"></i>
+        </div>
+        <div th:if="${emailError}" class="error-message" style="color: red;">[[${emailError}]]</div>
+
+        <!-- Trường Mật khẩu -->
+        <div class="input-box">
+          <input type="password" class="input-field" placeholder="Password" name="password" required />
+          <i class="bx bx-lock-alt"></i>
+        </div>
+
+        <!-- Nút đăng ký -->
+        <div class="input-box">
+          <input type="submit" class="submit" value="Register" />
+        </div>
+      </form>
+
+      <!-- Điều khoản và Checkbox Remember Me -->
       <div class="two-col">
         <div class="one">
           <input type="checkbox" id="register-check" />
@@ -87,3 +102,4 @@
   }
 </script>
 </body>
+</html>

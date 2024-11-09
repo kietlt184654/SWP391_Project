@@ -13,4 +13,6 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
     // Tìm dự án theo customerId
     List<ProjectEntity> findByCustomerCustomerID(Long customerId);
+    List<ProjectEntity> findByCustomer_CustomerIDAndStatus(Long customerId, String status);
+    List<ProjectEntity> findByCustomer_CustomerIDAndStatusNot(Long customerId, String status);
 }

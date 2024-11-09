@@ -34,5 +34,8 @@ public class CustomerEntity {
     public int getTotalPoints() {
         return pointsHistory.stream().mapToInt(PointEntity::getPoints).sum();
     }
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RatingFeedbackEntity> feedbacks = new ArrayList<>();
     }
+
 

@@ -33,9 +33,14 @@ public class MaterialController {
     @PostMapping("/{materialId}/update-quantity")
     public String updateMaterialQuantity(
             @PathVariable Long materialId,
-            @RequestParam int quantityChange,
+            @RequestParam int quantityChange ,
             @RequestParam String reason,
-            RedirectAttributes redirectAttributes) { // Dùng RedirectAttributes để truyền thông báo
+            RedirectAttributes redirectAttributes) {
+
+        // Dùng RedirectAttributes để truyền thông báo
+        if (quantityChange == 0){
+            redirectAttributes.addFlashAttribute("message", "Số lượng thay đổi không được bằng 0");
+        }
         try {
             materialService.updateMaterialQuantity(materialId, quantityChange, reason);
             // Thêm thông báo thành công vào redirect attributes
@@ -48,12 +53,7 @@ public class MaterialController {
         // Redirect đến trang danh sách sau khi cập nhật thành công
         return "redirect:/materials/list";
     }
-//    @GetMapping("/{materialId}/historyofchanging")
-//    public String showMaterialHistory(@PathVariable Long materialId, Model model) {
-//        List<MaterialChangeLogEntity> changeLogs = materialService.getMaterialChangeHistory(materialId);
-//        model.addAttribute("changeLogs", changeLogs);
-//        return "material-historychanging"; // Trả về view hiển thị lịch sử chỉnh sửa
-//    }
+
 // Endpoint xử lý yêu cầu xóa
 @PostMapping("/{materialId}/delete")
 public String deleteMaterial(@PathVariable Long materialId) {
@@ -67,6 +67,17 @@ public String deleteMaterial(@PathVariable Long materialId) {
             @RequestParam("stockQuantity") int stockQuantity,
             @RequestParam("unit") String unit,
             Model model) {
+
+        // Kiểm tra nếu tên nguyên vật liệu đã tồn tại
+        if (materialService.existsByMaterialName(materialName)) {
+            model.addAttribute("error", "Tên nguyên vật liệu đã tồn tại.");
+            return "materials/add"; // Trả về trang thêm mới với thông báo lỗi
+        }
+        // Kiểm tra điều kiện stockQuantity phải lớn hơn 0
+        if (stockQuantity <= 0) {
+            model.addAttribute("error", "Số lượng tồn kho phải lớn hơn 0.");
+            return "redirect:/materials/add"; // Trả về trang thêm mới với thông báo lỗi
+        }
 
         MaterialEntity material = new MaterialEntity();
         material.setMaterialName(materialName);

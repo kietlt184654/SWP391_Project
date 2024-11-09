@@ -1,6 +1,8 @@
 package com.example.swp391.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,11 +43,13 @@ public class DesignEntity {
     private Size size; // Kích cỡ của thiết kế
 
     @Column(name = "Price", nullable = false)
+    @Positive(message = "Price must be a positive value.")
     private double price; // Giá không âm
 
     private String shapeOfPond;
 
     @Column(name = "EstimatedCompletionTime", nullable = false)
+    @Min(value = 1, message = "Estimated completion time must be greater than 0.")
     private int estimatedCompletionTime; // Số ngày hoàn thành lớn hơn 0
 
     @Column(name = "Status", nullable = false, length = 50)

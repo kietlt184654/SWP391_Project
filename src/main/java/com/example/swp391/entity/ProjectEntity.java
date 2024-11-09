@@ -56,4 +56,7 @@ public class ProjectEntity {
     private List<PaymentEntity> payments = new ArrayList<>();
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<PointEntity> points = new ArrayList<>(); // Quan hệ một-nhiều với PointEntity
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private RatingFeedbackEntity feedback;
 }
+

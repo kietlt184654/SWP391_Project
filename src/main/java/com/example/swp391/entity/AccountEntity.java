@@ -31,12 +31,13 @@ public class AccountEntity {
     @Column(name = "Email", nullable = false)  // Tên cột chính xác
     private String email;
 
-    @Column(name = "PhoneNumber", nullable = false)  // Tên cột chính xác
+    @Column(name = "PhoneNumber")  // Tên cột chính xác
     private String phoneNumber;
     @Column(name = "ResetToken")
     private String token;
     @Column(name = "Address")  // Tên cột chính xác
     private String address;
+
     @Column(name = "Images")
     private String images;
     @Column(name = "Status", nullable = false)  // Thêm trường Status

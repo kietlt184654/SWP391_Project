@@ -22,8 +22,9 @@ public class AccountService {
     private AccountRepository accountRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
 private EmailService emailService;
-
+    @Autowired
     private CustomerRepository customerRepository;
 
     public AccountEntity login(String accountName, String password) {
@@ -38,30 +39,21 @@ private EmailService emailService;
         return accountRepository.findByAccountName(username)!=null;
     }
     public synchronized void registerUser(AccountEntity userDTO) {
-        // Tìm tài khoản có AccountID lớn nhất hiện có
-        AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
-
-        if (lastAccount != null) {
-            // Tăng giá trị AccountID thủ công
-            userDTO.setAccountId(lastAccount.getAccountId() + 1);
-        } else {
-            // Nếu bảng trống, bắt đầu từ AccountID = 1
-            userDTO.setAccountId(1);
-        }
-
-        // Thiết lập các giá trị khác
+        // Thiết lập các giá trị khác cho tài khoản
         userDTO.setAccountTypeID("Customer");
         userDTO.setStatus(true);
 
-        // Lưu tài khoản vào cơ sở dữ liệu
+        // Lưu tài khoản vào cơ sở dữ liệu (AccountID sẽ tự động tăng)
         accountRepository.save(userDTO);
-        // Sau khi lưu xong tài khoản, tạo một Customer mới
+
+        // Tạo một Customer mới và thiết lập thông tin
         CustomerEntity customer = new CustomerEntity();
-        customer.setCustomerID(customerRepository.findTopByOrderByCustomerIDDesc().getCustomerID() + 1); // Gán AccountID mới tạo cho Customer
         customer.setAdditionalInfo("Thông tin khách hàng mặc định"); // Thông tin thêm cho khách hàng, có thể thay đổi
-        customer.setAccount(userDTO); // Sửa đổi: gán trực tiếp đối tượng AccountEntity
-        customerRepository.save(customer); // Lưu thông tin Customer vào cơ sở dữ liệu
+        customer.setAccount(userDTO); // Gán đối tượng AccountEntity đã lưu vào Customer
+        customerRepository.save(customer); // Lưu Customer (CustomerID sẽ tự động tăng)
     }
+
+
 
 
     public AccountEntity findByEmail(String email) {

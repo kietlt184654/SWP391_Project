@@ -1,18 +1,18 @@
 package com.example.swp391.controller;
 
-import com.example.swp391.entity.AccountEntity;
-import com.example.swp391.entity.CustomerEntity;
-import com.example.swp391.entity.DesignEntity;
-import com.example.swp391.entity.ProjectEntity;
+import com.example.swp391.entity.*;
 import com.example.swp391.service.CustomerService;
 import com.example.swp391.service.DesignService;
 import com.example.swp391.service.ProjectService;
+import com.example.swp391.service.RatingFeedbackService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
@@ -29,6 +29,9 @@ public class CustomerController {
     private DesignService designService;
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private RatingFeedbackService ratingFeedbackService;
 
     // Hiển thị bảng điều khiển cho khách hàng với danh sách thiết kế
     @GetMapping("/customer/dashboard")
@@ -117,10 +120,54 @@ public class CustomerController {
         // Lấy customerID từ tài khoản trong session
         Long customerId = account.getCustomer().getCustomerID();
 
-        List<ProjectEntity> projects = projectService.getProjectsByCustomerId(customerId);
+        List<ProjectEntity> projects = projectService.getIncompleteProjectsByCustomerId(customerId);
         model.addAttribute("projects", projects);
 
         return "customer-projects"; // Trỏ đến trang Thymeleaf để hiển thị danh sách dự án
     }
 
+
+    @PostMapping("/submitFeedback")
+    public ResponseEntity<String> submitFeedback(@RequestParam Long projectId,
+                                                 @RequestParam int rating,
+                                                 @RequestParam String feedback) {
+        ProjectEntity project = projectService.getProjectById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectId));
+
+        if (!"COMPLETE".equalsIgnoreCase(project.getStatus())) {
+            return ResponseEntity.badRequest().body("Chỉ những dự án hoàn thành mới có thể đánh giá.");
+        }
+
+        // Kiểm tra nếu dự án đã được đánh giá trước đó
+        RatingFeedbackEntity existingFeedback = ratingFeedbackService.findByProjectId(projectId);
+        if (existingFeedback != null && existingFeedback.isReviewed()) {
+            return ResponseEntity.badRequest().body("Dự án này đã được đánh giá và không thể chỉnh sửa.");
+        }
+
+        // Tạo và lưu đối tượng RatingFeedbackEntity
+        RatingFeedbackEntity ratingFeedback = new RatingFeedbackEntity();
+        ratingFeedback.setProject(project);
+        ratingFeedback.setCustomer(project.getCustomer());
+        ratingFeedback.setRating(rating);
+        ratingFeedback.setFeedback(feedback);
+        ratingFeedback.setReviewed(true);  // Đánh dấu là đã được đánh giá
+        ratingFeedbackService.saveFeedback(ratingFeedback);
+
+        return ResponseEntity.ok("Đánh giá của bạn đã được gửi thành công.");
+    }
+    @GetMapping("/account/customer/completed-projects")
+    public String viewCompletedProjects(Model model, HttpSession session) {
+        AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
+
+        if (account == null || account.getCustomer() == null) {
+            model.addAttribute("errorMessage", "Bạn cần đăng nhập để xem lịch sử dự án.");
+            return "errorPage";
+        }
+
+        Long customerId = account.getCustomer().getCustomerID();
+        List<ProjectEntity> completedProjects = projectService.getCompletedProjectsByCustomerId(customerId);
+        model.addAttribute("completedProjects", completedProjects);
+
+        return "completed-projects"; // Trang để hiển thị lịch sử dự án hoàn thành
+    }
 }

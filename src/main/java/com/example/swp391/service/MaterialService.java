@@ -150,8 +150,11 @@ public class MaterialService {
         changeLogs.sort(Comparator.comparing(MaterialChangeLogEntity::getChangeDate).reversed());
         return changeLogs;
     }
-    public void updateMaterialQuantityForDesign(Long materialId, int quantityChange) {
-        // Tìm kiếm nguyên liệu từ DB
+    public void updateMaterialQuantityForDesign(Long materialId, int quantityChange ) {
+         // Kiểm tra quantityChange > 0
+            if (quantityChange == 0) {
+                throw new IllegalArgumentException("Số lượng thay đổi phải khác 0");
+            }
         MaterialEntity material = materialRepository.findById(materialId)
                 .orElseThrow(() -> new IllegalArgumentException("Material not found"));
 
@@ -178,6 +181,8 @@ public class MaterialService {
     public void deleteMaterialById(Long materialId) {
         materialRepository.deleteById(materialId);
     }
-
+    public boolean existsByMaterialName(String materialName) {
+        return materialRepository.existsByMaterialName(materialName);
+    }
 
 }

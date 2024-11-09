@@ -35,7 +35,7 @@ public class GoogleCallbackController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/google/callback")
+    @GetMapping("/oauth2callback")
     public String googleCallback(@RequestParam("code") String code, HttpSession session) {
         try {
             // Lấy Access Token từ Google
@@ -65,37 +65,29 @@ public class GoogleCallbackController {
             String email = userJson.getString("email");
             String name = userJson.getString("name");
 
-            // Kiểm tra và tạo tài khoản mới nếu đây là lần đầu đăng nhập
+            // Kiểm tra tài khoản theo email
             AccountEntity account = accountService.findByEmail(email);
             if (account == null) {
-                account = new AccountEntity();
-                account.setEmail(email);
-                account.setAccountName(name);
-                account.setStatus(true);
-                account.setAccountTypeID("Customer");
-                accountService.save(account); // Lưu vào cơ sở dữ liệu
+                // Nếu tài khoản chưa tồn tại, chuyển hướng đến trang tạo tài khoản
+                session.setAttribute("googleEmail", email);
+                session.setAttribute("googleName", name);
+
+
+                return "register";  // Giả sử /createAccount là endpoint cho trang tạo tài khoản
             }
 
             // Đăng nhập người dùng bằng cách lưu vào session
             session.setAttribute("loggedInUser", account);
+
             // Điều hướng dựa trên vai trò của người dùng
             if (account.getAccountTypeID().equals("Customer")) {
-                // Kiểm tra nếu customer chưa tồn tại
-                if (!customerService.existsByAccount(account)) {
-                    CustomerEntity customer = new CustomerEntity();
-                    customer.setAccount(account);
-                    customer.setAdditionalInfo("");  // Bạn có thể thêm thông tin bổ sung tùy ý
-
-                    // Lưu Customer mới vào cơ sở dữ liệu
-                    customerService.save(customer);
-                }
                 return "Homepage";
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
                 return "consultingHome";
             } else if (account.getAccountTypeID().equals("Construction Staff")) {
-                return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
+                return "redirect:/dashboard";
             }
             return "login";
 
@@ -104,4 +96,5 @@ public class GoogleCallbackController {
             return "errorPage";
         }
     }
+
 }

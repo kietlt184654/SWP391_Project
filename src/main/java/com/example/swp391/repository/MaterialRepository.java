@@ -17,4 +17,5 @@ public interface MaterialRepository extends JpaRepository<MaterialEntity, Long> 
     @Modifying
     @Query("UPDATE MaterialEntity m SET m.stockQuantity = m.stockQuantity - :quantity WHERE m.materialId = :materialId AND m.stockQuantity >= :quantity")
     void reduceMaterialStock(@Param("materialId") Long materialId, @Param("quantity") int quantity);
+    boolean existsByMaterialName(String materialName);
 }
