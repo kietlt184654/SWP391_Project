@@ -42,7 +42,7 @@
     <th>Role ID</th>
     <th>Phone Number</th>
     <th>Address</th>
-    <th>Point</th>
+<!--    <th>Point</th>-->
   </tr>
   </thead>
   <tbody>
@@ -54,7 +54,7 @@
     <td th:text="${customer.accountTypeID}"></td>
     <td th:text="${customer.phoneNumber}"></td>
     <td th:text="${customer.address}"></td>
-    <td th:text="0"></td> <!-- Thêm cột Point nếu có -->
+<!--    <td th:text="${customer.getTotalPoints}"></td>&lt;!&ndash; Thêm cột Point nếu có &ndash;&gt;-->
     <td><i class="bi bi-pencil-square"></i></td>
   </tr>
 <!--  <tr th:each="customer : ${customers}">-->

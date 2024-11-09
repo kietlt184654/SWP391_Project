@@ -1,35 +1,59 @@
 package com.example.swp391.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Entity
 @Table(name = "Project")
-@Data                         // Tự động sinh getter, setter, toString, hashCode, equals
-@NoArgsConstructor             // Tự động sinh constructor không tham số
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ProjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer projectID;  // Khóa chính
+    @Column(name = "ProjectID")
+    private Long projectID;
 
-    private String description;
+    @Column(name = "Name")
     private String name;
-    private LocalDate endDate;  // Sử dụng LocalDate hoặc java.sql.Date thay vì java.util.Date nếu chỉ cần ngày
 
-    private LocalDate startDate;
+    @Column(name = "Description")
+    private String description;
 
+    @Column(name = "TotalCost")
+    private double totalCost;
+
+    @ManyToOne
+    @JoinColumn(name = "DesignID")
+    private DesignEntity design;
+
+    @ManyToOne
+    @JoinColumn(name = "CustomerID")
+    private CustomerEntity customer;
+
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+
+    @Column(name = "Status")
     private String status;
-    private Float totalCost;
-    private Long designId;
 
-    private String priority;
     private String img;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<ProjectMaterialDetailEntity> projectMaterials = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PaymentEntity> payments = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<PointEntity> points = new ArrayList<>(); // Quan hệ một-nhiều với PointEntity
 }

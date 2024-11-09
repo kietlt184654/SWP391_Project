@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your purchase!</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="order-details">
+        <h2>Order Details</h2>
+        <p><strong>Transaction ID:</strong> <span th:text="${transactionId}">#123456</span></p>
+        <p><strong>Original Total:</strong> <span th:text="${totalAmount}">0.00</span> USD</p>
+        <p><strong>Discount Rate:</strong> <span th:text="${discountRate}">0.00</span>%</p>
+        <p><strong>Discount Amount:</strong> <span th:text="${discountAmount}">0.00</span> USD</p>
+        <p><strong>Total after Discount:</strong> <span th:text="${discountedTotalAmount}">0.00</span> USD</p>
+        <p><strong>Points Earned:</strong> <span th:text="${pointsEarned}">0</span> points</p>
+        <p><strong>Payment Status:</strong> <span th:text="${paymentStatus}">Pending</span></p>
+    </div>
+
+    <!-- Order Items -->
+    <div class="order-items">
+        <h3>Items Purchased</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Design Name</th>
+                <th>Quantity</th>
+                <th>Unit Price (USD)</th>
+                <th>Total Price (USD)</th>
+                <th> Total after Discount(USD)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${designItems}">
+                <td th:text="${entry.key.designName}">Design 1</td>
+                <td th:text="${entry.value}">1</td>
+                <td th:text="${entry.key.price}">50.00</td>
+                <td th:text="${entry.key.price * entry.value}">50.00</td>
+                <td th:text="${discountedTotalAmount}">0.00</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Redirect Buttons -->
+    <div class="redirect-buttons">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+        <a href="/account/profile" class="btn btn-secondary">View Profile</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -2,25 +2,26 @@ package com.example.swp391.service;
 
 import com.example.swp391.entity.AccountEntity;
 import com.example.swp391.entity.CustomerEntity;
-import com.example.swp391.entity.StaffEntity;
 import com.example.swp391.repository.AccountRepository;
 import com.example.swp391.repository.CustomerRepository;
-import com.example.swp391.repository.StaffRepository;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
-    private StaffRepository staffRepository;
+    private JavaMailSender mailSender;
 private EmailService emailService;
 
     private CustomerRepository customerRepository;
@@ -35,9 +36,6 @@ private EmailService emailService;
 
     public boolean checkIfAccountNameExists(String username) {
         return accountRepository.findByAccountName(username)!=null;
-    }
-    public AccountEntity saveAccount(AccountEntity account) {
-        return accountRepository.save(account);
     }
     public synchronized void registerUser(AccountEntity userDTO) {
         // Tìm tài khoản có AccountID lớn nhất hiện có
@@ -78,23 +76,6 @@ private EmailService emailService;
         accountRepository.save(user);
     }
 
-    public AccountEntity createAccount(AccountEntity account) {
-        // Validate account details before saving
-        if (account == null || account.getEmail() == null || account.getAccountName() == null) {
-            throw new IllegalArgumentException("Account details are incomplete or null");
-        }
-        AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
-
-        if (lastAccount != null) {
-            // Tăng giá trị AccountID thủ công
-            account.setAccountId(lastAccount.getAccountId() + 1);
-        } else {
-            // Nếu bảng trống, bắt đầu từ AccountID = 1
-            account.setAccountId(1);
-        }
-
-        return accountRepository.save(account);
-    }
 
 
 
@@ -141,5 +122,65 @@ private EmailService emailService;
             throw new Exception("Token không hợp lệ hoặc đã hết hạn.");
         }
 
+    }
+    public AccountEntity getCurrentAccount(HttpSession session) {
+        return (AccountEntity) session.getAttribute("loggedInUser");
+    }
+    public boolean checkIfEmailExistsAndSendResetLink(String email) {
+        AccountEntity user = accountRepository.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+
+        String token = UUID.randomUUID().toString();
+        user.setToken(token);
+        accountRepository.save(user);
+
+        String resetUrl = "http://localhost:8080/account/reset-password?token=" + token;
+        sendResetPasswordEmail(email, resetUrl);
+
+        return true;
+    }
+
+    private void sendResetPasswordEmail(String email, String resetUrl) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(email);
+            helper.setSubject("Reset Your Password");
+
+            String content = "<p>Hello,</p>"
+                    + "<p>We received a request to reset your password. "
+                    + "If you requested this, please click the link below to reset your password:</p>"
+                    + "<p><a href=\"" + resetUrl + "\">Reset Password</a></p>"
+                    + "<br>"
+                    + "<p>If you did not request a password reset, please ignore this email.</p>"
+                    + "<p>This link will expire in 15 minutes for your security.</p>"
+                    + "<br>"
+                    + "<p>Best regards,<br>Your Company Team</p>";
+
+            helper.setText(content, true); // Set to true to enable HTML formatting
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+    // Phương thức kiểm tra token có tồn tại hay không
+    public boolean isValidResetToken(String token) {
+        return accountRepository.findByToken(token) != null;
+    }
+
+    // Phương thức đặt lại mật khẩu mới nếu token hợp lệ
+    public boolean resetPassword(String token, String newPassword) {
+        AccountEntity account = accountRepository.findByToken(token);
+        if (account != null) {
+            account.setPassword(newPassword); // Đảm bảo mã hóa mật khẩu nếu cần
+            account.setToken(null); // Xóa token sau khi sử dụng
+            accountRepository.save(account);
+            return true;
+        }
+        return false;
     }
 }

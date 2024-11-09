@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Service Request Form</title>
+    <style>
+        /* Đặt kiểu cho body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Kiểu cho tiêu đề */
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Định dạng cho form */
+        form {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Kiểu cho label */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* Kiểu cho các input và select */
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Kiểu cho button */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hiệu ứng hover cho button */
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Service Request Form</h1>
+<form action="#" th:action="@{/services/submitServiceForm}" th:object="${serviceRequest}" method="post">
+    <label for="serviceType">Select Service Type:</label>
+    <select id="serviceType" name="serviceType" th:field="*{serviceType}">
+        <option value="Maintenance">Bảo Dưỡng</option>
+        <option value="Cleaning">Vệ Sinh</option>
+    </select>
+
+    <label for="size">Select Size:</label>
+    <select id="size" name="size" th:field="*{size}">
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+    </select>
+
+    <label for="budget">Budget:</label>
+    <input type="number" id="budget" th:field="*{budget}" placeholder="Enter your budget">
+
+    <label for="completionTime">Estimated Completion Time (days):</label>
+    <input type="number" id="completionTime" th:field="*{estimatedCompletionTime}" placeholder="Completion time in days">
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

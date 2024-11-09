@@ -1,125 +1,116 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <link rel="stylesheet" href="/css/login.css" />
+  <title>Login</title>
+</head>
+<body>
+<div class="wrapper" th:fragment="wrapper">
+  <nav class="nav" th:fragment="nav">
+    <div class="nav-logo">
+      <p>LOGO</p>
+    </div>
+    <div class="nav-menu" id="navMenu">
+      <ul>
+        <li><a th:href="@{/}" class="link">Home</a></li>
+        <li><a href="#" class="link">About</a></li>
+        <li><a href="#" class="link">Blog</a></li>
+        <li><a href="#" class="link">Services</a></li>
+        <li><a href="#" class="link">Product</a></li>
+      </ul>
+    </div>
+    <div class="nav-button">
+      <button class="btn white-btn">Sign In</button>
+      <a th:href="@{/register}"><button class="btn">Sign Up</button></a>
+    </div>
+    <div class="nav-menu-btn">
+      <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+    </div>
+  </nav>
 
-    <title>Login</title>
-  </head>
-  <body>
-    <div class="wrapper" th:fragment="wrapper">
-      <nav class="nav" th:fragment="nav">
-        <div class="nav-logo">
-          <p>LOGO</p>
-        </div>
-        <div class="nav-menu" id="navMenu">
-          <ul>
-            <li><a th:href="@{/}" class="link">Home</a></li>
-            <li><a href="#" class="link">About</a></li>
-            <li><a href="#" class="link">Blog</a></li>
-            <li><a href="#" class="link">Services</a></li>
-            <li><a href="#" class="link">Product</a></li>
-          </ul>
-        </div>
-        <div class="nav-button">
-          <button class="btn white-btn">Sign In</button>
-          <a th:href="@{/register}"><button class="btn">Sign Up</button></a>
-        </div>
-        <div class="nav-menu-btn">
-          <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-        </div>
-      </nav>
+  <!------------------- login form -------------------------->
 
-      <!------------------- login form -------------------------->
-
-      <div class="form-box">
-        <div class="login-container" id="login">
-          <div class="top">
+  <div class="form-box">
+    <div class="login-container" id="login">
+      <div class="top">
             <span
-              >Don't have an account?
-              <a th:href="@{/register}">Sign Up</a></span
+            >Don't have an account? <a th:href="@{/register}">Sign Up</a></span
             >
-            <header>Login</header>
-          </div>
+        <header>Login</header>
+      </div>
 
-          <form th:method="post" th:action="@{/account/login}">
-            <div class="input-box">
-              <input
-                id="accountName"
-                name="accountName"
-                type="text"
-                class="input-field"
-                placeholder="accountName"
-              />
-              <i class="bx bx-user"></i>
-            </div>
-            <div class="input-box">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                class="input-field"
-                placeholder="Password"
-              />
-              <i class="bx bx-lock-alt"></i>
-            </div>
-            <div
-              th:if="${message != null}"
-              class="error-message"
-              style="color: red"
-            >
-              <p th:text="${message}"></p>
-            </div>
-            <div class="input-box">
-              <input type="submit" class="submit" value="Sign In" />
-            </div>
-          </form>
-          <div class="btn-social">
-            <div class="btn-google">
-              <i class="fab fa-google"></i> Sign in with Google
-            </div>
-            <div class="btn-facebook">
-              <i class="fab fa-facebook-f"></i> Sign in with Facebook
-            </div>
-          </div>
-          <div class="two-col">
-            <div class="one">
-              <input type="checkbox" id="login-check" />
-              <label for="login-check"> Remember Me</label>
-            </div>
-            <!-- Liên kết tới trang quên mật khẩu -->
-            <div class="two">
-              <a
-                th:href="@{/account/forgot-password-form}"
-                style="color: blue; text-decoration: underline; cursor: pointer"
-              >
-                Forgot password?
-              </a>
-            </div>
-          </div>
+      <form th:method="post" th:action="@{/account/login}">
+        <div class="input-box">
+
+          <input
+                  id="accountName"
+                  name="accountName"
+                  type="text"
+                  class="input-field"
+                  placeholder="accountName"
+          />
+          <i class="bx bx-user"></i>
+        </div>
+        <div class="input-box">
+
+          <input id="password" name="password" type="password" class="input-field" placeholder="Password" />
+          <i class="bx bx-lock-alt"></i>
+        </div>
+        <div th:if="${messageLogin != null}" class="error-message" style="color:red;">
+          <p th:text="${messageLogin}"></p>
+        </div>
+        <div class="input-box">
+          <input type="submit" class="submit" value="Sign In" />
+        </div>
+
+      </form>
+      <div class="btn-social">
+        <div class="btn-google">
+          <i class="fab fa-google"></i> Sign in with Google
+        </div>
+        <div class="btn-facebook">
+          <i class="fab fa-facebook-f"></i> Sign in with Facebook
         </div>
       </div>
-    </div>
+      <div class="two-col">
+        <div class="one">
+          <input type="checkbox" id="login-check" />
+          <label for="login-check"> Remember Me</label>
+        </div>
+        <form th:action="@{/forgetPassword}" method="GET">
+          <div class="two">
+            <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">
+              Forgot password?
+            </button>
+          </div>
+        </form>
 
-    <script>
-      function myMenuFunction() {
-        var i = document.getElementById("navMenu");
-        if (i.className === "nav-menu") {
-          i.className += " responsive";
-        } else {
-          i.className = "nav-menu";
-        }
-      }
-    </script>
-  </body>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+    if (i.className === "nav-menu") {
+      i.className += " responsive";
+    } else {
+      i.className = "nav-menu";
+    }
+  }
+</script>
+</body>
 </html>

@@ -74,27 +74,27 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 60px; /* Match DesignService */
-    background: #3c7363; /* Match DesignService */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Match DesignService */
+    height: 60px; 
+    background: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     z-index: 100;
     display: flex;
     align-items: center;
-    padding: 0 20px; /* Match DesignService */
+    padding: 0 20px; 
 }
 
 .nav-logo p {
-    color: white;
-    font-size: 18px; /* Match DesignService */
+    color: black;
+    font-size: 18px; 
     font-weight: 600;
-    margin-right: 100px; /* Match DesignService */
-    margin-left: 100px; /* Match DesignService */
+    margin-right: 100px; 
+    margin-left: 100px; 
 }
 
 .nav-menu {
     display: flex;
     flex-grow: 1;
-    justify-content: center; /* Match DesignService */
+    justify-content: center; 
 }
 
 .nav-menu ul {
@@ -102,7 +102,7 @@ body {
     list-style: none;
     position: relative;
     align-content: center;
-    margin-right: 100px; /* Match DesignService */
+    margin-right: 100px; 
 }
 
 .nav-menu ul li {
@@ -113,16 +113,16 @@ body {
 
 .nav-menu ul li a {
     text-decoration: none;
-    color: white; /* Match DesignService */
+    color: black; 
     font-weight: 500;
-    font-size: 16px; /* Match DesignService */
-    padding: 8px; /* Match DesignService */
-    transition: border-bottom 0.3s ease, color 0.3s ease; /* Match DesignService */
+    font-size: 16px; 
+    padding: 8px; 
+    transition: border-bottom 0.3s ease, color 0.3s ease; 
 }
 
 .nav-menu ul li a:hover,
 .nav-menu ul li a.active {
-    border-bottom: 3px solid white; /* Match DesignService */
+    border-bottom: 3px solid white; 
 }
 
 .nav-button .btn {
@@ -219,8 +219,6 @@ body {
 }
 
 .nav ul ul {
-  position: absolute;
-  top: 100%;
   display: none;
 }
 
@@ -353,7 +351,7 @@ body {
 .carousel{
   width: 100vw;
   height: 100vh;
-  margin-top: -50px;
+  margin-top: 60px;
   overflow: hidden;
   position: relative;
 }
@@ -403,7 +401,6 @@ body {
   left: calc(67% + 800px);
   opacity: 0;
 }
-
 
 
 
@@ -504,12 +501,6 @@ body {
 }
 
 /* Carousel */
-
-
-
-
-
-
 /* next prev arrows */
 
 .arrows{
@@ -699,12 +690,17 @@ body {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid #eaeaea;
 }
 
 .project-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .project-card img {
@@ -736,9 +732,18 @@ body {
 }
 
 .project-title {
-  color: white;
+  color: #333;
   text-align: center;
-  padding: 10px;
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.project-card p {
+  color: #666;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 .rating-feedback {
@@ -747,7 +752,7 @@ body {
 }
 /* -------------------Footer----------------- */
 .footer {
-  background-color: #3c7363;
+  background-color: #000000;
   padding: 20px;
   border-top: 1px solid #ccc;
   width: 100%;
@@ -805,3 +810,178 @@ body {
 .footer-container h4 {
   text-decoration: underline;
 }
+
+
+@media only screen and (max-width: 1200px) {
+    .nav-logo p {
+        font-size: 16px; 
+        margin-right: 50px; 
+        margin-left: 50px; 
+    }
+
+    .nav-menu ul li {
+        margin: 0 10px; 
+    }
+
+    .carousel .list .item {
+        width: 100%; 
+        height: auto; 
+    }
+
+    .content .title, .content .name {
+        font-size: 60px; 
+    }
+
+    .content .des {
+        font-size: 14px; 
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .search-container {
+        margin: 50px; 
+    }
+
+    .header-top, .header-main {
+        padding: 10px; 
+    }
+
+    .project-card {
+        margin: 10px; 
+    }
+
+    .footer-container {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .footer-info, .footer-services, .footer-contact {
+        text-align: center; 
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .nav-menu ul {
+        flex-direction: column; 
+    }
+
+    .nav-menu ul li {
+        margin: 5px 0; 
+    }
+
+    .content .title, .content .name {
+        font-size: 40px; 
+    }
+
+    .content .des {
+        font-size: 12px; 
+    }
+
+    .btn {
+        padding: 8px 16px; 
+    }
+}
+
+/* Remove background color from card titles */
+.card-title-1,
+.card-title-2,
+.card-title-3 {
+    background-color: transparent; /* Remove background color */
+    color: #eaeaea; /* Keep text color */
+}
+
+/* Add specific colors to icons */
+.card-img-top {
+    filter: grayscale(0); /* Remove grayscale if any */
+}
+
+.card-title-1::before {
+    content: '';
+    display: inline-block;
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    background-color: #c0392b; /* Red for Return Policy */
+    border-radius: 50%; /* Make it circular */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.card-title-2::before {
+    content: '';
+    display: inline-block;
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    background-color: #2980b9; /* Blue for Professional Team */
+    border-radius: 50%; /* Make it circular */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.card-title-3::before {
+    content: '';
+    display: inline-block;
+    width: 30px; 
+    height: 30px; 
+    background-color: #27ae60; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+}
+
+/* Animation for title color change */
+@keyframes colorChange {
+    0% { color: #eaeaea; }
+    50% { color: #c0392b; } 
+    100% { color: #eaeaea; }
+}
+
+.animate-title {
+    animation: colorChange 0.5s ease-in-out; 
+}
+
+.card-title-1 i,
+.card-title-2 i,
+.card-title-3 i {
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.section-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3c7363; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: background-color 0.3s; 
+}
+
+/* Style for the Rating and Feedback section header */
+.rating-feedback-header {
+    font-size: 2.5rem; /* Same size as Our Projects */
+    font-weight: bold;
+    color: white;
+    background-color: #3c7363; /* Same background color */
+    padding: 20px; /* Same padding */
+    border-radius: 10px; /* Same border radius */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Same shadow effect */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Letter spacing */
+    text-align: center; /* Center the text */
+    margin: 20px 0; /* Add margin for spacing */
+}
+
+/* Style for the Rating and Feedback section container */
+.rating-feedback {
+    margin-top: 70px; /* Adjust margin as needed */
+    margin-bottom: 70px; /* Adjust margin as needed */
+    padding: 20px; /* Add padding */
+    background-color: #f8f9fa; /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+

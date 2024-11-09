@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', function() {
         bookingForm.reset();
         bookingForm.style.display = 'none';
         generateCalendar(); // Regenerate calendar to show booked date
+
+        // Display the success message
+        document.getElementById('displayCustomerName').innerText = customerName;
+        document.getElementById('displayPondSize').innerText = document.getElementById('pondSize').value;
+        document.getElementById('displayServiceDate').innerText = selectedDate;
+        document.getElementById('successMessage').style.display = 'block';
     });
 
     generateCalendar();
@@ -123,4 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Assuming you have a way to set the selected date
     // Example: document.getElementById('selectedDate').value = '2023-10-01';
+});
+// side bar
+const menuToggle = document.getElementById("menu-toggle");
+const sidebar = document.getElementById("sidebar");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("show");
 });
