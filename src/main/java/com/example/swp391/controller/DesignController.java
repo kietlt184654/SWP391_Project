@@ -1,16 +1,15 @@
 package com.example.swp391.controller;
 
-
+import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.entity.DesignEntity;
-//import com.example.swp391.entity.DesignImgEntity;
-//import com.example.swp391.repository.ImageRepository;
+import com.example.swp391.entity.TypeDesignEntity;
+import com.example.swp391.service.CustomerService;
 import com.example.swp391.service.DesignService;
+import com.example.swp391.service.TypeDesignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +20,16 @@ public class DesignController {
 
     @Autowired
     private DesignService designService;
-    //    private ImageRepository imgRepo;
-//show thiet ke
+    @Autowired
+    private TypeDesignService typeDesignService;
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping("/showAllDesign")
     public String showProducts(Model model) {
-        // Lấy danh sách sản phẩm từ service
-        List<DesignEntity> products = designService.getAllProducts();
+        List<DesignEntity> products = designService.getDesignsByTypeId();
         model.addAttribute("design", products);
-        return "Availableproject"; // Trả về trang "Availableproject.html"
+        return "Availableproject";
     }
 
     @GetMapping("/{id}")
@@ -36,13 +37,48 @@ public class DesignController {
         Optional<DesignEntity> designOpt = designService.getProductById(id);
         if (designOpt.isPresent()) {
             DesignEntity design = designOpt.get();
-//            List<DesignImgEntity> images = imgRepo.findByDesignId(id);
             model.addAttribute("design", design);
-//            model.addAttribute("images", images);
-            return "viewProductDetail"; // Tên của template Thymeleaf
+            return "viewProductDetail";
         } else {
-            return "404"; // Trang lỗi 404 nếu không tìm thấy
+            return "404";
         }
     }
 
+    @GetMapping("/create")
+    public String showCreateDesignForm() {
+        return "createDesign";
+    }
+
+    @PostMapping("/create")
+    public String createDesign(@RequestParam("customerReference") Long customerReference,
+                               @RequestParam("designName") String designName,
+                               @RequestParam("waterCapacity") Float waterCapacity,
+                               @RequestParam("description") String description,
+                               @RequestParam("size") String size,
+                               @RequestParam("price") double price,
+                               @RequestParam("shapeOfPond") String shapeOfPond,
+                               @RequestParam("estimatedCompletionTime") int estimatedCompletionTime,
+                               Model model) {
+        DesignEntity design = new DesignEntity();
+        design.setCustomerReference(customerReference);
+        design.setDesignName(designName);
+        design.setWaterCapacity(waterCapacity);
+        design.setDescription(description);
+        design.setSize(DesignEntity.Size.valueOf(size));
+        design.setPrice(price);
+        design.setShapeOfPond(shapeOfPond);
+        design.setEstimatedCompletionTime(estimatedCompletionTime);
+        design.setStatus(DesignEntity.Status.Pending);
+
+        TypeDesignEntity typeDesign = typeDesignService.findById(2L);
+        if (typeDesign == null) {model.addAttribute("errorMessage", "Invalid design type.");
+            return "createDesign";
+        }
+
+        design.setTypeDesign(typeDesign);
+        designService.save(design);
+
+        model.addAttribute("message", "The design has been submitted for review!");
+        return "redirect:/HomeConsulting";
+    }
 }

@@ -64,23 +64,34 @@
                 <h4 th:text="${project.name}">Project Name</h4>
                 <p>
                     1. Information<br />
-                    <strong>Customer Name:</strong> John Doe<br />
-                    <strong>Address:</strong> 123 ABC Street, District 1, Ho Chi Minh City<br />
-                    <strong>Phone Number:</strong> 0909 123 456<br />
-                    <strong>Email:</strong> johndoe@example.com<br /><br />
+                    <strong>Customer Name:</strong> <span th:text="${project.customer.account.accountName}">Account Name</span><br />
+                    <strong>Address:</strong> <span th:text="${project.customer.account.address}">Address</span><br />
+                    <strong>Phone Number:</strong> <span th:text="${project.customer.account.phoneNumber}">Phone Number</span><br />
+                    <strong>Email:</strong> <span th:text="${project.customer.account.email}">Email</span><br /><br />
+
+                    <!--                    2. Construction Timeline<br />-->
+                    <!--                    <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br />-->
+                    <!--                    <strong>Completion Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br /><br />-->
+
+                    <!--                    3. Status and Priority<br />-->
+                    <!--                    <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />-->
+                    <!--                    <strong>Total Cost:</strong> <span th:text="${#numbers.formatDecimal(project.totalCost, 2, 'POINT', 'COMMA')}">Cost</span><br />-->
+                    <!--                    <br />-->
                     2. Construction Timeline<br />
-                    <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br />
-                    <strong>Completion Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br /><br />
+                    <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
+                    <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
+
                     3. Status and Priority<br />
                     <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />
-                    <strong>Priority:</strong> <span th:text="${project.priority}">Priority</span><br /><br />
                     <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Cost</span><br />
+                    <br />
                 </p>
                 <a th:href="@{'/projects/viewDetailProject/' + ${project.projectID}}">
                     <button class="btn btn-primary">View</button>
                 </a>
             </div>
         </div>
+
     </div>
 </div>
 

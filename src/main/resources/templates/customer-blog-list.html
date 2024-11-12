@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Customer Blog List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 20px;
+      max-width: 800px;
+    }
+    .blog-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .blog-list li {
+      margin-bottom: 15px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .blog-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #007bff;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .blog-title:hover {
+      color: #0056b3;
+    }
+    .customer-name {
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .blog-excerpt {
+      color: #555;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .button-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .btn-custom {
+      padding: 8px 12px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .return-home-btn {
+      background-color: #007bff;
+    }
+    .return-home-btn:hover {
+      background-color: #0056b3;
+    }
+    .blog-image {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>All Blogs</h1>
+
+  <!-- Button to return to homepage -->
+  <div class="button-container">
+    <a th:href="@{/}" class="btn-custom return-home-btn">Return to Homepage</a>
+  </div>
+
+  <!-- Blog list -->
+  <ul class="blog-list">
+    <li th:each="blog : ${blogs}">
+      <!-- Blog title -->
+      <a th:href="@{/blogs/{id}(id=${blog.blogID})}" th:text="${blog.title}" class="blog-title"></a>
+
+      <!-- Customer name -->
+      <p class="customer-name" th:text="'Posted by: ' + ${blog.customer.account.accountName}"></p>
+
+      <!-- Blog excerpt -->
+      <p class="blog-excerpt" th:text="${blog.content.length() > 100 ? #strings.substring(blog.content, 0, 100) + '...' : blog.content}"></p>
+
+      <!-- Blog image (optional) -->
+      <img th:if="${blog.imageUrl != null}" th:src="${blog.imageUrl}" alt="Blog Image" class="blog-image">
+    </li>
+  </ul>
+</div>
+</body>
+</html>

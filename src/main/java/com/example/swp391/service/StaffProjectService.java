@@ -28,82 +28,48 @@ public class StaffProjectService {
     private ProjectRepository projectRepository;
     @Autowired
     private StaffProjectRepository staffProjectRepository;
-
-//    public void assignStaffToProject(Integer projectId, Integer staffId, String taskDescription, String deadline,String status) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        LocalDate parsedDeadline = LocalDate.parse(deadline, formatter);
-//
-//        // Get the last record in StaffProject table, if exists
-//        StaffProjectEntity lastStaffProject = projectStaffRepository.findTopByOrderByStaffProjectIDDesc();
-//
-//        StaffEntity staff = staffRepository.findById(staffId)
-//                .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên"));
-//        ProjectEntity project = projectRepository.findById(projectId)
-//                .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án"));
-//
-//        // Create a new StaffProjectEntity instance
-//        StaffProjectEntity staffProject = new StaffProjectEntity();
-//
-//        // Set the new StaffProjectID based on the last ID or start from 1
-//        int newStaffProjectID;
-//        if (lastStaffProject != null) {
-//            newStaffProjectID = lastStaffProject.getStaffProjectID() + 1;
-//        } else {
-//            newStaffProjectID = 1;
-//        }
-//
-//        // Set the generated StaffProjectID
-//        staffProject.setStaffProjectID(newStaffProjectID);
-//        staffProject.setStaff(staff);
-//        staffProject.setStatus(status);
-//        staffProject.setProject(project);
-//        staffProject.setTask(taskDescription);
-//        staffProject.setAssignmentDate(parsedDeadline);
-//
-//        // Save the new staff project assignment
-//        projectStaffRepository.save(staffProject);
-//    }
+    @Autowired
+    private ProjectService projectService;
+    public List<String> getProgressImages(int staffProjectID) {
+        return staffProjectRepository.findProgressImagesByStaffProjectID(staffProjectID);
+    }
 
 public void deleteStaffProjectById(int id) {
     staffProjectRepository.deleteById(id);
 }
-public void assignStaffToProject(Integer projectId, Integer staffId, String taskDescription, String deadline, String status) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate parsedDeadline = LocalDate.parse(deadline, formatter);
+    public void assignStaffToProject(Long projectId, Integer staffId, String taskDescription, String deadline, String status) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate parsedDeadline = LocalDate.parse(deadline, formatter);
 
-    // Get the last record in StaffProject table, if exists
-    StaffProjectEntity lastStaffProject = projectStaffRepository.findTopByOrderByStaffProjectIDDesc();
+        // Get the last record in StaffProject table, if exists
+        StaffProjectEntity lastStaffProject = projectStaffRepository.findTopByOrderByStaffProjectIDDesc();
 
-    StaffEntity staff = staffRepository.findById(staffId)
-            .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên"));
-    ProjectEntity project = projectRepository.findById(projectId)
-            .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án"));
+        StaffEntity staff = staffRepository.findById(staffId)
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
 
-    // Create a new StaffProjectEntity instance
-    StaffProjectEntity staffProject = new StaffProjectEntity();
+        // Create a new StaffProjectEntity instance
+        StaffProjectEntity staffProject = new StaffProjectEntity();
 
-    // Set the new StaffProjectID based on the last ID or start from 1
-    int newStaffProjectID;
-    if (lastStaffProject != null) {
-        newStaffProjectID = lastStaffProject.getStaffProjectID() + 1;
-    } else {
-        newStaffProjectID = 1;
+        // Set the new StaffProjectID based on the last ID or start from 1
+        int newStaffProjectID = (lastStaffProject != null) ? lastStaffProject.getStaffProjectID() + 1 : 1;
+
+        // Set fields on staffProject
+        staffProject.setStaffProjectID(newStaffProjectID);
+        staffProject.setStaff(staff);
+        staffProject.setProject(project);
+        staffProject.setTask(taskDescription);
+        staffProject.setAssignmentDate(parsedDeadline);
+        staffProject.setStatus(status);
+
+
+        // Save the new staff project assignment
+        projectStaffRepository.save(staffProject);
+
+        // Send notification email (if applicable)
+        sendAssignmentEmail(staff.getAccount().getEmail(), project.getName(), taskDescription, deadline);
     }
-
-    // Set the generated StaffProjectID
-    staffProject.setStaffProjectID(newStaffProjectID);
-    staffProject.setStaff(staff);
-    staffProject.setStatus(status);
-    staffProject.setProject(project);
-    staffProject.setTask(taskDescription);
-    staffProject.setAssignmentDate(parsedDeadline);
-
-    // Save the new staff project assignment
-    projectStaffRepository.save(staffProject);
-
-    // Send notification email
-    sendAssignmentEmail(staff.getAccount().getEmail(), project.getName(), taskDescription, deadline);
-}
 
     private void sendAssignmentEmail(String email, String projectName, String taskDescription, String deadline) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -115,7 +81,7 @@ public void assignStaffToProject(Integer projectId, Integer staffId, String task
 
         mailSender.send(message);
     }
-    public List<StaffProjectEntity> getTasksByProjectId(Integer projectId) {
+    public List<StaffProjectEntity> getTasksByProjectId(Long projectId) {
         return staffProjectRepository.findByProject_ProjectID(projectId); // Sử dụng tên phương thức đã sửa
     }
     public List<StaffProjectEntity> getTasksByStatus(String status) {
@@ -142,18 +108,46 @@ public void assignStaffToProject(Integer projectId, Integer staffId, String task
             return false; // StaffProject không tìm thấy
         }
     }
-    public StaffProjectEntity findById(Integer staffProjectID) {
+    public StaffProjectEntity findByProjectId(Integer staffProjectID) {
         return staffProjectRepository.findById(staffProjectID)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy StaffProject"));
     }
 
-    // Hàm để cập nhật trạng thái của StaffProject
-    @Transactional
-    public void updateProgressImage(Integer staffProjectID, String imagePath) {
-        StaffProjectEntity staffProject = staffProjectRepository.findById(staffProjectID)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án của nhân viên"));
-        staffProject.setProgressImage(imagePath);
-        staffProjectRepository.save(staffProject);
+        // Hàm để cập nhật trạng thái của StaffProject
+        @Transactional
+        public void updateProgressImage(Integer staffProjectID, String imagePath) {
+            StaffProjectEntity staffProject = staffProjectRepository.findById(staffProjectID)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án của nhân viên"));
+            staffProject.setProgressImage(imagePath);
+            staffProjectRepository.save(staffProject);
+        }
+        public void save(StaffProjectEntity staffProject) {
+            projectStaffRepository.save(staffProject);
+        }
+        public StaffProjectEntity findById(int id) {
+            return projectStaffRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy StaffProject"));
+        }
+    public void deleteImage(Long projectID, String imagePath) {
+        // Find the StaffProjectEntity by project ID and image path
+        Optional<StaffProjectEntity> staffProjectOptional = staffProjectRepository.findByProject_ProjectIDAndProgressImage(projectID, imagePath);
+
+        if (staffProjectOptional.isPresent()) {
+            StaffProjectEntity staffProject = staffProjectOptional.get();
+
+            // Set the ProgressImage field to null to remove the reference
+            staffProject.setProgressImage(null);
+
+            // Save the updated entity back to the database
+            staffProjectRepository.save(staffProject);
+        } else {
+            throw new RuntimeException("Image not found for Project ID: " + projectID + " and Image Path: " + imagePath);
+        }
     }
+
+
+
+
+
 }
 

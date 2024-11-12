@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết Dự Án - Quản Lý</title>
+</head>
+<body>
+<h1>Chi Tiết Dự Án</h1>
+
+<!-- Thông báo lỗi (nếu có) -->
+<div th:if="${errorMessage != null}" style="color: red;">
+  <p th:text="${errorMessage}"></p>
+</div>
+
+<!-- Thông báo thành công (nếu có) -->
+<div th:if="${successMessage != null}" style="color: green;">
+  <p th:text="${successMessage}"></p>
+</div>
+
+<!-- Hiển thị thông tin chi tiết của dự án -->
+<h2>Tên Dự Án: <span th:text="${project.name}"></span></h2>
+<p><strong>Mô Tả:</strong> <span th:text="${project.description}"></span></p>
+<p><strong>Ngày Bắt Đầu:</strong> <span th:text="${#dates.format(project.startDate, 'dd/MM/yyyy')}"></span></p>
+<p><strong>Ngày Kết Thúc:</strong> <span th:text="${#dates.format(project.endDate, 'dd/MM/yyyy')}"></span></p>
+<p><strong>Tổng Chi Phí:</strong> <span th:text="${project.totalCost}"></span> đồng</p>
+<p><strong>Trạng Thái:</strong> <span th:text="${project.status}"></span></p>
+
+<h3>Khách Hàng</h3>
+<p><strong>Tên Khách Hàng:</strong> <span th:text="${project.customer.name}"></span></p>
+<p><strong>Email:</strong> <span th:text="${project.customer.email}"></span></p>
+<p><strong>Số Điện Thoại:</strong> <span th:text="${project.customer.phone}"></span></p>
+
+<h3>Nguyên Liệu Sử Dụng</h3>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Tên Nguyên Liệu</th>
+    <th>Số Lượng Cần</th>
+    <th>Đơn Vị</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="dmq : ${project.design.designMaterialQuantities}">
+    <td th:text="${dmq.material.materialName}"></td>
+    <td th:text="${dmq.quantityNeeded}"></td>
+    <td th:text="${dmq.material.unit}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/manager/projects">Quay lại Danh Sách Dự Án</a>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Services</title>
+    <style>
+        /* Định dạng cho toàn bộ trang */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Bảng kết quả */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .no-results {
+            color: #555;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons button, .buttons a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .buttons button:hover, .buttons a:hover {
+            background-color: #45a049;
+        }
+
+        .buttons a {
+            display: inline-block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .buttons button, .buttons a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Available Services</h1>
+
+<!-- Hiển thị bảng kết quả -->
+<div th:if="${not #lists.isEmpty(designs)}">
+    <form th:action="@{/services/submitSelectedDesigns}" method="post">
+        <table>
+            <tr>
+                <th>Select</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Estimated Completion Time</th>
+            </tr>
+            <tr th:each="design : ${designs}" >
+                <td><input type="checkbox" name="selectedDesignIds" th:value="${design.designId}"/></td>
+                <td th:text="${design.designId}"></td>
+                <td th:text="${design.designName}"></td>
+                <td th:text="${design.typeDesign.typeDesignName}"></td>
+                <td th:text="${design.size}"></td>
+                <td th:text="${design.price}"></td>
+                <td th:text="${design.estimatedCompletionTime} + ' days'"></td>
+            </tr>
+        </table>
+
+        <div class="buttons">
+            <!-- Nút "Proceed to Payment" -->
+            <button type="submit" name="action" value="payment">Proceed to Payment</button>
+
+            <!-- Nút "Back to Service Form" -->
+            <a th:href="@{/services/serviceForm}">Back to Service Form</a>
+        </div>
+    </form>
+</div>
+
+<!-- Hiển thị thông báo khi không có kết quả phù hợp -->
+<p class="no-results" th:if="${#lists.isEmpty(designs)}">No services found matching your criteria.</p>
+
+</body>
+</html>

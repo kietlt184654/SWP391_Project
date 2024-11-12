@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script
-      src="/src/main/resources/static/javascript/dashboard.js"
-      defer
-    ></script>
-    <link
-      rel="stylesheet"
-      href="/src/main/resources/static/css/dashboard.css"
-    />
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script
+          src="/src/main/resources/static/javascript/dashboard.js"
+          defer
+  ></script>
+  <link
+          rel="stylesheet"
+          href="/src/main/resources/static/css/dashboard.css"
+  />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <div class="col-md-4 left-side">
-      <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="manageCustomer.html">Manage Customer</a></li>
-        <li><a href="manageStaff.html">Manage Staff</a></li>
-        <li><a href="manageMaterial.html">Manage Material</a></li>
-        <li><a href="manageConstruction.html">Manage Construction</a></li>
-      </ul>
+  <title>Dashboard</title>
+</head>
+<body>
+<div class="col-md-4 left-side">
+  <ul>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="manageCustomer.html">Manage Customer</a></li>
+    <li><a href="manageStaff.html">Manage Staff</a></li>
+    <li><a href="manageMaterial.html">Manage Material</a></li>
+    <li><a href="manageConstruction.html">Manage Construction</a></li>
+  </ul>
+</div>
+
+<div class="col-md-6 dashboard-container">
+  <h1>Dashboard</h1>
+  <div class="hero-content">
+    <ol class="breadcrumb">
+      <li><a href="homepage.html">Home</a></li>
+      <li class="active"><a href="dashboard.html">Dash board</a></li>
+    </ol>
+  </div>
+
+  <!-- Thống kê dự án -->
+
+  <div class="stats-box">
+    <h2>Thống kê Dự án</h2>
+    <div class="stats-grid">
+      <canvas id="projectChart"></canvas>
     </div>
+  </div>
 
-    <div class="col-md-6 dashboard-container">
-      <h1>Dashboard</h1>
-      <div class="hero-content">
-        <ol class="breadcrumb">
-          <li><a href="homepage.html">Home</a></li>
-          <li class="active"><a href="dashboard.html">Dash board</a></li>
-        </ol>
+  <!-- Thống kê khách hàng -->
+  <div class="stats-box">
+    <h2>Thống kê Khách hàng</h2>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>Số lượng khách hàng</h3>
+        <p>100</p>
       </div>
-
-      <!-- Thống kê dự án -->
-
-      <div class="stats-box">
-        <h2>Thống kê Dự án</h2>
-        <div class="stats-grid">
-          <canvas id="projectChart"></canvas>
-        </div>
+      <div class="stat-item">
+        <h3>Khách hàng mới</h3>
+        <p>10</p>
       </div>
-
-      <!-- Thống kê khách hàng -->
-      <div class="stats-box">
-        <h2>Thống kê Khách hàng</h2>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <h3>Số lượng khách hàng</h3>
-            <p>100</p>
-          </div>
-          <div class="stat-item">
-            <h3>Khách hàng mới</h3>
-            <p>10</p>
-          </div>
-          <div class="stat-item">
-            <h3>Khách hàng tiềm năng</h3>
-            <p>15</p>
-          </div>
-          <div class="stat-item">
-            <h3>Phản hồi khách hàng</h3>
-            <p>90% Tích cực</p>
-          </div>
-          <canvas id="customerChart"></canvas>
-        </div>
+      <div class="stat-item">
+        <h3>Khách hàng tiềm năng</h3>
+        <p>15</p>
       </div>
+      <div class="stat-item">
+        <h3>Phản hồi khách hàng</h3>
+        <p>90% Tích cực</p>
+      </div>
+      <canvas id="customerChart"></canvas>
+    </div>
+  </div>
 
-      <!-- Thống kê doanh thu -->
-      <div class="stats-box">
-        <h2>Thống kê Doanh thu</h2>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <h3>Doanh thu trong tháng</h3>
-            <p>500 triệu VND</p>
-          </div>
-          <div class="stat-item">
-            <h3>Tổng doanh thu</h3>
-            <p>5 tỷ VND</p>
-          </div>
-          <div class="stat-item">
-            <h3>Chi phí dự án</h3>
-            <p>3 tỷ VND</p>
-          </div>
-          <div class="stat-item">
-            <h3>Lợi nhuận</h3>
-            <p>2 tỷ VND</p>
-          </div>
-        </div>
+  <!-- Thống kê doanh thu -->
+  <div class="stats-box">
+    <h2>Thống kê Doanh thu</h2>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>Doanh thu trong tháng</h3>
+        <p>500 triệu VND</p>
+      </div>
+      <div class="stat-item">
+        <h3>Tổng doanh thu</h3>
+        <p>5 tỷ VND</p>
+      </div>
+      <div class="stat-item">
+        <h3>Chi phí dự án</h3>
+        <p>3 tỷ VND</p>
+      </div>
+      <div class="stat-item">
+        <h3>Lợi nhuận</h3>
+        <p>2 tỷ VND</p>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

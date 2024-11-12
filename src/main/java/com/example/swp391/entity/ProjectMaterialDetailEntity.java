@@ -1,30 +1,36 @@
-//package com.example.swp391.entity;
-//
-//import jakarta.persistence.*;
-//import lombok.AllArgsConstructor;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
-//
-//@Entity
-//@Table(name = "Project_Material_Detail")
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-//public class ProjectMaterialDetailEntity { // Sửa lại tên lớp cho đúng
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long projectMaterialDetailId; // ID của bảng này
-//
-//    private int quantity; // Số lượng vật liệu sử dụng trong dự án
-//
-//    // Liên kết với bảng Project
-//    @ManyToOne
-//    @JoinColumn(name = "projectId", nullable = false) // Tên cột trong bảng Project_Material_Detail
-//    private ProjectEntity project; // Sửa lại tên thành ProjectEntity cho đúng
-//
-//    // Liên kết với bảng Material
-//    @ManyToOne
-//    @JoinColumn(name = "materialId", nullable = false) // Tên cột trong bảng Project_Material_Detail
-//    private MaterialEntity material; // Sửa lại tên thành MaterialEntity cho đúng
-//}
+package com.example.swp391.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "ProjectMaterialDetail")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProjectMaterialDetailEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ProjectMaterialDetailId")
+    private long projectMaterialDetailId;
+
+    @Column(name = "QuantityUsed")
+    private int quantityUsed;
+
+    @ManyToOne
+    @JoinColumn(name = "ProjectID", nullable = false)
+    private ProjectEntity project;
+
+    @ManyToOne
+    @JoinColumn(name = "MaterialID", nullable = false)
+    private MaterialEntity material;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "UsedDate")
+    private Date usedDate;
+}

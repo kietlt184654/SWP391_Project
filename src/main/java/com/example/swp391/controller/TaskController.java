@@ -31,8 +31,8 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private StaffService staffService;
-@Autowired
-private StaffProjectService projectStaffService;
+    @Autowired
+    private StaffProjectService projectStaffService;
     @Autowired
     private StaffProjectService staffProjectService;
 
@@ -75,7 +75,7 @@ private StaffProjectService projectStaffService;
     }
     @PostMapping("/tasks/project/assign")
     public String assignStaffToProject(
-            @RequestParam("projectId") Integer projectId,
+            @RequestParam("projectId") Long projectId,
             @RequestParam("staffId") Integer staffId,
             @RequestParam("taskDescription") String taskDescription,
             @RequestParam("deadline") String deadline,
@@ -119,13 +119,13 @@ private StaffProjectService projectStaffService;
         return "StaffTask"; // Trả về view 'StaffTask'
     }
     @PostMapping("/accept")
-    public String acceptProject(@RequestParam("staffProjectID") int staffProjectId,
+    public String acceptProject(@RequestParam("staffProjectID") Integer staffProjectId,
                                 @RequestParam("currentStatus") String currentStatus,
                                 RedirectAttributes redirectAttributes) {
         String newStatus;
         if ("To Do".equals(currentStatus)) {
-            newStatus = "In-Progress";
-        } else if ("In-Progress".equals(currentStatus)) {
+            newStatus = "In Progress";
+        } else if ("In Progress".equals(currentStatus)) {
             newStatus = "Done";
         } else {
             newStatus = currentStatus; // Nếu trạng thái không nằm trong To Do hoặc In-Progress thì giữ nguyên

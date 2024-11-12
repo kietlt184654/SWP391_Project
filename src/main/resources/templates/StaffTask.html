@@ -28,7 +28,6 @@
                 <td th:text="${staffProject.project.projectID}">Project ID</td>
                 <td th:text="${staffProject.project.name}">Tên dự án</td>
                 <td th:text="${staffProject.project.startDate}">Ngày bắt đầu</td>
-                <td th:text="${staffProject.project.endDate}">Ngày kết thúc</td>
                 <td th:text="${staffProject.assignmentDate}">Deadline</td>
                 <td th:text="${staffProject.status}">Trạng thái</td>
                 <td th:text="${staffProject.task}">Task Description</td>
@@ -57,8 +56,8 @@
         <div th:if="${message != null}" class="alert">
             <p th:text="${message}"></p>
         </div>
-</div>
-<script src="/javascript/StaffTask.js"></script>
+    </div>
+    <script src="/javascript/StaffTask.js"></script>
 
 </body>
 </html>

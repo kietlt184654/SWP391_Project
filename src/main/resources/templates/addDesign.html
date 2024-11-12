@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thêm Thiết Kế</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    /* CSS tùy chỉnh */
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 50px;
+      padding: 30px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .form-group label {
+      font-weight: bold;
+      color: #555;
+    }
+    .form-control {
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      width: 100%;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Thêm Thiết Kế Mới</h2>
+  <form th:action="@{/HomeConsulting/add}" th:object="${design}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{typeDesign.typeDesignId}" value="2" />
+
+    <div class="form-group">
+      <label for="designName">Tên Thiết Kế</label>
+      <input type="text" class="form-control" id="designName" th:field="*{designName}" placeholder="Tên thiết kế" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Mô Tả</label>
+      <textarea class="form-control" id="description" th:field="*{description}" placeholder="Mô tả thiết kế" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Giá</label>
+      <input type="number" class="form-control" id="price" th:field="*{price}" placeholder="Giá thiết kế" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+      <label for="waterCapacity">Dung Tích Nước</label>
+      <input type="number" class="form-control" id="waterCapacity" th:field="*{waterCapacity}" placeholder="Dung tích nước" required>
+    </div>
+
+    <div class="form-group">
+      <label for="shapeOfPond">Hình Dạng</label>
+      <input type="text" class="form-control" id="shapeOfPond" th:field="*{shapeOfPond}" placeholder="Hình dạng của hồ" required>
+    </div>
+
+    <div class="form-group">
+      <label for="estimatedCompletionTime">Thời Gian Hoàn Thành (ngày)</label>
+      <input type="number" class="form-control" id="estimatedCompletionTime" th:field="*{estimatedCompletionTime}" placeholder="Số ngày hoàn thành" required>
+    </div>
+
+    <div class="form-group">
+      <label for="size">Kích Cỡ</label>
+      <select class="form-control" id="size" th:field="*{size}" required>
+        <option value="" disabled selected>Chọn kích cỡ</option>
+        <option th:value="Small">Nhỏ</option>
+        <option th:value="Medium">Trung Bình</option>
+        <option th:value="Large">Lớn</option>
+      </select>
+    </div>
+
+    <!-- Trường nhập Customer Reference -->
+    <div class="form-group">
+      <label for="customerReference">Mã Khách Hàng</label>
+      <input type="number" class="form-control" id="customerReference" th:field="*{customerReference}" placeholder="Nhập mã khách hàng" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Gửi Yêu Cầu</button>
+  </form>
+</div>
+</body>
+</html>

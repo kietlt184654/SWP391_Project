@@ -9,141 +9,223 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="/src/main/resources/static/css/ManageStaff.css" />
     <script src="/src/main/resources/static/javascript/manageCustomer.js" defer></script>
+    <script src="/src/main/resources/static/javascript/ManageStaff.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Manage Staff</title>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <div class="nav">
-        <div class="nav-button">
-            <button id="menu-toggle" class="btn">&#9776;</button>
-        </div>
-        <div class="nav-logo">
-            <p>LOGO</p>
-        </div>
-        <div class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="Homepage.html" class="link">Home</a></li>
-                <li><a href="about.html" class="link">About</a></li>
-                <li><a href="blog.html" class="link">Blog</a></li>
-                <li><a href="services.html" class="link">Services</a></li>
-                <li><a href="Availableproject.html" class="link">Product</a></li>
-                <li>
-                    <a href="#" class="icon" id="accountIcon">
-                        <i class="fas fa-user-circle"></i>StaffName
-                        <i class="fas fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-                        </li>
-                    </ul>
-            </ul>
-        </div>
+<!-- Navigation -->
+<div class="nav">
+    <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
     </div>
-
-
-    <!-- Content -->
-    <h1>Staff Information</h1>
-    <!-- Filter Checkboxes -->
-    <div>
-        <label>
-            <input type="checkbox" id="consultantCheckbox" onchange="filterStaff()"> Consultant Staff
-        </label>
-        <label>
-            <input type="checkbox" id="constructionCheckbox" onchange="filterStaff()"> Construction Staff
-        </label>
+    <div class="nav-logo">
+        <p>LOGO</p>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Staff ID</th>
-                <th>Image</th>
-                <th>Staff Name</th>
-                <th>Role ID</th>
-                <th>Phone Number</th>
-                <th>Address</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody id="staffTableBody">
-            <tr th:each="staff : ${staff}" th:if="${staff.accountTypeID == 'Staff'}" class="staff-row">
-                <td th:text="${staff.accountId}"></td>
-                <td><img th:src="@{${staff.images}}" alt="Staff Image" width="50" /></td>
-                <td th:text="${staff.accountName}"></td>
-                <td th:text="${staff.accountTypeID}"></td>
-                <td th:text="${staff.phoneNumber}"></td>
-                <td th:text="${staff.address}"></td>
-                <td><i class="bi bi-pencil-square"></i></td>
-                <td><i class="bi bi-trash"></i></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="user-info">
-            <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-            <p class="username">Username</p>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="Homepage.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a></li>
-            <li><a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a></li>
-            <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+    <div class="nav-menu" id="navMenu">
+        <ul>
+            <li><a href="Homepage.html" class="link">Home</a></li>
+            <li><a href="about.html" class="link">About</a></li>
+            <li><a href="blog.html" class="link">Blog</a></li>
+            <li><a href="services.html" class="link">Services</a></li>
+            <li><a href="Availableproject.html" class="link">Product</a></li>
+            <li>
+                <a href="#" class="icon" id="accountIcon">
+                    <i class="fas fa-user-circle"></i>StaffName
+                    <i class="fas fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+                    </li>
+                    <li>
+                        <a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
+</div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <h4>Information</h4>
-                <p>Open: 8 AM - 10 PM</p>
-                <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
-            </div>
-            <div class="footer-services">
-                <h4>Services</h4>
-                <ul>
-                    <li>Construction Koi pond</li>
-                    <li>Cleaning and maintenance</li>
-                    <li>Design upon requirements</li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact</h4>
-                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-                <p>
-                    <i class="fa-brands fa-facebook"></i>
-                    <a href="https://facebook.com" target="_blank">Visit Us</a>
-                </p>
-            </div>
+<!-- Content -->
+<h1>Staff Information</h1>
+<!-- Filter Checkboxes -->
+<div>
+    <label>
+        <input type="checkbox" id="consultantCheckbox" onchange="filterStaff()"> Consultant Staff
+    </label>
+    <label>
+        <input type="checkbox" id="constructionCheckbox" onchange="filterStaff()"> Construction Staff
+    </label>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Staff ID</th>
+        <th>Image</th>
+        <th>Staff Name</th>
+        <th>Role ID</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Add</th>
+    </tr>
+    </thead>
+    <tbody id="staffTableBody">
+    <tr class="staff-row">
+        <td>1</td>
+        <td><img src="https://via.placeholder.com/50" alt="Staff Image" /></td>
+        <td>John Doe</td>
+        <td>Consultant</td>
+        <td>123-456-7890</td>
+        <td>123 Main St, City, Country</td>
+        <td><i class="bi bi-pencil-square" onclick="openEditModal(1)"></i></td>
+        <td><i class="bi bi-trash" onclick="confirmDelete(1)"></i></td>
+        <td><i class="bi bi-person-fill-add" onclick="openModal()"></i></td>
+    </tr>
+    <tr class="staff-row">
+        <td>2</td>
+        <td><img src="https://via.placeholder.com/50" alt="Staff Image" /></td>
+        <td>Jane Smith</td>
+        <td>Construction</td>
+        <td>987-654-3210</td>
+        <td>456 Elm St, City, Country</td>
+        <td><i class="bi bi-pencil-square" onclick="openEditModal(2)"></i></td>
+        <td><i class="bi bi-trash" onclick="confirmDelete(2)"></i></td>
+        <td><i class="bi bi-person-fill-add" onclick="openModal()"></i></td>
+    </tr>
+    <tr class="staff-row">
+        <td>3</td>
+        <td><img src="https://via.placeholder.com/50" alt="Staff Image" /></td>
+        <td>Michael Johnson</td>
+        <td>Consultant</td>
+        <td>555-123-4567</td>
+        <td>789 Oak St, City, Country</td>
+        <td><i class="bi bi-pencil-square" onclick="openEditModal(3)"></i></td>
+        <td><i class="bi bi-trash" onclick="confirmDelete(3)"></i></td>
+        <td><i class="bi bi-person-fill-add" onclick="openModal()"></i></td>
+    </tr>
+    <tr class="staff-row">
+        <td>4</td>
+        <td><img src="https://via.placeholder.com/50" alt="Staff Image" /></td>
+        <td>Emily Davis</td>
+        <td>Construction</td>
+        <td>444-555-6666</td>
+        <td>321 Pine St, City, Country</td>
+        <td><i class="bi bi-pencil-square" onclick="openEditModal(4)"></i></td>
+        <td><i class="bi bi-trash" onclick="confirmDelete(4)"></i></td>
+        <td><i class="bi bi-person-fill-add" onclick="openModal()"></i></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Add Staff Modal -->
+<div id="addStaffModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="openModal()">&times;</span>
+        <h2>Add Staff</h2>
+        <form id="addStaffForm" action="/staff/add" method="post">
+            <label for="accountId">Account ID:</label>
+            <input type="text" id="accountId" name="accountId" placeholder="Enter Account ID" required>
+
+            <label for="accountName">Staff Name:</label>
+            <input type="text" id="accountName" name="accountName" placeholder="Enter Staff Name" required>
+
+            <label for="accountTypeID">Role ID:</label>
+            <input type="text" id="accountTypeID" name="accountTypeID" placeholder="Enter Role ID" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" placeholder="Enter Address" required>
+
+            <label for="images">Image URL:</label>
+            <input type="text" id="images" name="images" placeholder="Enter Image URL" required>
+
+            <button type="submit" class="btn green">Add Staff</button>
+            <button type="button" class="btn red" onclick="closeModal()">Close</button>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Staff Modal -->
+<div id="editStaffModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Staff</h2>
+        <form id="editStaffForm" action="/staff/update" method="post">
+            <input type="hidden" id="editStaffId" name="staffId" required>
+            <label for="editAccountName">Staff Name:</label>
+            <input type="text" id="editAccountName" name="accountName" placeholder="Enter Staff Name" required>
+
+            <label for="editAccountTypeID">Role ID:</label>
+            <input type="text" id="editAccountTypeID" name="accountTypeID" placeholder="Enter Role ID" required>
+
+            <label for="editPhoneNumber">Phone Number:</label>
+            <input type="text" id="editPhoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
+
+            <label for="editAddress">Address:</label>
+            <input type="text" id="editAddress" name="address" placeholder="Enter Address" required>
+
+            <label for="editImages">Image URL:</label>
+            <input type="text" id="editImages" name="images" placeholder="Enter Image URL" required>
+
+            <button type="submit" class="btn green">Update Staff</button>
+            <button type="button" class="btn red" onclick="closeEditModal()">Close</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast message -->
+<div id="toast" class="toast" style="display: none;">
+    <span id="toastMessage"></span>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="user-info">
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+        <p class="username">Username</p>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="Homepage.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a></li>
+        <li><a href="editprofile.html"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+    </ul>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>Information</h4>
+            <p>Open: 8 AM - 10 PM</p>
+            <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+        </div>
+        <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+                <li>Construction Koi pond</li>
+                <li>Cleaning and maintenance</li>
+                <li>Design upon requirements</li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+            <p>
+                <i class="fa-brands fa-facebook"></i>
+                <a href="https://facebook.com" target="_blank">Visit Us</a>
+            </p>
         </div>
     </div>
-
-    <script>
-        function filterStaff() {
-            const isConsultantChecked = document.getElementById('consultantCheckbox').checked;
-            const isConstructionChecked = document.getElementById('constructionCheckbox').checked;
-
-            const rows = document.querySelectorAll('.staff-row');
-            rows.forEach(row => {
-                const roleID = row.querySelector('td:nth-child(4)').innerText; // Assuming Role ID is in the 4th column
-                if ((isConsultantChecked && roleID === 'Consultant') || (isConstructionChecked && roleID === 'Construction')) {
-                    row.style.display = ''; // Show row
-                } else {
-                    row.style.display = 'none'; // Hide row
-                }
-            });
-        }
-    </script>
+</div>
 </body>
 
 </html>

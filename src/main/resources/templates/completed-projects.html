@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Lịch Sử Dự Án Đã Hoàn Thành</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body { background-color: #f8f9fa; }
+    .container { margin-top: 20px; }
+    h1 { color: #007bff; text-align: center; margin-bottom: 30px; }
+    .panel-heading { background-color: #007bff !important; color: white !important; font-weight: bold; }
+    .panel-body { background-color: #e9ecef; }
+    .feedback-button { margin-top: 10px; padding: 8px 12px; color: #fff; background-color: #28a745; text-decoration: none; border-radius: 4px; text-align: center; cursor: pointer; }
+    .feedback-button:hover { background-color: #218838; }
+    .rating-stars i { font-size: 24px; color: #ccc; cursor: pointer; }
+    .rating-stars .selected { color: #ffcc00; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Lịch Sử Dự Án Đã Hoàn Thành</h1>
+
+  <div th:each="project : ${completedProjects}">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Dự án: <span th:text="${project.name}"></span></h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Mô tả:</strong> <span th:text="${project.description}"></span></p>
+        <p><strong>Ngày bắt đầu:</strong> <span th:text="${project.startDate}"></span></p>
+        <p><strong>Ngày kết thúc:</strong> <span th:text="${project.endDate}"></span></p>
+        <p><strong>Tổng chi phí:</strong> <span th:text="${project.totalCost}"></span></p>
+
+        <!-- Kiểm tra nếu đã đánh giá thì chỉ hiển thị thông tin đánh giá -->
+        <div th:if="${project.feedback != null && project.feedback.isReviewed}">
+          <p><strong>Đánh giá:</strong> [[${project.feedback.rating}]] sao</p>
+          <p><strong>Nội dung đánh giá:</strong> [[${project.feedback.feedback}]]</p>
+        </div>
+
+        <!-- Nếu chưa có đánh giá, hiển thị form đánh giá -->
+        <div th:if="${project.feedback == null || !project.feedback.isReviewed}">
+          <p><a class="feedback-button" data-toggle="collapse" th:href="'#feedbackForm-' + ${project.projectID}">
+            Đánh giá dự án
+          </a></p>
+
+          <!-- Form đánh giá -->
+          <div th:id="'feedbackForm-' + ${project.projectID}" class="collapse">
+            <div class="rating-stars" th:id="'stars-' + ${project.projectID}">
+              <i class="fas fa-star" data-value="1"></i>
+              <i class="fas fa-star" data-value="2"></i>
+              <i class="fas fa-star" data-value="3"></i>
+              <i class="fas fa-star" data-value="4"></i>
+              <i class="fas fa-star" data-value="5"></i>
+            </div>
+            <input type="hidden" th:id="'ratingInput-' + ${project.projectID}" name="rating" value="0">
+            <textarea class="form-control" rows="3" placeholder="Nhập đánh giá của bạn" th:id="'feedbackText-' + ${project.projectID}"></textarea>
+            <button class="btn btn-primary" th:onclick="'submitFeedback(' + ${project.projectID} + ')'" style="margin-top: 10px;">Gửi Đánh Giá</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Thư viện JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+  $('.rating-stars i').on('click', function() {
+    let selectedStar = $(this).data('value');
+    let projectID = $(this).closest('.rating-stars').attr('id').split('-')[1];
+
+    $('#stars-' + projectID + ' i').each(function() {
+      $(this).removeClass('selected');
+      if ($(this).data('value') <= selectedStar) {
+        $(this).addClass('selected');
+      }
+    });
+
+    $('#ratingInput-' + projectID).val(selectedStar);
+  });
+
+  function submitFeedback(projectID) {
+    let rating = $('#ratingInput-' + projectID).val();
+    let feedback = $('#feedbackText-' + projectID).val();
+
+    if (rating === "0" || feedback.trim() === "") {
+      alert("Vui lòng chọn sao và nhập nội dung đánh giá.");
+      return;
+    }
+
+    $.ajax({
+      url: '/submitFeedback',
+      method: 'POST',
+      data: { projectId: projectID, rating: rating, feedback: feedback },
+      success: function(response) {
+        alert(response);
+        $('#feedbackForm-' + projectID).collapse('hide');
+
+        // Cập nhật giao diện sau khi gửi đánh giá thành công
+        $('#feedbackForm-' + projectID).parent().html(
+                `<p><strong>Đánh giá:</strong> ${rating} sao</p>
+                     <p><strong>Nội dung đánh giá:</strong> ${feedback}</p>`
+        );
+      },
+      error: function(xhr) {
+        alert(xhr.responseText || "Đã xảy ra lỗi, vui lòng thử lại.");
+      }
+    });
+  }
+</script>
+</body>
+</html>

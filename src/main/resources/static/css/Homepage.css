@@ -9,7 +9,10 @@
 
 body {
   font-family: Arial, sans-serif;
-  height: 100vh;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .search-container {
@@ -71,58 +74,81 @@ body {
 
 /* Navbar */
 .nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px; /* Match DesignService */
-    background: #3c7363; /* Match DesignService */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Match DesignService */
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    padding: 0 20px; /* Match DesignService */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
 }
 
 .nav-logo p {
-    color: white;
-    font-size: 18px; /* Match DesignService */
-    font-weight: 600;
-    margin-right: 100px; /* Match DesignService */
-    margin-left: 100px; /* Match DesignService */
+  color: black;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .nav-menu {
-    display: flex;
-    flex-grow: 1;
-    justify-content: center; /* Match DesignService */
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .nav-menu ul {
-    display: flex;
-    list-style: none;
-    position: relative;
-    align-content: center;
-    margin-right: 100px; /* Match DesignService */
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-menu ul li {
-    margin: 0 20px;
-    display: flex;
-    align-items: center;
+  margin: 0 15px;
+  display: flex;
+  align-items: center;
 }
 
 .nav-menu ul li a {
-    text-decoration: none;
-    color: white; /* Match DesignService */
-    font-weight: 500;
-    font-size: 16px; /* Match DesignService */
-    padding: 8px; /* Match DesignService */
-    transition: border-bottom 0.3s ease, color 0.3s ease; /* Match DesignService */
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-menu ul li a:hover,
 .nav-menu ul li a.active {
-    border-bottom: 3px solid white; /* Match DesignService */
+  border-bottom: 3px solid white;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.nav-button form {
+  margin: 0;
+}
+
+.nav-button .d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.nav-button .ms-2 {
+  margin-left: 5px;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .nav-button .btn {
@@ -133,57 +159,14 @@ body {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background 0.3s ease;
+  border: 2px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-.nav-button{
-  display: flex;
-  align-items: center;
-}
-
-@media only screen and (max-width: 786px) {
-
-  .nav-menu.responsive {
-    top: 100px;
-  }
-
-  .nav-menu {
-    position: absolute;
-    top: -800px;
-    display: flex;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
-    width: 100%;
-    height: 90vh;
-    backdrop-filter: blur(20px);
-    transition: 0.3s;
-  }
-
-  .nav-menu ul {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .nav-menu-btn {
-    display: block;
-  }
-
-  .nav-menu-btn i {
-    font-size: 25px;
-    color: #fff;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .nav-menu-btn i:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
+.nav-button .btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: #14ff72cb;
 }
 
 .btn.white-btn {
@@ -219,8 +202,6 @@ body {
 }
 
 .nav ul ul {
-  position: absolute;
-  top: 100%;
   display: none;
 }
 
@@ -290,53 +271,54 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+/* Style for the Our Company section */
 .section_about {
-  padding: 100;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space items evenly */
+  padding: 50px; /* Add padding for spacing */
+  background-color: #f0f8ff; /* Light background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 20px 0; /* Margin for spacing */
+}
+
+.section_about img {
+  max-width: 100%; /* Responsive image */
+  border-radius: 10px; /* Rounded corners for the image */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for the image */
 }
 
 .title_module {
-  font-size: 27px;
-  font-weight: 600;
-  margin: 0;
-  padding: 10px 0 20px;
-  color: #333333;
-  font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", sans-serif;
-  position: relative;
-  line-height: 32px;
+  font-size: 2.5rem; /* Increase font size */
+  font-weight: 700; /* Bold font weight */
+  color: #333; /* Darker text color */
+  margin-bottom: 20px; /* Space below the title */
+  text-align: left; /* Align text to the left */
 }
 
-.about_desc {    
-  margin-top: 8px;
-  color: #666;
-  font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", sans-serif;
-  line-height: 25px;
-  font-weight: 400;
-  font-size: 14px;
-  padding: 10px 0;
+.about_desc {
+  font-size: 1.1rem; /* Slightly larger font size */
+  line-height: 1.8; /* Increase line height for readability */
+  color: #555; /* Softer text color */
+  margin-top: 10px; /* Space above the description */
 }
 
+/* Add a button style for more information */
 .about_more {
-  text-transform: uppercase;
-  font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 14px;
-  margin: 27px 0 11px;
-  padding: 17px 48px 18px;
-  text-decoration: none !important;
-  position: relative;
-  border: 1px solid #343434;
-  display: inline-block;
-  background: none;
-  text-align: center;
-  overflow: hidden;
-  transition: all 0.3s linear 0s;
-  -moz-transition: all 0.3s linear 0s;
-  -webkit-transition: all 0.3s linear 0s;
-  -ms-transition: all 0.3s linear 0s;
-  -o-transition: all 0.3s linear 0s;
+  display: inline-block; /* Inline block for button */
+  padding: 10px 20px; /* Padding for button */
+  background-color: #3c7363; /* Button background color */
+  color: white; /* Button text color */
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  transition: background-color 0.3s; /* Transition for hover effect */
+  margin-top: 20px; /* Space above the button */
 }
 
+.about_more:hover {
+  background-color: #2a4d4a; /* Darker shade on hover */
+}
 
 /*.....................................................*/
 * {
@@ -353,7 +335,7 @@ body {
 .carousel{
   width: 100vw;
   height: 100vh;
-  margin-top: -50px;
+  margin-top: 60px;
   overflow: hidden;
   position: relative;
 }
@@ -403,7 +385,6 @@ body {
   left: calc(67% + 800px);
   opacity: 0;
 }
-
 
 
 
@@ -504,12 +485,6 @@ body {
 }
 
 /* Carousel */
-
-
-
-
-
-
 /* next prev arrows */
 
 .arrows{
@@ -699,12 +674,17 @@ body {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid #eaeaea;
 }
 
 .project-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .project-card img {
@@ -736,9 +716,18 @@ body {
 }
 
 .project-title {
-  color: white;
+  color: #333;
   text-align: center;
-  padding: 10px;
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.project-card p {
+  color: #666;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 .rating-feedback {
@@ -747,7 +736,7 @@ body {
 }
 /* -------------------Footer----------------- */
 .footer {
-  background-color: #3c7363;
+  background-color: #000000;
   padding: 20px;
   border-top: 1px solid #ccc;
   width: 100%;
@@ -804,4 +793,220 @@ body {
 }
 .footer-container h4 {
   text-decoration: underline;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .nav-logo p {
+    font-size: 16px;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+
+  .nav-menu ul li {
+    margin: 0 10px;
+  }
+
+  .carousel .list .item {
+    width: 100%;
+    height: auto;
+  }
+
+  .content .title, .content .name {
+    font-size: 60px;
+  }
+
+  .content .des {
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search-container {
+    margin: 50px;
+  }
+
+  .header-top, .header-main {
+    padding: 10px;
+  }
+
+  .project-card {
+    margin: 10px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-info, .footer-services, .footer-contact {
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .nav-menu ul {
+    flex-direction: column;
+  }
+
+  .nav-menu ul li {
+    margin: 5px 0;
+  }
+
+  .content .title, .content .name {
+    font-size: 40px;
+  }
+
+  .content .des {
+    font-size: 12px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+  }
+}
+
+/* Remove background color from card titles */
+.card-title-1,
+.card-title-2,
+.card-title-3 {
+  background-color: transparent; /* Remove background color */
+  color: #eaeaea; /* Keep text color */
+}
+
+/* Add specific colors to icons */
+.card-img-top {
+  filter: grayscale(0); /* Remove grayscale if any */
+}
+
+.card-title-1::before {
+  content: '';
+  display: inline-block;
+  width: 30px; /* Adjust size as needed */
+  height: 30px; /* Adjust size as needed */
+  background-color: #c0392b; /* Red for Return Policy */
+  border-radius: 50%; /* Make it circular */
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.card-title-2::before {
+  content: '';
+  display: inline-block;
+  width: 30px; /* Adjust size as needed */
+  height: 30px; /* Adjust size as needed */
+  background-color: #2980b9; /* Blue for Professional Team */
+  border-radius: 50%; /* Make it circular */
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.card-title-3::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #27ae60;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Animation for title color change */
+@keyframes colorChange {
+  0% { color: #eaeaea; }
+  50% { color: #c0392b; }
+  100% { color: #eaeaea; }
+}
+
+.animate-title {
+  animation: colorChange 0.5s ease-in-out;
+}
+
+.card-title-1 i,
+.card-title-2 i,
+.card-title-3 i {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+.section-header {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  background-color: #3c7363;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.3s;
+}
+
+/* Style for the Rating and Feedback section header */
+.rating-feedback-header {
+  font-size: 2.5rem; /* Same size as Our Projects */
+  font-weight: bold;
+  color: white;
+  background-color: #3c7363; /* Same background color */
+  padding: 20px; /* Same padding */
+  border-radius: 10px; /* Same border radius */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Same shadow effect */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 1px; /* Letter spacing */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Add margin for spacing */
+}
+
+/* Style for the Rating and Feedback section container */
+.rating-feedback {
+  margin-top: 70px; /* Adjust margin as needed */
+  margin-bottom: 70px; /* Adjust margin as needed */
+  padding: 20px; /* Add padding */
+  background-color: #f8f9fa; /* Light background for contrast */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Add this keyframe animation for the reload effect */
+@keyframes reloadAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply the animation to the card titles */
+.card-title-1 {
+  color: black; /* Ensure text color is black */
+  animation: reloadAnimation 1s ease-in-out infinite; /* Add animation */
+}
+
+.card-title-2 {
+  color: black; /* Ensure text color is black */
+  animation: reloadAnimation 1s ease-in-out infinite; /* Add animation */
+}
+
+.card-title-3 {
+  color: black; /* Ensure text color is black */
+  animation: reloadAnimation 1s ease-in-out infinite; /* Add animation */
+}
+
+/* Adjust the KoiPond logo size */
+.nav-logo p {
+  font-size: 20px; /* Change this value to make it smaller or larger */
+  margin: 0; /* Remove any margin */
+}
+
+/* Adjust the Login and Sign Up button sizes */
+.nav-button .btn {
+  padding: 5px 8px; /* Adjust padding for smaller buttons */
+  font-size: 15px; /* Change font size for buttons */
+  margin: 0 5px; /* Add margin for spacing between buttons */
 }

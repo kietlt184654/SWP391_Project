@@ -16,58 +16,44 @@
 </head>
 <nav class="nav" th:fragment="nav">
     <div class="nav-logo">
-        <p>LOGO</p>
+        <p>KoiPond</p>
     </div>
     <div class="nav-menu" id="navMenu">
         <ul>
             <li><a th:href="@{/}" class="link">Home</a></li>
-            <li><a href="#" class="link">About</a></li>
-            <li><a href="#" class="link">Blog</a></li>
+            <li><a th:href="@{/blogs}" class="link">Blog</a></li>
             <li>
-                <a href="#" class="link">Services</a>
-                <ul>
-                    <li><a th:href="@{/design}">Design Koi Pond</a></li> <!-- Sử dụng th:href để liên kết đến đường dẫn /design -->
-                    <li><a th:href="@{/services}">Koi Pond Service</a></li> <!-- Liên kết mẫu tới dịch vụ khác (thay thế #) -->
-                </ul>
-
+                <a th:href="@{/design}" style="color: black;">Services</a>
             </li>
-            <li><a href="#" class="link">Product</a></li>
+            <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+            <li><a th:href="@{customer/customer-projects}" class="link">Project</a></li>
+            <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
         </ul>
     </div>
     <div class="nav-button">
-        <!-- If the user is not logged in, show Login and Sign Up buttons -->
         <div th:if="${session.loggedInUser == null}">
             <form th:action="@{/login}" method="GET" style="display: inline;">
-                <button class="btn white-btn" id="loginBtn">
-                    Login
-                </button>
+                <button class="btn white-btn" id="loginBtn">Login</button>
             </form>
             <form th:action="@{/register}" method="GET" style="display: inline;">
-                <button class="btn" id="registerBtn">
-                    Sign Up
-                </button>
+                <button class="btn" id="registerBtn">Sign Up</button>
             </form>
         </div>
-        <!-- If the user is logged in, show avatar and account name -->
-        <!-- Hiển thị avatar và tên người dùng -->
         <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
             <a th:href="@{/account/profile}" class="d-flex align-items-center">
-                <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
-                     alt="User Avatar"
-                     class="rounded-circle"
-                     width="40"
-                     height="40">
+                <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                     class="rounded-circle" width="40" height="40">
                 <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
             </a>
             <form th:action="@{/account/logout}" method="post" class="ms-3">
-                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+                <button type="submit" class="btn ">Logout</button>
             </form>
         </div>
-
-
         <div class="nav-menu-btn">
             <i class="bx bx-menu" onclick="myMenuFunction()"></i>
         </div>
+    </div>
 </nav>
 
 <body>
@@ -86,8 +72,7 @@
                     bridge and gentle stream complete this tranquil oasis, perfect for quiet reflection and
                     connection with nature. Peaceful and harmonious.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
         </div>
@@ -102,8 +87,7 @@
                     and bonsai trees, this setting blends natural beauty and tranquility, perfect for reflection and
                     relaxation.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -120,8 +104,7 @@
                     reflecting delicate bamboo and bonsai trees. Vibrant koi swim gracefully, adding life to the
                     serene scene.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -138,8 +121,7 @@
                     creates a unique image. And you can't do modern without artificial light, so install waterproof
                     lighting under the waterfall.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -155,8 +137,7 @@
                     reflecting delicate bamboo and bonsai trees. Vibrant koi swim gracefully, adding life to the
                     serene scene.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -172,8 +153,7 @@
                     bridge and gentle stream complete this tranquil oasis, perfect for quiet reflection and
                     connection with nature. Peaceful and harmonious.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -189,8 +169,7 @@
                     and bonsai trees, this setting blends natural beauty and tranquility, perfect for reflection and
                     relaxation.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -207,8 +186,7 @@
                     creates a unique image. And you can't do modern without artificial light, so install waterproof
                     lighting under the waterfall.</div>
                 <div class="btn">
-                    <button>See More</button>
-                    <button>Subscribe</button>
+                    <button><a th:href="@{/design/showAllDesign}">See More</a></button>
                 </div>
             </div>
 
@@ -219,44 +197,42 @@
 
     <!--next prev button-->
     <div class="arrows">
-        <button class="prev">< </button>
+        <button class="prev">
+            < </button>
         <button class="next">></button>
     </div>
 </div>
 
 </div>
-
-<section class="awe-section-2">
-    <div class="section_about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <img class="img-fluid" src="path/to/company-image.jpg" alt="Our company">
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <h2 class="title_module">Our company</h2>
-                    <div class="about_desc">
-                        Our company is specialized in designing and constructing high-end koi ponds,
-                        gardens, and landscaping projects. With over 10 years of experience, we are
-                        committed to creating beautiful and functional outdoor spaces. Our team of
-                        experts uses the latest techniques and high-quality materials to ensure that
-                        each project meets our clients' expectations. We pride ourselves on our attention
-                        to detail and our ability to bring our clients' visions to life.
-                    </div>
-                    <a href="/about-us" class="about_more" title="Learn more"><span>Learn more</span></a>
+<br>
+<section class="section_about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <img class="img-fluid" src="https://fpsbutest.wordpress.com/wp-content/uploads/2012/11/sp.png" alt="Our company">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <h2 class="title_module">Our Company</h2>
+                <div class="about_desc">
+                    Our company is specialized in designing and constructing high-end koi ponds,
+                    gardens, and landscaping projects. With over 10 years of experience, we are
+                    committed to creating beautiful and functional outdoor spaces. Our team of
+                    experts uses the latest techniques and high-quality materials to ensure that
+                    each project meets our clients' expectations. We pride ourselves on our attention
+                    to detail and our ability to bring our clients' visions to life.
                 </div>
             </div>
         </div>
     </div>
 </section>
+<br>
 <section class="projects-section">
     <div class="container">
-        <h2 class="text-center mb-4" style="background-color: #3c7363; color: white; border-radius: 95px;">Our
-            Projects</h2>
+        <h2 class="text-center mb-4 section-header">Our Projects</h2>
         <div class="row">
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="project-card">
-                    <img src="/img/Japanese Koi Design.jpg" alt="Project 1">
+                    <img src="/img/JapaneseKoiDesign.jpg" alt="Project 1">
                     <div class="project-overlay">
                         <h3 class="project-title">Japanese Style</h3>
                     </div>
@@ -300,8 +276,11 @@
         <div class="card h-100">
             <img src="/img/refund.jpg" class="card-img-top" alt="refund">
             <div class="card-body">
-                <h3 class="card-title-1">Return Policy</h3>
-                <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without any additional costs</p>
+                <h3 class="card-title-1">
+                    <i class="fas fa-redo" style="color: red;"></i> Return Policy
+                </h3>
+                <p class="card-text">Ready to exchange or return within 24 hours if you are not satisfied, without
+                    any additional costs</p>
             </div>
             <div class="card-footer">
                 <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -312,8 +291,11 @@
         <div class="card h-100">
             <img src="/img/goodservice.jpg" class="card-img-top" alt="Service">
             <div class="card-body">
-                <h3 class="card-title-2">Professional Team</h3>
-                <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most perfect service.</p>
+                <h3 class="card-title-2">
+                    <i class="fas fa-users" style="color: blue;"></i> Professional Team
+                </h3>
+                <p class="card-text">With our experienced and enthusiastic staff, we will provide you with the most
+                    perfect service.</p>
             </div>
             <div class="card-footer">
                 <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -324,8 +306,11 @@
         <div class="card h-100">
             <img src="/img/ship1.jpg" class="card-img-top" alt="shipping">
             <div class="card-body">
-                <h3 class="card-title-3">Shipping Policy</h3>
-                <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to customers</p>
+                <h3 class="card-title-3">
+                    <i class="fas fa-truck" style="color: green;"></i> Shipping Policy
+                </h3>
+                <p class="card-text">Free shipping for all orders nationwide, ensuring quality when delivered to
+                    customers</p>
             </div>
             <div class="card-footer">
                 <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -334,19 +319,15 @@
     </div>
 </div>
 
-<section class="section_danhmucnoibat">
-    <!-- Content for this section remains the same -->
-</section>
 
 <section class="rating-feedback">
+    <div class="rating-feedback-header">Rating and Feedback</div>
     <div class="container">
-        <h2 class="text-center mb-4">Rating and feedback</h2>
         <div class="row">
             <div class="col-md-4 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0">
-                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
-                             height="50">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50" height="50">
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <div class="bg-light p-2 rounded">
@@ -367,8 +348,7 @@
             <div class="col-md-4 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0">
-                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
-                             height="50">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50" height="50">
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <div class="bg-light p-2 rounded">
@@ -389,8 +369,7 @@
             <div class="col-md-4 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0">
-                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50"
-                             height="50">
+                        <img src="/img/user.jpg" alt="User" class="rounded-circle" width="50" height="50">
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <div class="bg-light p-2 rounded">

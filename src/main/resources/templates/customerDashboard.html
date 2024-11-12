@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Bảng Điều Khiển Khách Hàng</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2>Bảng Điều Khiển Khách Hàng</h2>
+
+  <h3>Danh Sách Thiết Kế Của Bạn</h3>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên Thiết Kế</th>
+      <th>Mô Tả</th>
+      <th>Giá</th>
+      <th>Trạng Thái</th>
+      <th>Thao Tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="design : ${designs}">
+      <td th:text="${design.designId}"></td>
+      <td th:text="${design.designName}"></td>
+      <td th:text="${design.description}"></td>
+      <td th:text="${design.price}"></td>
+      <td th:text="${design.status}"></td>
+      <td>
+        <a th:href="@{'/customer/design/' + ${design.designId}}" class="btn btn-info">Chi Tiết</a>
+        <a th:if="${design.status.name() == 'NeedToPayment'}"
+           th:href="@{'/customer/design/' + ${design.designId} + '/payment'}"
+           class="btn btn-success">Thanh Toán</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

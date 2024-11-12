@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>View Blog</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .container { margin-top: 50px; max-width: 800px; background-color: #f8f9fa; padding: 30px; border-radius: 10px; }
+    .blog-title { font-size: 28px; font-weight: bold; color: #007bff; }
+    .author-info, .created-at { font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1 class="blog-title" th:text="${blog.title}">Blog Title</h1>
+  <p class="author-info"><strong>Author:</strong> <span th:text="${blog.customer.account.accountName}">Author Name</span></p>
+  <p class="author-info"><strong>Email:</strong> <span th:text="${blog.customer.account.email}">Author Email</span></p>
+  <p class="created-at"><i>Created At:</i> <span th:text="${blog.createdAt}"></span></p>
+  <hr>
+  <p th:text="${blog.content}">Blog content</p>
+</div>
+</body>
+</html>

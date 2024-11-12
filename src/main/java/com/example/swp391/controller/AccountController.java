@@ -2,6 +2,7 @@ package com.example.swp391.controller;
 
 import com.example.swp391.entity.AccountEntity;
 
+import com.example.swp391.entity.CustomerEntity;
 import com.example.swp391.service.AccountService;
 
 import com.example.swp391.service.CustomerService;
@@ -12,9 +13,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/account")
@@ -42,22 +48,30 @@ private StaffProjectService staffProjectService;
             model.addAttribute("message", "Login Successful");
             session.setAttribute("loggedInUser", account);
 
+            // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
             if (account.getAccountTypeID().equals("Customer")) {
+                // Kiểm tra nếu customer chưa tồn tại
+                if (!customerService.existsByAccount(account)) {
+                    CustomerEntity customer = new CustomerEntity();
+                    customer.setAccount(account);
+                    customer.setAdditionalInfo("");  // Bạn có thể thêm thông tin bổ sung tùy ý
+
+                    // Lưu Customer mới vào cơ sở dữ liệu
+                    customerService.save(customer);
+                }
                 return "Homepage";
             } else if (account.getAccountTypeID().equals("Manager")) {
                 return "manager";
             } else if (account.getAccountTypeID().equals("Consulting Staff")) {
-                return "FormConsulting";
+                return "consultingHome";
             } else if (account.getAccountTypeID().equals("Construction Staff")) {
-                return "redirect:/dashboard"; // Chuyển hướng đến `/dashboard`
+                return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
             }
         } else {
-            // Xử lý khi tài khoản không tồn tại hoặc mật khẩu sai
             model.addAttribute("messageLogin", "Invalid username or password");
         }
         return "login";
     }
-
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {
@@ -74,7 +88,10 @@ private StaffProjectService staffProjectService;
             model.addAttribute("emailError", "Email đã được sử dụng");
             return "register";
         }
-
+        if (userDTO.getEmail().matches("^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$")) {
+            model.addAttribute("emailError", "Email đã được sử dụng");
+            return "register";
+        }
         // Kiểm tra tên người dùng đã tồn tại
         if (accountService.checkIfAccountNameExists(userDTO.getAccountName())) {
             model.addAttribute("usernameError", "Tên người dùng đã tồn tại");
@@ -204,21 +221,7 @@ private StaffProjectService staffProjectService;
         return "manager"; // Tên của template HTML (manager.html)
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteCustomer(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        // Gọi hàm xóa trong AccountService
-        boolean isDeleted = customerService.deleteCustomerById(id);
 
-        // Thêm thông báo vào RedirectAttributes để chuyển hướng hiển thị trên giao diện
-        if (isDeleted) {
-            redirectAttributes.addFlashAttribute("messageDeleteUser", "Customer deleted successfully.");
-        } else {
-            redirectAttributes.addFlashAttribute("messageDeleteUser", "Customer not found.");
-        }
-
-        // Chuyển hướng lại trang quản lý khách hàng
-        return "redirect:/account/customer";
-    }
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestParam("email") String email, Model model) {
         boolean emailExists = accountService.checkIfEmailExistsAndSendResetLink(email);
