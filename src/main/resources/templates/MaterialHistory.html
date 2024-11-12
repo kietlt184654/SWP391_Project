@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Material History</title>
+  <link rel="stylesheet" href="/src/main/resources/static/css/MaterialHistory.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div class="sidebar close">
+    <div class="logo-details">
+      <i class='bx bxs-ship'></i>
+      <span class="logo_name">KoiPond</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt'></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Dashboard</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-user'></i>
+            <span class="link_name">Customer Management</span>
+          </a>
+
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Customer Management</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-folder'></i>
+            <span class="link_name">Project Management</span>
+          </a>
+          <!-- <i class='bx bxs-chevron-down arrow'></i> -->
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Project Management</a></li>
+
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-group'></i>
+            <span class="link_name">Staff Management</span>
+          </a>
+          <!-- <i class='bx bxs-chevron-down arrow'></i> -->
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Staff Management</a></li>
+
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-check-circle'></i>
+          <span class="link_name">Design Approval</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Design Approval</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-cube'></i>
+            <span class="link_name">Material Management</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Material Management</a></li>
+          <li><a th:href="@{/materials/list}">Material List</a></li>
+          <li><a th:href="@{/materials/history}">Material History</a></li>
+          <li><a th:href="@{/materials/historyofchanging}">Material Updated List</a></li>
+        </ul>
+      </li>
+      <div class="profile-details">
+        <div class="profile-content">
+          <!--<img src="image/profile.jpg" alt="profileImg">-->
+        </div>
+        <form th:action="@{/account/logout}" method="post" class="ms-3">
+          <button type="submit" class='bx bx-log-out'></button>
+        </form>
+      </div>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="home-content">
+      <i class='bx bx-menu'></i>
+    </div>
+    <h1>MATERIAL HISTORY</h1>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Quantity</th>
+        <th>Materials</th>
+        <th>Project</th>
+        <th>Date</th>
+      </tr>
+      <tr th:each="materialDetail : ${materialsUsed}">
+        <td th:text="${materialDetail.projectMaterialDetailId}"></td>
+        <td th:text="${materialDetail.quantityUsed}"></td>
+        <td th:text="${materialDetail.material.materialName}"></td>
+        <td th:text="${materialDetail.project.projectID}"></td> <!-- Nếu bạn muốn hiển thị ID của dự án -->
+        <td th:text="${materialDetail.usedDate}"></td>
+      </tr>
+    </table>
+
+    <h2>EACH RAW MATERIAL QUANTITIES USED</h2>
+    <table>
+      <tr>
+        <th>Material ID</th>
+        <th>Total used material</th>
+      </tr>
+      <tr th:each="entry : ${totalUsedQuantities.entrySet()}">
+        <td th:text="${entry.key}"></td> <!-- ID nguyên vật liệu -->
+        <td th:text="${entry.value}"></td> <!-- Tổng số lượng đã sử dụng -->
+      </tr>
+    </table>
+  </section>
+    <script src="/src/main/resources/static/javascript/MaterialManagement.js"></script>
+</body>
+
+</html>
