@@ -1,161 +1,213 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <script src="/javascript/viewCartPage.js" defer></script>
     <link rel="stylesheet" href="/css/viewCart.css" />
     <title>View Cart</title>
-</head>
-<body>
-
-<!-- HEADER -->
-<div class="nav">
-    <div class="nav-button">
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="nav">
+      <div class="nav-button">
         <!-- Login and Sign Up buttons if not logged in -->
         <div th:if="${session.loggedInUser == null}">
-            <form th:action="@{/login}" method="GET" style="display: inline;">
-                <button class="btn white-btn" id="loginBtn">Login</button>
-            </form>
-            <form th:action="@{/register}" method="GET" style="display: inline;">
-                <button class="btn" id="registerBtn">Sign Up</button>
-            </form>
+          <form th:action="@{/login}" method="GET" style="display: inline">
+            <button class="btn white-btn" id="loginBtn">Login</button>
+          </form>
+          <form th:action="@{/register}" method="GET" style="display: inline">
+            <button class="btn" id="registerBtn">Sign Up</button>
+          </form>
         </div>
 
         <!-- Avatar and account name if logged in -->
-        <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-            <a th:href="@{/account/profile}" class="d-flex align-items-center">
-                <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
-                     alt="User Avatar"
-                     class="rounded-circle"
-                     width="40"
-                     height="40">
-                <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
-            </a>
-<!--            <form th:action="@{/account/logout}" method="post" class="ms-3">-->
-<!--                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>-->
-<!--            </form>-->
+        <div
+          th:if="${session.loggedInUser != null}"
+          class="d-flex align-items-center"
+        >
+          <a th:href="@{/account/profile}" class="d-flex align-items-center">
+            <img
+              th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
+              alt="User Avatar"
+              class="rounded-circle"
+              width="40"
+              height="40"
+            />
+            <span
+              class="ms-2"
+              th:text="${session.loggedInUser.getAccountName()}"
+              >AccountName</span
+            >
+          </a>
+          <!--            <form th:action="@{/account/logout}" method="post" class="ms-3">-->
+          <!--                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>-->
+          <!--            </form>-->
         </div>
 
         <!-- Menu Button -->
         <div class="nav-menu-btn">
-            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+          <i class="bx bx-menu" onclick="myMenuFunction()"></i>
         </div>
-    </div>
+      </div>
 
-    <!-- Logo -->
-    <div class="nav-logo">
+      <!-- Logo -->
+      <div class="nav-logo">
         <p>LOGO</p>
+      </div>
+
+      <!-- Nav Menu -->
+      <!--    <div class="nav-menu" id="navMenu">-->
+      <!--        <ul>-->
+      <!--            <li><a th:href="@{/}" class="link">Home</a></li>-->
+      <!--            <li><a href="about.html" class="link">About</a></li>-->
+      <!--            <li><a href="blog.html" class="link">Blog</a></li>-->
+      <!--            <li><a th:href="@{/design}" class="link">Services</a></li>-->
+      <!--            <li><a href="products.html" class="link">Products</a></li>-->
+
+      <!--            &lt;!&ndash; Cart &ndash;&gt;-->
+      <!--            <li>-->
+      <!--                <a href="#" class="icon">-->
+      <!--                    <i class="fas fa-shopping-cart"></i>-->
+      <!--                    <span class="notification-badge" th:text="${cart.totalQuantity}">0</span>-->
+      <!--                </a>-->
+      <!--            </li>-->
+      <!--        </ul>-->
+      <!--    </div>-->
     </div>
 
-    <!-- Nav Menu -->
-<!--    <div class="nav-menu" id="navMenu">-->
-<!--        <ul>-->
-<!--            <li><a th:href="@{/}" class="link">Home</a></li>-->
-<!--            <li><a href="about.html" class="link">About</a></li>-->
-<!--            <li><a href="blog.html" class="link">Blog</a></li>-->
-<!--            <li><a th:href="@{/design}" class="link">Services</a></li>-->
-<!--            <li><a href="products.html" class="link">Products</a></li>-->
-
-<!--            &lt;!&ndash; Cart &ndash;&gt;-->
-<!--            <li>-->
-<!--                <a href="#" class="icon">-->
-<!--                    <i class="fas fa-shopping-cart"></i>-->
-<!--                    <span class="notification-badge" th:text="${cart.totalQuantity}">0</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-</div>
-
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
         <img src="/img/koi_des.webp" alt="Koi Pond Design" />
         <h1>View Cart</h1>
         <ol class="breadcrumb">
-            <li><a href="homepage.html">Home</a></li>
-            <li><a href="product.html">Products</a></li>
-            <li class="active">View Cart</li>
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="product.html">Products</a></li>
+          <li class="active">View Cart</li>
         </ol>
-    </div>
-</section>
+      </div>
+    </section>
 
-<!-- Main Container -->
-<div class="container">
-    <!-- Cart Section -->
-    <div class="cart">
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Cart Section -->
+      <div class="cart">
         <h2>Your Cart</h2>
         <table class="table table-bordered">
-            <thead>
+          <thead>
             <tr>
-                <th>Product ID</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+              <th>Product ID</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr th:each="entry : ${cart.designItems}">
-                <td th:text="${entry.key.designId}">Product ID</td>
-                <td><img th:src="@{${entry.key.img}}" alt="Product Image" width="100"/></td>
-                <td th:text="${entry.key.designName}">Product Name</td>
-                <td th:text="${entry.key.price}">Product Price</td>
-                <td th:text="${entry.value}">Quantity</td>
+              <td th:text="${entry.key.designId}">Product ID</td>
+              <td>
+                <img
+                  th:src="@{${entry.key.img}}"
+                  alt="Product Image"
+                  width="100"
+                />
+              </td>
+              <td th:text="${entry.key.designName}">Product Name</td>
+              <td th:text="${entry.key.price}">Product Price</td>
+              <td th:text="${entry.value}">Quantity</td>
             </tr>
-            </tbody>
+          </tbody>
         </table>
-    </div>
+        <div class="continue-shopping">
+          <a th:href="@{/products}">Continue Shopping</a>
+        </div>
+      </div>
 
-    <!-- Payment Info Section -->
-    <div class="payment-info">
+      <!-- Payment Info Section -->
+      <div class="payment-info">
         <h2>Payment</h2>
         <form th:action="@{/payment/create}" method="post">
-            <input type="hidden" name="source" value="CART"> <!-- Pass 'CART' as the source -->
-            <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
-            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
-            <button type="submit" class="checkout-btn">Check Out</button>
+          <input type="hidden" name="source" value="CART" />
+          <!-- Pass 'CART' as the source -->
+          <input
+            type="radio"
+            id="cod"
+            name="payment-method"
+            value="cod"
+            checked
+          />
+          COD<br />
+          <input
+            type="radio"
+            id="bank-transfer"
+            name="payment-method"
+            value="bank-transfer"
+          />
+          Bank Transfer<br /><br />
+          <button type="submit" class="checkout-btn">Check Out</button>
         </form>
+      </div>
     </div>
-</div>
 
-<!-- Return Button -->
-<div style="text-align: center; margin-top: 20px;">
-    <a th:href="@{/design/showAllDesign}" class="btn btn-primary">Return</a>
-</div>
+    <!-- Return Button -->
+    <div style="text-align: center; margin-top: 20px">
+      <a th:href="@{/design/showAllDesign}" class="btn btn-primary">Return</a>
+    </div>
 
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-container">
         <div class="footer-info">
-            <h4>Information</h4>
-            <p>Open: 8 AM - 10 PM</p>
-            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+          <h4>Information</h4>
+          <p>Open: 8 AM - 10 PM</p>
+          <p>
+            PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+            Minh
+          </p>
         </div>
         <div class="footer-services">
-            <h4>Services</h4>
-            <ul>
-                <li><a href="link-to-construction" class="service-item">Construction Koi Pond</a></li>
-                <li><a href="link-to-cleaning" class="service-item">Cleaning and Maintenance</a></li>
-                <li><a href="link-to-design" class="service-item">Design upon Requirements</a></li>
-            </ul>
+          <h4>Services</h4>
+          <ul>
+            <li>
+              <a href="link-to-construction" class="service-item"
+                >Construction Koi Pond</a
+              >
+            </li>
+            <li>
+              <a href="link-to-cleaning" class="service-item"
+                >Cleaning and Maintenance</a
+              >
+            </li>
+            <li>
+              <a href="link-to-design" class="service-item"
+                >Design upon Requirements</a
+              >
+            </li>
+          </ul>
         </div>
         <div class="footer-contact">
-            <h4>Contact</h4>
-            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-            <p><i class="fa-brands fa-facebook"></i>
-                <a href="https://facebook.com" target="_blank">Visit Us</a>
-            </p>
+          <h4>Contact</h4>
+          <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+          <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+          <p>
+            <i class="fa-brands fa-facebook"></i>
+            <a href="https://facebook.com" target="_blank">Visit Us</a>
+          </p>
         </div>
+      </div>
     </div>
-</div>
-
-</body>
+  </body>
 </html>

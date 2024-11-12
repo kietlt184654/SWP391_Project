@@ -7,10 +7,11 @@
 
 body {
   margin-top: 20px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 150vh;
   flex-direction: column;
   background: #f3f6f9;
 }
@@ -21,26 +22,26 @@ body {
   top: 0;
   width: 100%;
   height: 60px;
-  background: #3c7363;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
   display: flex;
   align-items: center;
+
   padding: 0 20px;
 }
-
 .nav-menu {
   display: flex;
   flex-grow: 1;
   justify-content: center;
 }
-
 .nav-logo p {
-  color: white;
+  color: #000000;
   font-size: 18px;
   font-weight: 600;
   margin-right: 100px;
   margin-left: 100px;
+  margin-top: 10px;
 }
 
 .nav-menu ul {
@@ -49,6 +50,7 @@ body {
   position: relative;
   align-content: center;
   margin-right: 100px;
+  margin-top: 10px;
 }
 
 .nav-menu ul li {
@@ -59,7 +61,7 @@ body {
 
 .nav-menu ul li a {
   text-decoration: none;
-  color: white;
+  color: #000000;
   font-weight: 500;
   font-size: 16px;
   padding: 8px;
@@ -71,18 +73,47 @@ body {
   border-bottom: 3px solid white;
 }
 
-.nav-button .btn {
-  font-size: 24px;
-  background: none;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  margin-left: 30px;
+.nav-menu ul li a i {
+  font-size: 20px;
+  margin-right: 8px;
 }
 
-.nav-button .btn:hover {
-  color: #f4f4f4;
+.icon-item {
+  display: flex;
+  list-style: none;
+}
+
+.icon-item li {
+  margin-left: 20px;
+}
+
+/* update quantity cart */
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.points-display-nav {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  display: flex;
+  align-items: center;
 }
 
 /* Sidebar */
@@ -129,75 +160,183 @@ body {
   color: white;
 }
 
-/* Profile Section */
-.profile-container {
-  background-color: white;
-  padding: 20px;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.sidebar-menu li a i {
+  margin-right: 10px;
 }
 
-.info-header {
-  background-color: #3c7363;
+/* Avatar and User Info */
+.user-info {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.user-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+}
+
+/* Button in Navbar */
+.nav-button .btn {
+  font-size: 24px;
+  background: none;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-left: 30px;
+}
+
+.nav-button .btn:hover {
+  color: #f4f4f4;
+}
+
+/* -----------------------------BODY-----------------------------*/
+.breadcrumb {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
   color: white;
   padding: 10px 20px;
+  list-style: none;
+  margin-bottom: 50px;
+}
+
+.hero-section {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.hero-content h1 {
+  position: absolute;
+  width: 100%;
   text-align: center;
-  border-radius: 5px;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.profile-sidebar {
-  text-align: center;
-}
-
-.profile-sidebar img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-
-.profile-sidebar .username {
-  font-size: 20px;
+  color: white;
+  top: 40%;
+  font-size: 48px;
   font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.profile-sidebar .user-role {
-  color: #888;
-  font-size: 14px;
-}
-
-.profile-container form .form-group {
-  margin-bottom: 15px;
-}
-
-.profile-container form label {
+label {
   display: block;
   margin-bottom: 5px;
   color: #333;
 }
 
-.profile-container form input {
-  width: 100%;
+input {
+  width: calc(120% - 20px);
+
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-/* Footer */
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #142b43;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+button:hover {
+  background-color: #265384;
+  transform: translateY(-2px);
+}
+button:active {
+  transform: translateY(0);
+}
+
+/* Profile Section */
+.profile-container {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 30px;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-header {
+  color: #000000;
+  font-weight: bold;
+  margin-top: 30px;
+  font-size: 30px;
+
+  margin-bottom: 20px;
+  text-align: left;
+  margin-left: 0;
+}
+
+.profile-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 40px;
+}
+.avatar {
+  display: flex;
+  flex-direction: column;
+  margin-right: 60px;
+  margin-bottom: 20px;
+}
+.avatar img {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+.upload-photo input[type="file"] {
+  display: none;
+}
+.upload-photo label {
+  background-color: #142b43;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 13px;
+  margin-top: 14px;
+}
+.upload-photo label:hover {
+  background-color: #265384;
+}
+
+/* -----------------------------FOOTER-----------------------------*/
 .footer {
-  background-color: #3c7363;
+  background-color: #000000;
   padding: 20px;
   border-top: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
-  color: white;
-  text-align: left;
 }
 
 .footer-container {
@@ -214,6 +353,12 @@ body {
   flex: 1;
   padding: 10px;
   min-width: 200px;
+  color: white;
+}
+
+.footer-services h4,
+.footer-contact h4 {
+  margin-bottom: 10px;
 }
 
 .footer-services ul {
@@ -233,5 +378,15 @@ body {
 
 .service-item:hover {
   color: #007bff;
+  text-decoration: underline;
+}
+
+.footer-contact {
+  text-align: left;
+}
+.footer-container h4 {
+  text-align: left;
+}
+.footer-container h4 {
   text-decoration: underline;
 }
