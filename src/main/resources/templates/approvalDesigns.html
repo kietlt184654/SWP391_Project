@@ -15,10 +15,18 @@
             margin-bottom: 20px;
             font-weight: bold;
         }
+        .alert {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- Thông báo thành công -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+
     <h2>Danh Sách Thiết Kế Chờ Duyệt</h2>
     <table class="table table-bordered table-hover">
         <thead>

@@ -37,7 +37,7 @@ public class ConsultingController {
         design.setStatus(DesignEntity.Status.Pending); // Đặt trạng thái ban đầu là Pending
         design.setTypeDesign(typeDesignService.findById(2L)); // Giả sử bạn có typeDesignService để lấy TypeDesign theo ID
         designService.save(design); // Lưu thiết kế vào DB
-        redirectAttributes.addFlashAttribute("message", "Thiết kế đã được gửi yêu cầu duyệt.");
+        redirectAttributes.addFlashAttribute("message", "The design has been submitted for approval.");
         return "consultingHome"; // Điều hướng về trang consultingHome
     }
 

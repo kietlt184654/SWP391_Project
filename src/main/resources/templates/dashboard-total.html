@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 20px;
+    }
+    .chart-container {
+      margin-top: 30px;
+      width: 80%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .stats-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .stats-item {
+      display: inline-block;
+      margin: 15px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Dashboard</h1>
+
+  <!-- Design Types Pie Chart -->
+  <div class="chart-container">
+    <h3>Design Types Distribution by TypeDesignName</h3>
+    <p th:if="${designCountsByTypeName.isEmpty()}">No data available for Design Types.</p>
+    <canvas id="designTypeChart" th:if="${!designCountsByTypeName.isEmpty()}"></canvas>
+  </div>
+
+  <!-- Monthly Revenue Line Chart -->
+  <div class="chart-container">
+    <h3>Monthly Revenue</h3>
+    <p th:if="${monthlyRevenue.isEmpty()}">No revenue data available for display.</p>
+    <canvas id="revenueChart" th:if="${!monthlyRevenue.isEmpty()}"></canvas>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <div class="stats-item">
+      <strong>Total Revenue:</strong> <span id="totalRevenue">0 VND</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+  // Data for Design Types Pie Chart
+  const designCountsByTypeName = /*[[${designCountsByTypeName}]]*/ {};
+  const designLabels = Object.keys(designCountsByTypeName);
+  const designData = Object.values(designCountsByTypeName);
+
+  if (designData.length > 0) {
+    const ctx1 = document.getElementById('designTypeChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'pie',
+      data: {
+        labels: designLabels,
+        datasets: [{
+          label: 'Design Types by TypeDesignName',
+          data: designData,
+          backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#17a2b8'],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  }
+
+  // Data for Monthly Revenue Line Chart
+  const monthlyRevenue = /*[[${monthlyRevenue}]]*/ {};
+  const revenueLabels = Object.keys(monthlyRevenue);
+  const revenueData = Object.values(monthlyRevenue);
+
+  if (revenueData.length > 0) {
+    const ctx2 = document.getElementById('revenueChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: revenueLabels,
+        datasets: [{
+          label: 'Monthly Revenue (VND)',
+          data: revenueData,
+          fill: false,
+          borderColor: '#007bff',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Month'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Revenue (VND)'
+            },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  // Format Total Revenue with VND and thousand separator
+  const totalRevenue = /*[[${totalRevenue}]]*/ 0;
+  const formattedTotalRevenue = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalRevenue);
+  document.getElementById("totalRevenue").innerText = formattedTotalRevenue;
+</script>
+</body>
+</html>

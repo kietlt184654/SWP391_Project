@@ -9,7 +9,9 @@ import com.example.swp391.repository.DesignRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -105,5 +107,32 @@ public class DesignService {
     public List<DesignEntity> findNeedToPaymentDesignsByCustomerReference(Long customerReference) {
         return designRepository.findByCustomerReferenceAndStatus(customerReference, DesignEntity.Status.NeedToPayment);
     }
+//    public Map<Long, Long> getDesignCountsByTypeId() {
+//        List<Object[]> results = designRepository.countDesignsByTypeId();
+//        System.out.println("Results from repository: " + results); // Kiểm tra dữ liệu từ repository
+//
+//        Map<Long, Long> designCounts = new HashMap<>();
+//        for (Object[] result : results) {
+//            Long typeDesignId = ((Number) result[0]).longValue();
+//            Long count = ((Number) result[1]).longValue();
+//            designCounts.put(typeDesignId, count);
+//        }
+//
+//        System.out.println("Design Counts By Type ID: " + designCounts); // Kiểm tra kết quả cuối cùng
+//        return designCounts;
+//    }
+    public Map<String, Long> getDesignCountsByTypeName() {
+        List<Object[]> results = designRepository.countDesignsByTypeIdWithNames();
+        Map<String, Long> designCounts = new HashMap<>();
+
+        for (Object[] result : results) {
+            String typeDesignName = (String) result[1];
+            Long count = ((Number) result[2]).longValue();
+            designCounts.put(typeDesignName, count);
+        }
+
+        return designCounts;
+    }
+
 }
 

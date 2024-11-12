@@ -23,4 +23,15 @@ public interface DesignRepository extends JpaRepository<DesignEntity, Long> {
     // Lấy tất cả các thiết kế có typeId là 3 hoặc 4
     @Query("SELECT d FROM DesignEntity d WHERE d.typeDesign.typeDesignId = 3L OR d.typeDesign.typeDesignId = 4L ")
     List<DesignEntity> findDesignsByTypeId3Or4();
+//    @Query("SELECT t.typeDesignId, COUNT(d) FROM DesignEntity d JOIN d.typeDesign t GROUP BY t.typeDesignId")
+//    List<Object[]> countDesignsByTypeId();
+
+//    @Query("SELECT d.typeDesign.typeDesignId, COUNT(d) FROM DesignEntity d GROUP BY d.typeDesign.typeDesignId")
+//    List<Object[]> countDesignsByTypeId();
+
+    @Query("SELECT t.typeDesignId, t.typeDesignName, COUNT(d) FROM DesignEntity d JOIN d.typeDesign t GROUP BY t.typeDesignId, t.typeDesignName")
+    List<Object[]> countDesignsByTypeIdWithNames();
+
+
+
 }
