@@ -65,7 +65,7 @@ public class MaterialController {
 
         if (materialService.existsByMaterialName(materialName)) {
             model.addAttribute("error", "Material name already exists.");
-            return "materials/add";
+            return "redirect:/materials/add";
         }
         if (stockQuantity <= 0) {
             model.addAttribute("error", "Stock quantity must be greater than 0.");

@@ -12,7 +12,7 @@ import java.util.*;
 @Service
 public class VNPayService {
 
-    public String createOrder(int total, String orderInfor, String urlReturn){
+    public String createOrder(Long total, String orderInfor, String urlReturn){
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Staff List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1>Staff List</h1>
+
+  <!-- Add New Staff Button -->
+  <a href="/staff/create" class="btn btn-primary mb-3">Add New Staff</a>
+
+  <!-- Success/Error Messages -->
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+  <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+  <!-- Staff Table -->
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Staff ID</th>
+      <th>Account Name</th>
+      <th>Email</th>
+      <th>Account Type</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="staff : ${staffList}">
+      <td th:text="${staff.staffID}">1</td>
+      <td th:text="${staff.account.accountName}">Account Name</td>
+      <td th:text="${staff.account.email}">Email</td>
+      <td th:text="${staff.account.accountTypeID}">Account Type</td>
+      <td th:text="${staff.role}">Role</td>
+      <td>
+        <!-- Delete Button -->
+        <a th:href="@{/staff/delete/{id}(id=${staff.staffID})}" class="btn btn-danger btn-sm"
+           onclick="return confirm('Are you sure you want to delete this staff member?');">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

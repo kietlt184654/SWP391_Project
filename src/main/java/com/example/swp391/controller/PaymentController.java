@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -182,27 +183,68 @@ public class PaymentController {
         }
     }
 
+//    @GetMapping("/vnpay")
+//    public String initiateVnPayPayment(HttpSession session, RedirectAttributes redirectAttributes) {
+//        try {
+//            String transactionId = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "").substring(0, 8);
+//            Object discountedTotalAmountObj = session.getAttribute("discountedTotalAmount");
+//            if (discountedTotalAmountObj == null) {
+//                redirectAttributes.addFlashAttribute("error", "Cannot find the total amount to process payment.");
+//                return "redirect:/cart/view";
+//            }
+//
+//            double discountedTotalAmount;
+//            try {
+//                discountedTotalAmount = Double.parseDouble(discountedTotalAmountObj.toString());
+//            } catch (NumberFormatException e) {
+//                redirectAttributes.addFlashAttribute("error", "Invalid total amount format. Please try again.");
+//                return "redirect:/cart/view";
+//            }
+//
+//            long vnpAmount = (long) (discountedTotalAmount * 1000 );
+//            String orderInfo = "Thanh toán đơn hàng " + transactionId;
+//            String paymentUrl = vnPayService.createOrder((int) vnpAmount, orderInfo, "http://localhost:8080/payment");
+//
+//            return "redirect:" + paymentUrl;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            redirectAttributes.addFlashAttribute("error", "An error occurred while processing VNPay payment. Please try again.");
+//            return "redirect:/cart/view";
+//        }
+//    }
+
+
+
+
     @GetMapping("/vnpay")
     public String initiateVnPayPayment(HttpSession session, RedirectAttributes redirectAttributes) {
         try {
+            // Tạo ID giao dịch duy nhất
             String transactionId = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "").substring(0, 8);
+
+            // Lấy tổng tiền đã được giảm giá từ session
             Object discountedTotalAmountObj = session.getAttribute("discountedTotalAmount");
             if (discountedTotalAmountObj == null) {
                 redirectAttributes.addFlashAttribute("error", "Cannot find the total amount to process payment.");
                 return "redirect:/cart/view";
             }
 
-            double discountedTotalAmount;
+            // Chuyển đổi discountedTotalAmountObj sang kiểu BigDecimal để đảm bảo độ chính xác
+            BigDecimal discountedTotalAmount;
             try {
-                discountedTotalAmount = Double.parseDouble(discountedTotalAmountObj.toString());
+                discountedTotalAmount = new BigDecimal(discountedTotalAmountObj.toString());
             } catch (NumberFormatException e) {
                 redirectAttributes.addFlashAttribute("error", "Invalid total amount format. Please try again.");
                 return "redirect:/cart/view";
             }
 
-            long vnpAmount = (long) (discountedTotalAmount * 1000 );
+            // Nhân với 1000 để chuyển sang đơn vị nhỏ hơn và đảm bảo kết quả chính xác
+            BigDecimal vnpAmountBigDecimal = discountedTotalAmount.multiply(BigDecimal.valueOf(1));
+            long vnpAmount = vnpAmountBigDecimal.longValue();
+
+            // Tạo thông tin đơn hàng và URL thanh toán
             String orderInfo = "Thanh toán đơn hàng " + transactionId;
-            String paymentUrl = vnPayService.createOrder((int) vnpAmount, orderInfo, "http://localhost:8080/payment");
+            String paymentUrl = vnPayService.createOrder(vnpAmount, orderInfo, "http://localhost:8080/payment");
 
             return "redirect:" + paymentUrl;
         } catch (Exception e) {
@@ -211,6 +253,7 @@ public class PaymentController {
             return "redirect:/cart/view";
         }
     }
+
 
     @GetMapping("/vnpay-payment")
     public String handleVnPayReturn(HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttributes) {

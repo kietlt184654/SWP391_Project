@@ -2,64 +2,142 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Confirmation</title>
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/serviceForm.css}">
+    <script src="/javascript/designService.js" defer></script>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="container">
+<div class="nav">
+    <div class="nav-button">
+        <button id="menu-toggle" class="btn">&#9776;</button>
+    </div>
+    <div class="nav-logo">
+        <p>KoiPond</p>
+    </div>
+    <div class="nav-menu" id="navMenu">
+        <ul>
+            <li><a th:href="@{/}" class="link">Home</a></li>
+            <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+            <li><a th:href="@{/design}">Services</a></li>
+
+            <!-- Cart -->
+            <li>
+                <a href="#" class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="notification-badge">0</span>
+                </a>
+            </li>
+
+            <!-- Conditional Account Menu -->
+            <li th:if="${session.loggedInUser == null}">
+                <a href="/login" class="btn btn-primary">Login</a>
+                <a href="/register" class="btn btn-secondary">Sign Up</a>
+            </li>
+            <li th:if="${session.loggedInUser != null}">
+                <a href="/account/profile" class="icon" id="accountIcon">
+                    <i class="fas fa-user-circle"></i>
+                    <span th:text="${session.loggedInUser.accountName}">Username</span>
+                </a>
+                <form th:action="@{/account/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Confirmation Page -->
+<div class="confirmation-page container">
+    <!-- Header Section -->
+    <div class="header">
         <h1>Order Confirmation</h1>
-        <p>Thank you for your purchase!</p>
+        <div class="thank-you-message">
+            <i class="fa-regular fa-circle-check"></i>
+            <p>Thank you for your purchase!</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Left Column - Order Information -->
+        <div class="col-md-6 order-info">
+            <h3>Your Information</h3>
+            <p><strong>Transaction ID:</strong> #123456</p>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Phone Number:</strong> 0987654321</p>
+            <p><strong>Email:</strong> mngen0138@gmail.com</p>
+            <p><strong>Address:</strong> 123 Main Street, Suite 4B, City, Country</p>
+            <div class="continue-shopping">
+                <a href="/Availableproject" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        </div>
+
+        <!-- Right Column - Order Summary -->
+        <div class="col-md-6 order-summary">
+            <h3>Order Summary</h3>
+            <div class="order-summary-header">
+                <p><strong>Date:</strong> 02 May 2023</p>
+                <p><strong>Order Number:</strong> 024-125478956</p>
+                <p><strong>Payment Method:</strong> Mastercard</p>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Design Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${designItems}">
+                    <td th:text="${entry.key.designName}">Design 1</td>
+                    <td th:text="${entry.value}">1</td>
+                    <td th:text="${entry.key.price}">50.00</td>
+                    <td th:text="${entry.key.price * entry.value}">50.00</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="order-total">
+                <p><strong>Sub Total:</strong> <span th:text="${subtotal}">100.000 VND</span></p>
+                <p><strong>Shipping:</strong> Free Shipping</p>
+                <p><strong>Discount:</strong> <span th:text="${discountAmount}">20%</span></p>
+                <p class="total-price"><strong>Order Total:</strong> <span th:text="${discountedTotalAmount}">107.00 VND</span></p>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="order-details">
-        <h2>Order Details</h2>
-        <p><strong>Transaction ID:</strong> <span th:text="${transactionId}">#123456</span></p>
-        <p><strong>Original Total:</strong> <span th:text="${totalAmount}">0.00</span> USD</p>
-        <p><strong>Discount Rate:</strong> <span th:text="${discountRate}">0.00</span>%</p>
-        <p><strong>Discount Amount:</strong> <span th:text="${discountAmount}">0.00</span> USD</p>
-        <p><strong>Total after Discount:</strong> <span th:text="${discountedTotalAmount}">0.00</span> USD</p>
-        <p><strong>Points Earned:</strong> <span th:text="${pointsEarned}">0</span> points</p>
-        <p><strong>Payment Status:</strong> <span th:text="${paymentStatus}">Pending</span></p>
-    </div>
-
-    <!-- Order Items -->
-    <div class="order-items">
-        <h3>Items Purchased</h3>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Design Name</th>
-                <th>Quantity</th>
-                <th>Unit Price (USD)</th>
-                <th>Total Price (USD)</th>
-                <th> Total after Discount(USD)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="entry : ${designItems}">
-                <td th:text="${entry.key.designName}">Design 1</td>
-                <td th:text="${entry.value}">1</td>
-                <td th:text="${entry.key.price}">50.00</td>
-                <td th:text="${entry.key.price * entry.value}">50.00</td>
-                <td th:text="${discountedTotalAmount}">0.00</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Redirect Buttons -->
-    <div class="redirect-buttons">
-        <a href="/" class="btn btn-primary">Back to Home</a>
-
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>Information</h4>
+            <p>Open: 8 AM - 10 PM</p>
+            <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+        </div>
+        <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="/construction" class="service-item">Construction Koi pond</a></li>
+                <li><a href="/cleaning" class="service-item">Cleaning and maintenance</a></li>
+                <li><a href="/design" class="service-item">Design upon requirements</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+            <p><i class="fa-brands fa-facebook"></i> <a href="https://facebook.com" target="_blank">Visit Us</a></p>
+        </div>
     </div>
 </div>
-
 </body>
 </html>

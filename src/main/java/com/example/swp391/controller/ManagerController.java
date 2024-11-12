@@ -23,6 +23,11 @@ public class ManagerController {
     @Autowired
     private DesignMaterialQuantityService designMaterialQuantityService;
 
+
+    @GetMapping("")
+    public String showManagerPage() {
+        return "manager";  // Tên file HTML là manager.html trong thư mục templates
+    }
     // Display pending designs list
     @GetMapping("/designs/pending")
     public String getPendingDesigns(Model model) {

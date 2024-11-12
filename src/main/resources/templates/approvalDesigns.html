@@ -26,6 +26,10 @@
     <div th:if="${successMessage}" class="alert alert-success" role="alert">
         <p th:text="${successMessage}"></p>
     </div>
+    <!-- Nút quay về trang quản lý -->
+    <div class="back-button">
+        <a th:href="@{/manager}" class="btn btn-primary">Back to Manager dashboard</a>
+    </div>
 
     <h2>Danh Sách Thiết Kế Chờ Duyệt</h2>
     <table class="table table-bordered table-hover">
