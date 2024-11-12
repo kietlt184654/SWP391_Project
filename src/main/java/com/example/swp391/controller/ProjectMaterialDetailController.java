@@ -33,7 +33,7 @@ public class ProjectMaterialDetailController {
     @PostMapping("/history/add")
     public String addMaterialDetail(ProjectMaterialDetailEntity detail, RedirectAttributes redirectAttributes) {
         projectMaterialDetailService.saveMaterialDetail(detail);
-        redirectAttributes.addFlashAttribute("message", "Đã thêm chi tiết sử dụng nguyên vật liệu thành công.");
+        redirectAttributes.addFlashAttribute("message", "Material usage details have been successfully added.");
         return "redirect:/materials/history";
     }
 }

@@ -23,105 +23,103 @@ public class AccountService {
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
-private EmailService emailService;
+    private EmailService emailService;
     @Autowired
     private CustomerRepository customerRepository;
 
     public AccountEntity login(String accountName, String password) {
         return accountRepository.findByAccountNameAndPassword(accountName, password);
-
     }
+
     public boolean checkIfEmailExists(String email) {
-        return accountRepository.findByEmail(email)!=null;
+        return accountRepository.findByEmail(email) != null;
     }
 
     public boolean checkIfAccountNameExists(String username) {
-        return accountRepository.findByAccountName(username)!=null;
+        return accountRepository.findByAccountName(username) != null;
     }
+
     public synchronized void registerUser(AccountEntity userDTO) {
-        // Thiết lập các giá trị khác cho tài khoản
+        // Set other values for the account
         userDTO.setAccountTypeID("Customer");
         userDTO.setStatus(true);
 
-        // Lưu tài khoản vào cơ sở dữ liệu (AccountID sẽ tự động tăng)
+        // Save the account into the database (AccountID will auto-increment)
         accountRepository.save(userDTO);
 
-        // Tạo một Customer mới và thiết lập thông tin
+        // Create a new Customer and set information
         CustomerEntity customer = new CustomerEntity();
-        customer.setAdditionalInfo("Thông tin khách hàng mặc định"); // Thông tin thêm cho khách hàng, có thể thay đổi
-        customer.setAccount(userDTO); // Gán đối tượng AccountEntity đã lưu vào Customer
-        customerRepository.save(customer); // Lưu Customer (CustomerID sẽ tự động tăng)
+        customer.setAdditionalInfo("Default customer information"); // Default additional info, can be changed
+        customer.setAccount(userDTO); // Link the saved AccountEntity to Customer
+        customerRepository.save(customer); // Save Customer (CustomerID will auto-increment)
     }
-
-
-
 
     public AccountEntity findByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
 
-
     public AccountEntity save(AccountEntity account) {
         return accountRepository.save(account);
     }
+
     public void updatePassword(AccountEntity user, String newPassword) {
-        // Không mã hóa, chỉ cập nhật mật khẩu trực tiếp
+        // No encryption, directly update the password
         user.setPassword(newPassword);
 
-        // Lưu đối tượng user đã cập nhật vào cơ sở dữ liệu
+        // Save the updated user object into the database
         accountRepository.save(user);
     }
 
-
-
-
     public AccountEntity findByToken(String token) {
-        return accountRepository.findByToken(token); // Tìm theo token
+        return accountRepository.findByToken(token); // Find by token
     }
-
 
     public void updateAccount(AccountEntity account) {
         accountRepository.save(account);
     }
+
     public List<AccountEntity> getAllCustomers() {
         return accountRepository.findAll();
     }
+
     public long countUsers() {
         return accountRepository.count();
     }
+
     @Transactional
     public void sendResetPasswordLink(String email) throws Exception {
-        // Tìm kiếm người dùng theo email
+        // Search for the user by email
         AccountEntity account = accountRepository.findByEmail(email);
         if (account == null) {
-            throw new Exception("Email không tồn tại trong hệ thống.");
+            throw new Exception("Email does not exist in the system.");
         }
 
-        // Tạo token khôi phục mật khẩu
+        // Create a password reset token
         String token = UUID.randomUUID().toString();
-        account.setToken(token);  // Lưu token vào đối tượng tài khoản
-        accountRepository.save(account);  // Lưu tài khoản với token mới
+        account.setToken(token);  // Save the token into the account object
+        accountRepository.save(account);  // Save the account with the new token
 
-        // Tạo URL khôi phục mật khẩu
+        // Create a password reset URL
         String resetUrl = "http://localhost:8080/account/reset-password?token=" + token;
 
-        // Gửi email chứa liên kết khôi phục mật khẩu
-        emailService.sendEmail(account.getEmail(), "Khôi phục mật khẩu",
-                "Nhấp vào liên kết sau để đặt lại mật khẩu của bạn: " + resetUrl);
+        // Send the reset password email with the link
+        emailService.sendEmail(account.getEmail(), "Password Reset",
+                "Click the following link to reset your password: " + resetUrl);
     }
 
-    // Cập nhật mật khẩu mới dựa trên token khôi phục
+    // Update password based on the reset token
     @Transactional
     public void updatePassword(String token, String newPassword) throws Exception {
         AccountEntity account = accountRepository.findByToken(token);
         if (account == null) {
-            throw new Exception("Token không hợp lệ hoặc đã hết hạn.");
+            throw new Exception("Invalid or expired token.");
         }
-
     }
+
     public AccountEntity getCurrentAccount(HttpSession session) {
         return (AccountEntity) session.getAttribute("loggedInUser");
     }
+
     public boolean checkIfEmailExistsAndSendResetLink(String email) {
         AccountEntity user = accountRepository.findByEmail(email);
         if (user == null) {
@@ -163,17 +161,18 @@ private EmailService emailService;
             e.printStackTrace();
         }
     }
-    // Phương thức kiểm tra token có tồn tại hay không
+
+    // Method to check if the token exists
     public boolean isValidResetToken(String token) {
         return accountRepository.findByToken(token) != null;
     }
 
-    // Phương thức đặt lại mật khẩu mới nếu token hợp lệ
+    // Method to reset password if the token is valid
     public boolean resetPassword(String token, String newPassword) {
         AccountEntity account = accountRepository.findByToken(token);
         if (account != null) {
-            account.setPassword(newPassword); // Đảm bảo mã hóa mật khẩu nếu cần
-            account.setToken(null); // Xóa token sau khi sử dụng
+            account.setPassword(newPassword); // Ensure password is encrypted if necessary
+            account.setToken(null); // Remove token after use
             accountRepository.save(account);
             return true;
         }

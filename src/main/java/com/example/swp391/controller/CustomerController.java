@@ -33,22 +33,21 @@ public class CustomerController {
     @Autowired
     private RatingFeedbackService ratingFeedbackService;
 
-    // Hiển thị bảng điều khiển cho khách hàng với danh sách thiết kế
+    // Display customer dashboard with design list
     @GetMapping("/customer/dashboard")
     public String getCustomerDashboard(HttpSession session, Model model) {
         AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
         if (account == null) {
-            model.addAttribute("errorMessage", "Bạn cần đăng nhập để xem bảng điều khiển.");
-            return "errorPage"; // Trang lỗi hoặc trang đăng nhập
-        }
-
-        CustomerEntity customer = account.getCustomer(); // Lấy thông tin customer từ account trong session
-        if (customer == null) {
-            model.addAttribute("errorMessage", "Khách hàng không tồn tại.");
+            model.addAttribute("errorMessage", "You need to log in to view the dashboard.");
             return "errorPage";
         }
 
-        // Lấy danh sách thiết kế của khách hàng với trạng thái cần thanh toán hoặc có sẵn
+        CustomerEntity customer = account.getCustomer();
+        if (customer == null) {
+            model.addAttribute("errorMessage", "Customer does not exist.");
+            return "errorPage";
+        }
+
         List<DesignEntity> designs = designService.findNeedToPaymentDesignsByCustomerReference(customer.getCustomerID());
 
         model.addAttribute("customer", customer);
@@ -56,19 +55,18 @@ public class CustomerController {
         return "customerDashboard";
     }
 
-    // Hiển thị chi tiết một thiết kế
+    // Display design details
     @GetMapping("/customer/design/{designId}")
     public String viewDesignDetails(@PathVariable Long designId, HttpSession session, Model model) {
         AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
         if (account == null || account.getCustomer() == null) {
-            model.addAttribute("errorMessage", "Bạn cần đăng nhập để xem chi tiết thiết kế.");
+            model.addAttribute("errorMessage", "You need to log in to view the design details.");
             return "errorPage";
         }
 
-        // Lấy thông tin thiết kế từ ID
         DesignEntity design = designService.findById(designId);
         if (design == null || !design.getCustomerReference().equals(account.getCustomer().getCustomerID())) {
-            model.addAttribute("errorMessage", "Thiết kế không tồn tại hoặc bạn không có quyền truy cập.");
+            model.addAttribute("errorMessage", "The design does not exist or you do not have permission to access it.");
             return "errorPage";
         }
 
@@ -76,56 +74,51 @@ public class CustomerController {
         return "customerDesignDetails";
     }
 
-    // Hiển thị trang thanh toán cho thiết kế
+    // Display payment page for design
     @GetMapping("/customer/design/{designId}/payment")
     public String showPaymentPage(@PathVariable Long designId, HttpSession session, Model model) {
         AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
         if (account == null || account.getCustomer() == null) {
-            model.addAttribute("errorMessage", "Bạn cần đăng nhập để tiến hành thanh toán.");
+            model.addAttribute("errorMessage", "You need to log in to proceed with payment.");
             return "errorPage";
         }
 
         DesignEntity design = designService.findById(designId);
         if (design == null || !design.getCustomerReference().equals(account.getCustomer().getCustomerID())) {
-            model.addAttribute("errorMessage", "Thiết kế không tồn tại hoặc bạn không có quyền thanh toán.");
+            model.addAttribute("errorMessage", "The design does not exist or you do not have permission to pay.");
             return "errorPage";
         }
 
         if (!"NeedToPayment".equals(design.getStatus().name())) {
-            model.addAttribute("errorMessage", "Thiết kế này hiện không cần thanh toán.");
+            model.addAttribute("errorMessage", "This design is currently not available for payment.");
             return "errorPage";
         }
 
-        // Lưu `design` vào session để sử dụng trong thanh toán
-        // Tạo `Map<DesignEntity, Integer>` với một phần tử là `design` và giá trị 1 cho số lượng
         Map<DesignEntity, Integer> designForPayment = new HashMap<>();
-        designForPayment.put(design, 1); // Đặt số lượng là 1 vì chỉ thanh toán cho một thiết kế
-        // Lưu vào session để sử dụng trong `PaymentController`
+        designForPayment.put(design, 1);
         session.setAttribute("designForPayment", designForPayment);
-
 
         model.addAttribute("designforproject", design);
         model.addAttribute("paymentAmount", design.getPrice());
         return "paymentPage";
     }
+
     @GetMapping("account/customer/customer-projects")
     public String viewCustomerProjects(Model model, HttpSession session) {
         AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
 
         if (account == null || account.getCustomer() == null) {
-            model.addAttribute("errorMessage", "Bạn cần đăng nhập để tiến hành thanh toán.");
+            model.addAttribute("errorMessage", "You need to log in to proceed with payment.");
             return "errorPage";
         }
 
-        // Lấy customerID từ tài khoản trong session
         Long customerId = account.getCustomer().getCustomerID();
 
         List<ProjectEntity> projects = projectService.getIncompleteProjectsByCustomerId(customerId);
         model.addAttribute("projects", projects);
 
-        return "customer-projects"; // Trỏ đến trang Thymeleaf để hiển thị danh sách dự án
+        return "customer-projects";
     }
-
 
     @PostMapping("/submitFeedback")
     public ResponseEntity<String> submitFeedback(@RequestParam Long projectId,
@@ -135,32 +128,31 @@ public class CustomerController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectId));
 
         if (!"COMPLETE".equalsIgnoreCase(project.getStatus())) {
-            return ResponseEntity.badRequest().body("Chỉ những dự án hoàn thành mới có thể đánh giá.");
+            return ResponseEntity.badRequest().body("Only completed projects can be rated.");
         }
 
-        // Kiểm tra nếu dự án đã được đánh giá trước đó
         RatingFeedbackEntity existingFeedback = ratingFeedbackService.findByProjectId(projectId);
         if (existingFeedback != null && existingFeedback.isReviewed()) {
-            return ResponseEntity.badRequest().body("Dự án này đã được đánh giá và không thể chỉnh sửa.");
+            return ResponseEntity.badRequest().body("This project has already been rated and cannot be modified.");
         }
 
-        // Tạo và lưu đối tượng RatingFeedbackEntity
         RatingFeedbackEntity ratingFeedback = new RatingFeedbackEntity();
         ratingFeedback.setProject(project);
         ratingFeedback.setCustomer(project.getCustomer());
         ratingFeedback.setRating(rating);
         ratingFeedback.setFeedback(feedback);
-        ratingFeedback.setReviewed(true);  // Đánh dấu là đã được đánh giá
+        ratingFeedback.setReviewed(true);
         ratingFeedbackService.saveFeedback(ratingFeedback);
 
-        return ResponseEntity.ok("Đánh giá của bạn đã được gửi thành công.");
+        return ResponseEntity.ok("Your feedback has been submitted successfully.");
     }
+
     @GetMapping("/account/customer/completed-projects")
     public String viewCompletedProjects(Model model, HttpSession session) {
         AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
 
         if (account == null || account.getCustomer() == null) {
-            model.addAttribute("errorMessage", "Bạn cần đăng nhập để xem lịch sử dự án.");
+            model.addAttribute("errorMessage", "You need to log in to view project history.");
             return "errorPage";
         }
 
@@ -168,6 +160,6 @@ public class CustomerController {
         List<ProjectEntity> completedProjects = projectService.getCompletedProjectsByCustomerId(customerId);
         model.addAttribute("completedProjects", completedProjects);
 
-        return "completed-projects"; // Trang để hiển thị lịch sử dự án hoàn thành
+        return "completed-projects";
     }
 }

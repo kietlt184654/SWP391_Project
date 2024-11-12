@@ -20,38 +20,38 @@ public class MaterialService {
     @Autowired
     private MaterialChangeLogRepository materialChangeLogRepository;
 
-
     /**
-     * Lấy danh sách tất cả nguyên vật liệu
+     * Get all materials
      */
     public List<MaterialEntity> findAllMaterials() {
         return materialRepository.findAll();
     }
 
     /**
-     * Tìm nguyên vật liệu theo ID
+     * Find material by ID
      */
     public MaterialEntity findById(Long materialId) {
         return materialRepository.findById(materialId)
                 .orElseThrow(() -> new IllegalArgumentException("Material not found"));
     }
-    // Phương thức tìm nguyên liệu theo tên
+
+    // Find material by name
     public MaterialEntity findByName(String materialName) {
         return materialRepository.findByMaterialName(materialName);
     }
 
     /**
-     * Cập nhật số lượng nguyên vật liệu và ghi log thay đổi
+     * Update material quantity and log the change
      */
     public void updateMaterialQuantity(Long materialId, int quantityChange, String reason) {
         MaterialEntity material = findById(materialId);
 
         int newQuantity = material.getStockQuantity() + quantityChange;
         if (newQuantity < 0) {
-            throw new IllegalArgumentException("Số lượng nguyên vật liệu không đủ!");
+            throw new IllegalArgumentException("Insufficient material quantity!");
         }
 
-        // Cập nhật số lượng và lưu bản ghi log
+        // Update quantity and save the change log
         material.setStockQuantity(newQuantity);
         materialRepository.save(material);
 
@@ -63,9 +63,8 @@ public class MaterialService {
         materialChangeLogRepository.save(changeLog);
     }
 
-
     /**
-     * Kiểm tra nguyên vật liệu cho tất cả thiết kế trong giỏ hàng
+     * Check materials for all designs in the cart
      */
     public boolean checkMaterialsForCart(CartEntity cart) {
         for (Map.Entry<DesignEntity, Integer> entry : cart.getDesignItems().entrySet()) {
@@ -73,14 +72,14 @@ public class MaterialService {
             int quantityInCart = entry.getValue();
 
             if (!checkMaterialsForDesign(design, quantityInCart)) {
-                return false; // Không đủ nguyên vật liệu cho thiết kế
+                return false; // Not enough materials for the design
             }
         }
-        return true; // Đủ nguyên vật liệu cho tất cả thiết kế trong giỏ hàng
+        return true; // Sufficient materials for all designs in the cart
     }
 
     /**
-     * Kiểm tra nguyên vật liệu cho một sản phẩm với số lượng nhất định
+     * Check materials for a design with a specific quantity
      */
     private boolean checkMaterialsForDesign(DesignEntity design, int quantityInCart) {
         for (DesignMaterialQuantity designMaterial : design.getMaterialQuantities()) {
@@ -95,7 +94,7 @@ public class MaterialService {
     }
 
     /**
-     * Xử lý giảm số lượng nguyên vật liệu trong kho sau khi thanh toán thành công cho giỏ hàng
+     * Update material quantities in stock after successful checkout for cart
      */
     public void updateMaterialsAfterCheckout(CartEntity cart) {
         for (Map.Entry<DesignEntity, Integer> entry : cart.getDesignItems().entrySet()) {
@@ -113,7 +112,7 @@ public class MaterialService {
     }
 
     /**
-     * Kiểm tra nguyên vật liệu cho tất cả thiết kế trong dịch vụ (service)
+     * Check materials for all designs in service
      */
     public boolean checkMaterialsForDesignItems(Map<DesignEntity, Integer> designItems) {
         for (Map.Entry<DesignEntity, Integer> entry : designItems.entrySet()) {
@@ -121,14 +120,14 @@ public class MaterialService {
             int quantity = entry.getValue();
 
             if (!checkMaterialsForDesign(design, quantity)) {
-                return false; // Không đủ nguyên vật liệu cho thiết kế trong dịch vụ
+                return false; // Not enough materials for the design in the service
             }
         }
-        return true; // Đủ nguyên vật liệu cho tất cả thiết kế trong dịch vụ
+        return true; // Sufficient materials for all designs in the service
     }
 
     /**
-     * Xử lý giảm số lượng nguyên vật liệu trong kho sau khi thanh toán thành công cho dịch vụ (service)
+     * Update material quantities in stock after successful checkout for service
      */
     public void updateMaterialsAfterCheckoutForDesignItems(Map<DesignEntity, Integer> designItems) {
         for (Map.Entry<DesignEntity, Integer> entry : designItems.entrySet()) {
@@ -150,39 +149,44 @@ public class MaterialService {
         changeLogs.sort(Comparator.comparing(MaterialChangeLogEntity::getChangeDate).reversed());
         return changeLogs;
     }
+
     public void updateMaterialQuantityForDesign(Long materialId, int quantityChange ) {
-         // Kiểm tra quantityChange > 0
-            if (quantityChange == 0) {
-                throw new IllegalArgumentException("Số lượng thay đổi phải khác 0");
-            }
+        // Check if quantityChange > 0
+        if (quantityChange == 0) {
+            throw new IllegalArgumentException("Quantity change must not be 0");
+        }
+
         MaterialEntity material = materialRepository.findById(materialId)
                 .orElseThrow(() -> new IllegalArgumentException("Material not found"));
 
-        // Tính toán số lượng mới
+        // Calculate new quantity
         int newQuantity = material.getStockQuantity() + quantityChange;
 
-        // Nếu số lượng mới < 0, báo lỗi vì số lượng nguyên liệu không đủ
+        // If new quantity < 0, throw error
         if (newQuantity < 0) {
-            throw new IllegalArgumentException("Số lượng nguyên vật liệu không đủ cho nguyên liệu: " + material.getMaterialName());
+            throw new IllegalArgumentException("Insufficient material quantity for the material: " + material.getMaterialName());
         }
 
-        // Cập nhật số lượng trong kho
+        // Update stock quantity
         material.setStockQuantity(newQuantity);
         materialRepository.save(material);
     }
-    // Phương thức lưu MaterialEntity
+
+    // Method to save MaterialEntity
     public MaterialEntity save(MaterialEntity material) {
         return materialRepository.save(material);
     }
-    // Phương thức tìm tất cả nguyên liệu
+
+    // Method to find all materials
     public List<MaterialEntity> findAll() {
         return materialRepository.findAll();
     }
+
     public void deleteMaterialById(Long materialId) {
         materialRepository.deleteById(materialId);
     }
+
     public boolean existsByMaterialName(String materialName) {
         return materialRepository.existsByMaterialName(materialName);
     }
-
 }

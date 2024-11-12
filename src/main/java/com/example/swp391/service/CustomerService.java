@@ -79,7 +79,7 @@ private ProjectRepository projectRepository;
     }
     public CustomerEntity findById(Long customerId) {
         return customerRepository.findById(customerId)
-                .orElseThrow(() -> new IllegalArgumentException("Khách hàng không tồn tại với ID: " + customerId));
+                .orElseThrow(() -> new IllegalArgumentException("Customer not exist with : " + customerId));
     }
 
 

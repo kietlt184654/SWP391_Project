@@ -33,7 +33,7 @@ private DesignRepository designRepository;
 
             // Kiểm tra xem kho có đủ số lượng hay không
             if (material.getStockQuantity() < quantityNeeded) {
-                throw new IllegalArgumentException("Số lượng nguyên vật liệu không đủ cho nguyên liệu: " + material.getMaterialName());
+                throw new IllegalArgumentException("Insufficient material quantity for the item: " + material.getMaterialName());
             }
 
             // Sử dụng phương thức updateMaterialQuantity để trừ đi số lượng cần dùng

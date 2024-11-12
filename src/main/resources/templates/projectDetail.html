@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chi Tiết Dự Án</title>
-</head>
-<body>
-<h1>Chi Tiết Dự Án: [[${project.name}]]</h1>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Chi Tiết Dự Án</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Chi Tiết Dự Án: [[${project.name}]]</h1>-->
 
-<!-- Thông tin dự án -->
-<p><strong>Mô Tả:</strong> <span th:text="${project.description}"></span></p>
-<p><strong>Ngày Bắt Đầu:</strong> <span th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></span></p>
-<p><strong>Ngày Kết Thúc:</strong> <span th:text="${#dates.format(project.endDate, 'yyyy-MM-dd')}"></span></p>
-<p><strong>Tổng Chi Phí:</strong> <span th:text="${project.totalCost}"></span> VND</p>
-<p><strong>Trạng Thái:</strong> <span th:text="${project.status}"></span></p>
+<!--&lt;!&ndash; Thông tin dự án &ndash;&gt;-->
+<!--<p><strong>Mô Tả:</strong> <span th:text="${project.description}"></span></p>-->
+<!--<p><strong>Ngày Bắt Đầu:</strong> <span th:text="${#dates.format(project.startDate, 'yyyy-MM-dd')}"></span></p>-->
+<!--<p><strong>Ngày Kết Thúc:</strong> <span th:text="${#dates.format(project.endDate, 'yyyy-MM-dd')}"></span></p>-->
+<!--<p><strong>Tổng Chi Phí:</strong> <span th:text="${project.totalCost}"></span> VND</p>-->
+<!--<p><strong>Trạng Thái:</strong> <span th:text="${project.status}"></span></p>-->
 
-<!-- Thông tin khách hàng -->
-<h3>Thông Tin Khách Hàng:</h3>
-<p><strong>Tên:</strong> <span th:text="${customer.name}"></span></p>
-<p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-<p><strong>Số Điện Thoại:</strong> <span th:text="${customer.phone}"></span></p>
+<!--&lt;!&ndash; Thông tin khách hàng &ndash;&gt;-->
+<!--<h3>Thông Tin Khách Hàng:</h3>-->
+<!--<p><strong>Tên:</strong> <span th:text="${customer.name}"></span></p>-->
+<!--<p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>-->
+<!--<p><strong>Số Điện Thoại:</strong> <span th:text="${customer.phone}"></span></p>-->
 
-<!-- Thanh toán (nếu cần thiết) -->
-<h3>Thanh Toán</h3>
-<form action="/customer/payment" method="post">
-  <input type="hidden" name="projectId" th:value="${project.projectID}">
-  <button type="submit">Thanh Toán</button>
-</form>
+<!--&lt;!&ndash; Thanh toán (nếu cần thiết) &ndash;&gt;-->
+<!--<h3>Thanh Toán</h3>-->
+<!--<form action="/customer/payment" method="post">-->
+<!--  <input type="hidden" name="projectId" th:value="${project.projectID}">-->
+<!--  <button type="submit">Thanh Toán</button>-->
+<!--</form>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
