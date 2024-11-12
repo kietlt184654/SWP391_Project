@@ -33,6 +33,9 @@
         <button type="button" class="btn btn-primary" onclick="addMaterial()">Thêm Nguyên Liệu</button>
         <button type="submit" class="btn btn-success">Duyệt và Thêm Nguyên Liệu</button>
         <button type="button" class="btn btn-danger" onclick="rejectDesign()">Từ Chối Thiết Kế</button>
+
+        <!-- URL từ chối thiết kế động -->
+        <input type="hidden" id="rejectUrl" th:value="@{'/manager/designs/' + ${design.designId} + '/reject'}"/>
     </form>
 </div>
 
@@ -65,7 +68,18 @@
         if (confirm("Bạn có chắc chắn muốn từ chối thiết kế này không?")) {
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = /*[[@{'/manager/designs/' + ${design.designId} + '/reject'}]]*/ '';
+            form.action = document.getElementById('rejectUrl').value; // Lấy URL từ input ẩn `rejectUrl`
+
+            // Thêm CSRF token nếu cần (nếu bạn dùng Spring Security)
+            const csrfInput = document.querySelector("input[name='_csrf']");
+            if (csrfInput) {
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_csrf';
+                csrfToken.value = csrfInput.value;
+                form.appendChild(csrfToken);
+            }
+
             document.body.appendChild(form);
             form.submit();
         }

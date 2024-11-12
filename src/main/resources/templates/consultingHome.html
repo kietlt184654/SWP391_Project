@@ -3,20 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ Nhân Viên Tư Vấn</title>
+    <title>Consulting Staff Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        .alert-success {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h2>Trang Chủ Nhân Viên Tư Vấn</h2>
+    <h2>Consulting Staff Home</h2>
 
     <!-- Thông báo thành công -->
     <div th:if="${message}" class="alert alert-success" role="alert">
         <p th:text="${message}"></p>
     </div>
 
-    <!-- Nút thêm thiết kế -->
-    <a th:href="@{/HomeConsulting/add}" class="btn btn-primary">Thêm Thiết Kế Mới</a>
+    <!-- Nút thêm thiết kế mới -->
+    <a th:href="@{/HomeConsulting/add}" class="btn btn-primary">Add New Design</a>
+
+    <!-- Nút chuyển đến trang xem các thiết kế bị từ chối -->
+    <a th:href="@{/HomeConsulting/rejectedDesigns}" class="btn btn-danger">View Rejected Designs</a>
+
+    <!-- Nút chuyển đến trang chỉnh sửa blog -->
+    <a th:href="@{/blogs}" class="btn btn-info">Edit Blogs</a>
 
     <!-- Các nội dung khác của trang -->
 </div>

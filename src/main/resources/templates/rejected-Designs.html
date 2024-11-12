@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rejected Designs</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      margin-top: 50px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .table {
+      margin-top: 20px;
+      background-color: #fff;
+    }
+
+    .table th {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+    }
+
+    .table td, .table th {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .no-data {
+      text-align: center;
+      font-size: 18px;
+      color: #888;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Rejected Designs</h2>
+  <div th:if="${rejectedDesigns.size() == 0}" class="no-data">
+    No rejected designs available.
+  </div>
+  <table class="table table-bordered" th:if="${rejectedDesigns.size() > 0}">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Design Name</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="design : ${rejectedDesigns}">
+      <td th:text="${design.designId}">1</td>
+      <td th:text="${design.designName}">Design Name</td>
+      <td th:text="${design.description}">Description</td>
+      <td th:text="${design.status}">Rejected</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

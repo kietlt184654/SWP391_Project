@@ -25,14 +25,20 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    // Đường dẫn lưu trữ hình ảnh tuyệt đối
     private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task";
 
-    // Hiển thị danh sách blog
+    // Phương thức hiển thị danh sách blog cho Consulting Staff và khách hàng
     @GetMapping
-    public String listBlogs(Model model) {
+    public String listBlogs(Model model, HttpSession session) {
+        AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
         model.addAttribute("blogs", blogService.getAllBlogs());
-        return "blog-list";
+
+        // Kiểm tra AccountTypeID để hiển thị giao diện phù hợp
+        if (account != null && "Consulting Staff".equals(account.getAccountTypeID())) {
+            return "blog-list"; // Trang có nút chỉnh sửa cho Consulting Staff
+        } else {
+            return "customer-blog-list"; // Trang không có nút chỉnh sửa cho khách hàng
+        }
     }
 
     // Hiển thị form tạo blog mới
@@ -64,18 +70,16 @@ public class BlogController {
         String imagePath = null;
         try {
             if (!imageFile.isEmpty()) {
-                // Lưu ảnh vào đường dẫn tuyệt đối
                 Path path = Paths.get(UPLOAD_DIR, imageFile.getOriginalFilename());
                 Files.createDirectories(path.getParent());
                 Files.write(path, imageFile.getBytes());
 
-                // Đặt URL cho ảnh (URL truy cập công khai)
                 imagePath = "/uploads/" + imageFile.getOriginalFilename();
                 blog.setImageUrl(imagePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", "Lỗi khi tải lên hình ảnh.");
+            redirectAttributes.addFlashAttribute("message", "Error uploading image.");
             return "errorPage";
         }
 
@@ -92,5 +96,70 @@ public class BlogController {
         }
         model.addAttribute("blog", blog);
         return "view-blog";
+    }
+
+    // Hiển thị form chỉnh sửa blog cho Consulting Staff
+    @GetMapping("/{id}/edit")
+    public String showEditBlogForm(@PathVariable("id") int id, Model model, HttpSession session) {
+        AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
+
+        // Kiểm tra quyền hạn của tài khoản (chỉ cho phép accountTypeID là 'Consulting Staff' chỉnh sửa)
+        if (account == null || !"Consulting Staff".equals(account.getAccountTypeID())) {
+            return "redirect:/blogs"; // Khách hàng hoặc người dùng khác sẽ được chuyển hướng về trang danh sách blog
+        }
+
+        BlogEntity blog = blogService.getBlogById(id);
+        if (blog == null) {
+            return "errorPage";
+        }
+        model.addAttribute("blog", blog);
+        return "edit-blog";
+    }
+
+    // Xử lý cập nhật blog
+    @PostMapping("/{id}/edit")
+    public String updateBlog(
+            @PathVariable("id") int id,
+            @ModelAttribute BlogEntity blog,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
+
+        // Kiểm tra quyền hạn của tài khoản (chỉ cho phép accountTypeID là 'Consulting Staff' chỉnh sửa)
+        if (account == null || !"Consulting Staff".equals(account.getAccountTypeID())) {
+            return "redirect:/blogs";
+        }
+
+        BlogEntity existingBlog = blogService.getBlogById(id);
+        if (existingBlog == null) {
+            return "errorPage";
+        }
+
+        // Cập nhật các trường thông tin blog
+        existingBlog.setTitle(blog.getTitle());
+        existingBlog.setContent(blog.getContent());
+        existingBlog.setUpdatedAt(LocalDateTime.now());
+
+        // Xử lý upload ảnh mới nếu có
+        try {
+            if (!imageFile.isEmpty()) {
+                Path path = Paths.get(UPLOAD_DIR, imageFile.getOriginalFilename());
+                Files.createDirectories(path.getParent());
+                Files.write(path, imageFile.getBytes());
+
+                String imagePath = "/uploads/" + imageFile.getOriginalFilename();
+                existingBlog.setImageUrl(imagePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", "Error uploading image.");
+            return "errorPage";
+        }
+
+        blogService.saveBlog(existingBlog);
+        redirectAttributes.addFlashAttribute("message", "Blog updated successfully.");
+        return "redirect:/blogs";
     }
 }

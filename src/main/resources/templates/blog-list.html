@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>All Blogs</title>
+  <title>All Blogs - Consulting Staff</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <style>
     .container {
@@ -52,17 +52,11 @@
       border-radius: 5px;
       font-weight: bold;
     }
-    .create-blog-btn {
-      background-color: #28a745;
+    .edit-blog-btn {
+      background-color: #ffc107;
     }
-    .create-blog-btn:hover {
-      background-color: #218838;
-    }
-    .return-home-btn {
-      background-color: #007bff;
-    }
-    .return-home-btn:hover {
-      background-color: #0056b3;
+    .edit-blog-btn:hover {
+      background-color: #e0a800;
     }
     .blog-image {
       width: 100%;
@@ -75,13 +69,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>All Blogs</h1>
-
-  <!-- Buttons container for "Write a New Blog" and "Return to Homepage" -->
-  <div class="button-container">
-    <a th:href="@{/blogs/create}" class="btn-custom create-blog-btn">Write a New Blog</a>
-    <a th:href="@{/}" class="btn-custom return-home-btn">Return to Homepage</a>
-  </div>
+  <h1>All Blogs - Consulting Staff</h1>
 
   <!-- Blog list -->
   <ul class="blog-list">
@@ -97,6 +85,9 @@
 
       <!-- Blog image (optional) -->
       <img th:if="${blog.imageUrl != null}" th:src="${blog.imageUrl}" alt="Blog Image" class="blog-image">
+
+      <!-- Edit button -->
+      <a th:href="@{/blogs/{id}/edit(id=${blog.blogID})}" class="btn-custom edit-blog-btn">Edit</a>
     </li>
   </ul>
 </div>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/HomeConsulting")
 public class ConsultingController {
@@ -39,5 +41,11 @@ public class ConsultingController {
         return "consultingHome"; // Điều hướng về trang consultingHome
     }
 
-
+    // Phương thức hiển thị danh sách các thiết kế bị từ chối
+    @GetMapping("/rejectedDesigns")
+    public String getRejectedDesigns(Model model) {
+        List<DesignEntity> rejectedDesigns = designService.findByStatus(DesignEntity.Status.Rejected); // Lấy danh sách các thiết kế bị từ chối
+        model.addAttribute("rejectedDesigns", rejectedDesigns); // Đưa danh sách vào model
+        return "rejected-Designs"; // Trả về trang rejectedDesigns.html để hiển thị
+    }
 }
