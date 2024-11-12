@@ -214,6 +214,13 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
+    @Transactional
+    public void updateProjectStatus(Long projectId, String status) {
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
+        project.setStatus(status);
+        projectRepository.save(project);
+    }
 
 }

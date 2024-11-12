@@ -473,3 +473,51 @@ body {
     font-weight: bold;
     border-radius: 4px;
 }
+/* Combo Box Styling */
+.status-dropdown {
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.status-dropdown label {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.status-dropdown select {
+    padding: 8px 12px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.status-dropdown select:hover {
+    border-color: #888;
+}
+
+.status-dropdown select:focus {
+    border-color: #555;
+    box-shadow: 0 0 5px rgba(85, 85, 85, 0.5);
+}
+
+.status-dropdown select option {
+    padding: 10px;
+    color: #333;
+    background-color: #fff;
+}
+
+.status-dropdown select option:disabled {
+    color: #aaa;
+}
+
+.status-dropdown select option[selected] {
+    font-weight: bold;
+}

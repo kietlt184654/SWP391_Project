@@ -192,10 +192,11 @@ public class TaskController {
 
     @PostMapping("/deleteService/{id}")
     public String deleteStaffProject(@PathVariable("id") int staffProjectID,
-                                     @RequestParam("projectID") int projectID,
+                                     @RequestParam("projectID") Long projectID,
                                      RedirectAttributes redirectAttributes) {
         staffProjectService.deleteStaffProjectById(staffProjectID);
         redirectAttributes.addFlashAttribute("successMessageDeleteTask", "Task deleted successfully.");
         return "redirect:/projects/viewDetailProject/" + projectID;
     }
+
 }

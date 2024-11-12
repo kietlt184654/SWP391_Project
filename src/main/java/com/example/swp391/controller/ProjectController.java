@@ -53,17 +53,19 @@ private DesignService designService;
 
     @PostMapping("/updateProjectStatus")
     public String updateProjectStatus(
-            @RequestParam("projectID") Long projectID,
+            @RequestParam("projectId") Long projectId,
             @RequestParam("status") String status,
-            RedirectAttributes redirectAttributes
-    ) {
-        // Update the project status using the service
-        projectService.updateStatus(projectID, status);
+            RedirectAttributes redirectAttributes) {
 
-        // Add a success message for feedback
-        redirectAttributes.addFlashAttribute("successMessage", "Project status updated successfully.");
-        return "redirect:/projects/viewDetailProject/" + projectID;
+        try {
+            projectService.updateProjectStatus(projectId, status);
+            redirectAttributes.addFlashAttribute("successMessage", "Project status updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update project status.");
+        }
 
+        // Corrected redirect URL
+        return "redirect:/projects/viewDetailProject/" + projectId;
     }
 
 
