@@ -24,6 +24,11 @@ public class ConsultingController {
     @Autowired
     private TypeDesignService typeDesignService;
 
+    @GetMapping("")
+    public String homeConsulting(Model model) {
+        // Add any data you need for the HomeConsulting page to the model
+        return "consultingHome"; // This should match the name of your HTML file: HomeConsulting.html
+    }
     // Hiển thị form thêm thiết kế
     @GetMapping("/add")
     public String showAddDesignForm(Model model) {

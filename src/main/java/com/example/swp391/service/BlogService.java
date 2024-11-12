@@ -35,4 +35,14 @@ public class BlogService {
     public void deleteBlog(int blogID) {
         blogRepository.deleteById(blogID);
     }
+
+
+    public void deleteBlogById(int id) {
+        // Check if the blog exists before deleting
+        if (blogRepository.existsById(id)) {
+            blogRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Blog with ID " + id + " does not exist.");
+        }
+    }
 }

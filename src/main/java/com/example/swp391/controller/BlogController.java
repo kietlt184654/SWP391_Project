@@ -27,6 +27,7 @@ public class BlogController {
 
     private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task";
 
+
     // Phương thức hiển thị danh sách blog cho Consulting Staff và khách hàng
     @GetMapping
     public String listBlogs(Model model, HttpSession session) {
@@ -162,4 +163,12 @@ public class BlogController {
         redirectAttributes.addFlashAttribute("message", "Blog updated successfully.");
         return "redirect:/blogs";
     }
+
+    @GetMapping("/{id}/delete")
+    public String deleteBlog(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+        blogService.deleteBlogById(id); // Assume blogService has a method to delete by ID
+        redirectAttributes.addFlashAttribute("message", "Blog deleted successfully.");
+        return "redirect:/blogs";
+    }
+
 }
