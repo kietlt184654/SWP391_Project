@@ -257,6 +257,25 @@ h1 {
 #sidebar.show {
   left: 0;
 }
+/* Style for Log out button in sidebar */
+.sidebar-menu form button {
+  font-size: 16px;
+  color: #7a8a77;
+  background-color: transparent;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu form button:hover {
+  background-color: #3c7363;
+  color: white;
+}
 
 .sidebar-menu {
   list-style: none;

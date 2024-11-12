@@ -19,26 +19,25 @@
 <div class="wrapper">
   <nav class="nav" th:fragment="nav">
     <div class="nav-logo">
-      <p>LOGO</p>
+      <p>KoiPond</p>
     </div>
     <div class="nav-menu" id="navMenu">
       <ul>
-        <li><a href="#" class="link">Home</a></li>
-        <li><a href="#" class="link">About</a></li>
-        <li><a href="#" class="link">Blog</a></li>
-        <li><a href="#" class="link">Services</a></li>
-        <li><a href="#" class="link">Product</a></li>
+        <li><a th:href="@{/}" class="link">Home</a></li>
+        <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+        <li>
+            <a th:href="@{/design}" style="color: white; margin-left: 20px;">Services</a>
+        </li>
       </ul>
     </div>
     <div class="nav-button">
-      <a th:href="@{/login}"><button class="btn">Sign In</button></a>
-      <button class="btn white-btn">Sign Up</button>
+      <button class="btn white-btn">Sign In</button>
+      <a th:href="@{/register}"><button class="btn">Sign Up</button></a>
     </div>
     <div class="nav-menu-btn">
       <i class="bx bx-menu" onclick="myMenuFunction()"></i>
     </div>
   </nav>
-
   <!------------------- registration form -------------------------->
   <div class="form-box">
     <div class="register-container" id="register">

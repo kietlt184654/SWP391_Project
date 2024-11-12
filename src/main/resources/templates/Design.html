@@ -2,159 +2,170 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/Design.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="/css/Design.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
-    <body>
-        <div class="nav">
-            <!-- Hamburger button -->
-            <div class="nav-button">
-              <button id="menu-toggle" class="btn">&#9776;</button>
-            </div>
-      
-            <!-- Logo -->
-            <div class="nav-logo">
-              <p>KoiPond</p>
-            </div>
-      
-            <!-- Nav Menu -->
-            <div class="nav-menu" id="navMenu">
-              <ul>
-                <li><a href="#" class="link">Home</a></li>
-                <li><a href="#" class="link">About</a></li>
-                <li><a href="#" class="link">Blog</a></li>
-                <li><a href="#" class="link">Services</a></li>
-                <li><a href="#" class="link">Product</a></li>
-      
-                <!-- Cart -->
-                <li>
-                  <a href="#" class="icon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="notification-badge">0</span>
-                    
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="icon" id="accountIcon">
-                    <i class="fas fa-user-circle"></i>
-                    <span th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</span>
-                </li>
-              </ul>
+
+<body>
+  <div class="nav">
+    <!-- Hamburger button -->
+    <div class="nav-button">
+      <button id="menu-toggle" class="btn">&#9776;</button>
+    </div>
+
+    <!-- Logo -->
+    <div class="nav-logo">
+      <p>KoiPond</p>
+    </div>
+
+    <!-- Nav Menu -->
+    <div class="nav-menu" id="navMenu">
+      <ul>
+        <li><a th:href="@{/}" class="link">Home</a></li>
+        <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+        <li>
+          <a th:href="@{/design}" style="color: black;">Services</a>
+        </li>
+        <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+        <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+        <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+        <!-- Cart -->
+        <li>
+          <a href="#" class="icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="notification-badge">0</span>
+
+          </a>
+        </li>
+        <li>
+          <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+            <a th:href="@{/account/profile}" class="d-flex align-items-center">
+              <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                class="rounded-circle" width="40" height="40">
+              <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+      <a th:href="@{/account/profile}" class="d-flex align-items-center">
+        <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+          class="rounded-circle" width="40" height="40">
+        <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+      </a>
+    </div>
+    <ul class="sidebar-menu">
+      <li>
+        <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li>
+        <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+      </li>
+      <li>
+        <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+      </li>
+      <li>
+        <form th:action="@{/account/logout}" method="post" class="ms-3">
+          <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section" style="background-image: url('/img/koi_des.webp');">
+    <div class="hero-content text-center">
+      <h1 class="hero-title">SERVICES PAGE</h1>
+      <div class="row mt-4">
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card text-center hover-card">
+            <div class="card-body">
+              <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+              <h5 class="card-title">Available Projects</h5>
+              <p class="card-text">Browse and select from our pre-designed projects.</p>
+              <a th:href="@{/design/showAllDesign}" class="btn btn-primary">View Projects</a>
             </div>
           </div>
-      <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="user-info">
-          <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-          <p class="username">Username</p>
         </div>
-        <ul class="sidebar-menu">
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card text-center hover-card">
+            <div class="card-body">
+              <i class="bi bi-pencil" style="font-size: 2rem;"></i>
+              <h5 class="card-title">Custom Design</h5>
+              <p class="card-text">Create your own unique design by filling out our form.</p>
+              <a th:href="@{/designService}" class="btn btn-secondary">Start Custom Design</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card text-center hover-card">
+            <div class="card-body">
+              <i class="bi bi-tools" style="font-size: 2rem;"></i>
+              <h5 class="card-title">Maintenance Services</h5>
+              <p class="card-text">Keep your koi pond in top condition with our maintenance services.</p>
+              <a th:href="@{/services/serviceForm}" class="btn btn-success">View Maintenance Services</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-container">
+      <div class="footer-info">
+        <h4>Information</h4>
+        <p>Open: 8 AM - 10 PM</p>
+        <p>
+          PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+          Minh
+        </p>
+      </div>
+      <div class="footer-services">
+        <h4>Services</h4>
+        <ul>
           <li>
-            <a href="#"><i class="fas fa-home"></i> Home</a>
+            <a th:href="@{/design/showAllDesign}" class="service-item">Construction Koi pond</a>
           </li>
           <li>
-            <a href="#"><i class="fas fa-history"></i> History Order</a>
+            <a th:href="@{/services/serviceForm}" class="service-item">Cleaning and maintenance</a>
           </li>
           <li>
-            <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-          </li>
-          <li>
-            <a href="#"><i class="fas fa-cog"></i> Settings</a>
-          </li>
-          <li>
-            <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+            <a th:href="@{/designService}" class="service-item">Design upon requirements</a>
           </li>
         </ul>
       </div>
-
-    <!-- Hero Section -->
-    <div class="hero-section" style="background-image: url('/src/main/resources/static/img/koi_des.webp');">
-        <div class="hero-content text-center">
-            <h1 class="hero-title">SERVICES PAGE</h1>
-            <div class="row mt-4">
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card text-center hover-card">
-                        <div class="card-body">
-                            <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
-                            <h5 class="card-title">Available Projects</h5>
-                            <p class="card-text">Browse and select from our pre-designed projects.</p>
-                            <a th:href="@{/design/showAllDesign}" class="btn btn-primary">View Projects</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card text-center hover-card">
-                        <div class="card-body">
-                            <i class="bi bi-pencil" style="font-size: 2rem;"></i>
-                            <h5 class="card-title">Custom Design</h5>
-                            <p class="card-text">Create your own unique design by filling out our form.</p>
-                            <a th:href="@{/designService}" class="btn btn-secondary">Start Custom Design</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="card text-center hover-card">
-                        <div class="card-body">
-                            <i class="bi bi-tools" style="font-size: 2rem;"></i>
-                            <h5 class="card-title">Maintenance Services</h5>
-                            <p class="card-text">Keep your koi pond in top condition with our maintenance services.</p>
-                            <a th:href="@{/serviceForm}" class="btn btn-success">View Maintenance Services</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+        <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+        <p>
+          <i class="fa-brands fa-facebook"></i>
+          <a href="https://facebook.com" target="_blank">Visit Us</a>
+        </p>
+      </div>
     </div>
-
-    <div class="footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <h4>Information</h4>
-                <p>Open: 8 AM - 10 PM</p>
-                <p>
-                    PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-                    Minh
-                </p>
-            </div>
-            <div class="footer-services">
-                <h4>Services</h4>
-                <ul>
-                    <li>
-                        <a href="link-to-construction" class="service-item">Construction Koi pond</a>
-                    </li>
-                    <li>
-                        <a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a>
-                    </li>
-                    <li>
-                        <a href="link-to-design" class="service-item">Design upon requirements</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact</h4>
-                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-                <p>
-                    <i class="fa-brands fa-facebook"></i>
-                    <a href="https://facebook.com" target="_blank">Visit Us</a>
-                </p>
-            </div>
-        </div>
-    </div>
+  </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <script src="/javascript/Services.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="/javascript/Services.js"></script>
 
-    </body>
+</body>
 
 </html>

@@ -3,7 +3,7 @@
 
 <head>
   <title>Material History</title>
-  <link rel="stylesheet" href="/src/main/resources/static/css/MaterialHistory.css" />
+  <link rel="stylesheet" href="/css/MaterialHistory.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,81 +12,50 @@
 <body>
   <div class="sidebar close">
     <div class="logo-details">
-      <i class='bx bxs-ship'></i>
-      <span class="logo_name">KoiPond</span>
+        <i class='bx bxs-ship'></i>
+        <span class="logo_name">KoiPond</span>
     </div>
     <ul class="nav-links">
-      <li>
-        <a href="#">
-          <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Dashboard</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Dashboard</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-user'></i>
-            <span class="link_name">Customer Management</span>
-          </a>
+        <li>
+            <div class="iocn-link">
+                <a th:href="@{/account/customers}">
+                    <i class='bx bx-user'></i>
+                    <span class="link_name">Customer Management</span>
+                </a>
 
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Customer Management</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-folder'></i>
-            <span class="link_name">Project Management</span>
-          </a>
-          <!-- <i class='bx bxs-chevron-down arrow'></i> -->
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Project Management</a></li>
-
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-group'></i>
-            <span class="link_name">Staff Management</span>
-          </a>
-          <!-- <i class='bx bxs-chevron-down arrow'></i> -->
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Staff Management</a></li>
-
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-check-circle'></i>
-          <span class="link_name">Design Approval</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Design Approval</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-cube'></i>
-            <span class="link_name">Material Management</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow'></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Material Management</a></li>
-          <li><a th:href="@{/materials/list}">Material List</a></li>
-          <li><a th:href="@{/materials/history}">Material History</a></li>
-          <li><a th:href="@{/materials/historyofchanging}">Material Updated List</a></li>
-        </ul>
-      </li>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Customer Management</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a th:href="@{/projects/showProjects}">
+                    <i class='bx bx-folder'></i>
+                    <span class="link_name">Project Management</span>
+                </a>
+                <!-- <i class='bx bxs-chevron-down arrow'></i> -->
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Project Management</a></li>
+               
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-cube'></i>
+                    <span class="link_name">Material Management</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Material Management</a></li>
+                <li><a th:href="@{/materials/list}">Material List</a></li>
+                <li><a th:href="@{/materials/history}">Material History</a></li>
+                <li><a th:href="@{/materials/historyofchanging}">Material Updated List</a></li>
+            </ul>
+        </li>
       <div class="profile-details">
         <div class="profile-content">
           <!--<img src="image/profile.jpg" alt="profileImg">-->
@@ -133,7 +102,7 @@
       </tr>
     </table>
   </section>
-    <script src="/src/main/resources/static/javascript/MaterialManagement.js"></script>
+    <script src="/javascript/MaterialManagement.js"></script>
 </body>
 
 </html>
