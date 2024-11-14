@@ -18,17 +18,17 @@
     <div class="nav-logo">
         <p>KoiPond</p>
     </div>
+    <!-- Nav Menu -->
     <div class="nav-menu" id="navMenu">
         <ul>
             <li><a th:href="@{/}" class="link">Home</a></li>
             <li><a th:href="@{/blogs}" class="link">Blog</a></li>
-            <li>
-                <a th:href="@{/design}" style="color: black;">Services</a>
-            </li>
-            <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
-            <li><a th:href="@{customer/customer-projects}" class="link">Project</a></li>
-            <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+            <li><a th:href="@{/design}" style="color: black;">Services</a></li>
 
+            <!-- Display these links only if the user is logged in -->
+            <li><a th:href="@{/customer/dashboard}" class="link">Customer Dashboard</a></li>
+            <li> <a th:href="@{customer/customer-projects}" class="link">Project</a></li>
+            <li> <a th:href="@{/account/customer/completed-projects}" class="link">History</a></li>
         </ul>
     </div>
     <div class="nav-button">

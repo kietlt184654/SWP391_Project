@@ -8,57 +8,84 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/css/Payment.css">
     <title>Service Payment</title>
 </head>
 <body>
 
 <!-- HEADER -->
-<div class="nav">
-    <!-- User Login Info -->
+<<div class="nav">
+    <!-- Hamburger button -->
     <div class="nav-button">
-        <div th:if="${session.loggedInUser == null}">
-            <form th:action="@{/login}" method="GET" style="display: inline;">
-                <button class="btn white-btn" id="loginBtn">Login</button>
-            </form>
-            <form th:action="@{/register}" method="GET" style="display: inline;">
-                <button class="btn" id="registerBtn">Sign Up</button>
-            </form>
-        </div>
-
-        <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-            <a th:href="@{/account/profile}" class="d-flex align-items-center">
-                <img th:src="@{${session.loggedInUser.images} ?: '/img/defaultAva.jpg'}"
-                     alt="User Avatar"
-                     class="rounded-circle"
-                     width="40"
-                     height="40">
-                <span class="ms-2" th:text="${session.loggedInUser.accountName}">AccountName</span>
-            </a>
-            <form th:action="@{/account/logout}" method="post" class="ms-3">
-                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-            </form>
-        </div>
+        <button id="menu-toggle" class="btn">&#9776;</button>
     </div>
 
     <!-- Logo -->
     <div class="nav-logo">
-        <p>LOGO</p>
+        <p>KoiPond</p>
     </div>
+
+    <!-- Nav Menu -->
+    <div class="nav-menu" id="navMenu">
+        <ul>
+            <li><a th:href="@{/}" class="link">Home</a></li>
+            <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+            <li>
+                <a th:href="@{/design}" style="color: black;">Services</a>
+            </li>
+            <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+            <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+            <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+            <!-- Cart -->
+            <li>
+                <a href="#" class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="notification-badge">0</span>
+
+                </a>
+            </li>
+            <li>
+                <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+                    <a th:href="@{/account/profile}" class="d-flex align-items-center">
+                        <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                             class="rounded-circle" width="40" height="40">
+                        <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+        <a th:href="@{/account/profile}" class="d-flex align-items-center">
+            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                 class="rounded-circle" width="40" height="40">
+            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+        </a>
+    </div>
+    <ul class="sidebar-menu">
+        <li>
+            <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li>
+            <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+        </li>
+        <li>
+            <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
+        <li>
+            <form th:action="@{/account/logout}" method="post" class="ms-3">
+                <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+            </form>
+        </li>
+    </ul>
 </div>
 
 <!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-content">
-        <img src="/img/project_payment.jpg" alt="Service Payment" />
-        <h1>Service Payment</h1>
-        <ol class="breadcrumb">
-            <li><a href="/homepage.html">Home</a></li>
-            <li><a href="/services.html">Services</a></li>
-            <li class="active">Service Payment</li>
-        </ol>
-    </div>
-</section>
-
 <!-- Selected Services Section -->
 <div class="container">
     <div class="selected-project">
@@ -77,7 +104,7 @@
                 <td th:text="${design.designId}">Service ID</td>
                 <td th:text="${design.designName}">Service Name</td>
                 <td th:text="${design.description}">Description</td>
-                <td th:text="${#numbers.formatDecimal(design.price, 1, 2)}">Cost</td>
+                <td th:text="${design.formattedPrice}">Cost</td>
             </tr>
             </tbody>
         </table>
@@ -121,6 +148,6 @@
         </div>
     </div>
 </div>
-
+<script src="/javascript/Services.js"></script>
 </body>
 </html>

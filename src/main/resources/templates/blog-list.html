@@ -58,6 +58,18 @@
     .edit-blog-btn:hover {
       background-color: #e0a800;
     }
+    .delete-blog-btn {
+      background-color: #dc3545;
+    }
+    .delete-blog-btn:hover {
+      background-color: #c82333;
+    }
+    .back-home-btn {
+      background-color: #007bff;
+    }
+    .back-home-btn:hover {
+      background-color: #0056b3;
+    }
     .blog-image {
       width: 100%;
       max-width: 300px;
@@ -70,6 +82,11 @@
 <body>
 <div class="container">
   <h1>All Blogs - Consulting Staff</h1>
+
+  <!-- Back to Home Button -->
+  <div class="button-container">
+    <a th:href="@{/HomeConsulting}" class="btn-custom back-home-btn">Back to HomeConsulting</a>
+  </div>
 
   <!-- Blog list -->
   <ul class="blog-list">
@@ -86,8 +103,13 @@
       <!-- Blog image (optional) -->
       <img th:if="${blog.imageUrl != null}" th:src="${blog.imageUrl}" alt="Blog Image" class="blog-image">
 
-      <!-- Edit button -->
-      <a th:href="@{/blogs/{id}/edit(id=${blog.blogID})}" class="btn-custom edit-blog-btn">Edit</a>
+      <!-- Edit and Delete buttons -->
+      <div class="button-container">
+        <a th:href="@{/blogs/{id}/edit(id=${blog.blogID})}" class="btn-custom edit-blog-btn">Edit</a>
+        <a th:href="@{/blogs/{id}/delete(id=${blog.blogID})}"
+           class="btn-custom delete-blog-btn"
+           onclick="return confirm('Are you sure you want to delete this blog?');">Delete</a>
+      </div>
     </li>
   </ul>
 </div>

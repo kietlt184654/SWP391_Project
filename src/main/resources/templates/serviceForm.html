@@ -1,81 +1,99 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <title>Service Request Form</title>
-  <style>
-    /* Đặt kiểu cho body */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  />
 
-    /* Kiểu cho tiêu đề */
-    h1 {
-      text-align: center;
-      color: #333;
-    }
+  <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+  />
 
-    /* Định dạng cho form */
-    form {
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      max-width: 400px;
-      width: 100%;
-      margin: 0 auto;
-    }
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="/javascript/designService.js" defer></script>
 
-    /* Kiểu cho label */
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-      font-weight: bold;
-    }
 
-    /* Kiểu cho các input và select */
-    input[type="number"],
-    select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
 
-    /* Kiểu cho button */
-    button[type="submit"] {
-      width: 100%;
-      padding: 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    /* Hiệu ứng hover cho button */
-    button[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/serviceForm.css">
+  <title>Service Form</title>
 </head>
 <body>
-<h1>Service Request Form</h1>
-<form action="#" th:action="@{/services/submitServiceForm}" th:object="${serviceRequest}" method="post">
+<!-------------------- HEADER-------------------->
+<div class="nav">
+  <!-- Hamburger button -->
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
+
+  <!-- Logo -->
+  <div class="nav-logo">
+    <p>KoiPond</p>
+  </div>
+
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li>
+        <a th:href="@{/design}" style="color: black;">Services</a>
+      </li>
+      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+      <li><a th:href="@{customer/customer-projects}" class="link">Project</a></li>
+      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+      <!-- Cart -->
+      <li>
+        <a href="#" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge">0</span>
+
+        </a>
+      </li>
+      <li>
+        <a href="#" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i>
+          <span th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</span>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<!--  content -->
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <img src="/img/koi_des.webp" />
+    <img th:src="@{/img/koi_des.webp}" />
+    <h1>Service Request Form</h1>
+    <ol class="breadcrumb">
+      <li><a th:href="@{/Homepage}">Home</a></li>
+      <li><a th:href="@{/Design}">Services</a></li>
+      <li class="active">Service Form</li>
+    </ol>
+  </div>
+</section>
+
+<form
+        action="#"
+        th:action="@{/services/submitServiceForm}"
+        th:object="${serviceRequest}"
+        method="post"
+>
   <label for="serviceType">Select Service Type:</label>
   <select id="serviceType" name="serviceType" th:field="*{serviceType}">
-    <option value="Maintenance">Bảo Dưỡng</option>
-    <option value="Cleaning">Vệ Sinh</option>
+    <option value="Maintenance">Maintenance</option>
+    <option value="Cleaning">Cleaning</option>
   </select>
 
   <label for="size">Select Size:</label>
@@ -86,12 +104,98 @@
   </select>
 
   <label for="budget">Budget:</label>
-  <input type="number" id="budget" th:field="*{budget}" placeholder="Enter your budget">
+  <input
+          type="number"
+          id="budget"
+          th:field="*{budget}"
+          placeholder="Enter your budget"
+  />
 
   <label for="completionTime">Estimated Completion Time (days):</label>
-  <input type="number" id="completionTime" th:field="*{estimatedCompletionTime}" placeholder="Completion time in days">
+  <input
+          type="number"
+          id="completionTime"
+          th:field="*{estimatedCompletionTime}"
+          placeholder="Completion time in days"
+  />
 
   <button type="submit">Submit</button>
 </form>
+<!-- ---------------------------------------------------------------------------------------------------------- -->
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="user-info">
+    <img th:src="@{/avatar.png}" alt="User Avatar" class="user-avatar" />
+    <p class="username" th:text="${username}">Username</p>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a th:href="@{/Homepage}"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a th:href="@{/historyOrder}"
+      ><i class="fas fa-history"></i> View Order</a
+      >
+    </li>
+    <li>
+      <a th:href="@{/serviceOrder}"
+      ><i class="fas fa-cog"></i> View Service Order</a
+      >
+    </li>
+    <li>
+      <a th:href="@{/profile}"
+      ><i class="fas fa-user-circle"></i> Profile</a
+      >
+    </li>
+    <li>
+      <a th:href="@{/logout}"
+      ><i class="fas fa-sign-out-alt"></i> Log Out</a
+      >
+    </li>
+  </ul>
+</div>
+
+<!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+        Minh
+      </p>
+    </div>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li>
+          <a th:href="@{/construction}" class="service-item"
+          >Construction Koi pond</a
+          >
+        </li>
+        <li>
+          <a th:href="@{/cleaning}" class="service-item"
+          >Cleaning and maintenance</a
+          >
+        </li>
+        <li>
+          <a th:href="@{/design}" class="service-item"
+          >Design upon requirements</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com">Visit Us</a>
+      </p>
+    </div>
+  </div>
+</div>
 </body>
 </html>

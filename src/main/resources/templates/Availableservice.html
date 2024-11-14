@@ -115,7 +115,7 @@
                 <td th:text="${design.designName}"></td>
                 <td th:text="${design.typeDesign.typeDesignName}"></td>
                 <td th:text="${design.size}"></td>
-                <td th:text="${design.price}"></td>
+                <td th:text="${design.formattedPrice}  + ' VND'"> </td>
                 <td th:text="${design.estimatedCompletionTime} + ' days'"></td>
             </tr>
         </table>

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Entity
@@ -71,5 +72,8 @@ public class DesignEntity {
     }
     @Column(name = "CustomerReference")
     private Long customerReference;
-
+    public String getFormattedPrice() {
+            DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(this.price).replace(",", ".");
+    }
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -17,15 +18,6 @@
     <span class="logo_name">KoiPond</span>
   </div>
   <ul class="nav-links">
-    <li>
-      <a href="#">
-        <i class='bx bx-grid-alt'></i>
-        <span class="link_name">Dashboard</span>
-      </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name" href="#">Dashboard</a></li>
-      </ul>
-    </li>
     <li>
       <div class="iocn-link">
         <a th:href="@{/account/customers}">
@@ -49,28 +41,6 @@
       <ul class="sub-menu">
         <li><a class="link_name" href="#">Project Management</a></li>
 
-      </ul>
-    </li>
-    <li>
-      <div class="iocn-link">
-        <a th:href="@{/staff}">
-          <i class='bx bx-group'></i>
-          <span class="link_name">Staff Management</span>
-        </a>
-        <!-- <i class='bx bxs-chevron-down arrow'></i> -->
-      </div>
-      <ul class="sub-menu">
-        <li><a class="link_name" href="#">Staff Management</a></li>
-
-      </ul>
-    </li>
-    <li>
-      <a th:href="@{/manager/design/approval}">
-        <i class='bx bx-check-circle'></i>
-        <span class="link_name">Design Approval</span>
-      </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name" href="#">Design Approval</a></li>
       </ul>
     </li>
     <li>
@@ -142,7 +112,8 @@
       <td th:text="${material.stockQuantity}"></td>
       <td th:text="${material.unit}"></td>
       <td>
-        <form th:action="@{/materials/{materialId}/update-quantity(materialId=${material.materialId})}" method="post">
+        <form th:action="@{/materials/{materialId}/update-quantity(materialId=${material.materialId})}"
+              method="post">
           <label>Quantity change:</label>
           <input type="number" name="quantityChange" required>
           <label>Reson change:</label>
@@ -151,7 +122,8 @@
         </form>
       </td>
       <td>
-        <form th:action="@{/materials/{materialId}/delete(materialId=${material.materialId})}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+        <form th:action="@{/materials/{materialId}/delete(materialId=${material.materialId})}" method="post"
+              onsubmit="return confirm('Are you sure you want to delete this?');">
           <button type="submit" class="btn-delete"><i class="bi bi-trash"></i></button>
         </form>
       </td>

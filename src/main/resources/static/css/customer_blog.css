@@ -1,31 +1,134 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+/* General Container */
 .container {
+    max-width: 800px;
+    margin-top: 100px;
     padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.product-card {
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    padding: 15px;
+/* Header */
+h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3c7363;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     text-align: center;
-    background-color: white;
-    transition: box-shadow 0.3s;
+    margin-top: 55px;
 }
-.product-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
-.card-img-top{
-    width: 90%;
-    height: 70%;
-    margin: 0 auto;
-    border-radius: 40px;
-    background-color: #f0f0f0;
-    margin-top: 20.5px;
+
+/* Return Home Button */
+.btn-custom.return-home-btn {
+    background-color: #3c7363;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+
+
+/* Add New Blog Button */
+.btn.btn-primary {
+    background-color: #3c7363;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+
+
+/* Blog List */
+.blog-list {
+    list-style: none;
+    padding: 0;
+}
+
+.blog-list li {
+    border-bottom: 1px solid #e9ecef;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+/* Blog Title */
+.blog-title {
+    font-size: 1.5em;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.blog-title:hover {
+    color: #0056b3;
+}
+
+/* Customer Name */
+.customer-name {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+/* Blog Excerpt */
+.blog-excerpt {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Blog Image */
+.blog-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .blog-title {
+        font-size: 1.3em;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-custom.return-home-btn,
+    .btn.btn-primary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
 /* Navbar */
 .nav {
@@ -113,6 +216,25 @@ body {
 
 #sidebar.show {
     left: 0;
+}
+/* Style for Log out button in sidebar */
+.sidebar-menu form button {
+    font-size: 16px;
+    color: #7a8a77;
+    background-color: transparent;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu form button:hover {
+    background-color: #3c7363;
+    color: white;
 }
 
 .sidebar-menu {
@@ -236,51 +358,4 @@ body {
 }
 .footer-container h4 {
     text-decoration: underline;
-}
-
-/* Header Styles */
-h1 {
-    text-align: center;
-    margin-top: 120px;
-    background: linear-gradient(90deg, #3c7363, #2a5b4d); /* Gradient background */
-    color: white;
-    border-radius: 10px; /* Rounded corners */
-    padding: 20px; /* Add padding */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    font-size: 2.5rem; /* Increase font size */
-    letter-spacing: 1px; /* Add letter spacing */
-}
-
-/* Search Bar Styles */
-.search-container {
-    display: flex;
-    justify-content: center; /* Center the search bar */
-    margin: 20px 0; /* Add margin */
-}
-
-.search-container input[type="text"] {
-    width: 300px; /* Fixed width */
-    padding: 10px; /* Padding for input */
-    border: 1px solid #ced4da; /* Border color */
-    border-radius: 20px; /* Rounded corners */
-    transition: width 0.4s ease, box-shadow 0.3s; /* Smooth transition */
-}
-
-.search-container input[type="text"]:focus {
-    outline: none; /* Remove outline */
-    width: 350px; /* Expand width on focus */
-    box-shadow: 0 0 5px rgba(60, 115, 99, 0.5); /* Shadow on focus */
-}
-
-.search-container a {
-    display: flex; /* Center the icon */
-    align-items: center; /* Center vertically */
-    margin-left: -40px; /* Adjust position */
-    color: #3c7363; /* Icon color */
-    font-size: 1.5rem; /* Icon size */
-    transition: color 0.3s; /* Smooth color transition */
-}
-
-.search-container a:hover {
-    color: #2a5b4d; /* Change color on hover */
 }

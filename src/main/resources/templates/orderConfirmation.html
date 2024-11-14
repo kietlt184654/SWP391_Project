@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,8 +9,9 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" th:href="@{/css/serviceForm.css}">
-  <script src="/javascript/designService.js" defer></script>
+
+  <link rel="stylesheet" href="/css/orderConfirm.css">
+
 </head>
 <body>
 <!-- Header -->
@@ -23,20 +24,31 @@
   </div>
   <div class="nav-menu" id="navMenu">
     <ul>
-      <li><a href="/Homepage" class="link">Home</a></li>
-      <li><a href="/About" class="link">About</a></li>
-      <li><a href="/Blog" class="link">Blog</a></li>
-      <li><a href="/Design" class="link">Services</a></li>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li><a th:href="@{/design}">Services</a></li>
+
+      <!-- Cart -->
       <li>
         <a href="#" class="icon">
           <i class="fas fa-shopping-cart"></i>
           <span class="notification-badge">0</span>
         </a>
       </li>
-      <li>
-        <a href="#" class="icon" id="accountIcon">
-          <i class="fas fa-user-circle"></i>Username
+
+      <!-- Conditional Account Menu -->
+      <li th:if="${session.loggedInUser == null}">
+        <a href="/login" class="btn btn-primary">Login</a>
+        <a href="/register" class="btn btn-secondary">Sign Up</a>
+      </li>
+      <li th:if="${session.loggedInUser != null}">
+        <a href="/account/profile" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i>
+          <span th:text="${session.loggedInUser.accountName}">Username</span>
         </a>
+        <form th:action="@{/account/logout}" method="post" style="display: inline;">
+          <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+        </form>
       </li>
     </ul>
   </div>
@@ -54,6 +66,17 @@
   </div>
 
   <!-- Main Content -->
+  <div class="container">
+    <div class="order-details">
+      <h2>Order Details</h2>
+      <p><strong>Transaction ID:</strong> <span id="transactionId" th:text="${transactionId}">#123456</span></p>
+      <p><strong>Original Total:</strong> <span id="totalAmount" th:text="${totalAmount}"></span> VND</p>
+      <p><strong>Discount Rate:</strong> <span id="discountRate" th:text="${discountRate}"></span>%</p>
+      <p><strong>Discount Amount:</strong> <span id="discountAmount" th:text="${discountAmount}"></span> VND</p>
+      <p><strong>Total after Discount:</strong> <span id="discountedTotalAmount" th:text="${discountedTotalAmount}"></span> VND</p>
+      <p><strong>Points Earned:</strong> <span id="pointsEarned" th:text="${pointsEarned}"></span> points</p>
+      <p><strong>Payment Status:</strong> <span id="paymentStatus" th:text="${paymentStatus}">Pending</span></p>
+    </div>
   <div class="row">
     <!-- Left Column - Order Information -->
     <div class="col-md-6 order-info">
@@ -62,10 +85,9 @@
       <p><strong>Name:</strong> John Doe</p>
       <p><strong>Phone Number:</strong> 0987654321</p>
       <p><strong>Email:</strong> mngen0138@gmail.com</p>
-      <p><strong>Address:</strong> 123 Main Street, Suite 4B, City, Country</p>
-      <div class="continue-shopping">
-        <a href="/Availableproject" class="btn btn-primary">Continue Shopping</a>
-      </div>
+      <p><strong>Address:</strong> 123 Main Street, Suite 4B, City, Country</p><div class="continue-shopping">
+      <a href="/design/showAllDesign" class="btn btn-primary">Continue Shopping</a>
+    </div>
     </div>
 
     <!-- Right Column - Order Summary -->
@@ -128,5 +150,7 @@
     </div>
   </div>
 </div>
+</div>
 </body>
+
 </html>

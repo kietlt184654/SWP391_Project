@@ -7,13 +7,12 @@
 
 body {
   margin-top: 20px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 150vh;
   flex-direction: column;
-  background: #f3f6f9;
+  background: white;
 }
 
 /* Navbar */
@@ -22,8 +21,8 @@ body {
   top: 0;
   width: 100%;
   height: 60px;
-  background: #3c7363;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -36,11 +35,12 @@ body {
   justify-content: center;
 }
 .nav-logo p {
-  color: white;
+  color: #000000;
   font-size: 18px;
   font-weight: 600;
   margin-right: 100px;
   margin-left: 100px;
+  margin-top: 10px;
 }
 
 .nav-menu ul {
@@ -49,6 +49,7 @@ body {
   position: relative;
   align-content: center;
   margin-right: 100px;
+  margin-top: 10px;
 }
 
 .nav-menu ul li {
@@ -59,7 +60,7 @@ body {
 
 .nav-menu ul li a {
   text-decoration: none;
-  color: white;
+  color: #000000;
   font-weight: 500;
   font-size: 16px;
   padding: 8px;
@@ -103,48 +104,6 @@ body {
   padding: 3px 6px;
   font-size: 12px;
   font-weight: bold;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  transform: translateX(-99%);
-
-  background: #3c7363;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  margin-top: -15px;
-  overflow: hidden;
-}
-
-.nav-menu li:hover .dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu li {
-  padding: 4px;
-}
-
-.dropdown-menu li a {
-  text-decoration: none;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.dropdown-menu li a i {
-  margin-right: 6px;
-  font-size: 6px;
-}
-
-.dropdown-menu li a:hover {
-  background-color: white;
-  color: #3c7363;
 }
 
 /* Sidebar */
@@ -218,7 +177,7 @@ body {
 .nav-button .btn {
   font-size: 24px;
   background: none;
-  color: white;
+  color: #000000;
   border: none;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -226,7 +185,7 @@ body {
 }
 
 .nav-button .btn:hover {
-  color: #f4f4f4;
+  color: #262626;
 }
 
 /* -----------------------------BODY-----------------------------*/
@@ -253,13 +212,14 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
+  margin-top: 30px;
 }
 
 .hero-content img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.7);
+  filter: brightness(0.5);
 }
 
 .hero-content h1 {
@@ -271,50 +231,61 @@ body {
   font-size: 48px;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.introduction-header {
-  background-color: #3c7363;
-  color: white;
-  padding: 10px 20px;
-  margin-right: 20px;
-  width: 500px;
-  box-sizing: border-box;
-  transition-timing-function: ease-in-out;
-  transition: width 2s;
-}
-.introduction-header:hover {
-  width: 300px;
-}
-#div1 {
-  transition-timing-function: ease-in-out;
+  z-index: 2;
 }
 
 .intro-wrapper {
   display: flex;
   align-items: center;
-  background-color: #3c7363;
-  padding: 10px 10px;
-  margin-top: 10px;
+  /* background-color: #8ea58c; */
+  padding: 5px 5px;
+  margin-top: 20px;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .intro-image img {
-  width: 550px;
-  height: 350px;
+  width: 220px;
+  height: 320px;
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease-in-out;
 }
-.intro-text {
+.third-image img {
+  width: 220px;
+  height: 320px;
+  margin-left: -50px;
+  animation: fadeIn 1s ease-in-out;
+}
+.intro-text p {
+  margin-left: -90px;
   padding-left: 30px;
-  color: white;
-  font-size: 15px;
+  color: #161e10;
+  font-size: 18px;
+  animation: fadeIn 1.5s ease-in-out;
+  animation-delay: 0.5s;
+}
+.intro-text h2 {
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-in-out;
 }
 
 /* overview */
 .overview-header {
-  color: #3c7363;
+  color: #000000;
   text-align: center;
   margin-top: 80px;
   font-weight: bold;
-  box-shadow: 0 3px #3c7363;
+  box-shadow: 0 3px #000000;
   width: 100px;
   justify-content: space-between;
   text-decoration: none;
@@ -323,40 +294,45 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  animation: fadeIn 1s ease-in-out;
 }
 .overview-image img {
   width: 350px;
 }
 
 /* second content */
-
 .second-wrapper {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: #3c7363;
-  padding: 10px 10px;
+  padding: 30px;
   margin-top: 80px;
+  padding: 0 0;
 }
 
 .second-image img {
-  width: 550px;
-  height: 350px;
+  width: 350px;
+  height: 450px;
+  object-fit: cover;
 }
+
 .second-header {
+  font-size: 30px;
   margin-bottom: 50px;
 }
 .second-text {
-  padding-left: 30px;
+  margin-right: 150px;
   color: white;
-  font-size: 15px;
-  line-height: 60px;
-  margin-bottom: 30px;
+  font-size: 18px;
+  line-height: 30px;
+  margin-bottom: 20px;
 }
+
 /* Process of service */
 .timeline {
   position: relative;
-  margin-top: 50px;
-  margin-right: 90px;
+  margin: 40px 0;
   padding-left: 40px;
   border-left: 4px solid #d0d0d0;
 }
@@ -432,9 +408,39 @@ body {
 #div1 {
   transition-timing-function: ease-in-out;
 }
+.messenger-button-wrapper {
+  text-align: center; /* Center the button */
+  margin-top: 20px; /* Add space above the button */
+}
+
+#messenger-button {
+  background: linear-gradient(135deg, #0078FF, #00B4FF); /* Gradient background */
+  color: #fff; /* White text color */
+  border: none; /* Remove default border */
+  padding: 12px 24px; /* Add padding */
+  font-size: 18px; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  border-radius: 30px; /* Rounded corners */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+  cursor: pointer; /* Pointer on hover */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect */
+#messenger-button:hover {
+  background: linear-gradient(135deg, #005BB5, #0078FF); /* Darker gradient on hover */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Increase shadow */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Optional: focus effect */
+#messenger-button:focus {
+  outline: none;
+  box-shadow: 0px 0px 8px 3px rgba(0, 120, 255, 0.4); /* Glow effect on focus */
+}
 /* -----------------------------FOOTER-----------------------------*/
 .footer {
-  background-color: #3c7363;
+  background-color: #000000;
   padding: 20px;
   border-top: 1px solid #ccc;
   width: 100%;
@@ -491,51 +497,4 @@ body {
 }
 .footer-container h4 {
   text-decoration: underline;
-}
-
-#messenger-button {
-  font-size: 24px;
-  padding: 15px 30px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: pulse 1.5s infinite, glow 1.5s infinite; /* Nhấp nháy và phát sáng */
-}
-
-/* Hiệu ứng khi di chuột */
-#messenger-button:hover {
-  background-color: #0056b3;
-  box-shadow: 0 6px 20px rgba(0, 86, 179, 0.8);
-  transform: scale(1.1);
-}
-
-/* Hiệu ứng khi nhấn nút */
-#messenger-button:active {
-  background-color: #004080;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transform: scale(0.98);
-}
-
-/* Vùng bọc nút */
-.messenger-button-wrapper {
-  text-align: center;
-  margin-top: 40px;
-}
-
-/* Hiệu ứng nhấp nháy nhẹ (pulse) */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-/* Hiệu ứng phát sáng (glow) */
-@keyframes glow {
-  0% { box-shadow: 0 0 10px rgba(0, 123, 255, 0.6), 0 0 20px rgba(0, 123, 255, 0.6), 0 0 30px rgba(0, 123, 255, 0.6); }
-  50% { box-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 30px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 123, 255, 0.8); }
-  100% { box-shadow: 0 0 10px rgba(0, 123, 255, 0.6), 0 0 20px rgba(0, 123, 255, 0.6), 0 0 30px rgba(0, 123, 255, 0.6); }
 }

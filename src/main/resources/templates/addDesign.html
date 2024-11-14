@@ -60,32 +60,32 @@
     <input type="hidden" th:field="*{typeDesign.typeDesignId}" value="2" />
 
     <div class="form-group">
-      <label for="designName">Tên Thiết Kế</label>
+      <label for="designName">Design Name</label>
       <input type="text" class="form-control" id="designName" th:field="*{designName}" placeholder="Tên thiết kế" required>
     </div>
 
     <div class="form-group">
-      <label for="description">Mô Tả</label>
+      <label for="description">Description</label>
       <textarea class="form-control" id="description" th:field="*{description}" placeholder="Mô tả thiết kế" required></textarea>
     </div>
 
     <div class="form-group">
-      <label for="price">Giá</label>
+      <label for="price">Price</label>
       <input type="number" class="form-control" id="price" th:field="*{price}" placeholder="Giá thiết kế" step="0.01" required>
     </div>
 
     <div class="form-group">
-      <label for="waterCapacity">Dung Tích Nước</label>
+      <label for="waterCapacity">Water Capaction</label>
       <input type="number" class="form-control" id="waterCapacity" th:field="*{waterCapacity}" placeholder="Dung tích nước" required>
     </div>
 
     <div class="form-group">
-      <label for="shapeOfPond">Hình Dạng</label>
+      <label for="shapeOfPond">Form</label>
       <input type="text" class="form-control" id="shapeOfPond" th:field="*{shapeOfPond}" placeholder="Hình dạng của hồ" required>
     </div>
 
     <div class="form-group">
-      <label for="estimatedCompletionTime">Thời Gian Hoàn Thành (ngày)</label>
+      <label for="estimatedCompletionTime">Time To Complete</label>
       <input type="number" class="form-control" id="estimatedCompletionTime" th:field="*{estimatedCompletionTime}" placeholder="Số ngày hoàn thành" required>
     </div>
 
@@ -101,7 +101,7 @@
 
     <!-- Trường nhập Customer Reference -->
     <div class="form-group">
-      <label for="customerReference">Mã Khách Hàng</label>
+      <label for="customerReference">CustomerID</label>
       <input type="number" class="form-control" id="customerReference" th:field="*{customerReference}" placeholder="Nhập mã khách hàng" required>
     </div>
 

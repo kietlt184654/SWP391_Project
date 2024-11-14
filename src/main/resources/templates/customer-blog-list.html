@@ -3,77 +3,90 @@
 <head>
   <title>Customer Blog List</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <style>
-    .container {
-      margin-top: 20px;
-      max-width: 800px;
-    }
-    .blog-list {
-      list-style-type: none;
-      padding: 0;
-    }
-    .blog-list li {
-      margin-bottom: 15px;
-      padding: 15px;
-      background-color: #f8f9fa;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .blog-title {
-      font-size: 20px;
-      font-weight: bold;
-      color: #007bff;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 5px;
-    }
-    .blog-title:hover {
-      color: #0056b3;
-    }
-    .customer-name {
-      color: #333;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .blog-excerpt {
-      color: #555;
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-    .button-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .btn-custom {
-      padding: 8px 12px;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    .return-home-btn {
-      background-color: #007bff;
-    }
-    .return-home-btn:hover {
-      background-color: #0056b3;
-    }
-    .blog-image {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/customer_blog.css">
 </head>
 <body>
+<div class="nav">
+  <!-- Hamburger button -->
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
+
+  <!-- Logo -->
+  <div class="nav-logo">
+    <p>KoiPond</p>
+  </div>
+
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li>
+        <a th:href="@{/design}" style="color: black;">Services</a>
+      </li>
+      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+      <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+      <!-- Cart -->
+      <li>
+        <a href="#" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge">0</span>
+
+        </a>
+      </li>
+      <li>
+        <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+          <a th:href="@{/account/profile}" class="d-flex align-items-center">
+            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                 class="rounded-circle" width="40" height="40">
+            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+    <a th:href="@{/account/profile}" class="d-flex align-items-center">
+      <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+           class="rounded-circle" width="40" height="40">
+      <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+    </li>
+    <li>
+      <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+    </li>
+    <li>
+      <form th:action="@{/account/logout}" method="post" class="ms-3">
+        <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+      </form>
+    </li>
+  </ul>
+</div>
 <div class="container">
   <h1>All Blogs</h1>
-
+  <br>
   <!-- Button to return to homepage -->
   <div class="button-container">
     <a th:href="@{/}" class="btn-custom return-home-btn">Return to Homepage</a>
+
+    <!-- Add New Blog Button - visible for any logged-in user -->
+    <a th:if="${session.loggedInUser != null}" th:href="@{/blogs/create}" class="btn btn-primary">Add New Blog</a>
   </div>
 
   <!-- Blog list -->
@@ -93,5 +106,41 @@
     </li>
   </ul>
 </div>
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+        Minh
+      </p>
+    </div>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li>
+          <a th:href="@{/design/showAllDesign}" class="service-item">Construction Koi pond</a>
+        </li>
+        <li>
+          <a th:href="@{/services/serviceForm}" class="service-item">Cleaning and maintenance</a>
+        </li>
+        <li>
+          <a th:href="@{/designService}" class="service-item">Design upon requirements</a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
+    </div>
+  </div>
+</div>
+<script src="/javascript/Services.js"></script>
 </body>
 </html>

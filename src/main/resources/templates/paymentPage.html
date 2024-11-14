@@ -41,17 +41,7 @@
 </div>
 
 <!-- Hero Section -->
-<section class="hero-section">
-  <div class="hero-content">
-    <img src="/img/design_payment.jpg" alt="Design Payment" />
-    <h1>Design Payment</h1>
-    <ol class="breadcrumb">
-      <li><a href="/homepage.html">Home</a></li>
-      <li><a href="/designs.html">Designs</a></li>
-      <li class="active">Design Payment</li>
-    </ol>
-  </div>
-</section>
+
 
 <!-- Selected Design Section -->
 <div class="container">
@@ -71,7 +61,7 @@
         <td th:text="${designforproject.designId}">Design ID</td>
         <td th:text="${designforproject.designName}">Design Name</td>
         <td th:text="${designforproject.description}">Description</td>
-        <td th:text="${#numbers.formatDecimal(paymentAmount, 1, 2)}">Cost</td>
+        <td th:text="${designforproject.formattedPrice} + 'VND' ">Cost</td>
       </tr>
       </tbody>
     </table>

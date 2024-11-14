@@ -6,17 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  />
+  <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
   <script src="/javascript/viewProductDetail.js" defer></script>
-  <link rel="stylesheet" href="/css/viewProductDetail.css" />
 
-  <title th:text="${design.designName}">Product Detail</title>
+  <link
+          rel="stylesheet"
+          href="/css/viewProductDetail.css"
+  />
+
+  <title>Product Detail</title>
 </head>
 
 <body>
-<!-- HEADER -->
 <div class="nav">
   <!-- Hamburger button -->
   <div class="nav-button">
@@ -25,49 +37,43 @@
 
   <!-- Logo -->
   <div class="nav-logo">
-    <p>LOGO</p>
+    <p>KoiPond</p>
   </div>
 
   <!-- Nav Menu -->
   <div class="nav-menu" id="navMenu">
     <ul>
       <li><a th:href="@{/}" class="link">Home</a></li>
-      <li><a href="/about" class="link">About</a></li>
-      <li><a href="/blog" class="link">Blog</a></li>
-      <li><a href="/services" class="link">Services</a></li>
-      <li><a href="/products" class="link">Product</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li>
+        <a th:href="@{/design}" style="color: #000000;">Services</a>
+      </li>
+      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+      <li><a th:href="@{customer/customer-projects}" class="link">Project</a></li>
+      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
 
       <!-- Cart -->
       <li>
-        <a href="/cart" class="icon">
+        <a href="#" class="icon">
           <i class="fas fa-shopping-cart"></i>
-          <span class="notification-badge" th:text="${cartItemCount}">0</span>
+          <span class="notification-badge">0</span>
+
         </a>
       </li>
-
-      <!-- Account Section -->
       <li>
         <a href="#" class="icon" id="accountIcon">
           <i class="fas fa-user-circle"></i>
           <span th:text="${loggedInUser != null ? loggedInUser.username : 'Guest'}">Username</span>
-          <i class="fas fa-caret-down"></i>
-        </a>
-
-        <!-- Dropdown menu for logged in user -->
-        <ul class="dropdown-menu" th:if="${loggedInUser != null}">
-          <li><a href="/profile"><i class="fas fa-user-circle"></i> Profile</a></li>
-          <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-        </ul>
       </li>
     </ul>
+
   </div>
 </div>
-
 <!-- Show product detail -->
 <div class="container" th:object="${design}">
   <ol class="breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li><a href="/products">Products</a></li>
+    <li><a href="/Homepage">Home</a></li>
+    <li><a href="/Availableproject">Products</a></li>
     <li class="active" th:text="${design.designName}">Product Detail</li>
   </ol>
 
@@ -77,48 +83,98 @@
         <div class="panel-body">
           <div class="col-md-6">
             <div class="pro-img-details">
-              <img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-responsive" />
+              <img
+                      th:src="@{/img/pond koi.jpg}"
+                      alt="Pond Koi"
+                      class="img-responsive"
+              />
             </div>
             <div class="pro-img-list">
               <!-- List of Images if multiple -->
-              <a href="#"><img th:src="@{${design.img}}" alt="[[${design.designName}]]" class="img-thumbnail" /></a>
+              <a href="#"
+              ><img
+                      th:src="@{${design.img}}"
+                      alt="[[${design.designName}]]"
+                      class="img-thumbnail"
+              /></a>
             </div>
             <div class="img-navigation">
               <span id="prev-btn"><i class="fas fa-chevron-left"></i></span>
-              <span id="next-btn"><i class="fas fa-chevron-right"></i></span>
+              <span id="next-btn"
+              ><i class="fas fa-chevron-right"></i
+              ></span>
             </div>
           </div>
 
           <div class="col-md-6 body-right">
             <h3 th:text="${design.designName}">Product Name</h3>
-            <p th:text="${design.description}">Product description goes here.</p>
+            <p th:text="${design.description}">
+              Product description goes here.
+            </p>
 
             <div class="product_meta">
-              <span class="posted_in"><strong>Size:</strong> <a th:text="${design.size}">Size</a></span>
-              <span class="tagged_as"><strong>Water Capacity:</strong> <a th:text="${design.waterCapacity}">Water Capacity</a></span>
-              <span class="tagged_as"><strong>Status:</strong> <a th:text="${design.status}">Status</a></span>
-              <span class="tagged_as"><strong>Estimated Completion Time:</strong> <a th:text="${design.estimatedCompletionTime} + ' days'">Estimated Completion Time</a></span>
-              <span class="tagged_as"><strong>Shape of Pond:</strong> <a th:text="${design.shapeOfPond}">Shape of Pond</a></span>
+                  <span class="posted_in"
+                  ><strong>Size:</strong>
+                    <a th:text="${design.size}">Size</a></span
+                  >
+              <span class="tagged_as"
+              ><strong>Water Capacity:</strong>
+                    <a th:text="${design.waterCapacity}"
+                    >Water Capacity</a
+                    ></span
+              >
+              <span class="tagged_as"
+              ><strong>Status:</strong>
+                    <a th:text="${design.status}">Status</a></span
+              >
+              <span class="tagged_as"
+              ><strong>Estimated Completion Time:</strong>
+                    <a th:text="${design.estimatedCompletionTime} + ' days'"
+                    >Estimated Completion Time</a
+                    ></span
+              >
+              <span class="tagged_as"
+              ><strong>Shape of Pond:</strong>
+                    <a th:text="${design.shapeOfPond}">Shape of Pond</a></span
+              >
             </div>
 
             <div class="price">
-              <span class="pro-price" th:text="${design.price} + ' $'">Price</span>
+                  <span class="amount-old" th:text="${design.price+1000000} + 'VND'"
+                  >100.000.000đ</span
+                  >
+              <span class="pro-price" th:text="${design.getFormattedPrice} + 'VND'"
+              >95.000.000đ</span
+              >
             </div>
 
             <div class="quantity-container">
-              <button class="quantity-btn" id="decrease">-</button>
-              <input type="number" id="quantity" min="1" max="1000" step="1" value="1" />
-              <button class="quantity-btn" id="increase">+</button>
+
+              <input
+                      type="number"
+                      id="quantity"
+                      min="1"
+                      max="1000"
+                      step="1"
+                      value="1"
+              />
+
             </div>
 
             <div class="button-cart">
               <div class="button-group">
                 <form th:action="@{/cart/add}" method="post">
-                  <input type="hidden" name="designId" th:value="${design.designId}" />
+                  <input
+                          type="hidden"
+                          name="designId"
+                          th:value="${design.designId}"
+                  />
                   <input type="hidden" name="quantity" value="1" />
-                  <button class="btn btn-cart" type="submit"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                  <button class="btn btn-cart" type="submit">
+                    <i class="fa fa-shopping-cart"></i> Add to Cart
+                  </button>
                 </form>
-                <button class="btn btn-buy">Buy Now</button>
+
               </div>
             </div>
           </div>
@@ -135,37 +191,103 @@
   <div class="tab-content" id="description-content">
     <h3>Description</h3>
     <ul>
-      <li><strong>Description:</strong> <span th:text="${design.description}">Description goes here.</span></li>
-      <li><strong>Size:</strong> <span th:text="${design.size}">Size description.</span></li>
-      <li><strong>Water Capacity:</strong> <span th:text="${design.waterCapacity}">Water capacity description.</span></li>
-      <li><strong>Status:</strong> <span th:text="${design.status}">Status description.</span></li>
-      <li><strong>Estimated Completion Time:</strong> <span th:text="${design.estimatedCompletionTime} + ' days'">Completion Time</span></li>
-      <li><strong>Shape of Pond:</strong> <span th:text="${design.shapeOfPond}">Shape of Pond</span></li>
+      <li>
+        <strong>Description:</strong>
+        <span th:text="${design.description}">Description goes here.</span>
+      </li>
+      <li>
+        <strong>Size:</strong>
+        <span th:text="${design.size}">Size description.</span>
+      </li>
+      <li>
+        <strong>Water Capacity:</strong>
+        <span th:text="${design.waterCapacity}"
+        >Water capacity description.</span
+        >
+      </li>
+      <li>
+        <strong>Status:</strong>
+        <span th:text="${design.status}">Status description.</span>
+      </li>
+      <li>
+        <strong>Estimated Completion Time:</strong>
+        <span th:text="${design.estimatedCompletionTime} + ' days'"
+        >Completion Time</span
+        >
+      </li>
+      <li>
+        <strong>Shape of Pond:</strong>
+        <span th:text="${design.shapeOfPond}">Shape of Pond</span>
+      </li>
     </ul>
   </div>
 </div>
-
+<!-- Side bar -->
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="user-info">
+    <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+    <p class="username">Username</p>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+    </li>
+    <li>
+      <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+    </li>
+    <li>
+      <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    </li>
+    <li>
+      <form th:action="@{/account/logout}" method="post" class="ms-3">
+        <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+      </form>
+    </li>
+  </ul>
+</div>
 <!-- Footer -->
 <div class="footer">
   <div class="footer-container">
     <div class="footer-info">
       <h4>Information</h4>
       <p>Open: 8 AM - 10 PM</p>
-      <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+        Minh
+      </p>
     </div>
     <div class="footer-services">
       <h4>Services</h4>
       <ul>
-        <li><a href="/services/construction" class="service-item">Construction Koi pond</a></li>
-        <li><a href="/services/cleaning" class="service-item">Cleaning and maintenance</a></li>
-        <li><a href="/services/design" class="service-item">Design upon requirements</a></li>
+        <li>
+          <a href="/services/construction" class="service-item"
+          >Construction Koi pond</a
+          >
+        </li>
+        <li>
+          <a href="/services/cleaning" class="service-item"
+          >Cleaning and maintenance</a
+          >
+        </li>
+        <li>
+          <a href="/services/design" class="service-item"
+          >Design upon requirements</a
+          >
+        </li>
       </ul>
     </div>
     <div class="footer-contact">
       <h4>Contact</h4>
       <p><i class="fa-solid fa-phone"></i> 0972423242</p>
       <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-      <p><i class="fa-brands fa-facebook"></i> <a href="https://facebook.com" target="_blank">Visit Us</a></p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
     </div>
   </div>
 </div>

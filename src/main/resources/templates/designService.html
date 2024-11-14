@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,79 +9,61 @@
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
   />
-
   <link
           href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
           rel="stylesheet"
   />
-
   <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
   />
-  <script src="/javascript/DesignService.js" defer></script>
-  <link rel="stylesheet" href="/css/DesignService.css" />
+  <script th:src="@{/javascript/designService.js}" defer></script>
+  <link th:href="@{/css/DesignService.css}" rel="stylesheet" />
+
   <title>Design service</title>
 </head>
 <body>
-<!-------------------- HEADER-------------------->
+<!-- HEADER -->
 <div class="nav">
-  <!-- Hamburger button -->
   <div class="nav-button">
     <button id="menu-toggle" class="btn">&#9776;</button>
   </div>
-
-  <!-- Logo -->
   <div class="nav-logo">
-    <p>LOGO</p>
+    <p>KoiPond</p>
   </div>
-
-  <!-- Nav Menu -->
   <div class="nav-menu" id="navMenu">
     <ul>
       <li><a th:href="@{/}" class="link">Home</a></li>
-      <li><a href="about.html" class="link">About</a></li>
-      <li><a href="blog.html" class="link">Blog</a></li>
-      <li><a href="service.html" class="link">Services</a></li>
-      <li><a th:href="@{/design}" class="link">Product</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li><a th:href="@{/design}" style="color: black;">Services</a></li>
 
-      <!-- Cart -->
+      <!-- Display these links only if the user is logged in -->
+      <li><a th:href="@{/customer/dashboard}" class="link">Customer Dashboard</a></li>
+      <li> <a th:href="@{customer/customer-projects}" class="link">Project</a></li>
+      <li> <a th:href="@{/account/customer/completed-projects}" class="link">History</a></li>
       <li>
-        <a href="#" class="icon">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="notification-badge">0</span>
-        </a>
+        <a href="#" class="icon"
+        ><i class="fas fa-shopping-cart"></i
+        ><span class="notification-badge">0</span></a
+        >
       </li>
-
       <li>
-        <a href="#" class="icon" id="accountIcon">
-          <i class="fas fa-user-circle"></i>Username
-          <i class="fas fa-caret-down"></i>
-        </a>
-
-        <!-- Dropdown menu -->
-        <ul class="dropdown-menu">
-          <li>
-            <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-          </li>
-          <li>
-            <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-          </li>
-        </ul>
+        <a href="#" class="icon" id="accountIcon"
+        ><i class="fas fa-user-circle"></i>Username</a
+        >
       </li>
     </ul>
   </div>
 </div>
 
-<!--  content -->
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="hero-content">
-    <img src="img/koi_des.webp" />
+    <img th:src="@{/img/koi_des.webp}" alt="Koi Pond Design" />
     <h1>Design request service</h1>
     <ol class="breadcrumb">
-      <li><a href="homepage.html">Home</a></li>
-      <li><a href="product.html">Services</a></li>
+      <li><a th:href="@{/Homepage}">Home</a></li>
+      <li><a th:href="@{/Design}">Services</a></li>
       <li class="active">Design service</li>
     </ol>
   </div>
@@ -91,14 +73,15 @@
 <section class="introduction">
   <div class="container">
     <div class="introduction-content">
-      <h2 class="introduction-header">Introduction</h2>
-
-      <!-- Main Content Section -->
       <div class="intro-wrapper">
-        <div class="col-md-6 intro-image">
-          <img src="img/n6.jpeg" alt="Koi Pond" />
+        <div class="col-md-3 intro-image">
+          <img th:src="@{/img/n6.jpeg}" alt="Koi Pond" />
+        </div>
+        <div class="col-md-3 third-image">
+          <img th:src="@{/img/a1.jpg}" alt="Koi Pond" />
         </div>
         <div class="col-md-6 intro-text">
+          <h2>Introduction about the service</h2>
           <p>
             We are proud to offer custom Koi pond design services, helping
             you create a luxurious and tranquil space right in your home.
@@ -110,57 +93,28 @@
         </div>
       </div>
     </div>
-    <!-- overview -->
+
+    <!-- Overview -->
     <div class="overview">
       <h2 class="overview-header">Overview</h2>
       <div class="row overview-image">
         <div class="col-md-4">
-          <img src="img/a2.jpg" />
+          <img th:src="@{/img/a2.jpg}" alt="Koi Pond" />
         </div>
         <div class="col-md-4">
-          <img src="img/a3.jpeg" />
+          <img th:src="@{/img/a3.jpeg}" alt="Koi Pond" />
         </div>
         <div class="col-md-4">
-          <img src="img/n6.jpeg" />
+          <img th:src="@{/img/n6.jpeg}" alt="Koi Pond" />
         </div>
       </div>
     </div>
 
-    <!-- Content 2 -->
-    <div class="second-wrapper">
-      <div class="col-md-6 second-text">
-        <h2 class="second-header">Benefits of Choosing Our Service</h2>
-        <ul>
-          <li>
-            Custom Designs: Tailored to your specific needs and style.
-          </li>
-          <li>
-            Expert Advice: Guidance on Feng Shui, pond shape, and location
-          </li>
-          <li>
-            High-Quality Construction: Durable, eco-friendly materials.
-          </li>
-          <li>
-            Maintenance Services: Ensuring a balanced and healthy ecosystem
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-6 second-image">
-        <img src="img/a3.jpeg" alt="Koi Pond" />
-      </div>
-    </div>
-
-    <!-- Add Messenger Button Here -->
-    <div class="messenger-button-wrapper">
-      <button id="messenger-button" class="btn btn-primary">
-        Nhắn tin với chúng tôi
-      </button>
-    </div>
-
-    <!-- Process of service -->
+    <!-- Process of Service -->
     <div class="col-md-12">
       <div class="timeline">
         <h2 class="service-header">Service process</h2>
+        <!-- Step 1 -->
         <div class="timeline-step">
           <div class="circle"></div>
           <div class="step-content">
@@ -171,14 +125,13 @@
               </h3>
               <p>
                 Survey the actual construction site, discuss with customers
-                to clearly understand their wishes and preferences. Based on
-                that, we will advise on the most suitable pool style and
-                size.
+                to clearly understand their wishes and preferences...
               </p>
             </div>
           </div>
         </div>
 
+        <!-- Step 2 -->
         <div class="timeline-step">
           <div class="circle"></div>
           <div class="step-content">
@@ -196,6 +149,7 @@
           </div>
         </div>
 
+        <!-- Step 3 -->
         <div class="timeline-step">
           <div class="circle"></div>
           <div class="step-content">
@@ -208,13 +162,14 @@
                 Once you have clearly understood the customer's wishes as
                 well as the details about the shape and style of the koi
                 fish pond, after signing the contract, the company's team of
-                architects will prepare a conceptual design document to
-                send. to customers.
+                architects will prepare a conceptual design document to send
+                to customers.
               </p>
             </div>
           </div>
         </div>
 
+        <!-- Step 4 -->
         <div class="timeline-step">
           <div class="circle"></div>
           <div class="step-content">
@@ -233,6 +188,7 @@
           </div>
         </div>
 
+        <!-- Step 5 -->
         <div class="timeline-step">
           <div class="circle"></div>
           <div class="step-content">
@@ -249,6 +205,7 @@
           </div>
         </div>
 
+        <!-- Step 6 -->
         <div class="timeline-step">
           <div class="circle"></div>
           <div class="step-content">
@@ -257,12 +214,18 @@
               <h3 class="timeline-header">Handover and maintenance</h3>
               <p>
                 When the project is done, then we will handover to customer
-                and maintenance also take care your Koi fish, plant,...
+                and maintenance also take care your Koi fish, plant...
               </p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <!-- Add Messenger Button Here -->
+    <div class="messenger-button-wrapper">
+      <button id="messenger-button" class="btn btn-primary">
+        Message us on Facebook!
+      </button>
     </div>
     <!-- Form design -->
     <div id="fb-root"></div>
@@ -281,11 +244,14 @@
   </div>
 </section>
 
-<!-- ---------------------------------------------------------------------------------------------------------- -->
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="user-info">
-    <img src="avatar.png" alt="User Avatar" class="user-avatar" />
+    <img
+            th:src="@{/img/avatar.png}"
+            alt="User Avatar"
+            class="user-avatar"
+    />
     <p class="username">Username</p>
   </div>
   <ul class="sidebar-menu">
@@ -307,7 +273,7 @@
   </ul>
 </div>
 
-<!-- -------------------------------------- Footer ----------------------------------------------------------------- -->
+<!-- Footer -->
 <div class="footer">
   <div class="footer-container">
     <div class="footer-info">
@@ -322,17 +288,17 @@
       <h4>Services</h4>
       <ul>
         <li>
-          <a href="link-to-construction" class="service-item"
+          <a th:href="@{/construction}" class="service-item"
           >Construction Koi pond</a
           >
         </li>
         <li>
-          <a href="link-to-cleaning" class="service-item"
+          <a th:href="@{/cleaning}" class="service-item"
           >Cleaning and maintenance</a
           >
         </li>
         <li>
-          <a href="link-to-design" class="service-item"
+          <a th:href="@{/design}" class="service-item"
           >Design upon requirements</a
           >
         </li>
@@ -344,12 +310,12 @@
       <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
       <p>
         <i class="fa-brands fa-facebook"></i>
-        <a href="https://facebook.com" target="_blank">Visit Us</a>
+        <a th:href="'https://facebook.com'">Visit us</a>
+
       </p>
     </div>
   </div>
 </div>
-
 <script>
   document
           .getElementById("messenger-button")

@@ -22,7 +22,7 @@
                     <!-- Pass project ID and image path to the delete endpoint -->
                     <input type="hidden" name="projectID" th:value="${projectID}" />
                     <input type="hidden" name="imagePath" th:value="${imagePath}" />
-                    <button type="submit" class="btn btn-danger">Delete Image</button>
+
                 </form>
             </div>
         </th:block>
@@ -34,16 +34,16 @@
 
 <!-- Back buttons to go to previous pages -->
 <div class="back-button-container">
-    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary back-button">Quay về Chi Tiết Dự Án</a>
-    <a href="/project/detail" class="back-button">Quay lại</a>
+<!--    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary back-button">Quay về Chi Tiết Dự Án</a>-->
+<!--    <a href="/project/detail" class="back-button">Quay lại</a>-->
 </div>
 
 <!-- Button to delete service (if applicable) -->
-<div class="delete-button-container" style="text-align: center; margin-top: 20px;">
-    <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">
-        <button type="submit" class="red-button">Xóa Dịch Vụ</button>
-    </form>
-</div>
+<!--<div class="delete-button-container" style="text-align: center; margin-top: 20px;">-->
+<!--    <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">-->
+<!--        <button type="submit" class="red-button">Xóa Dịch Vụ</button>-->
+<!--    </form>-->
+<!--</div>-->
 
 </body>
 </html>

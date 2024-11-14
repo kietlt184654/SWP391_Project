@@ -59,3 +59,27 @@ function showSlider(type) {
 
 // Start the initial animation 
 resetTimeAnimation()
+// JavaScript function to check login and show modal if not logged in
+function checkLogin(event, url) {
+    const loggedInUser = /*[[${session.loggedInUser != null}]]*/ false; // Thymeleaf will replace this with true or false
+
+    if (!loggedInUser) {
+        event.preventDefault(); // Prevent navigation
+        document.getElementById('loginModal').style.display = 'block'; // Show the modal
+    } else {
+        window.location.href = url; // Redirect if logged in
+    }
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('loginModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};

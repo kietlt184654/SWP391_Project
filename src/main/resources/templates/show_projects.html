@@ -1,138 +1,155 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-            rel="stylesheet"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <script src="/javascript/manageConstruction.js" defer></script>
-    <link rel="stylesheet" href="/css/manageConstruction.css" />
     <title>Manage construction progress</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="/javascript/manageConstruction.js" defer></script>
+    <link rel="stylesheet" href="/css/show_projects.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-<div class="nav">
-    <!-- Hamburger button -->
-    <div class="nav-button">
-        <button id="menu-toggle" class="btn">&#9776;</button>
+<div class="sidebar close">
+    <div class="logo-details">
+        <i class='bx bxs-ship'></i>
+        <span class="logo_name">KoiPond</span>
     </div>
+    <ul class="nav-links">
 
-    <!-- Logo -->
-    <div class="nav-logo">
-        <p>LOGO</p>
-    </div>
-
-    <!-- Nav Menu -->
-    <div class="nav-menu" id="navMenu">
-        <ul>
-            <li><a href="manageConstruction.html" class="link">Overview</a></li>
-            <li><a href="taskBoard.html" class="link">Task Board</a></li>
-            <li><a href="taskList.html" class="link">Task List</a></li>
-            <li>
-                <a href="construction.html" class="link">Construction Plan & Layers</a>
-            </li>
-            <li>
-                <a href="#" class="icon" id="accountIcon">
-                    <i class="fas fa-user-circle"></i>Username
-                    <i class="fas fa-caret-down"></i>
+        <li>
+            <div class="iocn-link">
+                <a th:href="@{/account/customers}">
+                    <i class='bx bx-user'></i>
+                    <span class="link_name">Customer Management</span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
 
-<!-- Body -->
-<div class="project-container">
-    <h2>All Projects</h2>
-    <div th:each="project : ${projects}" class="project">
-        <button class="toggle-btn" th:text="'Project ' + ${project.projectID}"></button>
-        <div class="project-content">
-            <div class="col-md-6 project-image">
-                <img th:src="@{${project.img}}" alt="Project Image" />
             </div>
-            <div class="col-md-6 text-content">
-                <h4 th:text="${project.name}">Project Name</h4>
-                <p>
-                    1. Information<br />
-                    <strong>Customer Name:</strong> <span th:text="${project.customer.account.accountName}">Account Name</span><br />
-                    <strong>Address:</strong> <span th:text="${project.customer.account.address}">Address</span><br />
-                    <strong>Phone Number:</strong> <span th:text="${project.customer.account.phoneNumber}">Phone Number</span><br />
-                    <strong>Email:</strong> <span th:text="${project.customer.account.email}">Email</span><br /><br />
-
-                    <!--                    2. Construction Timeline<br />-->
-                    <!--                    <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br />-->
-                    <!--                    <strong>Completion Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br /><br />-->
-
-                    <!--                    3. Status and Priority<br />-->
-                    <!--                    <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />-->
-                    <!--                    <strong>Total Cost:</strong> <span th:text="${#numbers.formatDecimal(project.totalCost, 2, 'POINT', 'COMMA')}">Cost</span><br />-->
-                    <!--                    <br />-->
-                    2. Construction Timeline<br />
-                    <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
-                    <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
-
-                    3. Status and Priority<br />
-                    <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />
-                    <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Cost</span><br />
-                    <br />
-                </p>
-                <a th:href="@{'/projects/viewDetailProject/' + ${project.projectID}}">
-                    <button class="btn btn-primary">View</button>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Customer Management</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a th:href="@{/projects/showProjects}">
+                    <i class='bx bx-folder'></i>
+                    <span class="link_name">Project Management</span>
                 </a>
+                <!-- <i class='bx bxs-chevron-down arrow'></i> -->
             </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Project Management</a></li>
+
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a th:href="@{/staff}">
+                    <i class='bx bx-group'></i>
+                    <span class="link_name">Staff Management</span>
+                </a>
+                <!-- <i class='bx bxs-chevron-down arrow'></i> -->
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Staff Management</a></li>
+
+            </ul>
+        </li>
+        <li>
+            <a th:href="@{/manager/design/approval}">
+                <i class='bx bx-check-circle'></i>
+                <span class="link_name">Design Approval</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Design Approval</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-cube'></i>
+                    <span class="link_name">Material Management</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Material Management</a></li>
+                <li><a th:href="@{/materials/list}">Material List</a></li>
+                <li><a th:href="@{/materials/history}">Material History</a></li>
+                <li><a th:href="@{/materials/historyofchanging}">Material Updated List</a></li>
+            </ul>
+        </li>
+        <div class="profile-details">
+            <div class="profile-content">
+                <!--<img src="image/profile.jpg" alt="profileImg">-->
+            </div>
+            <form th:action="@{/account/logout}" method="post" class="ms-3">
+                <button type="submit" class='bx bx-log-out'></button>
+            </form>
         </div>
-
-    </div>
-</div>
-
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <div class="user-info">
-        <img src="avatar.png" alt="User Avatar" class="user-avatar" />
-        <p class="username">Username</p>
-    </div>
-    <ul class="sidebar-menu">
-        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="#"><i class="fas fa-history"></i> History Order</a></li>
-        <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
-        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+        </li>
     </ul>
 </div>
+<section class="home-section">
+    <div class="home-content">
+        <i class='bx bx-menu'></i>
+    </div>
+    <div class="project-container">
+        <h2>All Projects</h2>
+        <div th:each="project : ${projects}" class="project">
+            <button class="toggle-btn" th:text="'Project ' + ${project.projectID}"></button>
+            <div class="project-content">
+                <div class="col-md-6 project-image">
+                    <img th:src="@{${project.img}}" alt="Project Image" />
+                </div>
+                <div class="col-md-6 text-content">
+                    <h4 th:text="${project.name}">Project Name</h4>
+                    <p>
+                        1. Information<br />
+                        <strong>Customer Name:</strong> <span th:text="${project.customer.account.accountName}">Account
+                                Name</span><br />
+                        <strong>Address:</strong> <span
+                            th:text="${project.customer.account.address}">Address</span><br />
+                        <strong>Phone Number:</strong> <span th:text="${project.customer.account.phoneNumber}">Phone
+                                Number</span><br />
+                        <strong>Email:</strong> <span
+                            th:text="${project.customer.account.email}">Email</span><br /><br />
 
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-info">
-            <h4>Information</h4>
-            <p>Open: 8 AM - 10 PM</p>
-            <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
-        </div>
-        <div class="footer-services">
-            <h4>Services</h4>
-            <ul>
-                <li><a href="link-to-construction" class="service-item">Construction Koi pond</a></li>
-                <li><a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a></li>
-                <li><a href="link-to-design" class="service-item">Design upon requirements</a></li>
-            </ul>
-        </div>
-        <div class="footer-contact">
-            <h4>Contact</h4>
-            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-            <p><i class="fa-brands fa-facebook"></i><a href="https://facebook.com" target="_blank">Visit Us</a></p>
+                        <!--                    2. Construction Timeline<br />-->
+                        <!--                    <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br />-->
+                        <!--                    <strong>Completion Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br /><br />-->
+
+                        <!--                    3. Status and Priority<br />-->
+                        <!--                    <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />-->
+                        <!--                    <strong>Total Cost:</strong> <span th:text="${#numbers.formatDecimal(project.totalCost, 2, 'POINT', 'COMMA')}">Cost</span><br />-->
+                        <!--                    <br />-->
+                        2. Construction Timeline<br />
+                        <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
+                        <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
+
+                        3. Status and Priority<br />
+                        <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />
+                        <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Cost</span><br />
+                        <br />
+                    </p>
+                    <a th:href="@{'/projects/viewDetailProject/' + ${project.projectID}}">
+                        <button class="btn btn-primary">View</button>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
+
+</section>
+<script src="/javascript/MaterialManagement.js"></script>
 </body>
+
 </html>

@@ -1,24 +1,15 @@
-const menuToggle = document.getElementById("menu-toggle");
-const sidebar = document.getElementById("sidebar");
-
-menuToggle.addEventListener("click", () => {
-  sidebar.classList.toggle("show");
-});
-
-// Toggle dropdown menu when clicking the account icon
-const accountIcon = document.getElementById("accountIcon");
-const dropdownMenu = document.querySelector(".dropdown-menu");
-
-accountIcon.addEventListener("click", (event) => {
-  event.preventDefault();
-  dropdownMenu.style.display =
-    dropdownMenu.style.display === "block" ? "none" : "block";
-});
-// Function to confirm delete action and send delete request
-// Sidebar Toggle
-document.getElementById("menu-toggle").addEventListener("click", function () {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("show");
+let arrow = document.querySelectorAll(".arrow");
+for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e) => {
+        let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+        arrowParent.classList.toggle("showMenu");
+    });
+}
+let sidebar = document.querySelector(".sidebar");
+let sidebarBtn = document.querySelector(".bx-menu");
+console.log(sidebarBtn);
+sidebarBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
 });
 
 // Display Notification
@@ -30,23 +21,22 @@ function showNotification(message) {
         notification.style.display = "none";
     }, 3000);
 }
-// Hiển thị modal khi nhấn nút xóa
-document.querySelectorAll(".btn-action.delete").forEach(button => {
+//show modal when delete
+document.querySelectorAll(".btn-action.delete").forEach((button) => {
     button.addEventListener("click", (event) => {
         event.preventDefault();
         const deleteUrl = button.closest("form").action;
         const deleteModal = document.getElementById("deleteModal");
         deleteModal.style.display = "flex";
 
-        // Xác nhận xóa
+        // delete
         document.getElementById("confirmDelete").onclick = () => {
             window.location.href = deleteUrl;
         };
 
-        // Hủy bỏ xóa
+        // cancel to delete
         document.getElementById("cancelDelete").onclick = () => {
             deleteModal.style.display = "none";
         };
     });
 });
-

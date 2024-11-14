@@ -1,32 +1,20 @@
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-}
-.container {
-    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
-.product-card {
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    background-color: white;
-    transition: box-shadow 0.3s;
+body {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150vh;
+    flex-direction: column;
+    background: white;
 }
-.product-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-.card-img-top{
-    width: 90%;
-    height: 70%;
-    margin: 0 auto;
-    border-radius: 40px;
-    background-color: #f0f0f0;
-    margin-top: 20.5px;
-}
+
 /* Navbar */
 .nav {
     position: fixed;
@@ -34,7 +22,7 @@ body {
     width: 100%;
     height: 60px;
     background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
     display: flex;
     align-items: center;
@@ -52,8 +40,7 @@ body {
     font-weight: 600;
     margin-right: 100px;
     margin-left: 100px;
-    margin-top:10px;
-
+    margin-top: 10px;
 }
 
 .nav-menu ul {
@@ -88,14 +75,37 @@ body {
 .nav-menu ul li a i {
     font-size: 20px;
     margin-right: 8px;
-}.icon-item {
-     display: flex;
-     list-style: none;
- }
+}
+
+.icon-item {
+    display: flex;
+    list-style: none;
+}
 
 .icon-item li {
     margin-left: 20px;
 }
+
+/* update quantity cart */
+.icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 /* Sidebar */
 #sidebar {
     width: 200px;
@@ -175,9 +185,108 @@ body {
 }
 
 .nav-button .btn:hover {
-    color: #f4f4f4;
+    color: #262626;
 }
-/* -------------------Footer----------------- */
+/* -----------------------------BODY-----------------------------*/
+.breadcrumb {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: white;
+    padding: 10px 20px;
+    list-style: none;
+    margin-bottom: 50px;
+}
+
+.hero-section {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.hero-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+}
+
+.hero-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+.hero-content h1 {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    top: 40%;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    z-index: 2;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Định dạng cho form */
+form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+/* Kiểu cho label */
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Kiểu cho các input và select */
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Kiểu cho button */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover cho button */
+button[type="submit"]:hover {
+    background-color: #343333;
+}
+
+/* -----------------------------FOOTER-----------------------------*/
 .footer {
     background-color: #000000;
     padding: 20px;
@@ -236,51 +345,4 @@ body {
 }
 .footer-container h4 {
     text-decoration: underline;
-}
-
-/* Header Styles */
-h1 {
-    text-align: center;
-    margin-top: 120px;
-    background: linear-gradient(90deg, #3c7363, #2a5b4d); /* Gradient background */
-    color: white;
-    border-radius: 10px; /* Rounded corners */
-    padding: 20px; /* Add padding */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    font-size: 2.5rem; /* Increase font size */
-    letter-spacing: 1px; /* Add letter spacing */
-}
-
-/* Search Bar Styles */
-.search-container {
-    display: flex;
-    justify-content: center; /* Center the search bar */
-    margin: 20px 0; /* Add margin */
-}
-
-.search-container input[type="text"] {
-    width: 300px; /* Fixed width */
-    padding: 10px; /* Padding for input */
-    border: 1px solid #ced4da; /* Border color */
-    border-radius: 20px; /* Rounded corners */
-    transition: width 0.4s ease, box-shadow 0.3s; /* Smooth transition */
-}
-
-.search-container input[type="text"]:focus {
-    outline: none; /* Remove outline */
-    width: 350px; /* Expand width on focus */
-    box-shadow: 0 0 5px rgba(60, 115, 99, 0.5); /* Shadow on focus */
-}
-
-.search-container a {
-    display: flex; /* Center the icon */
-    align-items: center; /* Center vertically */
-    margin-left: -40px; /* Adjust position */
-    color: #3c7363; /* Icon color */
-    font-size: 1.5rem; /* Icon size */
-    transition: color 0.3s; /* Smooth color transition */
-}
-
-.search-container a:hover {
-    color: #2a5b4d; /* Change color on hover */
 }

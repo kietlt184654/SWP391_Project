@@ -162,4 +162,11 @@ public class BlogController {
         redirectAttributes.addFlashAttribute("message", "Blog updated successfully.");
         return "redirect:/blogs";
     }
+    @GetMapping("/{id}/delete")
+    public String deleteBlog(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+        blogService.deleteBlogById(id); // Assume blogService has a method to delete by ID
+        redirectAttributes.addFlashAttribute("message", "Blog deleted successfully.");
+        return "redirect:/blogs";
+    }
+
 }

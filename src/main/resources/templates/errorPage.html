@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lỗi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .error-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .error-title {
+            font-size: 24px;
+            color: #dc3545;
+        }
+        .error-message {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <h1 class="error-title">Đã xảy ra lỗi</h1>
+    <p class="error-message" th:text="${errorMessage}">Lỗi không xác định</p>
+    <a href="/" class="back-link">Quay lại trang chủ</a>
+</div>
+</body>
+</html>
