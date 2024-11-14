@@ -41,3 +41,17 @@ function fetchProjectStatus() {
 // Polling function to check project status every 5 seconds
 const statusPolling = setInterval(fetchProjectStatus, 5000);
 
+// JavaScript cho popup xác nhận
+let formToDelete;
+
+function showPopup(form) {
+    formToDelete = form;  // Lưu form cần xóa
+    document.getElementById('confirmPopup').style.display = 'flex';
+}
+
+function confirmDelete(isConfirmed) {
+    document.getElementById('confirmPopup').style.display = 'none';
+    if (isConfirmed) {
+        formToDelete.submit();
+    }
+}
