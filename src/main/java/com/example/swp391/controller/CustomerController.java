@@ -147,19 +147,36 @@ public class CustomerController {
         return ResponseEntity.ok("Your feedback has been submitted successfully.");
     }
 
+
+//    @GetMapping("/account/customer/completed-projects")
+//    public String viewCompletedProjects(Model model, HttpSession session) {
+//        AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
+//
+//        if (account == null || account.getCustomer() == null) {
+//            model.addAttribute("errorMessage", "You need to log in to view project history.");
+//            return "errorPage";
+//        }
+//
+//        Long customerId = account.getCustomer().getCustomerID();
+//        List<ProjectEntity> completedProjects = projectService.getCompletedProjectsByCustomerId(customerId);
+//        model.addAttribute("completedProjects", completedProjects);
+//
+//        return "completed-projects";
+//    }
+
     @GetMapping("/account/customer/completed-projects")
-    public String viewCompletedProjects(Model model, HttpSession session) {
+    public String viewAllProjects(Model model, HttpSession session) {
         AccountEntity account = (AccountEntity) session.getAttribute("loggedInUser");
 
         if (account == null || account.getCustomer() == null) {
-            model.addAttribute("errorMessage", "You need to log in to view project history.");
+            model.addAttribute("errorMessage", "You need to log in to view your projects.");
             return "errorPage";
         }
 
         Long customerId = account.getCustomer().getCustomerID();
-        List<ProjectEntity> completedProjects = projectService.getCompletedProjectsByCustomerId(customerId);
-        model.addAttribute("completedProjects", completedProjects);
+        List<ProjectEntity> allProjects = projectService.getAllProjectsByCustomerId(customerId);
+        model.addAttribute("allProjects", allProjects);
 
-        return "completed-projects";
+        return "completed-projects";  // Tên của view cho trang hiển thị tất cả dự án
     }
 }

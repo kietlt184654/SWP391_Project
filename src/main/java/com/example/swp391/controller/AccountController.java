@@ -50,13 +50,10 @@ private StaffProjectService staffProjectService;
 
             // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
             if (account.getAccountTypeID().equals("Customer")) {
-                // Kiểm tra nếu customer chưa tồn tại
                 if (!customerService.existsByAccount(account)) {
                     CustomerEntity customer = new CustomerEntity();
                     customer.setAccount(account);
-                    customer.setAdditionalInfo("");  // Bạn có thể thêm thông tin bổ sung tùy ý
-
-                    // Lưu Customer mới vào cơ sở dữ liệu
+                    customer.setAdditionalInfo("");  // Thông tin bổ sung tùy ý
                     customerService.save(customer);
                 }
                 return "Homepage";
@@ -72,6 +69,7 @@ private StaffProjectService staffProjectService;
         }
         return "login";
     }
+
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {

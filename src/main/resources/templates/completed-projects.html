@@ -1,168 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Completed Project History</title>
+  <title>All Project History</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="/css/CompletedProject.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-<div class="nav">
-  <!-- Hamburger button -->
-  <div class="nav-button">
-    <button id="menu-toggle" class="btn">&#9776;</button>
-  </div>
-
-  <!-- Logo -->
-  <div class="nav-logo">
-    <p>KoiPond</p>
-  </div>
-
-  <!-- Nav Menu -->
-  <div class="nav-menu" id="navMenu">
-    <ul>
-      <li><a th:href="@{/}" class="link">Home</a></li>
-      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
-      <li>
-        <a th:href="@{/design}" style="color: black;">Services</a>
-      </li>
-      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
-      <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
-      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
-
-      <!-- Cart -->
-      <li>
-        <a href="#" class="icon">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="notification-badge">0</span>
-
-        </a>
-      </li>
-      <li>
-        <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-          <a th:href="@{/account/profile}" class="d-flex align-items-center">
-            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
-                 class="rounded-circle" width="40" height="40">
-            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
-          </a>
-        </div>
-      </li>
-    </ul>
-
-  </div>
-</div>
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-    <a th:href="@{/account/profile}" class="d-flex align-items-center">
-      <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
-           class="rounded-circle" width="40" height="40">
-      <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
-    </a>
-  </div>
-  <ul class="sidebar-menu">
-    <li>
-      <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
-    </li>
-    <li>
-      <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
-    </li>
-    <li>
-      <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
-    </li>
-    <li>
-      <form th:action="@{/account/logout}" method="post" class="ms-3">
-        <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
-      </form>
-    </li>
-  </ul>
-</div>
 <div class="container">
-  <h1>Completed Project History</h1>
+  <h1>All Project History</h1>
   <br>
 
-  <div th:each="project : ${completedProjects}">
+  <div th:each="project : ${allProjects}">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Project Name: <span th:text="${project.name}"></span></h3>
       </div>
       <div class="panel-body">
         <p><strong>Description:</strong> <span th:text="${project.description}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${project.status}"></span></p>
         <p><strong>Start Date:</strong> <span th:text="${project.startDate}"></span></p>
         <p><strong>End Date:</strong> <span th:text="${project.endDate}"></span></p>
         <p><strong>Total Cost:</strong> <span th:text="${project.totalCost}"></span></p>
 
-        <!-- Check if already reviewed, display review information -->
-        <div th:if="${project.feedback != null && project.feedback.isReviewed}">
-          <p><strong>Rating:</strong> [[${project.feedback.rating}]] stars</p>
-          <p><strong>Feedback:</strong> [[${project.feedback.feedback}]]</p>
-        </div>
+        <div th:if="${project.status == 'COMPLETE'}">
+          <div th:if="${project.feedback != null && project.feedback.isReviewed}">
+            <p><strong>Rating:</strong> [[${project.feedback.rating}]] stars</p>
+            <p><strong>Feedback:</strong> [[${project.feedback.feedback}]]</p>
+          </div>
 
-        <!-- If not reviewed, display feedback form -->
-        <div th:if="${project.feedback == null || !project.feedback.isReviewed}">
-          <p><a class="feedback-button" data-toggle="collapse" th:href="'#feedbackForm-' + ${project.projectID}">
-            Rate Project
-          </a></p>
+          <div th:if="${project.feedback == null || !project.feedback.isReviewed}">
+            <p><a class="feedback-button" data-toggle="collapse" th:href="'#feedbackForm-' + ${project.projectID}">
+              Rate Project
+            </a></p>
 
-          <!-- Feedback form -->
-          <div th:id="'feedbackForm-' + ${project.projectID}" class="collapse">
-            <div class="rating-stars" th:id="'stars-' + ${project.projectID}">
-              <i class="fas fa-star" data-value="1"></i>
-              <i class="fas fa-star" data-value="2"></i>
-              <i class="fas fa-star" data-value="3"></i>
-              <i class="fas fa-star" data-value="4"></i>
-              <i class="fas fa-star" data-value="5"></i>
+            <div th:id="'feedbackForm-' + ${project.projectID}" class="collapse" data-project-id="${project.projectID}">
+
+              <div class="rating-stars" th:id="'stars-' + ${project.projectID}">
+                <i class="fas fa-star" data-value="1"></i>
+                <i class="fas fa-star" data-value="2"></i>
+                <i class="fas fa-star" data-value="3"></i>
+                <i class="fas fa-star" data-value="4"></i>
+                <i class="fas fa-star" data-value="5"></i>
+              </div>
+              <input type="hidden" th:id="'ratingInput-' + ${project.projectID}" name="rating" value="0">
+              <textarea class="form-control feedback-text" rows="3" placeholder="Enter your feedback" th:id="'feedbackText-' + ${project.projectID}"></textarea>
+
+              <button class="btn btn-primary submit-feedback" style="margin-top: 10px;" th:onclick="'submitFeedback(' + ${project.projectID} + ')'">Submit Feedback</button>
             </div>
-            <input type="hidden" th:id="'ratingInput-' + ${project.projectID}" name="rating" value="0">
-            <textarea class="form-control" rows="3" placeholder="Enter your feedback" th:id="'feedbackText-' + ${project.projectID}"></textarea>
-            <button class="btn btn-primary" th:onclick="'submitFeedback(' + ${project.projectID} + ')'" style="margin-top: 10px;">Submit Feedback</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<br>
-<div class="footer">
-  <div class="footer-container">
-    <div class="footer-info">
-      <h4>Information</h4>
-      <p>Open: 8 AM - 10 PM</p>
-      <p>
-        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
-        Minh
-      </p>
-    </div>
-    <div class="footer-services">
-      <h4>Services</h4>
-      <ul>
-        <li>
-          <a href="link-to-construction" class="service-item">Construction Koi pond</a>
-        </li>
-        <li>
-          <a href="link-to-cleaning" class="service-item">Cleaning and maintenance</a>
-        </li>
-        <li>
-          <a href="link-to-design" class="service-item">Design upon requirements</a>
-        </li>
-      </ul>
-    </div>
-    <div class="footer-contact">
-      <h4>Contact</h4>
-      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-      <p>
-        <i class="fa-brands fa-facebook"></i>
-        <a href="https://facebook.com" target="_blank">Visit Us</a>
-      </p>
-    </div>
-  </div>
-</div>
 
-<!-- JS Libraries -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/javascript/Services.js"></script>
-<script src="/javascript/CompletedProject.js"></script>
+<script>
+  // Handle star rating click
+  $('.rating-stars i').on('click', function() {
+    let selectedStar = $(this).data('value');
+    let projectID = $(this).closest('.rating-stars').attr('id').split('-')[1];
+
+    $('#stars-' + projectID + ' i').each(function() {
+      $(this).removeClass('selected');
+      if ($(this).data('value') <= selectedStar) {
+        $(this).addClass('selected');
+      }
+    });
+
+    $('#ratingInput-' + projectID).val(selectedStar);
+  });
+
+  // Function to submit feedback
+  function submitFeedback(projectID) {
+    let rating = $('#ratingInput-' + projectID).val();
+    let feedback = $('#feedbackText-' + projectID).val();
+
+    if (rating === "0" || feedback.trim() === "") {
+      alert("Please select a star rating and enter your feedback.");
+      return;
+    }
+
+    $.ajax({
+      url: '/submitFeedback',
+      method: 'POST',
+      data: { projectId: projectID, rating: rating, feedback: feedback },
+      success: function(response) {
+        alert(response);
+        $('#feedbackForm-' + projectID).collapse('hide');
+
+        // Update interface after successfully submitting feedback
+        $('#feedbackForm-' + projectID).parent().html(
+                `<p><strong>Rating:</strong> ${rating} stars</p>
+                   <p><strong>Feedback:</strong> ${feedback}</p>`
+        );
+      },
+      error: function(xhr) {
+        alert(xhr.responseText || "An error occurred, please try again.");
+      }
+    });
+  }
+</script>
 </body>
 </html>

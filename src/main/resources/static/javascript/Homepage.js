@@ -70,6 +70,33 @@ function checkLogin(event, url) {
         window.location.href = url; // Redirect if logged in
     }
 }
+// Kiểm tra trạng thái đăng nhập trong sessionStorage và chuyển hướng nếu cần
+function checkLoginStatus() {
+    if (!sessionStorage.getItem("isLoggedIn")) {
+        // Chuyển hướng về trang đăng nhập nếu không có trạng thái đăng nhập
+        window.location.href = "/login";
+    }
+}
+document.addEventListener("DOMContentLoaded", checkLoginStatus);
+// Hàm xử lý đăng xuất và xóa sessionStorage
+function logout() {
+    sessionStorage.removeItem("isLoggedIn"); // Xóa trạng thái đăng nhập khỏi sessionStorage
+    window.location.href = "/account/logout"; // Điều hướng tới trang đăng xuất
+}
+
+// Khởi tạo AOS (Animate On Scroll) nếu thư viện được sử dụng
+function initializeAOS() {
+    if (typeof AOS !== 'undefined') {
+        AOS.init();
+    }
+}
+
+// Gọi hàm kiểm tra trạng thái đăng nhập ngay khi trang được tải
+document.addEventListener("DOMContentLoaded", function () {
+    checkLoginStatus();
+    initializeAOS();
+});
+
 
 // Function to close the modal
 function closeModal() {

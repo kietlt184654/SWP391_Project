@@ -1,42 +1,56 @@
-$('.rating-stars i').on('click', function() {
-    let selectedStar = $(this).data('value');
-    let projectID = $(this).closest('.rating-stars').attr('id').split('-')[1];
+$(document).ready(function() {
+    // Handle star rating click
+    $(document).on('click', '.rating-stars i', function() {
+        let selectedStar = $(this).data('value');
+        let ratingContainer = $(this).closest('.rating-stars');
+        let projectID = parseInt(ratingContainer.closest('.collapse').data('project-id')); // Parse project ID as integer
 
-    $('#stars-' + projectID + ' i').each(function() {
-        $(this).removeClass('selected');
-        if ($(this).data('value') <= selectedStar) {
-            $(this).addClass('selected');
-        }
+        ratingContainer.find('i').removeClass('selected');
+        $(this).prevAll().addBack().addClass('selected');
+
+        ratingContainer.next('input[name="rating"]').val(selectedStar);
     });
 
-    $('#ratingInput-' + projectID).val(selectedStar);
-});
+    $(document).on('click', '.submit-feedback', function() {
+        let feedbackForm = $(this).closest('.collapse');
+        let projectID = parseInt(feedbackForm.data('project-id')); // Parse project ID as integer
+        let rating = feedbackForm.find('input[name="rating"]').val();
+        let feedback = feedbackForm.find('.feedback-text').val().trim();
 
-function submitFeedback(projectID) {
-    let rating = $('#ratingInput-' + projectID).val();
-    let feedback = $('#feedbackText-' + projectID).val();
+        console.log("Submitting feedback with project ID:", projectID);
+        console.log("Rating:", rating, "Feedback:", feedback);
 
-    if (rating === "0" || feedback.trim() === "") {
-        alert("Please select a star rating and enter your feedback.");
-        return;
-    }
+        if (rating === "0" || feedback === "") {
+            alert("Please select a star rating and enter your feedback.");
+            return;
+        }
 
-    $.ajax({
-        url: '/submitFeedback',
-        method: 'POST',
-        data: { projectId: projectID, rating: rating, feedback: feedback },
-        success: function(response) {
-            alert(response);
-            $('#feedbackForm-' + projectID).collapse('hide');
+        // Disable the button during submission
+        $(this).prop('disabled', true);
 
-            // Update interface after successfully submitting feedback
-            $('#feedbackForm-' + projectID).parent().html(
-                `<p><strong>Rating:</strong> ${rating} stars</p>
+        $.ajax({
+            url: '/submitFeedback',
+            method: 'POST',
+            data: { projectId: projectID, rating: rating, feedback: feedback },
+            success: function(response) {
+                alert(response);
+                feedbackForm.collapse('hide');
+
+                // Update interface after feedback submission
+                feedbackForm.parent().html(
+                    `<p><strong>Rating:</strong> ${rating} stars</p>
                  <p><strong>Feedback:</strong> ${feedback}</p>`
-            );
-        },
-        error: function(xhr) {
-            alert(xhr.responseText || "An error occurred, please try again.");
-        }
+                );
+            },
+            error: function(xhr) {
+                alert(xhr.responseText || "An error occurred, please try again.");
+                console.error("AJAX Error:", xhr.responseText); // Debugging log
+            },
+            complete: function() {
+                // Enable button after submission completes
+                feedbackForm.find('.submit-feedback').prop('disabled', false);
+            }
+        });
     });
-}
+
+});

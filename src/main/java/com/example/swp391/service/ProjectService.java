@@ -56,6 +56,10 @@ public class ProjectService {
 //        StaffProjectEntity staffProject = new StaffProjectEntity(staffProjectId, staff, project, new Date(), null);
 //        staffProjectRepository.save(staffProject);
 //    }
+    List<ProjectEntity> getAllProjectsByCustomerId(long customerID){
+        return projectRepository.findByCustomer_CustomerID(customerID);
+
+    }
     public Optional<ProjectEntity> getProjectById(Long projectId) {
         return projectRepository.findById(projectId);
     }
@@ -192,11 +196,11 @@ public class ProjectService {
 
     // Lấy danh sách dự án của khách hàng, bao gồm cả chi tiết nguyên vật liệu
     public List<ProjectEntity> getProjectsByCustomerId(Long customerId) {
-        return projectRepository.findByCustomerCustomerID(customerId);
+        return projectRepository.findByCustomer_CustomerID(customerId);
     }
 
-    public List<ProjectEntity> getCompletedProjectsByCustomerId(Long customerId) {
-        return projectRepository.findByCustomer_CustomerIDAndStatus(customerId, "COMPLETE");
+    public List<ProjectEntity> getAllProjectsByCustomerId(Long customerId) {
+        return projectRepository.findByCustomerCustomerID(customerId);
     }
     public List<ProjectEntity> getIncompleteProjectsByCustomerId(Long customerId) {
         return projectRepository.findByCustomer_CustomerIDAndStatusNot(customerId, "COMPLETE");
