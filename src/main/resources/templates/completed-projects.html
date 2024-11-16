@@ -13,7 +13,36 @@
 <div class="container">
   <h1>All Project History</h1>
   <br>
+  <div class="order-header">
+    <h2>Đơn mua</h2>
+    <a href="#" class="view-history">Xem lịch sử mua hàng</a>
+  </div>
 
+  <!-- Status Bar -->
+  <div class="order-status-bar">
+    <div class="status-item" data-status="NEED_TO_PEND">
+      <i class="fas fa-clock icon"></i>
+      <span class="label">Need to Pend</span>
+      <span class="count" id="needToPendCount">0</span>
+    </div>
+    <div class="status-item" data-status="PENDING">
+      <i class="fas fa-wallet icon"></i>
+      <span class="label">Pending</span>
+      <span class="count" id="pendingCount">0</span>
+    </div>
+    <div class="status-item" data-status="IN_PROGRESS">
+      <i class="fas fa-truck icon"></i>
+      <span class="label">In Progress</span>
+      <span class="count" id="inProgressCount">0</span>
+    </div>
+    <div class="status-item" data-status="COMPLETE">
+      <i class="fas fa-star icon"></i>
+      <span class="label">Complete</span>
+      <span class="count" id="completeCount">0</span>
+    </div>
+  </div>
+
+  <!-- Project Panels -->
   <div th:each="project : ${allProjects}">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -26,6 +55,7 @@
         <p><strong>End Date:</strong> <span th:text="${project.endDate}"></span></p>
         <p><strong>Total Cost:</strong> <span th:text="${project.totalCost}"></span></p>
 
+        <!-- Rating and Feedback Section -->
         <div th:if="${project.status == 'COMPLETE'}">
           <div th:if="${project.feedback != null && project.feedback.isReviewed}">
             <p><strong>Rating:</strong> [[${project.feedback.rating}]] stars</p>
@@ -38,7 +68,6 @@
             </a></p>
 
             <div th:id="'feedbackForm-' + ${project.projectID}" class="collapse" data-project-id="${project.projectID}">
-
               <div class="rating-stars" th:id="'stars-' + ${project.projectID}">
                 <i class="fas fa-star" data-value="1"></i>
                 <i class="fas fa-star" data-value="2"></i>
@@ -58,7 +87,44 @@
   </div>
 </div>
 
+<!-- JavaScript to Count Projects by Status -->
 <script>
+  $(document).ready(function () {
+    function countProjectsByStatus() {
+      // Initialize counters for each status
+      let needToPendCount = 0;
+      let pendingCount = 0;
+      let inProgressCount = 0;
+      let completeCount = 0;
+
+      // Iterate through each project panel and extract the status
+      $('.panel').each(function () {
+        // Extract the status text
+        let status = $(this).find('p:contains("Status:") span').text().trim();
+
+        // Increment counters based on the status
+        if (status === "Need to Pend") {
+          needToPendCount++;
+        } else if (status === "Pending") {
+          pendingCount++;
+        } else if (status === "In Progress") {
+          inProgressCount++;
+        } else if (status === "COMPLETE") {
+          completeCount++;
+        }
+      });
+
+      // Update the status counts in the status bar
+      $('#needToPendCount').text(needToPendCount);
+      $('#pendingCount').text(pendingCount);
+      $('#inProgressCount').text(inProgressCount);
+      $('#completeCount').text(completeCount);
+    }
+
+    // Call the function to update counts on page load
+    countProjectsByStatus();
+  });
+
   // Handle star rating click
   $('.rating-stars i').on('click', function() {
     let selectedStar = $(this).data('value');
@@ -95,7 +161,7 @@
         // Update interface after successfully submitting feedback
         $('#feedbackForm-' + projectID).parent().html(
                 `<p><strong>Rating:</strong> ${rating} stars</p>
-                   <p><strong>Feedback:</strong> ${feedback}</p>`
+           <p><strong>Feedback:</strong> ${feedback}</p>`
         );
       },
       error: function(xhr) {

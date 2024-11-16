@@ -11,14 +11,12 @@ $(document).ready(function() {
         ratingContainer.next('input[name="rating"]').val(selectedStar);
     });
 
+    // Handle feedback submission
     $(document).on('click', '.submit-feedback', function() {
         let feedbackForm = $(this).closest('.collapse');
         let projectID = parseInt(feedbackForm.data('project-id')); // Parse project ID as integer
         let rating = feedbackForm.find('input[name="rating"]').val();
         let feedback = feedbackForm.find('.feedback-text').val().trim();
-
-        console.log("Submitting feedback with project ID:", projectID);
-        console.log("Rating:", rating, "Feedback:", feedback);
 
         if (rating === "0" || feedback === "") {
             alert("Please select a star rating and enter your feedback.");
@@ -39,7 +37,7 @@ $(document).ready(function() {
                 // Update interface after feedback submission
                 feedbackForm.parent().html(
                     `<p><strong>Rating:</strong> ${rating} stars</p>
-                 <p><strong>Feedback:</strong> ${feedback}</p>`
+                     <p><strong>Feedback:</strong> ${feedback}</p>`
                 );
             },
             error: function(xhr) {
@@ -52,5 +50,82 @@ $(document).ready(function() {
             }
         });
     });
-
 });
+$(document).ready(function () {
+    // Count projects in each status
+    let totalProjects = $('.panel').length;
+    let pendingCount = $('.panel:has(.panel-body span:contains("PENDING"))').length;
+    let inProgressCount = $('.panel:has(.panel-body span:contains("IN_PROGRESS"))').length;
+    let completeCount = $('.panel:has(.panel-body span:contains("COMPLETE"))').length;
+
+    // Update counts in the status bar
+    $('#allCount').text(totalProjects);
+    $('#pendingCount').text(pendingCount);
+    $('#inProgressCount').text(inProgressCount);
+    $('#completeCount').text(completeCount);
+
+    // Filter projects based on status
+    $('.status-item').on('click', function () {
+        $('.status-item').removeClass('active');
+        $(this).addClass('active');
+
+        let status = $(this).data('status');
+
+        if (status === 'ALL') {
+            $('.panel').show();
+        } else {
+            $('.panel').hide();
+            $(`.panel:has(.panel-body span:contains("${status}"))`).show();
+        }
+    });
+});
+// Function to update the badge count dynamically
+function updateBadge(count) {
+    document.querySelector('.badge').textContent = count;
+}
+
+// Example usage
+$(document).ready(function () {
+    function countProjectsByStatus() {
+        // Initialize counts
+        let needToPendCount = 0;
+        let pendingCount = 0;
+        let inProgressCount = 0;
+        let completeCount = 0;
+
+        // Loop through each project panel
+        $('.panel').each(function () {
+            // Extract the status text
+            let status = $(this).find('p:contains("Status:")').text().replace("Status:", "").trim();
+            console.log("Detected Status:", status); // Debug log
+
+            // Increment counts based on the status
+            if (status === "Need to Pend") {
+                needToPendCount++;
+            } else if (status === "Pending") {
+                pendingCount++;
+            } else if (status === "In Progress") {
+                inProgressCount++;
+            } else if (status === "COMPLETE") {
+                completeCount++;
+            }
+        });
+
+        // Update the status bar counts
+        $('#needToPendCount').text(needToPendCount);
+        $('#pendingCount').text(pendingCount);
+        $('#inProgressCount').text(inProgressCount);
+        $('#completeCount').text(completeCount);
+
+        console.log("Counts:", {
+            needToPendCount,
+            pendingCount,
+            inProgressCount,
+            completeCount,
+        }); // Debug log
+    }
+
+    // Call the function to update counts
+    countProjectsByStatus();
+});
+
