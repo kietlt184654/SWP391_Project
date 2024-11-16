@@ -128,4 +128,142 @@ $(document).ready(function () {
     // Call the function to update counts
     countProjectsByStatus();
 });
+$(document).ready(function () {
+    function countProjectsByStatus() {
+        let needToPendCount = 0;
+        let pendingCount = 0;
+        let inProgressCount = 0;
+        let completeCount = 0;
+        let totalProjects = 0;
+
+        // Loop through all project panels to count statuses
+        $('.panel').each(function () {
+            let status = $(this).find('p:contains("Status:") span').text().trim();
+            totalProjects++;
+
+            if (status === "Need to Pend") {
+                needToPendCount++;
+            } else if (status === "Pending") {
+                pendingCount++;
+            } else if (status === "In Progress") {
+                inProgressCount++;
+            } else if (status === "COMPLETE") {
+                completeCount++;
+            }
+        });
+
+        // Update the counts in the status bar
+        $('#needToPendCount').text(needToPendCount);
+        $('#pendingCount').text(pendingCount);
+        $('#inProgressCount').text(inProgressCount);
+        $('#completeCount').text(completeCount);
+
+        // Update total count for "All"
+        $('.status-item[data-status="ALL"] .count').remove();
+        $('.status-item[data-status="ALL"]').append(`<span class="count">${totalProjects}</span>`);
+    }
+
+    function filterProjectsByStatus(selectedStatus) {
+        let noProjectsFound = true;
+
+        // Show or hide projects based on the selected status
+        $('.panel').each(function () {
+            let projectStatus = $(this).find('p:contains("Status:") span').text().trim();
+
+            if (selectedStatus === "ALL") {
+                // Show all projects
+                $(this).show();
+                noProjectsFound = false;
+            } else if (
+                (selectedStatus === "NEED_TO_PEND" && projectStatus === "Need to Pend") ||
+                (selectedStatus === "PENDING" && projectStatus === "Pending") ||
+                (selectedStatus === "IN_PROGRESS" && projectStatus === "In Progress") ||
+                (selectedStatus === "COMPLETE" && projectStatus === "COMPLETE")
+            ) {
+                $(this).show();
+                noProjectsFound = false;
+            } else {
+                $(this).hide();
+            }
+        });
+
+        // If no projects are found for the selected status, display "No Project"
+        if (noProjectsFound) {
+            $('.project-container').append(`<p id="noProjectsMessage">No Project</p>`);
+        } else {
+            $('#noProjectsMessage').remove();
+        }
+    }
+
+    // Initial count on page load
+    countProjectsByStatus();
+
+    // Add click event to filter projects by status
+    $('.status-item').on('click', function () {
+        // Get the selected status from the data-status attribute
+        let selectedStatus = $(this).data('status');
+
+        // Highlight the active filter
+        $('.status-item').removeClass('active');
+        $(this).addClass('active');
+
+        // Filter projects by selected status
+        filterProjectsByStatus(selectedStatus);
+    });
+
+    // Handle Cancel Button
+    function confirmCancel(form) {
+        const confirmed = confirm("Are you sure you want to cancel this project?");
+        if (confirmed) {
+            return true; // Gửi form nếu người dùng xác nhận
+        }
+        return false; // Ngăn việc gửi form nếu người dùng từ chối
+    }
+
+
+    // Handle star rating click
+    $('.rating-stars i').on('click', function () {
+        let selectedStar = $(this).data('value');
+        let projectID = $(this).closest('.rating-stars').attr('id').split('-')[1];
+
+        $('#stars-' + projectID + ' i').each(function () {
+            $(this).removeClass('selected');
+            if ($(this).data('value') <= selectedStar) {
+                $(this).addClass('selected');
+            }
+        });
+
+        $('#ratingInput-' + projectID).val(selectedStar);
+    });
+
+    // Function to submit feedback
+    window.submitFeedback = function (projectID) {
+        let rating = $('#ratingInput-' + projectID).val();
+        let feedback = $('#feedbackText-' + projectID).val();
+
+        if (rating === "0" || feedback.trim() === "") {
+            alert("Please select a star rating and enter your feedback.");
+            return;
+        }
+
+        $.ajax({
+            url: '/submitFeedback',
+            method: 'POST',
+            data: { projectId: projectID, rating: rating, feedback: feedback },
+            success: function (response) {
+                alert(response);
+                $('#feedbackForm-' + projectID).collapse('hide');
+
+                // Update interface after successfully submitting feedback
+                $('#feedbackForm-' + projectID).parent().html(
+                    `<p><strong>Rating:</strong> ${rating} stars</p>
+                     <p><strong>Feedback:</strong> ${feedback}</p>`
+                );
+            },
+            error: function (xhr) {
+                alert(xhr.responseText || "An error occurred, please try again.");
+            }
+        });
+    };
+});
 

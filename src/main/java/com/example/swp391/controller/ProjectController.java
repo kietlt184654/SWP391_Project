@@ -68,8 +68,17 @@ private DesignService designService;
         return "redirect:/projects/viewDetailProject/" + projectId;
     }
 
+    @PostMapping("/cancel")
+    public String cancelProject(@RequestParam("projectId") Long projectId, Model model) {
+        System.out.println("Cancel request received for Project ID: " + projectId);
+        try {
+            projectService.cancelProject(projectId);
+            model.addAttribute("message", "Project canceled successfully.");
+        } catch (Exception e) {
+            e.printStackTrace(); // Log error details
+            model.addAttribute("error", "Failed to cancel the project: " + e.getMessage());
+        }
+        return "redirect:/account/customer/completed-projects"; // Redirect to the projects list page
+    }
 
-
-
-
-}
+        }

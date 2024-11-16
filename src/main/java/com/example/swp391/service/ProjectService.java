@@ -226,5 +226,11 @@ public class ProjectService {
         project.setStatus(status);
         projectRepository.save(project);
     }
+    public void cancelProject(Long projectId) {
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+        project.setStatus("Canceled"); // Cập nhật trạng thái thành "Canceled"
+        projectRepository.save(project); // Lưu thay đổi vào database
+    }
 
 }
