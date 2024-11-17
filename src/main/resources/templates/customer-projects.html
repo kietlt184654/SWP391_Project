@@ -31,6 +31,9 @@
         .table {
             margin-top: 15px;
         }
+        .btn-view-project {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +77,11 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Nút Xem Dự Án -->
+                <a th:href="@{'/customer/project/' + ${project.projectID}}" class="btn btn-primary btn-view-project">
+                    Xem Dự Án
+                </a>
             </div>
         </div>
     </div>

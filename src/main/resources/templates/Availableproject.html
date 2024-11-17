@@ -89,7 +89,7 @@
         <img th:src="@{${product.img}}" class="card-img-top" alt="Product Image">
         <div class="card-body">
           <h5 class="card-title" th:text="${product.getDesignName()}">Product Name</h5>
-          <p class="card-text" th:text="${product.getPrice()} + ' $'">Price</p>
+          <p class="card-text" th:text="${product.getFormattedPrice()} + ' $'">Price</p>
           <a th:href="@{/design/{id}(id=${product.designId})}" class="btn btn-primary" style="background-color: #3c7363;">Detail</a>
         </div>
       </div>

@@ -53,6 +53,8 @@ public class AccountController {
                 return "consultingHome";
             } else if (account.getAccountTypeID().equals("Construction Staff")) {
                 return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
+            }else if (account.getAccountTypeID().equals("Design Staff")) {
+                return "redirect:/designStaff/designs/inprogress";
             }
         } else {
             model.addAttribute("messageLogin", "Invalid username or password");

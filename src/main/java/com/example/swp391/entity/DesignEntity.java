@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Entity
@@ -61,7 +62,7 @@ public class DesignEntity {
     }
 
     public enum Status {
-        Available, Unavailable, Pending, Rejected, NeedToPayment
+        Available, Unavailable, Pending, Rejected, NeedToPayment, InDesign, Designed
     }
     @OneToMany(mappedBy = "design", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<DesignMaterialQuantity> designMaterialQuantities; // Danh sách các vật liệu cần thiết
@@ -71,5 +72,16 @@ public class DesignEntity {
     }
     @Column(name = "CustomerReference")
     private Long customerReference;
+
+
+
+
+
+
+        public String getFormattedPrice() {
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            return formatter.format(this.price).replace(",", ".");
+        }
+
 
 }

@@ -39,12 +39,13 @@ public class ConsultingController {
     // Xử lý khi nhân viên gửi form
     @PostMapping("/add")
     public String addDesign(@ModelAttribute("design") DesignEntity design, RedirectAttributes redirectAttributes) {
-        design.setStatus(DesignEntity.Status.Pending); // Đặt trạng thái ban đầu là Pending
-        design.setTypeDesign(typeDesignService.findById(2L)); // Giả sử bạn có typeDesignService để lấy TypeDesign theo ID
-        designService.save(design); // Lưu thiết kế vào DB
+        design.setStatus(DesignEntity.Status.Pending); // Giữ trạng thái ban đầu là Pending
+        design.setTypeDesign(typeDesignService.findById(2L));
+        designService.save(design);
         redirectAttributes.addFlashAttribute("message", "The design has been submitted for approval.");
-        return "consultingHome"; // Điều hướng về trang consultingHome
+        return "consultingHome";
     }
+
 
     // Phương thức hiển thị danh sách các thiết kế bị từ chối
     @GetMapping("/rejectedDesigns")

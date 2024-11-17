@@ -1,0 +1,20 @@
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Design Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="design : ${inProgressDesigns}">
+        <td th:text="${design.designId}"></td>
+        <td th:text="${design.designName}"></td>
+        <td th:text="${design.description}"></td>
+        <td>
+            <a th:href="@{/designStaff/designs/{id}/details(id=${design.designId})}">View</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

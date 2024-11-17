@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi Tiết Dự Án Khách Hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/css/viewDetailProject.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="nav">
+    <div class="nav-logo"><p>LOGO</p></div>
+    <div class="nav-menu">
+        <ul>
+            <li><a href="/customer/dashboard">Dashboard</a></li>
+            <li><a href="/customer/completed-projects">Completed Projects</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Project Details -->
+<div class="project-container">
+    <div class="project">
+        <div class="project-content">
+            <div class="col-md-6 project-image">
+                <img th:src="@{${project.img}}" alt="Project Image" />
+            </div>
+            <div class="col-md-6 text-content">
+                <h4 th:text="${project.name}">Project Name</h4>
+                <p>
+                    <strong>Description:</strong> <span th:text="${project.description}">Project Description</span><br>
+                    <strong>Status:</strong> <span th:text="${project.status}">Project Status</span><br>
+                    <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
+                    <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
+                    <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
+                    <strong>Project ID:</strong> <span th:text="${project.projectID}">Project ID</span><br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs for Task Statuses -->
+<div class="tab-bar">
+    <div class="tab" data-status="task">Task</div>
+    <div class="tab" data-status="To Do">To Do</div>
+    <div class="tab" data-status="In Progress">In Progress</div>
+    <div class="tab" data-status="Done">Done</div>
+</div>
+
+<!-- Assigned Tasks Section -->
+<div class="assigned-tasks">
+    <h3>Các nhiệm vụ đã được phân công:</h3>
+    <ul>
+        <th:block th:each="task : ${tasks}">
+            <div class="task-item">
+                <div class="task-details">
+                    <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> <span th:text="${task.task}"></span></span>
+                    <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
+                    <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
+                    <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${task.assignmentDate}">Assignment Date</span></span>
+                    <div class="task-buttons">
+                        <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </ul>
+</div>
+
+<script src="/javascript/viewDetailProject.js"></script>
+</body>
+</html>

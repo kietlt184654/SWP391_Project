@@ -106,7 +106,7 @@
                 <td th:text="${entry.key.designId}">Product ID</td>
                 <td><img th:src="@{${entry.key.img}}" alt="Product Image" width="100"/></td>
                 <td th:text="${entry.key.designName}">Product Name</td>
-                <td th:text="${entry.key.price}">Product Price</td>
+                <td th:text="${entry.key.formattedPrice}">Product Price</td>
                 <td th:text="${entry.value}">Quantity</td>
             </tr>
             </tbody>
