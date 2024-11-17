@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StaffProjectService {
@@ -145,9 +146,22 @@ public void deleteStaffProjectById(int id) {
         }
     }
 
+//    public List<String> getProgressImagesByProjectId(Long projectId) {
+//        // Lấy danh sách các StaffProjectEntity từ projectId
+//        List<StaffProjectEntity> tasks = staffProjectRepository.findByProject_ProjectID(projectId);
+//
+//        // Trích xuất danh sách các hình ảnh (progressImage)
+//        return tasks.stream()
+//                .map(StaffProjectEntity::getProgressImage) // Lấy cột progressImage
+//                .filter(image -> image != null && !image.isEmpty()) // Loại bỏ giá trị null hoặc chuỗi rỗng
+//                .collect(Collectors.toList());
+//    }
+
+    public List<StaffProjectEntity> getProgressImagesByProjectId(Long projectId) {
 
 
-
+        return staffProjectRepository.findByProject_ProjectID(projectId);
+    }
 
 }
 

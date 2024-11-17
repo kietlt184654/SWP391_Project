@@ -33,17 +33,21 @@
         <h4 th:text="${project.name}">Project Name</h4>
         <p>
           <strong>Description:</strong> <span th:text="${project.description}">Project Description</span><br>
-          <strong>Status:</strong> <span th:text="${project.status}">Project Status</span><br>
+          <strong>Status:</strong>
+          <span th:if="${project.status == 'Pending'}" style="color: blue;" th:text="${project.status}">Pending</span>
+          <span th:if="${project.status == 'In Progress'}" style="color: orange;" th:text="${project.status}">In Progress</span>
+          <span th:if="${project.status == 'COMPLETE'}" style="color: green;" th:text="${project.status}">Complete</span>
+          <br>
           <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
           <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
           <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Total Cost</span><br>
-
           <strong>Project ID:</strong> <span th:text="${project.projectID}">Project ID</span><br>
         </p>
       </div>
     </div>
   </div>
 </div>
+
 <!-- Status Dropdown -->
 <div class="status-dropdown">
   <form th:action="@{/projects/updateProjectStatus}" method="post">
@@ -57,59 +61,44 @@
     </select>
   </form>
 </div>
-<a th:href="@{/staff/list(projectId=${project.projectID})}" class="btn btn-primary">Select Staff</a>
-<!-- Tabs for Additional Information -->
-<!--<div class="tab-bar">-->
-<!--  <div class="tab" onclick="showContent('task')">Task</div>-->
-<!--  <div class="tab" onclick="showContent('progress')">Progress</div>-->
-<!--  <div class="tab" onclick="showContent('finish')">Finish</div>-->
-<!--</div>-->
-<div class="tab-bar">
-  <div class="tab" data-status="task">Task</div>        <!-- Show all tasks -->
-  <div class="tab" data-status="To Do">To Do</div>       <!-- Show 'To Do' tasks -->
-  <div class="tab" data-status="in-progress">Progress</div> <!-- Show 'In Progress' tasks -->
-  <div class="tab" data-status="done">Finish</div>       <!-- Show 'Done' tasks -->
-</div>
-<!-- Assigned Tasks Section -->
-<div class="assigned-tasks">
-  <h3>Các nhiệm vụ đã được phân công:</h3>
-  <ul>
-    <th:block th:each="task : ${tasks}">
-      <div class="task-item">
-        <div class="task-details">
-          <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> <span th:text="${task.task}"></span></span>
-          <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
-          <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
-          <!--          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${#temporals.format(task.assignmentDate, 'yyyy-MM-dd')}"></span></span>-->
-          <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${task.assignmentDate}">Assignment Date</span></span>
-          <div class="task-buttons">
-            <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
-            <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
-              <input type="hidden" name="projectID" th:value="${project.projectID}" />
-              <button type="submit" class="btn-delete">Xóa</button>
-            </form>
+
+<!-- Conditional Section: Hidden if Status is Pending -->
+<div th:if="${project.status != 'Pending'}">
+  <a th:href="@{/staff/list(projectId=${project.projectID})}" class="btn btn-primary">Select Staff</a>
+
+  <!-- Tabs for Additional Information -->
+  <div class="tab-bar">
+    <div class="tab" data-status="task">Task</div>
+    <div class="tab" data-status="To Do">To Do</div>
+    <div class="tab" data-status="in-progress">Progress</div>
+    <div class="tab" data-status="done">Finish</div>
+  </div>
+
+  <!-- Assigned Tasks Section -->
+  <div class="assigned-tasks">
+    <h3>Các nhiệm vụ đã được phân công:</h3>
+    <ul>
+      <th:block th:each="task : ${tasks}">
+        <div class="task-item">
+          <div class="task-details">
+            <span class="task-name"><strong>Mô tả nhiệm vụ:</strong> <span th:text="${task.task}"></span></span>
+            <span class="task-staff"><strong>Tên nhân viên:</strong> <span th:text="${task.staff.account.accountName}"></span></span>
+            <span class="task-progress"><strong>Progress:</strong> <span th:text="${task.getStatus()}"></span></span>
+            <span class="task-deadline"><strong>Thời hạn:</strong> <span th:text="${task.assignmentDate}">Assignment Date</span></span>
+            <div class="task-buttons">
+              <a th:href="@{'/project/images/' + ${task.staffProjectID}}" class="view-details">View Details</a>
+              <form th:action="@{/deleteService/{id}(id=${task.staffProjectID})}" method="post" class="delete-form">
+                <input type="hidden" name="projectID" th:value="${project.projectID}" />
+                <button type="submit" class="btn-delete">Xóa</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </th:block>
-  </ul>
-</div>
-
-<!-- Modal for selecting staff -->
-<div id="staffModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h4>Select a Staff Member</h4>
-    <div id="staffList">
-      <div class="staff-item" onclick="selectStaff(1, 'John Doe', 'Engineer', 'john@example.com', '123-456-7890')">
-        <p><strong>Name:</strong> John Doe</p>
-        <p><strong>Role:</strong> Engineer</p>
-      </div>
-    </div>
+      </th:block>
+    </ul>
   </div>
 </div>
 
-<!-- Link to the external JavaScript file -->
 <script src="/javascript/viewDetailProject.js"></script>
 </body>
 </html>

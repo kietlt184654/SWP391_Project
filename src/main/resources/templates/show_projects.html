@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manage construction progress</title>
+    <title>Manage Construction Progress</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <script src="/javascript/manageConstruction.js" defer></script>
@@ -23,84 +23,17 @@
         <span class="logo_name">KoiPond</span>
     </div>
     <ul class="nav-links">
-
-        <li>
-            <div class="iocn-link">
-                <a th:href="@{/account/customers}">
-                    <i class='bx bx-user'></i>
-                    <span class="link_name">Customer Management</span>
-                </a>
-
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Customer Management</a></li>
-            </ul>
-        </li>
-        <li>
-            <div class="iocn-link">
-                <a th:href="@{/projects/showProjects}">
-                    <i class='bx bx-folder'></i>
-                    <span class="link_name">Project Management</span>
-                </a>
-                <!-- <i class='bx bxs-chevron-down arrow'></i> -->
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Project Management</a></li>
-
-            </ul>
-        </li>
-        <li>
-            <div class="iocn-link">
-                <a th:href="@{/staff}">
-                    <i class='bx bx-group'></i>
-                    <span class="link_name">Staff Management</span>
-                </a>
-                <!-- <i class='bx bxs-chevron-down arrow'></i> -->
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Staff Management</a></li>
-
-            </ul>
-        </li>
-        <li>
-            <a th:href="@{/manager/design/approval}">
-                <i class='bx bx-check-circle'></i>
-                <span class="link_name">Design Approval</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Design Approval</a></li>
-            </ul>
-        </li>
-        <li>
-            <div class="iocn-link">
-                <a href="#">
-                    <i class='bx bx-cube'></i>
-                    <span class="link_name">Material Management</span>
-                </a>
-                <i class='bx bxs-chevron-down arrow'></i>
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Material Management</a></li>
-                <li><a th:href="@{/materials/list}">Material List</a></li>
-                <li><a th:href="@{/materials/history}">Material History</a></li>
-                <li><a th:href="@{/materials/historyofchanging}">Material Updated List</a></li>
-            </ul>
-        </li>
-        <div class="profile-details">
-            <div class="profile-content">
-                <!--<img src="image/profile.jpg" alt="profileImg">-->
-            </div>
-            <form th:action="@{/account/logout}" method="post" class="ms-3">
-                <button type="submit" class='bx bx-log-out'></button>
-            </form>
-        </div>
-        </li>
+        <!-- Sidebar content -->
     </ul>
 </div>
 <section class="home-section">
     <div class="home-content">
         <i class='bx bx-menu'></i>
-    </div>
+    </div>  <div>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+</div>
+
     <div class="project-container">
         <h2>All Projects</h2>
         <div th:each="project : ${projects}" class="project">
@@ -122,32 +55,41 @@
                         <strong>Email:</strong> <span
                             th:text="${project.customer.account.email}">Email</span><br /><br />
 
-                        <!--                    2. Construction Timeline<br />-->
-                        <!--                    <strong>Start Date:</strong> <span th:text="${#temporals.format(project.startDate, 'yyyy-MM-dd')}">Start Date</span><br />-->
-                        <!--                    <strong>Completion Date:</strong> <span th:text="${#temporals.format(project.endDate, 'yyyy-MM-dd')}">End Date</span><br /><br />-->
-
-                        <!--                    3. Status and Priority<br />-->
-                        <!--                    <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />-->
-                        <!--                    <strong>Total Cost:</strong> <span th:text="${#numbers.formatDecimal(project.totalCost, 2, 'POINT', 'COMMA')}">Cost</span><br />-->
-                        <!--                    <br />-->
                         2. Construction Timeline<br />
                         <strong>Start Date:</strong> <span th:text="${project.startDate}">Start Date</span><br />
                         <strong>Completion Date:</strong> <span th:text="${project.endDate}">End Date</span><br /><br />
 
                         3. Status and Priority<br />
-                        <strong>Status:</strong> <span th:text="${project.status}">Status</span><br />
+                        <strong>Status:</strong>
+                        <span th:if="${project.status == 'Canceled'}" style="color: red; font-weight: bold;" th:text="${project.status}"></span>
+                        <span th:if="${project.status == 'COMPLETE'}" style="color: green; font-weight: bold;" th:text="${project.status}"></span>
+                        <span th:if="${project.status == 'In Progress'}" style="color: orange; font-weight: bold;" th:text="${project.status}"></span>
+                        <span th:if="${project.status == 'Pending'}" style="color: blue; font-weight: bold;" th:text="${project.status}"></span>
+                        <span th:if="${project.status != 'Canceled' && project.status != 'COMPLETE' && project.status != 'In Progress' && project.status != 'Pending'}" th:text="${project.status}"></span>
+                        <br />
                         <strong>Total Cost:</strong> <span th:text="${project.totalCost}">Cost</span><br />
                         <br />
                     </p>
-                    <a th:href="@{'/projects/viewDetailProject/' + ${project.projectID}}">
+                    <!-- Delete Button: Only visible for canceled projects -->
+<!--                    <form th:if="${project.status == 'Canceled'}" th:action="@{/projects/delete}" method="POST" style="display: inline-block;">-->
+<!--                        <input type="hidden" name="projectId" th:value="${project.projectID}" />-->
+<!--                        <button-->
+<!--                                type="submit"-->
+<!--                                class="btn btn-danger"-->
+<!--                                style="background-color: #dc3545; color: white; border: none;"-->
+<!--                                onclick="return confirm('Are you sure you want to delete this project?');">-->
+<!--                            Delete-->
+<!--                        </button>-->
+<!--                    </form>-->
+
+                    <!-- Hide View button if project is canceled -->
+                    <a th:if="${project.status != 'Canceled'}" th:href="@{'/projects/viewDetailProject/' + ${project.projectID}}">
                         <button class="btn btn-primary">View</button>
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
-
 </section>
 <script src="/javascript/MaterialManagement.js"></script>
 </body>

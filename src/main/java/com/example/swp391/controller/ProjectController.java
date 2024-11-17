@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/projects")
@@ -80,5 +81,51 @@ private DesignService designService;
         }
         return "redirect:/account/customer/completed-projects"; // Redirect to the projects list page
     }
-
+    @PostMapping("/delete")
+    public String deleteProject(@RequestParam("projectId") Long projectId, RedirectAttributes redirectAttributes) {
+        try {
+            projectService.deleteProject(projectId);
+            redirectAttributes.addFlashAttribute("message", "Project deleted successfully.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Failed to delete the project: " + e.getMessage());
         }
+        return "redirect:/projects/showProjects"; // Redirect to the project list page
+    }
+    @GetMapping("/{projectId}/progress")
+    public String viewProjectProgress(@PathVariable Long projectId, Model model) {
+        // Lấy danh sách StaffProjectEntity từ projectId
+        List<StaffProjectEntity> tasks = staffProjectService.getProgressImagesByProjectId(projectId);
+
+        // Lấy danh sách ảnh
+        List<String> progressImages = tasks.stream()
+                .map(StaffProjectEntity::getProgressImage)
+                .filter(image -> image != null && !image.isEmpty()) // Bỏ qua null/chuỗi rỗng
+                .map(image -> {
+                    if (image.startsWith("http://") || image.startsWith("https://")) {
+                        // Ảnh từ URL bên ngoài
+                        return image;
+                    } else if (image.startsWith("/uploads/")) {
+                        // Tránh thêm lại "/uploads/" nếu đã tồn tại
+                        return image;
+                    } else {
+                        // Ảnh cục bộ, thêm "/uploads/" vào đầu
+                        return "/uploads/" + image;
+                    }
+                })
+
+                .collect(Collectors.toList());
+
+        // Log để kiểm tra đường dẫn ảnh
+        progressImages.forEach(System.out::println);
+
+        // Thêm dữ liệu vào model
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("progressImages", progressImages);
+        model.addAttribute("tasks", tasks);
+
+        return "viewProjectProgress";
+    }
+
+
+
+}

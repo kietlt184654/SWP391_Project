@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Project Progress</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .progress-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .progress-images img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 5px;
+    }
+
+    .progress-images img:hover {
+      border: 1px solid #777;
+    }
+
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .task-table th, .task-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .task-table th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Project Progress</h1>
+  <h3>Progress Images for Project ID: <span th:text="${projectId}"></span></h3>
+
+  <!-- Hiển thị danh sách ảnh -->
+  <div th:if="${progressImages.isEmpty()}" class="alert alert-warning">
+    No progress images available for this project.
+  </div>
+  <div th:if="${!progressImages.isEmpty()}">
+    <div class="progress-images">
+      <!-- Lặp qua danh sách hình ảnh -->
+      <div th:each="image : ${progressImages}" style="width: 30%;">
+        <img th:src="${image}" alt="Progress Image">
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  <!-- Hiển thị danh sách task -->
+  <h3>Tasks for Project</h3>
+  <div th:if="${tasks.isEmpty()}" class="alert alert-warning">
+    No tasks available for this project.
+  </div>
+  <table th:if="${!tasks.isEmpty()}" class="task-table">
+    <thead>
+    <tr>
+      <th>Task Name</th>
+      <th>Staff Assigned</th>
+      <th>Status</th>
+      <th>Assignment Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+      <td th:text="${task.task}">Task Name</td>
+      <td th:text="${task.staff != null && task.staff.account != null ? task.staff.account.accountName : 'No Staff Assigned'}">Staff Name</td>
+      <td th:text="${task.status}">Status</td>
+      <td th:text="${task.assignmentDate}">Assignment Date</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a th:href="@{/projects}" class="btn btn-primary">Back to Projects</a>
+</div>
+</body>
+</html>

@@ -232,5 +232,12 @@ public class ProjectService {
         project.setStatus("Canceled"); // Cập nhật trạng thái thành "Canceled"
         projectRepository.save(project); // Lưu thay đổi vào database
     }
-
+    public void deleteProject(Long projectId) {
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+        if (!"Canceled".equalsIgnoreCase(project.getStatus())) {
+            throw new RuntimeException("Only canceled projects can be deleted.");
+        }
+        projectRepository.delete(project); // Delete the project from the database
+    }
 }

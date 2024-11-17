@@ -45,6 +45,11 @@
       <span class="label">Complete</span>
       <span class="count" id="completeCount">0</span>
     </div>
+    <div class="status-item" data-status="CANCELED">
+      <i class="fas fa-times-circle icon"></i>
+      <span class="label">Canceled</span>
+      <span class="count" id="canceledCount">0</span>
+    </div>
   </div>
   <div th:if="${messages}" class="alert alert-success" th:text="${message}"></div>
   <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
@@ -65,10 +70,14 @@
 <!--          <input type="hidden" name="projectId" th:value="${project.projectID}">-->
 <!--          <button type="submit" class="btn btn-danger">Cancel</button>-->
 <!--        </form>-->
-        <form th:if="${project.status != 'Canceled'||project.status!= 'COMPLETE'}" action="/projects/cancel" method="POST" onsubmit="return confirmCancel();">
+        <form th:if="${project.status != 'Canceled'&&project.status != 'COMPLETE'}" action="/projects/cancel" method="POST" onsubmit="return confirmCancel();">
           <input type="hidden" name="projectId" th:value="${project.projectID}">
           <button type="submit" class="btn btn-danger">Cancel</button>
         </form>
+        <form th:action="@{/projects/{projectId}/progress(projectId=${project.projectID})}" method="GET">
+          <button type="submit" class="btn btn-info">View Progress</button>
+        </form>
+
         <!-- Rating and Feedback Section -->
         <div th:if="${project.status == 'COMPLETE'}">
           <div th:if="${project.feedback != null && project.feedback.isReviewed}">

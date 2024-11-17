@@ -83,57 +83,14 @@ $(document).ready(function () {
 function updateBadge(count) {
     document.querySelector('.badge').textContent = count;
 }
-
-// Example usage
 $(document).ready(function () {
-    function countProjectsByStatus() {
-        // Initialize counts
-        let needToPendCount = 0;
-        let pendingCount = 0;
-        let inProgressCount = 0;
-        let completeCount = 0;
-
-        // Loop through each project panel
-        $('.panel').each(function () {
-            // Extract the status text
-            let status = $(this).find('p:contains("Status:")').text().replace("Status:", "").trim();
-            console.log("Detected Status:", status); // Debug log
-
-            // Increment counts based on the status
-            if (status === "Need to Pend") {
-                needToPendCount++;
-            } else if (status === "Pending") {
-                pendingCount++;
-            } else if (status === "In Progress") {
-                inProgressCount++;
-            } else if (status === "COMPLETE") {
-                completeCount++;
-            }
-        });
-
-        // Update the status bar counts
-        $('#needToPendCount').text(needToPendCount);
-        $('#pendingCount').text(pendingCount);
-        $('#inProgressCount').text(inProgressCount);
-        $('#completeCount').text(completeCount);
-
-        console.log("Counts:", {
-            needToPendCount,
-            pendingCount,
-            inProgressCount,
-            completeCount,
-        }); // Debug log
-    }
-
-    // Call the function to update counts
-    countProjectsByStatus();
-});
-$(document).ready(function () {
+    // Function to count projects by status
     function countProjectsByStatus() {
         let needToPendCount = 0;
         let pendingCount = 0;
         let inProgressCount = 0;
         let completeCount = 0;
+        let canceledCount = 0; // Add count for Canceled projects
         let totalProjects = 0;
 
         // Loop through all project panels to count statuses
@@ -149,6 +106,8 @@ $(document).ready(function () {
                 inProgressCount++;
             } else if (status === "COMPLETE") {
                 completeCount++;
+            } else if (status === "Canceled") {
+                canceledCount++; // Count Canceled projects
             }
         });
 
@@ -157,12 +116,14 @@ $(document).ready(function () {
         $('#pendingCount').text(pendingCount);
         $('#inProgressCount').text(inProgressCount);
         $('#completeCount').text(completeCount);
+        $('#canceledCount').text(canceledCount); // Update Canceled count
 
         // Update total count for "All"
         $('.status-item[data-status="ALL"] .count').remove();
         $('.status-item[data-status="ALL"]').append(`<span class="count">${totalProjects}</span>`);
     }
 
+    // Function to filter projects by selected status
     function filterProjectsByStatus(selectedStatus) {
         let noProjectsFound = true;
 
@@ -178,7 +139,8 @@ $(document).ready(function () {
                 (selectedStatus === "NEED_TO_PEND" && projectStatus === "Need to Pend") ||
                 (selectedStatus === "PENDING" && projectStatus === "Pending") ||
                 (selectedStatus === "IN_PROGRESS" && projectStatus === "In Progress") ||
-                (selectedStatus === "COMPLETE" && projectStatus === "COMPLETE")
+                (selectedStatus === "COMPLETE" && projectStatus === "COMPLETE") ||
+                (selectedStatus === "CANCELED" && projectStatus === "Canceled")
             ) {
                 $(this).show();
                 noProjectsFound = false;
@@ -210,6 +172,134 @@ $(document).ready(function () {
         // Filter projects by selected status
         filterProjectsByStatus(selectedStatus);
     });
+
+
+// // Example usage
+// $(document).ready(function () {
+//     function countProjectsByStatus() {
+//         // Initialize counts
+//         let needToPendCount = 0;
+//         let pendingCount = 0;
+//         let inProgressCount = 0;
+//         let completeCount = 0;
+//
+//         // Loop through each project panel
+//         $('.panel').each(function () {
+//             // Extract the status text
+//             let status = $(this).find('p:contains("Status:")').text().replace("Status:", "").trim();
+//             console.log("Detected Status:", status); // Debug log
+//
+//             // Increment counts based on the status
+//             if (status === "Need to Pend") {
+//                 needToPendCount++;
+//             } else if (status === "Pending") {
+//                 pendingCount++;
+//             } else if (status === "In Progress") {
+//                 inProgressCount++;
+//             } else if (status === "COMPLETE") {
+//                 completeCount++;
+//             }
+//         });
+//
+//         // Update the status bar counts
+//         $('#needToPendCount').text(needToPendCount);
+//         $('#pendingCount').text(pendingCount);
+//         $('#inProgressCount').text(inProgressCount);
+//         $('#completeCount').text(completeCount);
+//
+//         console.log("Counts:", {
+//             needToPendCount,
+//             pendingCount,
+//             inProgressCount,
+//             completeCount,
+//         }); // Debug log
+//     }
+//
+//     // Call the function to update counts
+//     countProjectsByStatus();
+// });
+// $(document).ready(function () {
+//     function countProjectsByStatus() {
+//         let needToPendCount = 0;
+//         let pendingCount = 0;
+//         let inProgressCount = 0;
+//         let completeCount = 0;
+//         let totalProjects = 0;
+//
+//         // Loop through all project panels to count statuses
+//         $('.panel').each(function () {
+//             let status = $(this).find('p:contains("Status:") span').text().trim();
+//             totalProjects++;
+//
+//             if (status === "Need to Pend") {
+//                 needToPendCount++;
+//             } else if (status === "Pending") {
+//                 pendingCount++;
+//             } else if (status === "In Progress") {
+//                 inProgressCount++;
+//             } else if (status === "COMPLETE") {
+//                 completeCount++;
+//             }
+//         });
+//
+//         // Update the counts in the status bar
+//         $('#needToPendCount').text(needToPendCount);
+//         $('#pendingCount').text(pendingCount);
+//         $('#inProgressCount').text(inProgressCount);
+//         $('#completeCount').text(completeCount);
+//
+//         // Update total count for "All"
+//         $('.status-item[data-status="ALL"] .count').remove();
+//         $('.status-item[data-status="ALL"]').append(`<span class="count">${totalProjects}</span>`);
+//     }
+//
+//     function filterProjectsByStatus(selectedStatus) {
+//         let noProjectsFound = true;
+//
+//         // Show or hide projects based on the selected status
+//         $('.panel').each(function () {
+//             let projectStatus = $(this).find('p:contains("Status:") span').text().trim();
+//
+//             if (selectedStatus === "ALL") {
+//                 // Show all projects
+//                 $(this).show();
+//                 noProjectsFound = false;
+//             } else if (
+//                 (selectedStatus === "NEED_TO_PEND" && projectStatus === "Need to Pend") ||
+//                 (selectedStatus === "PENDING" && projectStatus === "Pending") ||
+//                 (selectedStatus === "IN_PROGRESS" && projectStatus === "In Progress") ||
+//                 (selectedStatus === "COMPLETE" && projectStatus === "COMPLETE")
+//             ) {
+//                 $(this).show();
+//                 noProjectsFound = false;
+//             } else {
+//                 $(this).hide();
+//             }
+//         });
+//
+//         // If no projects are found for the selected status, display "No Project"
+//         if (noProjectsFound) {
+//             $('.project-container').append(`<p id="noProjectsMessage">No Project</p>`);
+//         } else {
+//             $('#noProjectsMessage').remove();
+//         }
+//     }
+//
+//     // Initial count on page load
+//     countProjectsByStatus();
+//
+//     // Add click event to filter projects by status
+//     $('.status-item').on('click', function () {
+//         // Get the selected status from the data-status attribute
+//         let selectedStatus = $(this).data('status');
+//
+//         // Highlight the active filter
+//         $('.status-item').removeClass('active');
+//         $(this).addClass('active');
+//
+//         // Filter projects by selected status
+//         filterProjectsByStatus(selectedStatus);
+//     });
 
     // Handle Cancel Button
     function confirmCancel(form) {
