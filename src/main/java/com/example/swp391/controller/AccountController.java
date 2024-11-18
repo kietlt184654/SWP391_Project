@@ -1,5 +1,6 @@
 package com.example.swp391.controller;
 
+
 import com.example.swp391.entity.AccountEntity;
 
 import com.example.swp391.entity.CustomerEntity;
@@ -40,6 +41,80 @@ public class AccountController {
 private StaffProjectService staffProjectService;
     @Autowired
     private CustomerService customerService;
+//    @PostMapping("/login")
+//    public String login(@RequestParam("accountName") String accountName,
+//                        @RequestParam("password") String password,
+//                        Model model,
+//                        HttpSession session,
+//                        RedirectAttributes redirectAttributes,
+//                        SessionManager sessionManager) {
+//        // Xác thực tài khoản
+//        AccountEntity account = accountService.login(accountName, password);
+//        if (account != null) {
+//            // Đăng ký session mới, hủy session cũ nếu cần
+//            sessionManager.registerSession(accountName, session);
+//
+//            // Lưu thông tin người dùng vào session
+//            session.setAttribute("loggedInUser", account);
+//
+//            // Phân loại xử lý dựa trên loại tài khoản
+//            switch (account.getAccountTypeID()) {
+//                case "Customer":
+//                    // Kiểm tra nếu đây là lần đầu đăng nhập và tạo CustomerEntity
+//                    if (!customerService.existsByAccount(account)) {
+//                        CustomerEntity customer = new CustomerEntity();
+//                        customer.setAccount(account);
+//                        customerService.save(customer);
+//                    }
+//                    redirectAttributes.addFlashAttribute("message", "Login successful! Welcome back.");
+//                    return "redirect:/";
+//
+//                case "Manager":
+//                    redirectAttributes.addFlashAttribute("message", "Welcome, Manager!");
+//                    return "redirect:/manager";
+//
+//                case "Consulting Staff":
+//                    redirectAttributes.addFlashAttribute("message", "Welcome to the Consulting Dashboard!");
+//                    return "redirect:/consultingHome";
+//
+//                case "Construction Staff":
+//                    redirectAttributes.addFlashAttribute("message", "Welcome to your Dashboard!");
+//                    return "redirect:/dashboard";
+//
+//                default:
+//                    redirectAttributes.addFlashAttribute("messageLogin", "Unknown account type.");
+//                    return "redirect:/login";
+//            }
+//        }
+//
+//        // Nếu tài khoản không hợp lệ
+//        model.addAttribute("messageLogin", "Invalid username or password.");
+//        return "login";
+//    }
+//
+//
+//
+//
+//
+//    //    @PostMapping("/logout")
+////    public String logout(HttpSession session) {
+////        // Xóa toàn bộ session
+////        session.invalidate();
+////        // Chuyển hướng đến trang đăng nhập hoặc trang chủ
+////        return "Homepage"; // Thay đổi đường dẫn theo yêu cầu của bạn
+////    }
+//    @PostMapping("/logout")
+//    public String logout(HttpSession session, RedirectAttributes redirectAttributes, SessionManager sessionManager) {
+//        AccountEntity loggedInUser = (AccountEntity) session.getAttribute("loggedInUser");
+//        if (loggedInUser != null) {
+//            sessionManager.removeSession(loggedInUser.getAccountName());
+//        }
+//        if (session != null) {
+//            session.invalidate(); // Hủy toàn bộ session
+//        }
+//        redirectAttributes.addFlashAttribute("message", "You have been logged out successfully.");
+//        return "redirect:/login"; // Chuyển hướng đến trang đăng nhập
+//    }
 
     @PostMapping("/login")
     public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
@@ -63,6 +138,8 @@ private StaffProjectService staffProjectService;
                 return "consultingHome";
             } else if (account.getAccountTypeID().equals("Construction Staff")) {
                 return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
+            }else if (account.getAccountTypeID().equals("Design Staff")) {
+                return "redirect:/designStaff/designs/inprogress";
             }
         } else {
             model.addAttribute("messageLogin", "Invalid username or password");
@@ -78,7 +155,6 @@ private StaffProjectService staffProjectService;
         // Chuyển hướng đến trang đăng nhập hoặc trang chủ
         return "Homepage"; // Thay đổi đường dẫn theo yêu cầu của bạn
     }
-
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("userDTO") AccountEntity userDTO, Model model) {
         // Kiểm tra email đã tồn tại

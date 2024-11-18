@@ -33,6 +33,13 @@
         <a th:if="${design.status.name() == 'NeedToPayment'}"
            th:href="@{'/customer/design/' + ${design.designId} + '/payment'}"
            class="btn btn-success">Thanh Toán</a>
+
+        <!-- Nút Từ Chối, chỉ hiển thị nếu trạng thái là NeedToPayment -->
+        <form th:if="${design.status.name() == 'NeedToPayment'}"
+              th:action="@{'/customer/design/' + ${design.designId} + '/reject'}"
+              method="post" style="display:inline;">
+          <button type="submit" class="btn btn-danger">Từ Chối</button>
+        </form>
       </td>
     </tr>
     </tbody>

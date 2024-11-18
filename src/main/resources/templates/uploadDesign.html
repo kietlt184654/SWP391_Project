@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Design</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Đường dẫn đến file CSS nếu có -->
+</head>
+<body>
+<h1>Upload Design for Project</h1>
+
+<!-- Hiển thị thông báo lỗi nếu có -->
+<div th:if="${errorMessage}" class="error-message">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<!-- Hiển thị thông báo thành công nếu có -->
+<div th:if="${successMessage}" class="success-message">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<!-- Thông tin chi tiết thiết kế -->
+<div>
+    <h2>Design Details</h2>
+    <p><strong>Design ID:</strong> <span th:text="${design.designId}"></span></p>
+    <p><strong>Design Name:</strong> <span th:text="${design.designName}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${design.status}"></span></p>
+</div>
+
+<!-- Form Upload File -->
+<form th:action="@{/designStaff/designs/{designId}/submit(designId=${design.designId})}" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="designFile">Upload Design File:</label>
+        <input type="file" id="designFile" name="designFile" required>
+    </div>
+    <div>
+        <button type="submit">Submit Design</button>
+    </div>
+</form>
+
+<!-- Link trở lại danh sách thiết kế -->
+<div>
+    <a th:href="@{/designStaff/designs/inprogress}">Back to Design List</a>
+</div>
+</body>
+</html>
