@@ -70,7 +70,7 @@
 <!--          <input type="hidden" name="projectId" th:value="${project.projectID}">-->
 <!--          <button type="submit" class="btn btn-danger">Cancel</button>-->
 <!--        </form>-->
-        <form th:if="${project.status != 'Canceled'&&project.status != 'COMPLETE'}" action="/projects/cancel" method="POST" onsubmit="return confirmCancel();">
+        <form th:if="${project.status != 'Canceled'&&project.status != 'COMPLETE'&&project.status != 'In Progress'}" action="/projects/cancel" method="POST" onsubmit="return confirmCancel();">
           <input type="hidden" name="projectId" th:value="${project.projectID}">
           <button type="submit" class="btn btn-danger">Cancel</button>
         </form>
