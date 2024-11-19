@@ -1,143 +1,145 @@
-/* CSS cho trang Project Images */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-h2 {
-    color: #333;
-    margin-bottom: 20px;
+h1 {
+    color: #2c3e50;
+    margin: 20px 0 40px 0;
     text-align: center;
+    font-size: 3.2em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 20px 40px;
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    border-radius: 2px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #2c3e50);
+    border-radius: 2px;
 }
 
 .images-container {
-    display: flex;
+    display: flex;  /* Changed from grid to flex */
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
-    margin-bottom: 20px;
-    max-width: 1200px;
+    align-items: center;
+    margin: 30px auto;
+    max-width: 1600px;
+    width: 90%;
+    padding: 0 15px;
+    gap: 30px;
 }
 
 .image-card {
-    width: 220px;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;  /* Set a fixed width */
+    height: auto;  /* Allow height to adjust based on content */
 }
 
 .image-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 .progress-image {
     width: 100%;
-    height: auto;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    height: 400px;  /* Increased height */
+    object-fit: contain;
+    border-radius: 8px;
+    border: none;
 }
 
 p {
-    color: #666;
+    color: #6c757d;
     font-size: 1.1em;
     text-align: center;
+    margin: 20px 0;
 }
 
 .back-button-container {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .back-button {
-    padding: 10px 25px;
+    padding: 12px 30px;
     color: #fff;
-    background-color: #007bff;
+    background-color: #3498db;
     text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: #2980b9;
     transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
 }
-.red-button {
+
+.delete-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.delete-button {
     color: #ffffff;
-    background-color: #ff4d4d;
-    padding: 10px 20px;
+    background-color: #e74c3c;
+    padding: 12px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
 }
 
-.red-button:hover {
-    background-color: #ff0000;
-}
-/* Căn chỉnh các nút trong từng nhiệm vụ */
-.task-buttons {
-    display: flex;
-    gap: 10px; /* Khoảng cách giữa các nút */
-    margin-top: 10px;
-}
-
-.view-details {
-    background-color: #007bff; /* Màu xanh cho nút View Details */
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.view-details:hover {
-    background-color: #0056b3; /* Màu xanh đậm hơn khi hover */
-}
-
-.view-details:active {
-    background-color: #004494; /* Màu đậm hơn khi nhấn */
-    transform: scale(0.98); /* Nhấn nút hơi thu nhỏ */
-}
-
-/* Nút Xóa với màu đỏ */
-.btn-delete {
-    background-color: #ff4d4d;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-delete:hover {
-    background-color: #cc0000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.btn-delete:active {
-    background-color: #b30000;
-    transform: scale(0.98);
-}
-
-/* Đảm bảo căn giữa các nội dung bên trong */
-.task-item {
-    display: flex;
-    flex-direction: column;
+.delete-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
 }

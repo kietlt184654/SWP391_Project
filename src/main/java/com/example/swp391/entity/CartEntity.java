@@ -22,6 +22,9 @@ public class CartEntity {
     public void removeDesign(DesignEntity design) {
         designItems.remove(design);
     }
+    public void removeDesignById(Long designId) {
+        designItems.entrySet().removeIf(entry -> entry.getKey().getDesignId() == designId);
+    }
 
     // Lấy danh sách thiết kế
     public Map<DesignEntity, Integer> getDesignItems() {

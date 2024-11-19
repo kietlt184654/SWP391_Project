@@ -8,42 +8,28 @@
 </head>
 <body>
 
-<h2>Hình ảnh tiến độ dự án</h2>
+<h1>Project Progress Images</h1>
 
 <div class="images-container">
-    <!-- Check if progress images exist -->
     <th:block th:if="${progressImages != null}">
         <th:block th:each="imagePath : ${progressImages}">
             <div class="image-card">
                 <img th:src="${imagePath}" alt="Progress Image" class="progress-image" />
-
-                <!-- Form to delete image -->
-                <form th:action="@{/projects/deleteImage}" method="post" style="text-align: center; margin-top: 10px;">
-                    <!-- Pass project ID and image path to the delete endpoint -->
-                    <input type="hidden" name="projectID" th:value="${projectID}" />
-                    <input type="hidden" name="imagePath" th:value="${imagePath}" />
-
-                </form>
             </div>
         </th:block>
     </th:block>
 
-    <!-- Display a message if no images are found -->
+    <!-- Display message when no images are available -->
     <p th:if="${noImagesMessage != null}" th:text="${noImagesMessage}"></p>
 </div>
 
-<!-- Back buttons to go to previous pages -->
 <div class="back-button-container">
-<!--    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${projectId})}" class="btn btn-secondary back-button">Quay về Chi Tiết Dự Án</a>-->
-<!--    <a href="/project/detail" class="back-button">Quay lại</a>-->
+    <a th:href="@{/projects/viewDetailProject/{projectID}(projectID=${staffProjectID})}" class="back-button">Back to Project</a>
 </div>
-
-<!-- Button to delete service (if applicable) -->
-<!--<div class="delete-button-container" style="text-align: center; margin-top: 20px;">-->
-<!--    <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">-->
-<!--        <button type="submit" class="red-button">Xóa Dịch Vụ</button>-->
-<!--    </form>-->
-<!--</div>-->
-
+<div class="delete-button-container">
+    <form th:action="@{/deleteService/{id}(id=${staffProjectID})}" method="post">
+        <button type="submit" class="delete-button">Delete Service</button>
+    </form>
+</div>
 </body>
 </html>

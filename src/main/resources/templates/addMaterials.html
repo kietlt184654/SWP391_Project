@@ -1,58 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <title>Chi Tiết Thiết Kế</title>
-  <link rel="stylesheet" href="/css/AddMaterial.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
-
 <body>
-<div class="sidebar close">
-  <div class="logo-details">
-    <i class='bx bxs-ship'></i>
-    <span class="logo_name">KoiPond</span>
-  </div>
-  <!-- Sidebar Navigation -->
-</div>
-
-<section class="home-section">
-  <div class="home-content">
-    <i class='bx bx-menu'></i>
-  </div>
-
-  <h2>DESIGN DETAILS</h2>
+<div class="container">
+  <h2>Chi Tiết Thiết Kế</h2>
   <div>
-    <p><strong>ID:</strong> <span th:text="${design.designId}"></span></p><br>
-    <p><strong>Name:</strong> <span th:text="${design.designName}"></span></p><br>
-    <p><strong>Description:</strong> <span th:text="${design.description}"></span></p>
+    <p><strong>ID:</strong> <span th:text="${design.designId}"></span></p>
+    <p><strong>Tên:</strong> <span th:text="${design.designName}"></span></p>
+    <p><strong>Mô Tả:</strong> <span th:text="${design.description}"></span></p>
+    <p><strong>Thiết kế:</strong></p>
+    <img th:src="@{${design.img}}" alt="Hình ảnh thiết kế" />
   </div>
-  <br>
-  <h3>ADD MATERIALS</h3>
+
+  <h3>Thêm Nguyên Liệu</h3>
   <form th:action="@{'/manager/designs/' + ${design.designId} + '/approve'}" method="post">
     <div id="materialsContainer">
-      <!-- Initial Material Group -->
+      <!-- Mẫu nguyên liệu ban đầu -->
       <div class="form-group material-group">
-        <label for="material_0">Materials</label>
+        <label for="material_0">Nguyên Liệu</label>
         <select class="form-control material-select" id="material_0" name="materials[0].materialId">
-          <option value="" disabled selected>Choose materials</option>
-          <!-- Thymeleaf processes these options on the server side -->
-          <option th:each="material : ${materials}" th:value="${material.materialId}"
+          <option value="" disabled selected>Chọn nguyên liệu</option>
+          <option th:each="material : ${materials}"
+                  th:value="${material.materialId}"
                   th:text="${material.materialName + ' (' + material.unit + ')'}"></option>
         </select>
-        <input type="number" class="form-control material-quantity" name="materials[0].quantityNeeded"
-               placeholder="Quantity" min="1">
+        <input type="number" class="form-control material-quantity" name="materials[0].quantityNeeded" placeholder="Số lượng" min="1">
       </div>
     </div>
 
-    <button type="button" class="btn btn-primary" onclick="addMaterial()">Add materials</button>
-    <button type="submit" class="btn btn-success">Add Ingredients</button>
-    <button type="button" class="btn btn-danger" onclick="rejectDesign()">Design Rejection</button>
+    <button type="button" class="btn btn-primary" onclick="addMaterial()">Thêm Nguyên Liệu</button>
+    <button type="submit" class="btn btn-success">Duyệt và Thêm Nguyên Liệu</button>
+    <button type="button" class="btn btn-danger" onclick="rejectDesign()">Từ Chối Thiết Kế</button>
+
+    <!-- URL từ chối thiết kế động -->
+    <input type="hidden" id="rejectUrl" th:value="@{'/manager/designs/' + ${design.designId} + '/reject'}"/>
   </form>
-  <script src="/javascript/addMaterial.js"></script>
-</section>
+</div>
+
+<script>
+  let materialCount = 1; // Đếm số lượng nguyên liệu để đặt tên cho các trường
+
+  function addMaterial() {
+    const container = document.getElementById('materialsContainer');
+
+    // Lưu lại HTML của phần tử nguyên liệu đầu tiên để sao chép
+    const firstMaterialGroup = document.querySelector('.material-group').cloneNode(true);
+
+    // Cập nhật lại các thuộc tính ID và name để chúng duy nhất cho mỗi nhóm nguyên liệu
+    const select = firstMaterialGroup.querySelector('.material-select');
+    const quantity = firstMaterialGroup.querySelector('.material-quantity');
+
+    select.id = `material_${materialCount}`;
+    select.name = `materials[${materialCount}].materialId`;
+    select.value = ""; // Đặt lại giá trị về rỗng
+
+    quantity.name = `materials[${materialCount}].quantityNeeded`;
+    quantity.value = ""; // Đặt lại số lượng về rỗng
+
+    // Thêm phần tử đã sao chép vào container
+    container.appendChild(firstMaterialGroup);
+    materialCount++; // Tăng biến đếm
+  }
+
+  function rejectDesign() {
+    if (confirm("Bạn có chắc chắn muốn từ chối thiết kế này không?")) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = document.getElementById('rejectUrl').value; // Lấy URL từ input ẩn `rejectUrl`
+
+      // Thêm CSRF token nếu cần (nếu bạn dùng Spring Security)
+      const csrfInput = document.querySelector("input[name='_csrf']");
+      if (csrfInput) {
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_csrf';
+        csrfToken.value = csrfInput.value;
+        form.appendChild(csrfToken);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
+</script>
 </body>
 </html>

@@ -39,15 +39,43 @@ public class CartController {
     // Hiển thị giỏ hàng
     @GetMapping("/cart/view")
     public String viewCart(HttpSession session, Model model) {
+        // Lấy giỏ hàng từ session
         CartEntity cart = (CartEntity) session.getAttribute("cart");
         if (cart == null) {
             cart = new CartEntity();
             session.setAttribute("cart", cart);
         }
 
-        // Đưa giỏ hàng vào model để hiển thị trong view
+        // Tính tổng số tiền
+        double totalAmount = cart.calculateTotalAmount();
+
+        // Đưa giỏ hàng và tổng số tiền vào model
         model.addAttribute("cart", cart);
-        return "viewCart"; // Trang viewCart.html
+        model.addAttribute("totalAmount", totalAmount);
+        return "viewCart"; // Trả về trang hiển thị giỏ hàng
+    }
+
+    @PostMapping("/cart/remove")
+    public String removeFromCart(@RequestParam("designId") Long designId, HttpSession session) {
+        CartEntity cart = (CartEntity) session.getAttribute("cart");
+        if (cart != null) {
+            cart.removeDesignById(designId);
+            // Optionally remove the cart if it's empty
+            if (cart.getDesignItems().isEmpty()) {
+                session.removeAttribute("cart");
+            }
+        }
+        return "redirect:/cart/view";
+    }
+    // Xóa toàn bộ sản phẩm khỏi giỏ hàng
+    @PostMapping("/cart/clear")
+    public String clearCart(HttpSession session) {
+        // Lấy giỏ hàng từ session
+        CartEntity cart = (CartEntity) session.getAttribute("cart");
+        if (cart != null) {
+            cart.clear();
+        }
+        return "redirect:/cart/view";
     }
 
 }

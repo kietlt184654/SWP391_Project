@@ -111,6 +111,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>Remove</th>
             </tr>
             </thead>
             <tbody>
@@ -118,18 +119,26 @@
                 <td th:text="${entry.key.designId}">Product ID</td>
                 <td><img th:src="@{${entry.key.img}}" alt="Product Image" width="100"/></td>
                 <td th:text="${entry.key.designName}">Product Name</td>
-                <td th:text="${entry.key.formattedPrice}">Product Price</td>
+                <td th:text="${entry.key.price}">Product Price</td>
                 <td th:text="${entry.value}">Quantity</td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="designId" th:value="${entry.key.designId}" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
+
         </table>
     </div>
 
     <!-- Payment Info Section -->
     <div class="payment-info">
         <h2>Payment</h2>
+        <p><strong>Total Amount:</strong> <span th:text="${totalAmount}">0.0</span> VND</p>
         <form th:action="@{/payment/create}" method="post">
-            <input type="hidden" name="source" value="CART"> <!-- Pass 'CART' as the source -->
+            <input type="hidden" name="source" value="CART">
             <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
             <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
             <button type="submit" class="checkout-btn">Check Out</button>
