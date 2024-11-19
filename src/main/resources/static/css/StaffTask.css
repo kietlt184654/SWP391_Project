@@ -6,8 +6,9 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Make sure the content is aligned at the top */
     height: 100vh;
+    overflow-y: auto; /* Allow vertical scrolling if needed */
 }
 
 .container {
@@ -17,6 +18,8 @@ body {
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    overflow-x: auto; /* Make sure table doesn't overflow outside of the container */
+    margin-top: 20px; /* Ensure some space from the top */
 }
 
 h2 {
@@ -24,6 +27,9 @@ h2 {
     margin-bottom: 25px;
     font-weight: 700;
     color: #444;
+    font-size: 2rem; /* Adjust size for better visibility */
+    line-height: 1.5;
+    margin-top: 0; /* Remove margin-top to prevent being pushed down */
 }
 
 table {
@@ -91,6 +97,7 @@ button.accept:hover {
 @media (max-width: 768px) {
     .container {
         width: 95%;
+        padding: 20px; /* Adjust padding for smaller screens */
     }
 
     table th, table td {
@@ -130,7 +137,16 @@ button.accept:hover {
     }
 }
 
-/* Improved Aesthetics for Forms */
+/* Styling for progress images */
+.progress-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Ensure the form fields are aligned well */
 input[type="text"], input[type="password"], select {
     width: calc(100% - 20px);
     padding: 10px;

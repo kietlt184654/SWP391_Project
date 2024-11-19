@@ -118,6 +118,8 @@ public class TaskController {
 
         return "StaffTask"; // Trả về view 'StaffTask'
     }
+
+
     @PostMapping("/accept")
     public String acceptProject(@RequestParam("staffProjectID") Integer staffProjectId,
                                 @RequestParam("currentStatus") String currentStatus,
@@ -190,6 +192,8 @@ public class TaskController {
         return "redirect:/dashboard";
     }
 
+
+
     @PostMapping("/deleteService/{id}")
     public String deleteStaffProject(@PathVariable("id") int staffProjectID,
                                      @RequestParam("projectID") Long projectID,
@@ -198,5 +202,18 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("successMessageDeleteTask", "Task deleted successfully.");
         return "redirect:/projects/viewDetailProject/" + projectID;
     }
+    @PostMapping("/deleteProgressImage")
+    public String deleteProgressImage(@RequestParam("staffProjectID") Integer staffProjectID,
+                                      RedirectAttributes redirectAttributes) {
+        // Call service to remove image URL from database
+        boolean success = staffProjectService.removeProgressImage(staffProjectID);
 
+        if (success) {
+            redirectAttributes.addFlashAttribute("message", "Hình ảnh đã được xóa thành công!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Xóa hình ảnh không thành công.");
+        }
+
+        return "redirect:/dashboard";
+    }
 }

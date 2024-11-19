@@ -162,6 +162,15 @@ public void deleteStaffProjectById(int id) {
 
         return staffProjectRepository.findByProject_ProjectID(projectId);
     }
+    public boolean removeProgressImage(Integer staffProjectID) {
+        StaffProjectEntity staffProject = staffProjectRepository.findById(staffProjectID).orElse(null);
 
+        if (staffProject != null) {
+            staffProject.setProgressImage(null); // Remove the image URL
+            staffProjectRepository.save(staffProject);
+            return true;
+        }
+        return false;
+    }
 }
 
