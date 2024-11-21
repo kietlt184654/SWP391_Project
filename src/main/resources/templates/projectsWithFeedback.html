@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects with Feedback</title>
+</head>
+<body>
+<h1>All Projects with Feedback</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Project Name</th>
+        <th>Description</th>
+        <th>Total Cost</th>
+        <th>Status</th>
+        <th>Image</th>
+        <th>Feedback</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <td th:text="${project.totalCost}"></td>
+        <td th:text="${project.status}"></td>
+        <td>
+    <span th:if="${project.img != null}">
+        <img th:src="${project.img}" alt="Project Image" style="width: 100px; height: auto;" />
+    </span>
+            <span th:if="${project.img == null}">
+        No image available
+    </span>
+        </td>
+
+        <td>
+            <span th:if="${project.feedback != null}">
+                <strong>Feedback:</strong> <span th:text="${project.feedback.feedback}"></span>
+            </span>
+            <span th:if="${project.feedback == null}">
+                No feedback available
+            </span>
+        </td>
+        <td>
+            <span th:if="${project.feedback != null}" th:text="${project.feedback.rating}"></span>
+            <span th:if="${project.feedback == null}">No rating</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

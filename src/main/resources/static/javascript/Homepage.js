@@ -130,3 +130,11 @@ document.addEventListener("DOMContentLoaded", function() {
     checkLoginStatus();
     updateLoginStatus();
 });
+// Tạo và lưu `tabSessionId` nếu chưa tồn tại trong sessionStorage
+if (!sessionStorage.getItem("tabSessionId")) {
+    sessionStorage.setItem("tabSessionId", `tab-${Date.now()}-${Math.random()}`);
+}
+
+// Kiểm tra trạng thái tabSessionId
+const tabSessionId = sessionStorage.getItem("tabSessionId");
+console.log("Tab Session ID:", tabSessionId);

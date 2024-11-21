@@ -116,37 +116,75 @@ private StaffProjectService staffProjectService;
 //        return "redirect:/login"; // Chuyển hướng đến trang đăng nhập
 //    }
 
-    @PostMapping("/login")
-    public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
-        AccountEntity account = accountService.login(accountname, password);
-        if (account != null) {
-            model.addAttribute("message", "Login Successful");
-            session.setAttribute("loggedInUser", account);
+//    @PostMapping("/login")
+//    public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
+//        AccountEntity account = accountService.login(accountname, password);
+//        if (account != null) {
+//            model.addAttribute("message", "Login Successful");
+//            session.setAttribute("loggedInUser", account);
+//
+//            // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
+//            if (account.getAccountTypeID().equals("Customer")) {
+//                if (!customerService.existsByAccount(account)) {
+//                    CustomerEntity customer = new CustomerEntity();
+//                    customer.setAccount(account);
+//                    customer.setAdditionalInfo("");  // Thông tin bổ sung tùy ý
+//                    customerService.save(customer);
+//                }
+//                return "Homepage";
+//            } else if (account.getAccountTypeID().equals("Manager")) {
+//                return "manager";
+//            } else if (account.getAccountTypeID().equals("Consulting Staff")) {
+//                return "consultingHome";
+//            } else if (account.getAccountTypeID().equals("Construction Staff")) {
+//                return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
+//            }else if (account.getAccountTypeID().equals("Design Staff")) {
+//                return "redirect:/designStaff/designs/inprogress";
+//            }
+//        } else {
+//            model.addAttribute("messageLogin", "Invalid username or password");
+//        }
+//        return "login";
+//    }
+@PostMapping("/login")
+public String login(
+        @RequestParam("accountName") String accountName,
+        @RequestParam("password") String password,
+        Model model,
+        HttpSession session) {
+    AccountEntity account = accountService.login(accountName, password);
 
-            // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
-            if (account.getAccountTypeID().equals("Customer")) {
+    if (account != null) {
+        session.setAttribute("loggedInUser", account);
+
+        // Điều hướng theo quyền
+        switch (account.getAccountTypeID()) {
+            case "Customer":
+                // Nếu là Customer, tạo thông tin nếu chưa có
                 if (!customerService.existsByAccount(account)) {
                     CustomerEntity customer = new CustomerEntity();
                     customer.setAccount(account);
-                    customer.setAdditionalInfo("");  // Thông tin bổ sung tùy ý
+                    customer.setAdditionalInfo("");
                     customerService.save(customer);
                 }
                 return "Homepage";
-            } else if (account.getAccountTypeID().equals("Manager")) {
-                return "manager";
-            } else if (account.getAccountTypeID().equals("Consulting Staff")) {
-                return "consultingHome";
-            } else if (account.getAccountTypeID().equals("Construction Staff")) {
-                return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
-            }else if (account.getAccountTypeID().equals("Design Staff")) {
+            case "Manager":
+                return "redirect:/manager";
+            case "Consulting Staff":
+                return "redirect:/consultingHome";
+            case "Construction Staff":
+                return "redirect:/dashboard";
+            case "Design Staff":
                 return "redirect:/designStaff/designs/inprogress";
-            }
-        } else {
-            model.addAttribute("messageLogin", "Invalid username or password");
+            default:
+                model.addAttribute("messageLogin", "Access denied!");
+                return "login";
         }
+    } else {
+        model.addAttribute("messageLogin", "Invalid username or password");
         return "login";
     }
-
+}
 
     @PostMapping("/logout")
     public String logout(HttpSession session) {

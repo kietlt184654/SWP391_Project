@@ -38,24 +38,9 @@ public class ProjectService {
     }
 
 
-//    @Autowired
-//    private StaffRepository staffRepository;
-//    @Autowired
-//    private StaffProjectRepository staffProjectRepository;
-
-
-
-    //    // Thêm staff vào dự án
-//    public void addStaffToProject(Integer staffID, Integer projectID) {
-//        // Tìm kiếm staff và project
-//        StaffEntity staff = staffRepository.findById(staffID).orElseThrow(() -> new IllegalArgumentException("Invalid staff ID"));
-//        ProjectEntity project = projectRepository.findById(projectID).orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
-//
-//        // Tạo đối tượng StaffProjectEntity để lưu vào bảng trung gian
-//        StaffProjectId staffProjectId = new StaffProjectId(staffID, projectID);
-//        StaffProjectEntity staffProject = new StaffProjectEntity(staffProjectId, staff, project, new Date(), null);
-//        staffProjectRepository.save(staffProject);
-//    }
+    public List<ProjectEntity> getAllProjectsWithFeedback() {
+        return projectRepository.findAllProjectsWithFeedback();
+    }
     List<ProjectEntity> getAllProjectsByCustomerId(long customerID){
         return projectRepository.findByCustomer_CustomerID(customerID);
 

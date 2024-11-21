@@ -12,5 +12,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///D:/K5/SWP391/Process_Img_Task/");
     }
 
-
+//    @Autowired
+//    private SessionInterceptor sessionInterceptor;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(sessionInterceptor)
+//                .addPathPatterns("/**") // Áp dụng cho tất cả các đường dẫn
+//                .excludePathPatterns("/login", "/register", "/css/**", "/js/**"); // Loại trừ các trang không cần kiểm tra
+//    }
 }

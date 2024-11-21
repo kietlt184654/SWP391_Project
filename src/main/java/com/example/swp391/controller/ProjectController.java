@@ -125,7 +125,12 @@ private DesignService designService;
 
         return "viewProjectProgress";
     }
-
+    @GetMapping("/allWithFeedback")
+    public String getAllProjectsWithFeedback(Model model) {
+        List<ProjectEntity> projects = projectService.getAllProjectsWithFeedback();
+        model.addAttribute("projects", projects);
+        return "projectsWithFeedback";
+    }
 
 
 }
