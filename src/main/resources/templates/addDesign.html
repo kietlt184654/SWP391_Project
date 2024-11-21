@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Design</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/addDesign.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+  <div class="container">
+    <h2>Create New Design</h2>
+    <form th:action="@{/HomeConsulting/add}" th:object="${design}" method="post" enctype="multipart/form-data">
+      <input type="hidden" th:field="*{typeDesign.typeDesignId}" value="2" />
+  
+      <div class="form-group">
+        <label for="designName">Design Name</label>
+        <input type="text" class="form-control" id="designName" th:field="*{designName}" placeholder="Enter design name" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" th:field="*{description}" placeholder="Enter design description" rows="4" required></textarea>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="price">Price ($)</label>
+          <input type="number" class="form-control" id="price" th:field="*{price}" placeholder="Enter price" step="0.01" required>
+        </div>
+  
+        <div class="form-group col-md-6">
+          <label for="waterCapacity">Water Capacity (L)</label>
+          <input type="number" class="form-control" id="waterCapacity" th:field="*{waterCapacity}" placeholder="Enter water capacity" required>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="shapeOfPond">Pond Shape</label>
+        <input type="text" class="form-control" id="shapeOfPond" th:field="*{shapeOfPond}" placeholder="Enter pond shape" required>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="estimatedCompletionTime">Completion Time (Days)</label>
+          <input type="number" class="form-control" id="estimatedCompletionTime" th:field="*{estimatedCompletionTime}" placeholder="Enter estimated days" required>
+        </div>
+  
+        <div class="form-group col-md-6">
+          <label for="size">Size</label>
+          <select class="form-control" id="size" th:field="*{size}" required>
+            <option value="" disabled selected>Select size</option>
+            <option th:value="Small">Small</option>
+            <option th:value="Medium">Medium</option>
+            <option th:value="Large">Large</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="customerReference">Customer ID</label>
+        <input type="number" class="form-control" id="customerReference" th:field="*{customerReference}" placeholder="Enter customer ID" required>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Submit Design</button>
+    </form>
+  </div>
+  </body>
+  </html>

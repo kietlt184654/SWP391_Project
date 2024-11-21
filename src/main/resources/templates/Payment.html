@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,119 +9,159 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/src/main/resources/static/css/Payment.css">
     <title>Service Payment</title>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<div class="nav">
-    <!-- User Login Info -->
-    <div class="nav-button">
-        <div th:if="${session.loggedInUser == null}">
-            <form th:action="@{/login}" method="GET" style="display: inline;">
-                <button class="btn white-btn" id="loginBtn">Login</button>
-            </form>
-            <form th:action="@{/register}" method="GET" style="display: inline;">
-                <button class="btn" id="registerBtn">Sign Up</button>
-            </form>
+    <!-- HEADER -->
+    <div class="nav">
+        <!-- Hamburger button -->
+        <div class="nav-button">
+            <button id="menu-toggle" class="btn">&#9776;</button>
         </div>
 
+        <!-- Logo -->
+        <div class="nav-logo">
+            <p>KoiPond</p>
+        </div>
+
+        <!-- Nav Menu -->
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a th:href="@{/}" class="link">Home</a></li>
+                <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+                <li>
+                    <a th:href="@{/design}" style="color: black;">Services</a>
+                </li>
+                <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+                <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+                <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+                <!-- Cart -->
+                <li>
+                    <a href="#" class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="notification-badge">0</span>
+
+                    </a>
+                </li>
+                <li>
+                    <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+                        <a th:href="@{/account/profile}" class="d-flex align-items-center">
+                            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
+                                alt="User Avatar" class="rounded-circle" width="40" height="40">
+                            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
         <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
             <a th:href="@{/account/profile}" class="d-flex align-items-center">
-                <img th:src="@{${session.loggedInUser.images} ?: '/img/defaultAva.jpg'}"
-                     alt="User Avatar"
-                     class="rounded-circle"
-                     width="40"
-                     height="40">
-                <span class="ms-2" th:text="${session.loggedInUser.accountName}">AccountName</span>
+                <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                    class="rounded-circle" width="40" height="40">
+                <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
             </a>
-            <form th:action="@{/account/logout}" method="post" class="ms-3">
-                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-            </form>
         </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+                <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+            </li>
+            <li>
+                <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+            </li>
+            <li>
+                <form th:action="@{/account/logout}" method="post" class="ms-3">
+                    <button type="submit" class="fas fa-sign-out-alt "></button>
+                </form>
+            </li>
+        </ul>
     </div>
 
-    <!-- Logo -->
-    <div class="nav-logo">
-        <p>LOGO</p>
-    </div>
-</div>
-
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-content">
-        <img src="/img/project_payment.jpg" alt="Service Payment" />
-        <h1>Service Payment</h1>
-        <ol class="breadcrumb">
-            <li><a href="/homepage.html">Home</a></li>
-            <li><a href="/services.html">Services</a></li>
-            <li class="active">Service Payment</li>
-        </ol>
-    </div>
-</section>
-
-<!-- Selected Services Section -->
-<div class="container">
-    <div class="selected-project">
-        <h2>Selected Services</h2>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Service ID</th>
-                <th>Service Name</th>
-                <th>Description</th>
-                <th>Cost</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="design : ${selectedDesigns}">
-                <td th:text="${design.designId}">Service ID</td>
-                <td th:text="${design.designName}">Service Name</td>
-                <td th:text="${design.description}">Description</td>
-                <td th:text="${#numbers.formatDecimal(design.price, 1, 2)}">Cost</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Payment Info Section -->
+    <!-- Hero Section -->
+    <!-- Selected Services Section -->
+    <div class="container">
+        <div class="selected-project">
+            <h2>Selected Services</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Service ID</th>
+                        <th>Service Name</th>
+                        <th>Description</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="design : ${selectedDesigns}">
+                        <td th:text="${design.designId}">Service ID</td>
+                        <td th:text="${design.designName}">Service Name</td>
+                        <td th:text="${design.description}">Description</td>
+                        <td th:text="${design.formattedPrice}">Cost</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
     <div class="payment-info">
-        <h2>Payment</h2>
+        <h2>Payment Method</h2>
         <form th:action="@{/payment/create}" method="post">
-            <input type="hidden" name="source" value="SERVICE"> <!-- Pass 'CART' as the source -->
-            <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
-            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
-            <button type="submit" class="checkout-btn">Check Out</button>
+            <input type="hidden" name="source" value="SERVICE">
+            <div class="payment-options">
+                <input type="radio" id="cod" name="payment-method" value="cod" checked />
+                <label for="cod">
+                    <i class="fas fa-truck"></i> Cash on Delivery
+                </label>
+
+                <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" />
+                <label for="bank-transfer">
+                    <i class="fas fa-university"></i> Bank Transfer
+                </label>
+            </div>
+            <button type="submit" class="checkout-btn">
+                 Proceed to Checkout
+            </button>
         </form>
     </div>
 </div>
+    <!-- ... existing footer ... -->
 
-<!-- Footer -->
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-info">
-            <h4>Information</h4>
-            <p>Open: 8 AM - 10 PM</p>
-            <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
-        </div>
-        <div class="footer-services">
-            <h4>Services</h4>
-            <ul>
-                <li><a href="link-to-construction">Construction Koi Pond</a></li>
-                <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
-                <li><a href="link-to-design">Design upon Requirements</a></li>
-            </ul>
-        </div>
-        <div class="footer-contact">
-            <h4>Contact</h4>
-            <p><i class="fa-solid fa-phone"></i> 0972423242</p>
-            <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-            <p><i class="fa-brands fa-facebook"></i>
-                <a href="https://facebook.com" target="_blank">Visit Us</a>
-            </p>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <h4>Information</h4>
+                <p>Open: 8 AM - 10 PM</p>
+                <p>PPFH+362, Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+            </div>
+            <div class="footer-services">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="link-to-construction">Construction Koi Pond</a></li>
+                    <li><a href="link-to-cleaning">Cleaning and Maintenance</a></li>
+                    <li><a href="link-to-design">Design upon Requirements</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+                <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+                <p><i class="fa-brands fa-facebook"></i>
+                    <a href="https://facebook.com" target="_blank">Visit Us</a>
+                </p>
+            </div>
         </div>
     </div>
-</div>
-
+    <script src="/javascript/Services.js"></script>
 </body>
+
 </html>

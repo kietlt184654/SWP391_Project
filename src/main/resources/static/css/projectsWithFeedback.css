@@ -1,0 +1,171 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+h1 {
+    color: #1a365d;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Project name styling */
+.project-name {
+    font-weight: 600;
+    color: #4CAF50;
+}
+
+/* Status badge styling */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: #e5e7eb;
+}
+
+/* Image styling */
+.image-cell img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.no-image, .no-feedback, .no-rating {
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+/* Feedback styling */
+.feedback-content {
+    max-width: 300px;
+}
+
+.feedback-content strong {
+    color: #4CAF50;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.feedback-content p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Rating styling */
+.rating {
+    font-weight: 600;
+    color: #4CAF50;
+    font-size: 1.1rem;
+}
+
+/* Cost styling */
+.cost {
+    font-family: 'Inter', monospace;
+    font-weight: 500;
+}
+
+/* Description styling */
+.description {
+    color: #4b5563;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+/* Status badge styling */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Different colors for different statuses */
+.status-badge[data-status="IN_PROGRESS"] {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge[data-status="COMPLETED"] {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-badge[data-status="PENDING"] {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status-badge[data-status="ON_HOLD"] {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    table {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 640px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .container {
+        margin: 1rem auto;
+    }
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Project Progress</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/viewProjectProgress.css">
+</head>
+
+<body>
+  <div class="nav">
+    <!-- Hamburger button -->
+    <div class="nav-button">
+      <button id="menu-toggle" class="btn">&#9776;</button>
+    </div>
+
+    <!-- Logo -->
+    <div class="nav-logo">
+      <p>KoiPond</p>
+    </div>
+
+    <!-- Nav Menu -->
+    <div class="nav-menu" id="navMenu">
+      <ul>
+        <li><a th:href="@{/}" class="link">Home</a></li>
+        <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+        <li>
+          <a th:href="@{/design}" style="color: black;">Services</a>
+        </li>
+        <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+        <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+        <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+        <!-- Cart -->
+        <li>
+          <a href="#" class="icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="notification-badge">0</span>
+
+          </a>
+        </li>
+        <li>
+          <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+            <a th:href="@{/account/profile}" class="d-flex align-items-center">
+              <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+                class="rounded-circle" width="40" height="40">
+              <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+      <a th:href="@{/account/profile}" class="d-flex align-items-center">
+        <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+          class="rounded-circle" width="40" height="40">
+        <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+      </a>
+    </div>
+    <ul class="sidebar-menu">
+      <li>
+        <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li>
+        <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+      </li>
+      <li>
+        <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+      </li>
+      <li>
+        <form th:action="@{/account/logout}" method="post" class="ms-3">
+          <button type="submit" class="fas fa-sign-out-alt "></button>
+        </form>
+      </li>
+    </ul>
+  </div>
+  <!-- <div class="container">
+    <h1>Project Progress</h1>
+    <h2>Progress Images for Project : <span th:text="${projectId}"></span></h2>
+
+    
+    <div th:if="${progressImages.isEmpty()}" class="alert alert-warning">
+      No progress images available for this project.
+    </div>
+    <div th:if="${!progressImages.isEmpty()}">
+      <div class="progress-images">
+
+        <div th:each="image : ${progressImages}" style="width: 30%;">
+          <img th:src="${image}" alt="Progress Image">
+        </div>
+
+      </div>
+    </div>
+  </div> -->
+  <div class="container">
+    <div class="project-header">
+        <h1>Project Progress</h1>
+        <h2>Progress Images for Project: <span class="project-id" th:text="${projectId}"></span></h2>
+    </div>
+
+    <!-- Image Gallery Section -->
+    <div th:if="${progressImages.isEmpty()}" class="alert alert-warning">
+        <i class="fas fa-exclamation-circle"></i>
+        No progress images available for this project.
+    </div>
+    <div th:if="${!progressImages.isEmpty()}" class="gallery-container">
+        <div class="progress-images">
+            <div th:each="image : ${progressImages}" class="image-card">
+                <div class="image-wrapper">
+                    <img th:src="${image}" alt="Progress Image">
+                    <div class="image-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Hiển thị danh sách task -->
+  <h3>Tasks for Project</h3>
+  <div th:if="${tasks.isEmpty()}" class="alert alert-warning">
+    No tasks available for this project.
+  </div>
+  <table th:if="${!tasks.isEmpty()}" class="task-table">
+    <thead>
+      <tr>
+        <th>Task Name</th>
+        <th>Staff Assigned</th>
+        <th>Status</th>
+        <th>Assignment Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="task : ${tasks}">
+        <td th:text="${task.task}"></td>
+        <td
+          th:text="${task.staff != null && task.staff.account != null ? task.staff.account.accountName : 'No Staff Assigned'}">
+          </td>
+        <!-- <td th:text="${task.status}"></td> -->
+        <td th:text="${task.status}" 
+        th:class="${'status-' + #strings.toLowerCase(task.status)}">
+    </td>
+        <td th:text="${task.assignmentDate}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a th:href="@{/projects}" class="btn btn-primary">Back to Projects</a>
+  </div>
+  <div class="footer">
+    <div class="footer-container">
+      <div class="footer-info">
+        <h4>Information</h4>
+        <p>Open: 8 AM - 10 PM</p>
+        <p>
+          PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+          Minh
+        </p>
+      </div>
+      <div class="footer-services">
+        <h4>Services</h4>
+        <ul>
+          <li>
+            <a th:href="@{/design/showAllDesign}" class="service-item">Construction Koi pond</a>
+          </li>
+          <li>
+            <a th:href="@{/services/serviceForm}" class="service-item">Cleaning and maintenance</a>
+          </li>
+          <li>
+            <a th:href="@{/designService}" class="service-item">Design upon requirements</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+        <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+        <p>
+          <i class="fa-brands fa-facebook"></i>
+          <a href="https://facebook.com" target="_blank">Visit Us</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <script src="/javascript/Services.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+.main-content {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.page-title {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+}
+
+.design-details {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.info-section {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.info-section p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.info-section strong {
+    color: #34495e;
+    min-width: 150px;
+    display: inline-block;
+}
+
+.image-section {
+    flex: 1;
+    text-align: center;
+}
+
+.image-section h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.design-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.button-group {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-default {
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+}
+
+.btn-default:hover {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+}

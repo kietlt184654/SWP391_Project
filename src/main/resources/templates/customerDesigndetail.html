@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Design Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/src/main/resources/static/css/customerDesigndetail.css">
+</head>
+<body>
+<div class="container main-content">
+    <h2 class="page-title">Design Details</h2>
+    <div class="design-details">
+        <div class="info-section">
+            <p><strong>Design ID:</strong> <span th:text="${design.designId}"></span></p>
+            <p><strong>Name:</strong> <span th:text="${design.designName}"></span></p>
+            <p><strong>Description:</strong> <span th:text="${design.description}"></span></p>
+            <p><strong>Price:</strong> <span th:text="${design.price}"></span> VND</p>
+            <p><strong>Water Capacity:</strong> <span th:text="${design.waterCapacity}"></span> liters</p>
+            <p><strong>Shape:</strong> <span th:text="${design.shapeOfPond}"></span></p>
+            <p><strong>Size:</strong> <span th:text="${design.size}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${design.status}"></span></p>
+        </div>
+        <div class="image-section">
+            <h3>Design Preview</h3>
+            <img th:src="@{${design.img}}" alt="Design Preview" class="design-image"/>
+        </div>
+    </div>
+    <div class="button-group">
+        <a th:href="@{'/customer/dashboard'}" class="btn btn-default">Back to Dashboard</a>
+        <a th:if="${design.status.name() == 'NeedToPayment'}"
+           th:href="@{'/customer/design/' + ${design.designId} + '/payment'}"
+           class="btn btn-success">Proceed to Payment</a>
+    </div>
+</div>
+</body>
+</html>

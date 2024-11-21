@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Projects with Feedback</title>
+    <link rel="stylesheet" href="/css/projectsWithFeedback.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Projects With Feedback</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Description</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                        <th>Image</th>
+                        <th>Feedback</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="project : ${projects}">
+                        <td class="project-name" th:text="${project.name}"></td>
+                        <td class="description" th:text="${project.description}"></td>
+                        <td class="cost" th:text="${'$' + project.totalCost}"></td>
+                        <td class="status">
+                            <span class="status-badge" th:data-status="${project.status}"
+                                th:text="${project.status}"></span>
+                        </td>
+                        <td class="image-cell">
+                            <img th:if="${project.img != null}" th:src="${project.img}" alt="Project Image" />
+                            <span th:if="${project.img == null}" class="no-image">No image</span>
+                        </td>
+                        <td class="feedback-cell">
+                            <div th:if="${project.feedback != null}" class="feedback-content">
+                                <strong>Feedback:</strong>
+                                <p th:text="${project.feedback.feedback}"></p>
+                            </div>
+                            <span th:if="${project.feedback == null}" class="no-feedback">No feedback yet</span>
+                        </td>
+                        <td class="rating-cell">
+                            <span th:if="${project.feedback != null}" class="rating"
+                                th:text="${project.feedback.rating + '/5'}"></span>
+                            <span th:if="${project.feedback == null}" class="no-rating">-</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

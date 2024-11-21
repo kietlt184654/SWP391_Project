@@ -1,0 +1,436 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f4f4f9;
+}
+
+/* Navbar */
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+}
+.nav-menu {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+.nav-logo p {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top:10px;
+
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    position: relative;
+    align-content: center;
+    margin-right: 100px;
+    margin-top: 10px;
+}
+
+.nav-menu ul li {
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 8px;
+    transition: border-bottom 0.3s ease, color 0.3s ease;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+    border-bottom: 3px solid white;
+}
+
+.nav-menu ul li a i {
+    font-size: 20px;
+    margin-right: 8px;
+}.icon-item {
+     display: flex;
+     list-style: none;
+ }
+
+.icon-item li {
+    margin-left: 20px;
+}
+/* Sidebar */
+#sidebar {
+    width: 200px;
+    background-color: white;
+    position: fixed;
+    top: 60px;
+    height: calc(100% - 60px);
+    left: -200px;
+    padding: 20px;
+    transition: left 0.3s;
+    z-index: 999;
+    border-radius: 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar.show {
+    left: 0;
+}
+/* Style for Log out button in sidebar */
+.sidebar-menu form button {
+    font-size: 16px;
+    color: #7a8a77;
+    background-color: transparent;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu form button:hover {
+    background-color: #3c7363;
+    color: white;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 15px;
+}
+
+.sidebar-menu li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #7a8a77;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #3c7363;
+    color: white;
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+}
+
+/* Avatar and User Info */
+.user-info {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.user-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+}
+
+/* Button in Navbar */
+.nav-button .btn {
+    font-size: 24px;
+    background: none;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+}
+
+.nav-button .btn:hover {
+    color: #f4f4f4;
+}
+
+.mb-4 {
+    margin-top: 120px;
+    text-align: center;
+}
+.hero-section {
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+
+}
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(3px);
+    z-index: 1;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+.hero-title {
+    font-size: 3rem;
+    margin-top: 500px;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+    color: white;
+}
+.hover-card {
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    height: 50%;
+    padding: 20px;
+}
+.hover-card:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+        margin-top: 300px;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .nav {
+        flex-direction: column;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    .nav-menu-btn {
+        display: block;
+    }
+}
+/* Selected Services Section */
+.container {
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Selected Design Section */
+.selected-design {
+    margin-bottom: 40px;
+}
+
+.selected-design h2,
+.payment-info h2 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.selected-design h2::after,
+.payment-info h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #3c7363;
+    border-radius: 2px;
+}
+
+/* Table Styling */
+.table {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.table thead th {
+    background-color: #3c7363;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 15px;
+    border: none;
+}
+
+.table tbody td {
+    padding: 18px 15px;
+    border: none;
+    border-bottom: 1px solid #eef2f7;
+    color: #2c3e50;
+    font-size: 15px;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Payment Info Section */
+.payment-info {
+    background-color: #f8fafc;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+/* Radio Button Styling */
+.payment-info input[type="radio"] {
+    display: none;
+}
+
+.payment-info label {
+    display: inline-block;
+    padding: 15px 25px;
+    margin: 10px;
+    background-color: white;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.payment-info input[type="radio"]:checked + label {
+    border-color: #3c7363;
+    background-color: #f0f7f4;
+    color: #3c7363;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 30px auto 0;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #3c7363, #2b4d44);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(60, 115, 99, 0.2);
+}
+
+.checkout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(60, 115, 99, 0.3);
+    background: linear-gradient(135deg, #2b4d44, #3c7363);
+}
+
+
+
+/* -------------------Footer----------------- */
+.footer {
+    background-color: #000000;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-info,
+.footer-services,
+.footer-contact {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px;
+    color: white;
+}
+
+.footer-services h4,
+.footer-contact h4 {
+    margin-bottom: 10px;
+}
+
+.footer-services ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-services li {
+    margin: 5px 0;
+}
+
+.service-item {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.service-item:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.footer-contact {
+    text-align: left;
+}
+.footer-container h4 {
+    text-align: left;
+}
+.footer-container h4 {
+    text-decoration: underline;
+}

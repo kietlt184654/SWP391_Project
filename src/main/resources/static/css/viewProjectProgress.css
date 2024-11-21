@@ -1,0 +1,542 @@
+ /* Navbar */
+ .nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+  
+    padding: 0 20px;
+  }
+  .nav-menu {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+  }
+  .nav-logo p {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top:10px;
+   
+  }
+  
+  .nav-menu ul {
+    display: flex;
+    list-style: none;
+    position: relative;
+    align-content: center;
+    margin-right: 100px;
+    margin-top: 10px;
+  }
+  
+  .nav-menu ul li {
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-menu ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 8px;
+    transition: border-bottom 0.3s ease, color 0.3s ease;
+  }
+  
+  .nav-menu ul li a:hover,
+  .nav-menu ul li a.active {
+    border-bottom: 3px solid white;
+  }
+  
+  .nav-menu ul li a i {
+    font-size: 20px;
+    margin-right: 8px;
+  }.icon-item {
+    display: flex;
+    list-style: none;
+  }
+  
+  .icon-item li {
+    margin-left: 20px;
+  }
+  /* Sidebar */
+  #sidebar {
+    width: 200px;
+    background-color: white;
+    position: fixed;
+    top: 60px;
+    height: calc(100% - 60px);
+    left: -200px;
+    padding: 20px;
+    transition: left 0.3s;
+    z-index: 999;
+    border-radius: 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #sidebar.show {
+    left: 0;
+  }
+  /* Style for Log out button in sidebar */
+  .sidebar-menu form button {
+    font-size: 16px;
+    color: #7a8a77;
+    background-color: transparent;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar-menu form button:hover {
+    background-color: #3c7363;
+    color: white;
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-menu li {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar-menu li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #7a8a77;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .sidebar-menu li a:hover {
+    background-color: #3c7363;
+    color: white;
+  }
+  
+  .sidebar-menu li a i {
+    margin-right: 10px;
+  }
+  
+  /* Avatar and User Info */
+  .user-info {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .user-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .username {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  /* Button in Navbar */
+  .nav-button .btn {
+    font-size: 24px;
+    background: none;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+  }
+  
+  .nav-button .btn:hover {
+    color: #f4f4f4;
+  }
+  .container {
+    margin-top: 80px;
+    padding: 30px;
+    max-width: 1200px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 3.5em;
+    border-bottom: 3px solid #3c7363;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+h2 {
+    color: #555;
+    margin: 25px 0 15px;
+    font-size: 1.8em;
+}
+.project-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.project-header h1 {
+    color: #2a5147;
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.project-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #3c7363, #2a5147);
+    border-radius: 2px;
+}
+
+.project-header h2 {
+    color: #666;
+    font-size: 1.4em;
+    font-weight: 400;
+}
+
+.project-id {
+    color: #3c7363;
+    font-weight: 600;
+}
+
+.gallery-container {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.progress-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.image-card {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding-top: 75%; /* 4:3 Aspect Ratio */
+}
+
+.image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(60, 115, 99, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay i {
+    color: white;
+    font-size: 2em;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.image-card:hover .image-overlay i {
+    transform: scale(1);
+}
+
+.alert-warning {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 1.1em;
+}
+
+.alert-warning i {
+    font-size: 1.5em;
+    color: #ffc107;
+}
+/* Progress Images Section */
+.progress-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.progress-images > div {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.progress-images img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.progress-images img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Tasks Section Styling */
+h3 {
+    color: #333;
+    font-size: 2em;
+    margin: 40px 0 20px;
+    position: relative;
+    padding-left: 15px;
+}
+
+h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 70%;
+    background-color: #3c7363;
+    border-radius: 2px;
+}
+
+/* Enhanced Table Styling */
+.task-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin: 25px 0;
+}
+
+.task-table thead {
+    background: linear-gradient(135deg, #3c7363, #2a5147);
+}
+
+.task-table th {
+    color: white;
+    font-weight: 600;
+    padding: 18px 25px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+.task-table td {
+    padding: 18px 25px;
+    border-bottom: 1px solid #eef2f7;
+    font-size: 0.95em;
+    color: #4a5568;
+    vertical-align: middle;
+}
+
+.task-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.task-table tbody tr:hover {
+    background-color: #f8fafb;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.task-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Cell Styling */
+.task-table td:nth-child(3) {
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* Assignment Date Styling */
+.task-table td:last-child {
+    color: #718096;
+    font-size: 0.9em;
+}
+
+/* Alert Styling Enhancement */
+.alert-warning {
+    background-color: #fff8e6;
+    border-left: 4px solid #ffc107;
+    color: #856404;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+}
+
+.alert-warning::before {
+    content: '⚠️';
+    margin-right: 15px;
+    font-size: 1.2em;
+}
+/* Status Styles */
+.status-completed {
+    color: #059669;
+    background-color: #ecfdf5;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.status-inprogress {
+    color: #d97706;
+    background-color: #fffbeb;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.status-pending {
+    color: #dc2626;
+    background-color: #fef2f2;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+/* Back Button */
+.btn-primary {
+    background-color: #3c7363;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2a5147;
+    text-decoration: none;
+    color: white;
+}
+  /* -------------------Footer----------------- */
+.footer {
+    background-color: #000000;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-info,
+  .footer-services,
+  .footer-contact {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px;
+    color: white;
+  }
+  
+  .footer-services h4,
+  .footer-contact h4 {
+    margin-bottom: 10px;
+  }
+  
+  .footer-services ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer-services li {
+    margin: 5px 0;
+  }
+  
+  .service-item {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .service-item:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  
+  .footer-contact {
+    text-align: left;
+  }
+  .footer-container h4 {
+    text-align: left;
+  }
+  .footer-container h4 {
+    text-decoration: underline;
+  }
