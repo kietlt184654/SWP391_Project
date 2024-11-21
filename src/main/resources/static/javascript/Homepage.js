@@ -8,11 +8,11 @@ var nextBtn = document.querySelector('.next'),
 let timeRunning = 3000
 let timeAutoNext = 7000
 
-nextBtn.onclick = function(){
+nextBtn.onclick = function() {
     showSlider('next')
 }
 
-prevBtn.onclick = function(){
+prevBtn.onclick = function() {
     showSlider('prev')
 }
 
@@ -22,7 +22,6 @@ let runNextAuto = setTimeout(() => {
     nextBtn.click()
 }, timeAutoNext)
 
-
 function resetTimeAnimation() {
     runningTime.style.animation = 'none'
     runningTime.offsetHeight /* trigger reflow */
@@ -30,24 +29,22 @@ function resetTimeAnimation() {
     runningTime.style.animation = 'runningTime 7s linear 1 forwards'
 }
 
-
 function showSlider(type) {
     let sliderItemsDom = list.querySelectorAll('.carousel .list .item')
-    if(type === 'next'){
+    if (type === 'next') {
         list.appendChild(sliderItemsDom[0])
         carousel.classList.add('next')
-    } else{
+    } else {
         list.prepend(sliderItemsDom[sliderItemsDom.length - 1])
         carousel.classList.add('prev')
     }
 
     clearTimeout(runTimeOut)
 
-    runTimeOut = setTimeout( () => {
+    runTimeOut = setTimeout(() => {
         carousel.classList.remove('next')
         carousel.classList.remove('prev')
     }, timeRunning)
-
 
     clearTimeout(runNextAuto)
     runNextAuto = setTimeout(() => {
@@ -57,46 +54,22 @@ function showSlider(type) {
     resetTimeAnimation() // Reset the running time animation
 }
 
-// Start the initial animation 
+// Start the initial animation
 resetTimeAnimation()
-// JavaScript function to check login and show modal if not logged in
-function checkLogin(event, url) {
-    const loggedInUser = /*[[${session.loggedInUser != null}]]*/ false; // Thymeleaf will replace this with true or false
 
-    if (!loggedInUser) {
-        event.preventDefault(); // Prevent navigation
-        document.getElementById('loginModal').style.display = 'block'; // Show the modal
-    } else {
-        window.location.href = url; // Redirect if logged in
-    }
-}
-// Kiểm tra trạng thái đăng nhập trong sessionStorage và chuyển hướng nếu cần
+// Check login status in sessionStorage and redirect if not logged in
 function checkLoginStatus() {
     if (!sessionStorage.getItem("isLoggedIn")) {
-        // Chuyển hướng về trang đăng nhập nếu không có trạng thái đăng nhập
+        // Redirect to the login page if the user is not logged in
         window.location.href = "/login";
     }
 }
-document.addEventListener("DOMContentLoaded", checkLoginStatus);
-// Hàm xử lý đăng xuất và xóa sessionStorage
+
+// Function to handle logout and clear sessionStorage
 function logout() {
-    sessionStorage.removeItem("isLoggedIn"); // Xóa trạng thái đăng nhập khỏi sessionStorage
-    window.location.href = "/account/logout"; // Điều hướng tới trang đăng xuất
+    sessionStorage.removeItem("isLoggedIn"); // Clear login status from sessionStorage
+    window.location.href = "/account/logout"; // Redirect to logout page
 }
-
-// Khởi tạo AOS (Animate On Scroll) nếu thư viện được sử dụng
-function initializeAOS() {
-    if (typeof AOS !== 'undefined') {
-        AOS.init();
-    }
-}
-
-// Gọi hàm kiểm tra trạng thái đăng nhập ngay khi trang được tải
-document.addEventListener("DOMContentLoaded", function () {
-    checkLoginStatus();
-    initializeAOS();
-});
-
 
 // Function to close the modal
 function closeModal() {
@@ -110,3 +83,50 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 };
+
+// Listen for changes in localStorage
+window.addEventListener('storage', function(event) {
+    if (event.key === 'loggedInUser') {
+        updateLoginStatus();
+    }
+});
+
+// Update login status
+function updateLoginStatus() {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    const loginButton = document.getElementById('loginBtn');
+    const registerButton = document.getElementById('registerBtn');
+    const logoutForm = document.getElementById('logoutForm');
+    const profileLink = document.getElementById('profileLink');
+    const avatarImg = document.getElementById('avatarImg');
+    const accountName = document.getElementById('accountName');
+    const navLinks = document.querySelectorAll('.logged-in');
+
+    if (loggedInUser) {
+        // Show items for logged-in user
+        loginButton.style.display = 'none';
+        registerButton.style.display = 'none';
+        logoutForm.style.display = 'block';
+        profileLink.style.display = 'block';
+        avatarImg.src = loggedInUser.avatar || '/img/defaultAva.jpg';
+        accountName.textContent = loggedInUser.username;
+
+        // Show links for logged-in user
+        navLinks.forEach(link => link.style.display = 'block');
+    } else {
+        // Hide items for logged-in user
+        loginButton.style.display = 'inline-block';
+        registerButton.style.display = 'inline-block';
+        logoutForm.style.display = 'none';
+        profileLink.style.display = 'none';
+
+        // Hide links for logged-in user
+        navLinks.forEach(link => link.style.display = 'none');
+    }
+}
+
+// Check login status and initialize animations when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    checkLoginStatus();
+    updateLoginStatus();
+});

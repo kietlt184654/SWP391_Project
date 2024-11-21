@@ -39,12 +39,12 @@ private DesignService designService;
         ProjectEntity project = projectService.getProjectById(projectID)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectID));
 
-        List<StaffProjectEntity> tasks = staffProjectService.getTasksByProjectId(projectID); // Lấy danh sách tasks
+        List<StaffProjectEntity> tasks = staffProjectService.getTasksByProjectId(projectID);
         model.addAttribute("project", project);
-        model.addAttribute("projectId", projectID); // Thêm projectId vào model
-        model.addAttribute("tasks", tasks); // Thêm danh sách tasks vào model
+        model.addAttribute("projectId", projectID); // Make sure projectId is added to the model
+        model.addAttribute("tasks", tasks);
 
-        return "viewDetailProject"; // Tên của file HTML cho trang chi tiết dự án
+        return "viewDetailProject";
     }
 
 

@@ -1,0 +1,393 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    background: white;
+}
+
+/* Navbar */
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+}
+.nav-menu {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+.nav-logo p {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: 10px;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    position: relative;
+    align-content: center;
+    margin-right: 100px;
+    margin-top: 10px;
+}
+
+.nav-menu ul li {
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 8px;
+    transition: border-bottom 0.3s ease, color 0.3s ease;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+    border-bottom: 3px solid white;
+}
+
+.nav-menu ul li a i {
+    font-size: 20px;
+    margin-right: 8px;
+}
+/* Button in Navbar */
+.nav-button .btn {
+    font-size: 24px;
+    background: none;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+}
+
+.nav-button .btn:hover {
+    color: #262626;
+}
+
+.icon-item {
+    display: flex;
+    list-style: none;
+}
+
+.icon-item li {
+    margin-left: 20px;
+}
+
+/* update quantity cart */
+.icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 200px;
+    background-color: white;
+    position: fixed;
+    top: 60px;
+    height: calc(100% - 60px);
+    left: -200px;
+    padding: 20px;
+    transition: left 0.3s;
+    z-index: 999;
+    border-radius: 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar.show {
+    left: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 15px;
+}
+
+.sidebar-menu li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #7a8a77;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #3c7363;
+    color: white;
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+}
+
+/* Avatar and User Info */
+.user-info {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.user-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+}
+
+/* Button in Navbar */
+.nav-button .btn {
+    font-size: 24px;
+    background: none;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+}
+
+.nav-button .btn:hover {
+    color: #262626;
+}
+/* ----------------------------------Body ---------------------------------- */
+.confirmation-page {
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.header h1 {
+    font-weight: bold;
+}
+
+.thank-you-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+}
+
+.thank-you-message i {
+    font-size: 24px;
+    color: #28a745;
+}
+
+.thank-you-message p {
+    font-size: 18px;
+    color: #28a745;
+    margin: 0;
+}
+.order-info {
+    margin-top: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-right:80px;
+    max-width: 400px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+.order-info h3 {
+    font-weight: bold;
+}
+
+.order-summary {
+    margin-left:100px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.order-summary h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.order-summary-header {
+    margin-bottom: 20px;
+}
+
+.order-summary-header p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.item-price {
+    font-size: 16px;
+    color: #333;
+    text-align: right;
+}
+
+.order-total p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #a7a5a5;
+}
+
+.order-total .total-price {
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+}
+
+.continue-shopping {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #000000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #383838;
+}
+
+/* -----------------------------FOOTER-----------------------------*/
+.footer {
+    background-color: #000000;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-info,
+.footer-services,
+.footer-contact {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px;
+    color: white;
+}
+
+.footer-services h4,
+.footer-contact h4 {
+    margin-bottom: 10px;
+}
+
+.footer-services ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-services li {
+    margin: 5px 0;
+}
+
+.service-item {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.service-item:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.footer-contact {
+    text-align: left;
+}
+.footer-container h4 {
+    text-align: left;
+}
+.footer-container h4 {
+    text-decoration: underline;
+}
+

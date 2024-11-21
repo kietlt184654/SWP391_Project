@@ -156,7 +156,12 @@ public class TaskController {
         } else {
             model.addAttribute("progressImages", staffProject.getProgressImage());
         }
-        return "viewProjectImages"; // Trang HTML để hiển thị hình ảnh
+
+        // Ensure projectId is set correctly
+        Long projectId = staffProject.getProject().getProjectID(); // Adjust based on your entity relationships
+        model.addAttribute("projectId", projectId);
+
+        return "viewProjectImages";
     }
     private final String UPLOAD_DIR = "D:\\K5\\SWP391\\Process_Img_Task"; // Đường dẫn lưu trữ hình ảnh trên server
 

@@ -81,4 +81,11 @@ public class DesignController {
         model.addAttribute("message", "The design has been submitted for review!");
         return "redirect:/HomeConsulting";
     }
+    @GetMapping("/manager/availableProjects")
+    public String showAvailableProjects(Model model) {
+        Long typeDesignId = 1L; // ID của TypeDesign là 1
+        List<DesignEntity> designs = designService.getDesignsByTypeId(typeDesignId);
+        model.addAttribute("designs", designs);
+        return "manageAvailableProject"; // Trả về trang hiển thị danh sách
+    }
 }

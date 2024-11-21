@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,35 +10,79 @@
   <link rel="stylesheet" href="/css/paymentPage.css" />
   <title>Design Payment</title>
 </head>
+
 <body>
 
 <!-- HEADER -->
 <div class="nav">
+  <!-- Hamburger button -->
   <div class="nav-button">
-    <div th:if="${session.loggedInUser == null}">
-      <form th:action="@{/login}" method="GET" style="display: inline;">
-        <button class="btn white-btn" id="loginBtn">Login</button>
-      </form>
-      <form th:action="@{/register}" method="GET" style="display: inline;">
-        <button class="btn" id="registerBtn">Sign Up</button>
-      </form>
-    </div>
-
-    <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
-      <a th:href="@{/account/profile}" class="d-flex align-items-center">
-        <img th:src="@{${session.loggedInUser.images} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
-             class="rounded-circle" width="40" height="40">
-        <span class="ms-2" th:text="${session.loggedInUser.accountName}">AccountName</span>
-      </a>
-      <form th:action="@{/account/logout}" method="post" class="ms-3">
-        <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-      </form>
-    </div>
+    <button id="menu-toggle" class="btn">&#9776;</button>
   </div>
 
+  <!-- Logo -->
   <div class="nav-logo">
-    <p>LOGO</p>
+    <p>KoiPond</p>
   </div>
+
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li>
+        <a th:href="@{/design}" style="color: black;">Services</a>
+      </li>
+      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+      <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+      <!-- Cart -->
+      <li>
+        <a href="#" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge">0</span>
+
+        </a>
+      </li>
+      <li>
+        <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+          <a th:href="@{/account/profile}" class="d-flex align-items-center">
+            <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}"
+                 alt="User Avatar" class="rounded-circle" width="40" height="40">
+            <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+    <a th:href="@{/account/profile}" class="d-flex align-items-center">
+      <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+           class="rounded-circle" width="40" height="40">
+      <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+    </li>
+    <li>
+      <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+    </li>
+    <li>
+      <form th:action="@{/account/logout}" method="post" class="ms-3">
+        <button type="submit" class="fas fa-sign-out-alt "></button>
+      </form>
+    </li>
+  </ul>
 </div>
 
 <!-- Hero Section -->
@@ -69,16 +114,26 @@
 
   <!-- Payment Info Section -->
   <div class="payment-info">
-    <h2>Payment</h2>
+    <h2>Payment Method</h2>
     <form th:action="@{/payment/create}" method="post">
-      <input type="hidden" name="source" value="PROJECT"> <!-- Pass 'CART' as the source -->
-      <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
-      <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
-      <button type="submit" class="checkout-btn">Check Out</button>
+      <input type="hidden" name="source" value="PROJECT">
+      <div class="payment-options">
+        <input type="radio" id="cod" name="payment-method" value="cod" checked />
+        <label for="cod">
+          <i class="fas fa-truck"></i> Cash on Delivery
+        </label>
+
+        <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" />
+        <label for="bank-transfer">
+          <i class="fas fa-university"></i> Bank Transfer
+        </label>
+      </div>
+      <button type="submit" class="checkout-btn">
+        Proceed to Checkout
+      </button>
     </form>
   </div>
 </div>
-
 <!-- Footer -->
 <div class="footer">
   <div class="footer-container">
@@ -104,6 +159,7 @@
     </div>
   </div>
 </div>
-
+<script src="/javascript/Services.js"></script>
 </body>
+
 </html>

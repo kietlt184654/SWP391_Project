@@ -39,3 +39,13 @@ function closeModal() {
     document.getElementById("imageModal").style.display = "none";
 }
 
+function toggleDetails(button) {
+    const detailsContainer = button.nextElementSibling;
+    if (detailsContainer.style.display === "none") {
+        detailsContainer.style.display = "block";
+        button.textContent = "Ẩn Thông Tin";
+    } else {
+        detailsContainer.style.display = "none";
+        button.textContent = "Xem Thông Tin Chi Tiết";
+    }
+}

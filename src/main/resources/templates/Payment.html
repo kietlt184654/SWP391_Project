@@ -14,7 +14,7 @@
 <body>
 
 <!-- HEADER -->
-<<div class="nav">
+<div class="nav">
     <!-- Hamburger button -->
     <div class="nav-button">
         <button id="menu-toggle" class="btn">&#9776;</button>
@@ -79,7 +79,7 @@
         </li>
         <li>
             <form th:action="@{/account/logout}" method="post" class="ms-3">
-                <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+                <button type="submit" class="fas fa-sign-out-alt "></button>
             </form>
         </li>
     </ul>
@@ -111,16 +111,31 @@
     </div>
 
     <!-- Payment Info Section -->
-    <div class="payment-info">
-        <h2>Payment</h2>
-        <form th:action="@{/payment/create}" method="post">
-            <input type="hidden" name="source" value="SERVICE"> <!-- Pass 'CART' as the source -->
-            <input type="radio" id="cod" name="payment-method" value="cod" checked /> COD<br />
-            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" /> Bank Transfer<br /><br />
-            <button type="submit" class="checkout-btn">Check Out</button>
-        </form>
-    </div>
+    <!-- ... existing header, navbar, sidebar ... -->
 </div>
+<!-- Payment Info Section -->
+<div class="payment-info">
+    <h2>Payment Method</h2>
+    <form th:action="@{/payment/create}" method="post">
+        <input type="hidden" name="source" value="SERVICE">
+        <div class="payment-options">
+            <input type="radio" id="cod" name="payment-method" value="cod" checked />
+            <label for="cod">
+                <i class="fas fa-truck"></i> Cash on Delivery
+            </label>
+
+            <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer" />
+            <label for="bank-transfer">
+                <i class="fas fa-university"></i> Bank Transfer
+            </label>
+        </div>
+        <button type="submit" class="checkout-btn">
+            Proceed to Checkout
+        </button>
+    </form>
+</div>
+
+<!-- ... existing footer ... -->
 
 <!-- Footer -->
 <div class="footer">

@@ -2,23 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Bảng Điều Khiển Khách Hàng</title>
+  <title>Customer Dashboard</title>
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/customerDashboard.css"/>
+
 </head>
 <body>
-<div class="container">
-  <h2>Bảng Điều Khiển Khách Hàng</h2>
+<!-------------------- HEADER-------------------->
+<div class="nav">
+  <!-- Hamburger button -->
+  <div class="nav-button">
+    <button id="menu-toggle" class="btn">&#9776;</button>
+  </div>
 
-  <h3>Danh Sách Thiết Kế Của Bạn</h3>
+  <!-- Logo -->
+  <div class="nav-logo">
+    <p>KoiPond</p>
+  </div>
+
+  <!-- Nav Menu -->
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a th:href="@{/}" class="link">Home</a></li>
+      <li><a th:href="@{/blogs}" class="link">Blog</a></li>
+      <li>
+        <a th:href="@{/design}" style="color: black;">Services</a>
+      </li>
+      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+      <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
+
+      <!-- Cart -->
+      <li>
+        <a href="#" class="icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="notification-badge">0</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i>Username
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="container">
+  <h2>Customer Dashboard</h2>
+
+  <h3>List Of Your Design</h3>
   <table class="table table-bordered">
     <thead>
     <tr>
       <th>ID</th>
-      <th>Tên Thiết Kế</th>
-      <th>Mô Tả</th>
-      <th>Giá</th>
-      <th>Trạng Thái</th>
-      <th>Thao Tác</th>
+      <th>Project Name</th>
+      <th>Describe</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Operation</th>
     </tr>
     </thead>
     <tbody>
@@ -29,21 +75,94 @@
       <td th:text="${design.price}"></td>
       <td th:text="${design.status}"></td>
       <td>
-        <a th:href="@{'/customer/design/' + ${design.designId}}" class="btn btn-info">Chi Tiết</a>
+        <a th:href="@{'/customer/design/' + ${design.designId}}" class="btn btn-info">Detail</a>
         <a th:if="${design.status.name() == 'NeedToPayment'}"
            th:href="@{'/customer/design/' + ${design.designId} + '/payment'}"
-           class="btn btn-success">Thanh Toán</a>
+           class="btn btn-success">Payment</a>
 
-        <!-- Nút Từ Chối, chỉ hiển thị nếu trạng thái là NeedToPayment -->
+
         <form th:if="${design.status.name() == 'NeedToPayment'}"
               th:action="@{'/customer/design/' + ${design.designId} + '/reject'}"
               method="post" style="display:inline;">
-          <button type="submit" class="btn btn-danger">Từ Chối</button>
+          <button type="submit" class="btn btn-danger">Cancel</button>
         </form>
       </td>
     </tr>
+
     </tbody>
   </table>
 </div>
+
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+    <a th:href="@{/account/profile}" class="d-flex align-items-center">
+      <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+           class="rounded-circle" width="40" height="40">
+      <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+    </li>
+    <li>
+      <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+    </li>
+    <li>
+      <form th:action="@{/account/logout}" method="post" class="ms-3">
+        <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+      </form>
+    </li>
+  </ul>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h4>Information</h4>
+      <p>Open: 8 AM - 10 PM</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+        Minh
+      </p>
+    </div>
+    <div class="footer-services">
+      <h4>Services</h4>
+      <ul>
+        <li>
+          <a href="/construction" class="service-item"
+          >Construction Koi pond</a
+          >
+        </li>
+        <li>
+          <a href="/cleaning" class="service-item"
+          >Cleaning and maintenance</a
+          >
+        </li>
+        <li>
+          <a href="/design" class="service-item"
+          >Design upon requirements</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-phone"></i> 0972423242</p>
+      <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
+    </div>
+  </div>
+</div>
 </body>
 </html>
+

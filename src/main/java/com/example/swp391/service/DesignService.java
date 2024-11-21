@@ -52,7 +52,9 @@ public class DesignService {
                 4L, serviceRequest.getSize(), serviceRequest.getBudget(), serviceRequest.getEstimatedCompletionTime());
     }
 
-
+    public List<DesignEntity> getDesignsByTypeId(Long typeId) {
+        return designRepository.findByTypeDesign_TypeDesignId(typeId);
+    }
     /**
      * Lấy tất cả các thiết kế hiện có (status = Available)
      *

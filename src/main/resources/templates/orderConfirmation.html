@@ -1,32 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Confirmation</title>
-
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  />
 
-  <link rel="stylesheet" href="/css/orderConfirm.css">
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="/javascript/designService.js" defer></script>
 
+
+  <link rel="stylesheet" href="/css/orderConfirmation.css" />
+
+  <title>Order Confirmation</title>
 </head>
 <body>
-<!-- Header -->
+<!-------------------- HEADER-------------------->
 <div class="nav">
+  <!-- Hamburger button -->
   <div class="nav-button">
     <button id="menu-toggle" class="btn">&#9776;</button>
   </div>
+
+  <!-- Logo -->
   <div class="nav-logo">
     <p>KoiPond</p>
   </div>
+
+  <!-- Nav Menu -->
   <div class="nav-menu" id="navMenu">
     <ul>
       <li><a th:href="@{/}" class="link">Home</a></li>
       <li><a th:href="@{/blogs}" class="link">Blog</a></li>
-      <li><a th:href="@{/design}">Services</a></li>
+      <li>
+        <a th:href="@{/design}" style="color: black;">Services</a>
+      </li>
+      <li><a th:href="@{/customer/dashboard}" class="link">Dashboard</a></li>
+      <li><a th:href="@{/account/customer/customer-projects}" class="link">Project</a></li>
+      <li><a th:href="@{/account/customer/completed-projects}">History</a></li>
 
       <!-- Cart -->
       <li>
@@ -36,24 +54,14 @@
         </a>
       </li>
 
-      <!-- Conditional Account Menu -->
-      <li th:if="${session.loggedInUser == null}">
-        <a href="/login" class="btn btn-primary">Login</a>
-        <a href="/register" class="btn btn-secondary">Sign Up</a>
-      </li>
-      <li th:if="${session.loggedInUser != null}">
-        <a href="/account/profile" class="icon" id="accountIcon">
-          <i class="fas fa-user-circle"></i>
-          <span th:text="${session.loggedInUser.accountName}">Username</span>
+      <li>
+        <a href="#" class="icon" id="accountIcon">
+          <i class="fas fa-user-circle"></i>Username
         </a>
-        <form th:action="@{/account/logout}" method="post" style="display: inline;">
-          <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-        </form>
       </li>
     </ul>
   </div>
 </div>
-
 <!-- Confirmation Page -->
 <div class="confirmation-page container">
   <!-- Header Section -->
@@ -66,35 +74,32 @@
   </div>
 
   <!-- Main Content -->
-  <div class="container">
-    <div class="order-details">
-      <h2>Order Details</h2>
-      <p><strong>Transaction ID:</strong> <span id="transactionId" th:text="${transactionId}">#123456</span></p>
-      <p><strong>Original Total:</strong> <span id="totalAmount" th:text="${totalAmount}"></span> VND</p>
-      <p><strong>Discount Rate:</strong> <span id="discountRate" th:text="${discountRate}"></span>%</p>
-      <p><strong>Discount Amount:</strong> <span id="discountAmount" th:text="${discountAmount}"></span> VND</p>
-      <p><strong>Total after Discount:</strong> <span id="discountedTotalAmount" th:text="${discountedTotalAmount}"></span> VND</p>
-      <p><strong>Points Earned:</strong> <span id="pointsEarned" th:text="${pointsEarned}"></span> points</p>
-      <p><strong>Payment Status:</strong> <span id="paymentStatus" th:text="${paymentStatus}">Pending</span></p>
-    </div>
   <div class="row">
     <!-- Left Column - Order Information -->
     <div class="col-md-6 order-info">
       <h3>Your Information</h3>
-      <p><strong>Transaction ID:</strong> #123456</p>
+      <p><strong>Transaction ID:</strong> <span id="transactionId" th:text="${transactionId}">#123456</span></p>
       <p><strong>Name:</strong> John Doe</p>
       <p><strong>Phone Number:</strong> 0987654321</p>
       <p><strong>Email:</strong> mngen0138@gmail.com</p>
-      <p><strong>Address:</strong> 123 Main Street, Suite 4B, City, Country</p><div class="continue-shopping">
-      <a href="/design/showAllDesign" class="btn btn-primary">Continue Shopping</a>
-    </div>
+      <p>
+        <strong> Address:</strong> 123 Main Street, Suite 4B, City, Country
+      </p>
+      <p><strong>Points Earned:</strong> <span id="pointsEarned" th:text="${pointsEarned}"></span> points</p>
+      <p><strong>Payment Status:</strong> <span id="paymentStatus" th:text="${paymentStatus}">Success</span></p>
+
+      <div class="continue-shopping">
+        <a th:href="@{/design}" class="btn btn-primary"
+        >Continue Shopping</a
+        >
+      </div>
     </div>
 
-    <!-- Right Column - Order Summary -->
+    <!-- order summary -->
     <div class="col-md-6 order-summary">
       <h3>Order Summary</h3>
       <div class="order-summary-header">
-        <p><strong>Date:</strong> 02 May 2023</p>
+        <p><strong>Date:</strong> 30 November 2024</p>
         <p><strong>Order Number:</strong> 024-125478956</p>
         <p><strong>Payment Method:</strong> Mastercard</p>
       </div>
@@ -116,41 +121,101 @@
         </tr>
         </tbody>
       </table>
+
+      <!-- Total and Continue Shopping -->
       <div class="order-total">
-        <p><strong>Sub Total:</strong> <span th:text="${subtotal}">100.000 VND</span></p>
-        <p><strong>Shipping:</strong> Free Shipping</p>
-        <p><strong>Discount:</strong> <span th:text="${discountAmount}">20%</span></p>
-        <p class="total-price"><strong>Order Total:</strong> <span th:text="${discountedTotalAmount}">107.00 VND</span></p>
+        <p>
+          <strong>Sub Total:</strong><span id="totalAmount" th:text="${totalAmount}"></span>
+          <span style="color: #000000;"> VND</span>
+        </p>
+        </p>
+        <p><strong>Shipping:</strong>  <span style="color: #000000;">Free Ship</span></p>
+        <p><strong>Discount Rate:</strong> <span id="discountRate" th:text="${discountRate}"></span>
+          <span style="color: #000000;">20%</span>
+        </p>
+        <p>
+          <strong>Discount Amount:</strong>
+          <span id="discountAmount" th:text="${discountAmount}"></span>  <span style="color: #000000;">VND</span></p>
+        <p class="total-price">
+          <strong>Order Total:</strong>
+
+          <span id="discountedTotalAmount" th:text="${discountedTotalAmount}" style="color: #e32f2f;"></span>
+        </p>
       </div>
     </div>
   </div>
 </div>
 
+
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div th:if="${session.loggedInUser != null}" class="d-flex align-items-center">
+    <a th:href="@{/account/profile}" class="d-flex align-items-center">
+      <img th:src="@{${session.loggedInUser.getImages()} ?: '/img/defaultAva.jpg'}" alt="User Avatar"
+           class="rounded-circle" width="40" height="40">
+      <span class="ms-2" th:text="${session.loggedInUser.getAccountName()}">AccountName</span>
+    </a>
+  </div>
+  <ul class="sidebar-menu">
+    <li>
+      <a th:href="@{/}" class="link"><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li>
+      <a th:href="@{/account/customer/completed-projects}"><i class="fas fa-history"></i> History Order</a>
+    </li>
+    <li>
+      <a th:href="@{/account/profile}" class="link"><i class="fas fa-user-circle"></i> Profile</a>
+    </li>
+    <li>
+      <form th:action="@{/account/logout}" method="post" class="ms-3">
+        <button type="submit" class="fas fa-sign-out-alt " style="margin-left: -15px"></button>
+      </form>
+    </li>
+  </ul>
+</div>
 <!-- Footer -->
 <div class="footer">
   <div class="footer-container">
     <div class="footer-info">
       <h4>Information</h4>
       <p>Open: 8 AM - 10 PM</p>
-      <p>PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh</p>
+      <p>
+        PPFH+362, Phú Mỹ Hưng, Khu đô thị Phú Mỹ Hưng, Quận 7, TP. Hồ Chí
+        Minh
+      </p>
     </div>
     <div class="footer-services">
       <h4>Services</h4>
       <ul>
-        <li><a href="/construction" class="service-item">Construction Koi pond</a></li>
-        <li><a href="/cleaning" class="service-item">Cleaning and maintenance</a></li>
-        <li><a href="/design" class="service-item">Design upon requirements</a></li>
+        <li>
+          <a href="/construction" class="service-item"
+          >Construction Koi pond</a
+          >
+        </li>
+        <li>
+          <a href="/cleaning" class="service-item"
+          >Cleaning and maintenance</a
+          >
+        </li>
+        <li>
+          <a href="/design" class="service-item"
+          >Design upon requirements</a
+          >
+        </li>
       </ul>
     </div>
     <div class="footer-contact">
       <h4>Contact</h4>
       <p><i class="fa-solid fa-phone"></i> 0972423242</p>
       <p><i class="fa-solid fa-envelope"></i> koipond@gmail.com</p>
-      <p><i class="fa-brands fa-facebook"></i> <a href="https://facebook.com" target="_blank">Visit Us</a></p>
+      <p>
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://facebook.com" target="_blank">Visit Us</a>
+      </p>
     </div>
   </div>
 </div>
-</div>
 </body>
-
 </html>
+
