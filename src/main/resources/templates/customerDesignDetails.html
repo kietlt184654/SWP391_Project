@@ -17,6 +17,8 @@
         <p><strong>Hình Dạng:</strong> <span th:text="${design.shapeOfPond}"></span></p>
         <p><strong>Kích Cỡ:</strong> <span th:text="${design.size}"></span></p>
         <p><strong>Trạng Thái:</strong> <span th:text="${design.status}"></span></p>
+        <p><strong>Thiết kế:</strong></p>
+        <img th:src="@{${design.img}}" alt="Hình ảnh thiết kế" />
     </div>
     <a th:href="@{'/customer/dashboard'}" class="btn btn-default">Quay lại Bảng Điều Khiển</a>
     <a th:if="${design.status.name() == 'NeedToPayment'}"

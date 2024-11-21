@@ -38,6 +38,7 @@
             <th>ID</th>
             <th>Tên Thiết Kế</th>
             <th>Mô Tả</th>
+            <th>Hình thiết kế</th>
             <th>Thao Tác</th>
         </tr>
         </thead>
@@ -46,6 +47,7 @@
             <td th:text="${design.designId}"></td>
             <td th:text="${design.designName}"></td>
             <td th:text="${design.description}"></td>
+            <td th:text="${design.img}"></td>
             <td>
                 <a th:href="@{'/manager/designs/' + ${design.designId} + '/details'}" class="btn btn-info">Chi Tiết</a>
             </td>

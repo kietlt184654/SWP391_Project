@@ -12,6 +12,8 @@
         <p><strong>ID:</strong> <span th:text="${design.designId}"></span></p>
         <p><strong>Tên:</strong> <span th:text="${design.designName}"></span></p>
         <p><strong>Mô Tả:</strong> <span th:text="${design.description}"></span></p>
+        <p><strong>Thiết kế:</strong></p>
+        <img th:src="@{${design.img}}" alt="Hình ảnh thiết kế" />
     </div>
 
     <h3>Thêm Nguyên Liệu</h3>

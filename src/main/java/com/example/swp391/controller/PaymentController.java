@@ -297,6 +297,11 @@ public class PaymentController {
         CustomerEntity customer = loggedInUser.getCustomer();
         int totalPoints = customer.getTotalPoints();
 
+
+
+        // Lấy địa chỉ từ CustomerEntity
+        String customerAddress = loggedInUser.getAddress();
+
         Map<DesignEntity, Integer> designItems = null;
         try {
             designItems = (Map<DesignEntity, Integer>) session.getAttribute("designItems");
@@ -319,8 +324,10 @@ public class PaymentController {
         model.addAttribute("paymentStatus", status);
         model.addAttribute("customerName", loggedInUser.getAccountName());
         model.addAttribute("customerEmail", loggedInUser.getEmail());
+        model.addAttribute("customerAddress", customerAddress); // Thêm địa chỉ vào model
         model.addAttribute("totalPoints", totalPoints);
         model.addAttribute("designItems", designItems);
+
 
         session.removeAttribute("transactionId");
         session.removeAttribute("totalAmount");
@@ -332,6 +339,8 @@ public class PaymentController {
         session.removeAttribute("designItems");
         session.removeAttribute("cart");
 
+
         return "orderConfirmation";
     }
+
 }
