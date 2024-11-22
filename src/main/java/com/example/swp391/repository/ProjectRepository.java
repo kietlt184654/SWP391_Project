@@ -19,4 +19,5 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
     List<ProjectEntity> findByCustomer_CustomerIDAndStatusNot(Long customerId, String status);
     @Query("SELECT p FROM ProjectEntity p LEFT JOIN FETCH p.feedback")
     List<ProjectEntity> findAllProjectsWithFeedback();
+
 }

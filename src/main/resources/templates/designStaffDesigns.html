@@ -1,9 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Designs Table</title>
+    <link rel="stylesheet" href="/css/designStaffDesign.css">
+</head>
+<body>
+<h1>Designs in Progress</h1>
 <table>
     <thead>
     <tr>
         <th>ID</th>
         <th>Design Name</th>
-        <th>Status</th>
+        <th>Description</th>
+        <th>Water Capacity</th>
+        <th>Estimated Completion Time</th>
+        <th>Price</th>
+        <th>Shape Of Pond</th>
+        <th>Size</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -12,9 +26,16 @@
         <td th:text="${design.designId}"></td>
         <td th:text="${design.designName}"></td>
         <td th:text="${design.description}"></td>
+        <td th:text="${design.waterCapacity}"></td>
+        <td th:text="${design.estimatedCompletionTime}"></td>
+        <td th:text="${design.formattedPrice}"></td>
+        <td th:text="${design.shapeOfPond}"></td>
+        <td th:text="${design.size}"></td>
         <td>
             <a th:href="@{/designStaff/designs/{id}/details(id=${design.designId})}">View</a>
         </td>
     </tr>
     </tbody>
 </table>
+</body>
+</html>

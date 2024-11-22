@@ -146,46 +146,78 @@ private StaffProjectService staffProjectService;
 //        }
 //        return "login";
 //    }
+//@PostMapping("/login")
+//public String login(
+//        @RequestParam("accountName") String accountName,
+//        @RequestParam("password") String password,
+//        Model model,
+//        HttpSession session) {
+//    AccountEntity account = accountService.login(accountName, password);
+//
+//    if (account != null) {
+//        session.setAttribute("loggedInUser", account);
+//
+//        // Điều hướng theo quyền
+//        switch (account.getAccountTypeID()) {
+//            case "Customer":
+//                // Nếu là Customer, tạo thông tin nếu chưa có
+//                if (!customerService.existsByAccount(account)) {
+//                    CustomerEntity customer = new CustomerEntity();
+//                    customer.setAccount(account);
+//                    customer.setAdditionalInfo("");
+//                    customerService.save(customer);
+//                }
+//                return "Homepage";
+//            case "Manager":
+//                return "redirect:/manager";
+//            case "Consulting Staff":
+//                return "redirect:/consultingHome";
+//            case "Construction Staff":
+//                return "redirect:/dashboard";
+//            case "Design Staff":
+//                return "redirect:/designStaff/designs/inprogress";
+//            default:
+//                model.addAttribute("messageLogin", "Access denied!");
+//                return "login";
+//        }
+//    } else {
+//        model.addAttribute("messageLogin", "Invalid username or password");
+//        return "login";
+//    }
+//}
 @PostMapping("/login")
-public String login(
-        @RequestParam("accountName") String accountName,
-        @RequestParam("password") String password,
-        Model model,
-        HttpSession session) {
-    AccountEntity account = accountService.login(accountName, password);
-
+public String login(@RequestParam("accountName") String accountname, @RequestParam("password") String password, Model model, HttpSession session) {
+    AccountEntity account = accountService.login(accountname, password);
     if (account != null) {
+        model.addAttribute("message", "Login Successful");
         session.setAttribute("loggedInUser", account);
 
-        // Điều hướng theo quyền
-        switch (account.getAccountTypeID()) {
-            case "Customer":
-                // Nếu là Customer, tạo thông tin nếu chưa có
-                if (!customerService.existsByAccount(account)) {
-                    CustomerEntity customer = new CustomerEntity();
-                    customer.setAccount(account);
-                    customer.setAdditionalInfo("");
-                    customerService.save(customer);
-                }
-                return "Homepage";
-            case "Manager":
-                return "redirect:/manager";
-            case "Consulting Staff":
-                return "redirect:/consultingHome";
-            case "Construction Staff":
-                return "redirect:/dashboard";
-            case "Design Staff":
-                return "redirect:/designStaff/designs/inprogress";
-            default:
-                model.addAttribute("messageLogin", "Access denied!");
-                return "login";
+        // Kiểm tra và tạo CustomerEntity nếu đây là lần đầu đăng nhập
+        if (account.getAccountTypeID().equals("Customer")) {
+            // Kiểm tra nếu customer chưa tồn tại
+            if (!customerService.existsByAccount(account)) {
+                CustomerEntity customer = new CustomerEntity();
+                customer.setAccount(account);
+                customer.setAdditionalInfo("");  // Bạn có thể thêm thông tin bổ sung tùy ý
+
+                // Lưu Customer mới vào cơ sở dữ liệu
+                customerService.save(customer);
+            }
+            return "Homepage";
+        } else if (account.getAccountTypeID().equals("Manager")) {
+            return "manager";
+        } else if (account.getAccountTypeID().equals("Consulting Staff")) {
+            return "consultingHome";
+        } else if (account.getAccountTypeID().equals("Construction Staff")) {
+            return "redirect:/dashboard"; // Chuyển hướng đến /dashboard
+        }else if (account.getAccountTypeID().equals("Design Staff")) {
+            return "redirect:/designStaff/designs/inprogress";
         }
     } else {
         model.addAttribute("messageLogin", "Invalid username or password");
-        return "login";
     }
+    return "login";
 }
-
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         // Xóa toàn bộ session
@@ -200,24 +232,51 @@ public String login(
             model.addAttribute("emailError", "Email đã được sử dụng");
             return "register";
         }
-        if (userDTO.getEmail().matches("^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$")) {
-            model.addAttribute("emailError", "Email đã được sử dụng");
-            return "register";
-        }
-        // Kiểm tra tên người dùng đã tồn tại
-        if (accountService.checkIfAccountNameExists(userDTO.getAccountName())) {
-            model.addAttribute("usernameError", "Tên người dùng đã tồn tại");
+
+        // Kiểm tra định dạng email
+        if (!userDTO.getEmail().matches("^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$")) {
+            model.addAttribute("emailError", "Email invalid");
             return "register";
         }
 
-        // Tạo tài khoản mới và lưu trực tiếp mật khẩu (không mã hóa)
+        // Kiểm tra tên người dùng đã tồn tại
+        if (accountService.checkIfAccountNameExists(userDTO.getAccountName())) {
+            model.addAttribute("usernameError", "User Name existed");
+            return "register";
+        }
+
+        // Kiểm tra số điện thoại đã tồn tại
+        if (accountService.checkIfPhoneNumberExists(userDTO.getPhoneNumber())) {
+            model.addAttribute("phoneError", "Phonenumber Existed");
+            return "register";
+        }
+
+        // Kiểm tra định dạng số điện thoại
+        if (!userDTO.getPhoneNumber().matches("^\\d{10,11}$")) {
+            model.addAttribute("phoneError", "Must be 10-11 numbers");
+            return "register";
+        }
+
+        // Kiểm tra địa chỉ không được để trống
+        if (userDTO.getAddress() == null || userDTO.getAddress().isEmpty()) {
+            model.addAttribute("addressError", "Address cannot be empty");
+            return "register";
+        }
+
+        // Tạo tài khoản mới
         AccountEntity account = new AccountEntity();
         account.setAccountName(userDTO.getAccountName());
-        account.setPassword(userDTO.getPassword()); // Lưu trực tiếp mật khẩu không mã hóa
+        account.setPassword((userDTO.getPassword())); // Mã hóa mật khẩu trước khi lưu
         account.setEmail(userDTO.getEmail());
+        account.setPhoneNumber(userDTO.getPhoneNumber());
+        account.setAddress(userDTO.getAddress());
+        account.setStatus(true); // Đặt trạng thái mặc định là "Hoạt động"
+
         // Lưu tài khoản vào cơ sở dữ liệu
         accountService.registerUser(account);
-        return "login"; // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
+
+        // Chuyển hướng đến trang đăng nhập sau khi đăng ký thành công
+        return "redirect:/login";
     }
 
     @GetMapping("/profile")

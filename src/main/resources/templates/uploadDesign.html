@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Upload Design</title>
-    <link rel="stylesheet" href="/css/style.css"> <!-- Đường dẫn đến file CSS nếu có -->
+    <link rel="stylesheet" href="/css/uploadDesign.css">
 </head>
 <body>
 <h1>Upload Design for Project</h1>
@@ -18,26 +19,32 @@
 </div>
 
 <!-- Thông tin chi tiết thiết kế -->
-<div>
+<div class="design-details">
     <h2>Design Details</h2>
     <p><strong>Design ID:</strong> <span th:text="${design.designId}"></span></p>
     <p><strong>Design Name:</strong> <span th:text="${design.designName}"></span></p>
+    <p><strong>Design Description:</strong> <span th:text="${design.description}"></span></p>
+    <p><strong>Design Price:</strong> <span th:text="${design.formattedPrice}"></span></p>
+    <p><strong>Design WaterCapacity:</strong> <span th:text="${design.waterCapacity}"></span></p>
+    <p><strong>Design Completion Time:</strong> <span th:text="${design.estimatedCompletionTime}"></span></p>
+    <p><strong>Shape Of Pon:</strong> <span th:text="${design.shapeOfPond}"></span></p>
+    <p><strong>Size:</strong> <span th:text="${design.size}"></span></p>
     <p><strong>Status:</strong> <span th:text="${design.status}"></span></p>
 </div>
 
 <!-- Form Upload File -->
-<form th:action="@{/designStaff/designs/{designId}/submit(designId=${design.designId})}" method="post" enctype="multipart/form-data">
-    <div>
+<form th:action="@{/designStaff/designs/{designId}/submit(designId=${design.designId})}" method="post" enctype="multipart/form-data" class="upload-form">
+    <div class="form-group">
         <label for="designFile">Upload Design File:</label>
         <input type="file" id="designFile" name="designFile" required>
     </div>
-    <div>
-        <button type="submit">Submit Design</button>
+    <div class="form-group">
+        <button type="submit" class="btn-submit">Submit Design</button>
     </div>
 </form>
 
 <!-- Link trở lại danh sách thiết kế -->
-<div>
+<div class="back-link">
     <a th:href="@{/designStaff/designs/inprogress}">Back to Design List</a>
 </div>
 </body>

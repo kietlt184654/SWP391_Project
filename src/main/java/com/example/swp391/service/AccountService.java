@@ -28,7 +28,7 @@ public class AccountService {
     @Autowired
     private JavaMailSender mailSender;
 private EmailService emailService;
-
+    @Autowired
     private CustomerRepository customerRepository;
 
     public AccountEntity login(String accountName, String password) {
@@ -45,31 +45,24 @@ private EmailService emailService;
     public AccountEntity saveAccount(AccountEntity account) {
         return accountRepository.save(account);
     }
-
+    public boolean checkIfPhoneNumberExists(String phoneNumber) {
+        return accountRepository.findByPhoneNumber(phoneNumber).isPresent();
+    }
     public synchronized void registerUser(AccountEntity userDTO) {
-        // Tìm tài khoản có AccountID lớn nhất hiện có
-        AccountEntity lastAccount = accountRepository.findTopByOrderByAccountIdDesc();
-
-        if (lastAccount != null) {
-            // Tăng giá trị AccountID thủ công
-            userDTO.setAccountId(lastAccount.getAccountId() + 1);
-        } else {
-            // Nếu bảng trống, bắt đầu từ AccountID = 1
-            userDTO.setAccountId(1);
-        }
-
         // Thiết lập các giá trị khác
         userDTO.setAccountTypeID("Customer");
         userDTO.setStatus(true);
 
-        // Lưu tài khoản vào cơ sở dữ liệu
-        accountRepository.save(userDTO);
-        // Sau khi lưu xong tài khoản, tạo một Customer mới
+        // Lưu tài khoản vào cơ sở dữ liệu trước
+        AccountEntity savedAccount = accountRepository.save(userDTO);
+
+        // Tạo một CustomerEntity liên kết với tài khoản
         CustomerEntity customer = new CustomerEntity();
-        customer.setCustomerID(customerRepository.findTopByOrderByCustomerIDDesc().getCustomerID() + 1); // Gán AccountID mới tạo cho Customer
         customer.setAdditionalInfo("Thông tin khách hàng mặc định"); // Thông tin thêm cho khách hàng, có thể thay đổi
-        customer.setAccount(userDTO); // Sửa đổi: gán trực tiếp đối tượng AccountEntity
-        customerRepository.save(customer); // Lưu thông tin Customer vào cơ sở dữ liệu
+        customer.setAccount(savedAccount); // Gán AccountEntity đã lưu cho CustomerEntity
+
+        // Lưu CustomerEntity vào cơ sở dữ liệu
+        customerRepository.save(customer);
     }
 
 

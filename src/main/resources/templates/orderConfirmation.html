@@ -76,22 +76,22 @@
   <!-- Main Content -->
   <div class="row">
     <!-- Left Column - Order Information -->
+    <!-- Left Column - Order Information -->
     <div class="col-md-6 order-info">
       <h3>Your Information</h3>
-      <p><strong>Transaction ID:</strong> <span id="transactionId" th:text="${transactionId}">#123456</span></p>
-      <p><strong>Name:</strong> John Doe</p>
-      <p><strong>Phone Number:</strong> 0987654321</p>
-      <p><strong>Email:</strong> mngen0138@gmail.com</p>
+      <p><strong>Transaction ID:</strong> <span id="transactionId" th:text="${transactionId}"></span></p>
+      <p><strong>Name:</strong><span th:text="${customerName}"></span></p>
+
+      <p><strong>Email:</strong><span th:text="${customerEmail}"></span></p>
       <p>
-        <strong> Address:</strong> 123 Main Street, Suite 4B, City, Country
+        <strong> Address:</strong><span th:text="${customerAddress}"></span>
       </p>
-      <p><strong>Points Earned:</strong> <span id="pointsEarned" th:text="${pointsEarned}"></span> points</p>
-      <p><strong>Payment Status:</strong> <span id="paymentStatus" th:text="${paymentStatus}">Success</span></p>
+      <p><strong>Total Points:</strong> <span th:text="${totalPoints}"></span></p>
+      <p><strong>Points Earned:</strong> <span id="pointsEarned" th:text="${pointsEarned}"></span></p>
+      <p><strong>Payment Status:</strong> <span id="paymentStatus" th:text="${paymentStatus}"></span></p>
 
       <div class="continue-shopping">
-        <a th:href="@{/design}" class="btn btn-primary"
-        >Continue Shopping</a
-        >
+        <a th:href="@{/design/showAllDesign}" class="btn btn-primary">Continue Shopping</a>
       </div>
     </div>
 
@@ -99,9 +99,9 @@
     <div class="col-md-6 order-summary">
       <h3>Order Summary</h3>
       <div class="order-summary-header">
-        <p><strong>Date:</strong> 30 November 2024</p>
-        <p><strong>Order Number:</strong> 024-125478956</p>
-        <p><strong>Payment Method:</strong> Mastercard</p>
+<!--        <p><strong>Date:</strong> <span th:text="${startDate}"></span></p>-->
+<!--        <p><strong>Order Number:</strong></p>-->
+<!--        <p><strong>Payment Method:</strong></p>-->
       </div>
       <table class="table">
         <thead>
@@ -125,17 +125,17 @@
       <!-- Total and Continue Shopping -->
       <div class="order-total">
         <p>
-          <strong>Sub Total:</strong><span id="totalAmount" th:text="${totalAmount}"></span>
-          <span style="color: #000000;"> VND</span>
+          <strong>Sub Total:</strong><span style="color: #000000;" id="totalAmount" th:text="${totalAmount}"></span>
+
         </p>
         </p>
         <p><strong>Shipping:</strong>  <span style="color: #000000;">Free Ship</span></p>
-        <p><strong>Discount Rate:</strong> <span id="discountRate" th:text="${discountRate}"></span>
-          <span style="color: #000000;">20%</span>
+        <p><strong>Discount Rate:</strong> <span style="color: #000000;" id="discountRate" th:text="${discountRate}"></span>
+
         </p>
         <p>
           <strong>Discount Amount:</strong>
-          <span id="discountAmount" th:text="${discountAmount}"></span>  <span style="color: #000000;">VND</span></p>
+          <span style="color: #000000;" id="discountAmount" th:text="${discountAmount}"></span></p>
         <p class="total-price">
           <strong>Order Total:</strong>
 
@@ -218,4 +218,3 @@
 </div>
 </body>
 </html>
-

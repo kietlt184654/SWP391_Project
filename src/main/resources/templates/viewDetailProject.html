@@ -55,9 +55,9 @@
     <label for="statusSelect"><strong>Update Status:</strong></label>
     <select id="statusSelect" name="status" onchange="this.form.submit()">
       <option value="Pending" th:selected="${project.status == 'Pending'}">Pending</option>
-      <option value="To Do" th:selected="${project.status == 'To Do'}">To Do</option>
+
       <option value="In Progress" th:selected="${project.status == 'In Progress'}">In Progress</option>
-      <option value="COMPLETE" th:selected="${project.status == 'COMPLETE'}">Done</option>
+      <option value="COMPLETE" th:selected="${project.status == 'COMPLETE'}">Complete</option>
     </select>
   </form>
 </div>

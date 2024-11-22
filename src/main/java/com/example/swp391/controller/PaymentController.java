@@ -313,6 +313,7 @@ public class PaymentController {
         model.addAttribute("paymentStatus", status);
         model.addAttribute("customerName", loggedInUser.getAccountName());
         model.addAttribute("customerEmail", loggedInUser.getEmail());
+        model.addAttribute("customerAddress", loggedInUser.getAddress());
         model.addAttribute("totalPoints", totalPoints);
         model.addAttribute("designItems", designItems);
 

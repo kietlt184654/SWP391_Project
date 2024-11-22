@@ -15,5 +15,6 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
             "GROUP BY YEAR(p.paymentDate), MONTH(p.paymentDate) " +
             "ORDER BY CONCAT(YEAR(p.paymentDate), '-', MONTH(p.paymentDate))")
     List<Object[]> findMonthlyRevenue();
+    PaymentEntity findByTransactionId(String transactionId);
 
 }

@@ -2,77 +2,82 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Chi Tiết Thiết Kế</title>
+  <title>Design Details</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/addMaterials.css">
 </head>
 <body>
 <div class="container">
-  <h2>Chi Tiết Thiết Kế</h2>
-  <div>
+  <h2>Design Details</h2>
+  <div class="design-details">
     <p><strong>ID:</strong> <span th:text="${design.designId}"></span></p>
-    <p><strong>Tên:</strong> <span th:text="${design.designName}"></span></p>
-    <p><strong>Mô Tả:</strong> <span th:text="${design.description}"></span></p>
-    <p><strong>Thiết kế:</strong></p>
-    <img th:src="@{${design.img}}" alt="Hình ảnh thiết kế" />
+    <p><strong>Name:</strong> <span th:text="${design.designName}"></span></p>
+    <p><strong>Description:</strong> <span th:text="${design.description}"></span></p>
+    <p><strong>Price:</strong> <span th:text="${design.formattedPrice}"></span></p>
+    <p><strong>Water Capacity:</strong> <span th:text="${design.waterCapacity}"></span></p>
+    <p><strong>Size:</strong> <span th:text="${design.size}"></span></p>
+    <p><strong>Shape Of Pon:</strong> <span th:text="${design.shapeOfPond}"></span></p>
+    <p><strong>Sample Design:</strong></p>
+    <img class="design-image" th:src="@{${design.img}}" alt="Design Image" />
   </div>
 
-  <h3>Thêm Nguyên Liệu</h3>
+  <h3>Add Materials</h3>
   <form th:action="@{'/manager/designs/' + ${design.designId} + '/approve'}" method="post">
-    <div id="materialsContainer">
-      <!-- Mẫu nguyên liệu ban đầu -->
+    <div id="materialsContainer" class="materials-container">
+      <!-- Initial Material Template -->
       <div class="form-group material-group">
-        <label for="material_0">Nguyên Liệu</label>
+        <label for="material_0">Material</label>
         <select class="form-control material-select" id="material_0" name="materials[0].materialId">
-          <option value="" disabled selected>Chọn nguyên liệu</option>
+          <option value="" disabled selected>Choose Material</option>
           <option th:each="material : ${materials}"
                   th:value="${material.materialId}"
                   th:text="${material.materialName + ' (' + material.unit + ')'}"></option>
         </select>
-        <input type="number" class="form-control material-quantity" name="materials[0].quantityNeeded" placeholder="Số lượng" min="1">
+        <input type="number" class="form-control material-quantity" name="materials[0].quantityNeeded" placeholder="Quantity" min="1">
       </div>
     </div>
 
-    <button type="button" class="btn btn-primary" onclick="addMaterial()">Thêm Nguyên Liệu</button>
-    <button type="submit" class="btn btn-success">Duyệt và Thêm Nguyên Liệu</button>
-    <button type="button" class="btn btn-danger" onclick="rejectDesign()">Từ Chối Thiết Kế</button>
+    <button type="button" class="btn btn-primary" onclick="addMaterial()">Add Material</button>
+    <button type="submit" class="btn btn-success">Accept Design and Add Materials</button>
+    <button type="button" class="btn btn-danger" onclick="rejectDesign()">Reject Design</button>
 
-    <!-- URL từ chối thiết kế động -->
+    <!-- Dynamic URL for rejecting design -->
     <input type="hidden" id="rejectUrl" th:value="@{'/manager/designs/' + ${design.designId} + '/reject'}"/>
   </form>
 </div>
 
 <script>
-  let materialCount = 1; // Đếm số lượng nguyên liệu để đặt tên cho các trường
+  let materialCount = 1; // Counter for materials to set unique names
 
   function addMaterial() {
     const container = document.getElementById('materialsContainer');
 
-    // Lưu lại HTML của phần tử nguyên liệu đầu tiên để sao chép
+    // Clone the first material group to duplicate it
     const firstMaterialGroup = document.querySelector('.material-group').cloneNode(true);
 
-    // Cập nhật lại các thuộc tính ID và name để chúng duy nhất cho mỗi nhóm nguyên liệu
+    // Update the ID and name attributes to make them unique
     const select = firstMaterialGroup.querySelector('.material-select');
     const quantity = firstMaterialGroup.querySelector('.material-quantity');
 
     select.id = `material_${materialCount}`;
     select.name = `materials[${materialCount}].materialId`;
-    select.value = ""; // Đặt lại giá trị về rỗng
+    select.value = ""; // Reset the value to empty
 
     quantity.name = `materials[${materialCount}].quantityNeeded`;
-    quantity.value = ""; // Đặt lại số lượng về rỗng
+    quantity.value = ""; // Reset quantity to empty
 
-    // Thêm phần tử đã sao chép vào container
+    // Append the duplicated material group to the container
     container.appendChild(firstMaterialGroup);
-    materialCount++; // Tăng biến đếm
+    materialCount++; // Increment the counter
   }
 
   function rejectDesign() {
-    if (confirm("Bạn có chắc chắn muốn từ chối thiết kế này không?")) {
+    if (confirm("Are you sure you want to reject this design?")) {
       const form = document.createElement('form');
       form.method = 'POST';
-      form.action = document.getElementById('rejectUrl').value; // Lấy URL từ input ẩn `rejectUrl`
+      form.action = document.getElementById('rejectUrl').value; // Get the URL from the hidden input `rejectUrl`
 
-      // Thêm CSRF token nếu cần (nếu bạn dùng Spring Security)
+      // Add CSRF token if needed (for Spring Security)
       const csrfInput = document.querySelector("input[name='_csrf']");
       if (csrfInput) {
         const csrfToken = document.createElement('input');

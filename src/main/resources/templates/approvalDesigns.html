@@ -4,21 +4,7 @@
   <meta charset="UTF-8">
   <title>Danh Sách Thiết Kế Chờ Duyệt</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <style>
-    .container {
-      max-width: 800px;
-      margin-top: 20px;
-    }
-    h2 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-    .alert {
-      margin-bottom: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/approvalDesign.css">
 </head>
 <body>
 <div class="container">
@@ -27,14 +13,19 @@
     <p th:text="${successMessage}"></p>
   </div>
 
-  <h2>Danh Sách Thiết Kế Chờ Duyệt</h2>
+  <h2>List Approval</h2>
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
       <th>ID</th>
-      <th>Tên Thiết Kế</th>
-      <th>Mô Tả</th>
-      <th>Thao Tác</th>
+      <th>Design Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Water Capacity</th>
+      <th>Time Completion</th>
+      <th>Size</th>
+      <th>Shape Of Pond</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -42,8 +33,13 @@
       <td th:text="${design.designId}"></td>
       <td th:text="${design.designName}"></td>
       <td th:text="${design.description}"></td>
+      <td th:text="${design.formattedPrice}"></td>
+      <td th:text="${design.waterCapacity}"></td>
+      <td th:text="${design.estimatedCompletionTime}"></td>
+      <td th:text="${design.size}"></td>
+      <td th:text="${design.shapeOfPond}"></td>
       <td>
-        <a th:href="@{'/manager/designs/' + ${design.designId} + '/details'}" class="btn btn-info">Chi Tiết</a>
+        <a th:href="@{'/manager/designs/' + ${design.designId} + '/details'}" class="btn btn-info">Details</a>
       </td>
     </tr>
     </tbody>

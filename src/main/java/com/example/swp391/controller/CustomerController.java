@@ -128,7 +128,7 @@ public class CustomerController {
         ProjectEntity project = projectService.getProjectById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID: " + projectId));
 
-        if (!"Done".equalsIgnoreCase(project.getStatus())) {
+        if (!"COMPLETE".equalsIgnoreCase(project.getStatus())) {
             return ResponseEntity.badRequest().body("Only completed projects can be rated.");
         }
 

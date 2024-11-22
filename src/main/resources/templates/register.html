@@ -60,9 +60,21 @@
         <i class="bx bx-lock-alt"></i>
       </div>
       <div class="input-box">
+        <input type="text" class="input-field" placeholder="Address" name="address" required />
+        <i class="bx bx-home-alt"></i>
+      </div>
+      <div th:if="${addressError}" class="error-message" style="color: red;">[[${addressError}]]</div>
+
+      <div class="input-box">
+        <input type="text" class="input-field" placeholder="Phone Number" name="phoneNumber" required />
+        <i class="bx bx-phone"></i>
+      </div>
+      <div th:if="${phoneError}" class="error-message" style="color: red;">[[${phoneError}]]</div>
+
+      <div class="input-box">
         <input type="submit" class="submit" value="Register" />
       </div>
-    </form>
+      </form>
       <div class="two-col">
         <div class="one">
           <input type="checkbox" id="register-check" />

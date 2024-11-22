@@ -16,7 +16,7 @@ public class AccountEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "AccountID")  // Tên cột chính xác
+    @Column(name = "AccountID")  // Tên cột chính xácx`
     private long accountId;
 
     @Column(name = "AccountName", nullable = false)  // Thêm trường AccountName
